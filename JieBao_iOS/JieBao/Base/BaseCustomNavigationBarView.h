@@ -16,4 +16,6 @@
 
 - (void)configRightBtnWithAttrs:(NSDictionary *)attrs;
 
+
+
 @end

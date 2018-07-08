@@ -94,6 +94,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     self.view.backgroundColor = [UIColor whiteColor];
     [self initUI];
     if (self.dev) {
+        NSLog(@"%@",self.dev.macAddress);
         self.dev.delegate = self;
         [self.dev setSubscribe:self.dev.productKey subscribed:YES];
         [self.dev getDeviceStatus:@[@"mode",@"switch"]];
@@ -137,11 +138,13 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     [self.btnsBGView addSubview:self.modelLb];;
     [self.btnsBGView addSubview:self.msgLb];
     
+    [self initDragImageView];
+    [self showImage];
+    
     [self.btnsBGView addSubview:self.currentImgView];
     [self.btnsBGView addSubview:self.currentModelLb];
     
-    [self initDragImageView];
-    [self showImage];
+    
     
     [self makeContraints];
 }
@@ -170,6 +173,12 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
         make.center.equalTo(weakself.circleView);
         make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(60), CurrentDeviceSize(60)));
     }];
+    
+    [self.currentModelLb mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(weakself.currentImgView);
+        make.top.equalTo(weakself.currentImgView.mas_bottom).offset(+CurrentDeviceSize(4));
+        make.width.lessThanOrEqualTo(@(CurrentDeviceSize(200)));
+    }];
 
     
     [self.msgLb mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -195,7 +204,6 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     imageviewDetailOne.image = [UIImage imageNamed:@"riluo"];
     imageviewDetailOne.imgName = @"riluo";
     imageviewDetailOne.selectImgName = @"riluo1";
-    
     // 添加转盘上图标4
     imageviewCharitiesTwo = [[DragImageView alloc] initWithFrame:CGRectMake(0, 0, ImageWidth, ImageHeight)];
     imageviewCharitiesTwo.image = [UIImage imageNamed:@"sun"];

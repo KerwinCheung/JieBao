@@ -58,7 +58,7 @@
     [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(weakself.mas_centerY);
         make.left.equalTo(@(CurrentDeviceSize(10)));
-        make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(20), CurrentDeviceSize(20)));
+        make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(20), CurrentDeviceSize(22)));
     }];
     
     [self.textLb mas_makeConstraints:^(MASConstraintMaker *make) {

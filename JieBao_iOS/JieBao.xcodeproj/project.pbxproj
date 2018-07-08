@@ -1102,10 +1102,10 @@
 				E0B51928208DC2C20010D552 /* CaiDengRiChuTypeViewController.m */,
 				E0B51924208DC1770010D552 /* CaiDengMorningTypeViewController.h */,
 				E0B51925208DC1770010D552 /* CaiDengMorningTypeViewController.m */,
-				E0B519092089E1290010D552 /* CaiDengTimingTypeViewController.h */,
-				E0B5190A2089E1290010D552 /* CaiDengTimingTypeViewController.m */,
 				E0B51912208D8D170010D552 /* CaiDengHandViewController.h */,
 				E0B51913208D8D170010D552 /* CaiDengHandViewController.m */,
+				E0B519092089E1290010D552 /* CaiDengTimingTypeViewController.h */,
+				E0B5190A2089E1290010D552 /* CaiDengTimingTypeViewController.m */,
 				E0B164D320A293E6005D294B /* TimingSettingViewController.h */,
 				E0B164D420A293E6005D294B /* TimingSettingViewController.m */,
 			);

@@ -71,10 +71,10 @@
         }
         NSArray *list =  [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         
-        if (!list) {
-            [HudHelper showStatus:@"没有查询到定时任务"];
-            return;
-        }
+//        if (list.count == 0) {
+//            [HudHelper showStatus:@"没有查询到定时任务"];
+//            return;
+//        }
         
         [weakself.dataSource removeAllObjects];
         DeviceSchedulerTask *LPStask = [DeviceSchedulerTask new];
@@ -84,6 +84,7 @@
         DeviceSchedulerTask *SPStask = [DeviceSchedulerTask new];
         SPStask.taskName = @"SPS程序";
         SPStask.taskLogo = @"dingshichengxu";
+        
         [weakself.dataSource addObject:LPStask];
         [weakself.dataSource addObject:SPStask];
         
@@ -232,6 +233,11 @@
     [SVProgressHUD show];
     DeviceSchedulerTask *schTask = self.temps.firstObject;
     
+    if (schTask.sches.count == 0) {
+        [SVProgressHUD dismiss];
+        [HudHelper showErrorWithStatus:@"设置失败"];
+        return;
+    }
     for (DeviceCommonSchulder *sch in schTask.sches) {
         sch.enabled = YES;
         NSDictionary *dic = [sch yy_modelToJSONObject];
@@ -268,6 +274,7 @@
     }
 }
 
+#pragma mark - tableView Delegate
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
@@ -335,8 +342,7 @@
         [(CaiDengTimingCell *)cell setSelected];
         [self.temps removeAllObjects];
         [self.temps addObject:self.dataSource[self.currentIndex]];
-    }else
-    {
+    }else{
         TimingSettingViewController *vc = [TimingSettingViewController new];
         vc.dev = self.dev;
         vc.group = self.group;

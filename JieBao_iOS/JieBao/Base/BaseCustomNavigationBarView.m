@@ -56,7 +56,7 @@
     [self.rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakself.mas_right).offset(-CurrentDeviceSize(20));
         make.centerY.equalTo(weakself.mas_centerY).offset(CurrentDeviceSize(15));
-        make.size.mas_equalTo(CGSizeMake(30, 30));
+        make.size.mas_equalTo(CGSizeMake(40, 30));
     }];
     
     [self.titleLb mas_makeConstraints:^(MASConstraintMaker *make) {
