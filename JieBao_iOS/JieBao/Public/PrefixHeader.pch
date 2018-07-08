@@ -1,0 +1,36 @@
+//
+//  PrefixHeader.pch
+//  JieBao
+//
+//  Created by yangzhenmin on 2018/4/12.
+//  Copyright © 2018年 yangzhenmin. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#import "Define.h"
+#import "SpecificDefine.h"
+#import "UIFont+Custom.h"
+#import "BlockDefine.h"
+#import <Masonry/Masonry.h>
+#import <GizWifiSDK/GizWifiSDK.h>
+#import "SDKHelper.h"
+#import "UserDefaultHelper.h"
+#import "UserHelper.h"
+#import "SelectImageHelper.h"
+#import "UtilHelper.h"
+#import "LoadingHelper.h"
+#import "JieBao-Bridging-Header.h"
+#import <AFNetworking/AFNetworking.h>
+#import "NetworkHelper.h"
+#import "YYModel.h"
+#import "SVProgressHUD.h"
+#import "UIViewController+Custom.h"
+#import "BaseSlider.h"
+#import "DateTools.h"
+#import "HudHelper.h"
+
+#endif /* PrefixHeader_pch */
