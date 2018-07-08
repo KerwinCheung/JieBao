@@ -54,13 +54,12 @@
     [super viewWillAppear:animated];
     [self.tabBarController.tabBar setHidden:NO];
     LHWeakSelf(self)
-    ActionBlock rightAction = ^(UIButton *btn){//MyDeviceCaiDengTurnViewController DianDiBengViewController MyDeviceWirelessTurnViewController ZaoLangBengViewController
+    ActionBlock rightAction = ^(UIButton *btn){
+        //MyDeviceCaiDengTurnViewController DianDiBengViewController MyDeviceWirelessTurnViewController ZaoLangBengViewController
 //        [weakself.navigationController pushViewController:[NSClassFromString(@"ShuiBengViewController") new] animated:YES];
     [weakself addDeviceDidSelected];
         LHLog(@"right");
     };
-    
-    
     [self.naviBar  configNavigationBarWithAttrs:@{
                                                   kCustomNaviBarTitleKey:@"我的设备",
                                                   kCustomNaviBarRightImgKey:@"tianjia",
@@ -107,11 +106,62 @@
     [[GizWifiSDK sharedInstance] getBoundDevices:[UserHelper getCurrentUser].uid token:[UserHelper getCurrentUser].token];
 }
 
+#pragma mark - userLogout
 - (void)userLogout
 {
     [self.dataSource removeAllObjects];
     [self.cv reloadData];
     self.noDeviceView.hidden = NO;
+}
+
+#pragma mark - navigationbar right btn action
+- (void)addDeviceDidSelected
+{
+    [self.navigationController pushViewController:[NSClassFromString(@"MyDeviceAddViewController") new] animated:YES];
+}
+
+- (void)addBtnClicked
+{
+    [self.navigationController pushViewController:[NSClassFromString(@"MyDeviceAddViewController") new] animated:YES];
+}
+
+#pragma mark - collectionDelegate
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.dataSource.count;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    DeviceCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceCollectionViewCell" forIndexPath:indexPath];
+    cell.dataDic = self.dataSource[indexPath.row];
+    UILongPressGestureRecognizer *ges = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(tap:)];
+    [cell addGestureRecognizer:ges];
+    [cell addGestureRecognizer:tap];
+    return cell;
+}
+
+#pragma mark - 手势方法
+- (void)longPress:(UILongPressGestureRecognizer *)ges
+{
+    if (ges.state == UIGestureRecognizerStateBegan) {
+        [self deviceCellGroupDidSelected:((DeviceCollectionViewCell *)ges.view).dataDic];
+    }
+}
+
+- (void)tap:(UITapGestureRecognizer *)ges
+{
+    GizWifiDevice *dev = ((DeviceCollectionViewCell *)ges.view).dataDic;
+    [dev setSubscribe:dev.productKey subscribed:YES];
+    self.currentCell = (DeviceCollectionViewCell *)ges.view;
+    dev.delegate = self;
 }
 
 - (void)deviceCellGroupDidSelected:(GizWifiDevice *)model
@@ -143,38 +193,7 @@
     }
 }
 
-- (void)addDeviceDidSelected
-{
-    [self.navigationController pushViewController:[NSClassFromString(@"MyDeviceAddViewController") new] animated:YES];
-}
-
-- (void)addBtnClicked
-{
-    [self.navigationController pushViewController:[NSClassFromString(@"MyDeviceAddViewController") new] animated:YES];
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return self.dataSource.count;
-}
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    DeviceCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceCollectionViewCell" forIndexPath:indexPath];
-    cell.dataDic = self.dataSource[indexPath.row];
-    UILongPressGestureRecognizer *ges = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                          action:@selector(tap:)];
-    [cell addGestureRecognizer:ges];
-    [cell addGestureRecognizer:tap];
-    return cell;
-}
-
+#pragma mark - device Delegate
 - (void)device:(GizWifiDevice *)device didReceiveData:(NSError *)result data:(NSDictionary<NSString *,id> *)dataMap withSN:(NSNumber *)sn
 {
     if(result.code == GIZ_SDK_SUCCESS) {
@@ -188,21 +207,6 @@
             [self.currentCell cellSetSelectedWithStatus:turnStatus];
         }
     }
-}
-
-- (void)longPress:(UILongPressGestureRecognizer *)ges
-{
-    if (ges.state == UIGestureRecognizerStateBegan) {
-        [self deviceCellGroupDidSelected:((DeviceCollectionViewCell *)ges.view).dataDic];
-    }
-}
-
-- (void)tap:(UITapGestureRecognizer *)ges
-{
-    GizWifiDevice *dev = ((DeviceCollectionViewCell *)ges.view).dataDic;
-    [dev setSubscribe:dev.productKey subscribed:YES];
-    self.currentCell = (DeviceCollectionViewCell *)ges.view;
-    dev.delegate = self;
 }
 
 - (void)device:(GizWifiDevice *)device didSetSubscribe:(NSError *)result isSubscribed:(BOOL)isSubscribed
@@ -221,6 +225,8 @@
     }
 }
 
+
+#pragma mark - getter
 - (BaseCollectionView *)cv
 {
     if (!_cv) {
