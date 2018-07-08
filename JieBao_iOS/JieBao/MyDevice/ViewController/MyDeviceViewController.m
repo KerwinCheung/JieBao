@@ -41,12 +41,9 @@
     return self;
 }
 
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLogout) name:kUserLogoutKey object:nil];
-    self.dataSource = [NSMutableArray array];
-    [self initUI];
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -56,8 +53,8 @@
     LHWeakSelf(self)
     ActionBlock rightAction = ^(UIButton *btn){
         //MyDeviceCaiDengTurnViewController DianDiBengViewController MyDeviceWirelessTurnViewController ZaoLangBengViewController
-//        [weakself.navigationController pushViewController:[NSClassFromString(@"ShuiBengViewController") new] animated:YES];
-    [weakself addDeviceDidSelected];
+        //        [weakself.navigationController pushViewController:[NSClassFromString(@"ShuiBengViewController") new] animated:YES];
+        [weakself addDeviceDidSelected];
         LHLog(@"right");
     };
     [self.naviBar  configNavigationBarWithAttrs:@{
@@ -69,10 +66,14 @@
     
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLogout) name:kUserLogoutKey object:nil];
+    self.dataSource = [NSMutableArray array];
+    [self initUI];
 }
+
+
 
 - (void)initUI
 {
@@ -156,14 +157,6 @@
     }
 }
 
-- (void)tap:(UITapGestureRecognizer *)ges
-{
-    GizWifiDevice *dev = ((DeviceCollectionViewCell *)ges.view).dataDic;
-    [dev setSubscribe:dev.productKey subscribed:YES];
-    self.currentCell = (DeviceCollectionViewCell *)ges.view;
-    dev.delegate = self;
-}
-
 - (void)deviceCellGroupDidSelected:(GizWifiDevice *)model
 {
     NSString *type = model.productKey;
@@ -193,22 +186,15 @@
     }
 }
 
-#pragma mark - device Delegate
-- (void)device:(GizWifiDevice *)device didReceiveData:(NSError *)result data:(NSDictionary<NSString *,id> *)dataMap withSN:(NSNumber *)sn
+- (void)tap:(UITapGestureRecognizer *)ges
 {
-    if(result.code == GIZ_SDK_SUCCESS) {
-        // 命令序号相符，开灯指令执行成功
-        if ([sn integerValue] == 500) {
-            [device getDeviceStatus:@[@"switch"]];
-        }else if ([sn integerValue] == 0)
-        {
-            NSDictionary *data = dataMap[@"data"];
-            BOOL turnStatus = [data[@"switch"] boolValue];
-            [self.currentCell cellSetSelectedWithStatus:turnStatus];
-        }
-    }
+    GizWifiDevice *dev = ((DeviceCollectionViewCell *)ges.view).dataDic;
+    [dev setSubscribe:dev.productKey subscribed:YES];
+    self.currentCell = (DeviceCollectionViewCell *)ges.view;
+    dev.delegate = self;
 }
 
+#pragma mark - device contro delegate
 - (void)device:(GizWifiDevice *)device didSetSubscribe:(NSError *)result isSubscribed:(BOOL)isSubscribed
 {
     if(result.code == GIZ_SDK_SUCCESS) {
@@ -218,13 +204,26 @@
             NSNumber *switchNum = [NSNumber numberWithBool:isSwitch];
             [device write:@{@"switch":switchNum} withSN:500];
             LHLog(@"订阅成功");
-        }else
-        {
+        }else{
             LHLog(@"订阅失败");
         }
     }
 }
 
+- (void)device:(GizWifiDevice *)device didReceiveData:(NSError *)result data:(NSDictionary<NSString *,id> *)dataMap withSN:(NSNumber *)sn
+{
+    if(result.code == GIZ_SDK_SUCCESS) {
+        // 命令序号相符，开灯指令执行成功
+        NSDictionary *data = dataMap[@"data"];
+        BOOL turnStatus = [data[@"switch"] boolValue];
+        if ([sn integerValue] == 500) {
+            [self.currentCell cellSetSelectedWithStatus:turnStatus];
+        }else if ([sn integerValue] == 0)
+        {
+            [self.currentCell cellSetSelectedWithStatus:turnStatus];
+        }
+    }
+}
 
 #pragma mark - getter
 - (BaseCollectionView *)cv
