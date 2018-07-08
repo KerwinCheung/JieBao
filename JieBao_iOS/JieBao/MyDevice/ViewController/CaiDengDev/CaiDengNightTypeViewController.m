@@ -51,11 +51,11 @@
         [weakself.navigationController popViewControllerAnimated:YES];
         LHLog(@"left");
     };
-    [self.naviBar  configNavigationBarWithAttrs:@{
-                                                  kCustomNaviBarLeftActionKey:leftAction,
+    [self.naviBar  configNavigationBarWithAttrs:@{kCustomNaviBarLeftActionKey:leftAction,
                                                   kCustomNaviBarLeftImgKey:@"back",
-                                                  kCustomNaviBarTitleKey:@"夜晚模式设置",
-                                                  }];
+                                                  kCustomNaviBarTitleKey:@"夜晚模式设置",}];
+    self.dev.delegate = self;
+    [self.dev getDeviceStatus:@[@"M5"]];
 }
 
 - (void)initUI
@@ -129,11 +129,10 @@
 - (void)settingBtnClicked
 {
     if (self.dev) {
-        self.dev.delegate = self;
-        [self.dev write:@{@"M5":@(self.slider.value)} withSN:105];
-    }else
-    {
-        NSDictionary *body = @{@"attrs":@{@"M2":@(self.slider.value)}};
+        float sliderValue = self.slider.value;
+        [self.dev write:@{@"M5":@(sliderValue)} withSN:105];
+    }else{
+        NSDictionary *body = @{@"attrs":@{@"M5":@(self.slider.value)}};
         [NetworkHelper sendRequest:body Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
             if (!data || error) {
                 [HudHelper showErrorWithStatus:@"设置失败"];
@@ -147,12 +146,21 @@
 - (void)device:(GizWifiDevice *)device didReceiveData:(NSError *)result data:(NSDictionary<NSString *,id> *)dataMap withSN:(NSNumber *)sn
 {
     if (result.code == GIZ_SDK_SUCCESS) {
+        if (self.dev && sn == 0) {
+            NSDictionary *data = dataMap[@"data"];
+            self.slider.value = [[data objectForKey:@"M5"] floatValue];
+            return;
+        }
+        
         if ([sn integerValue] == 105) {
             [HudHelper showSuccessWithStatus:@"设置成功"];
         }
-    }else
-    {
-        [HudHelper showErrorWithStatus:@"设置失败"];
+    }else{
+        if ([sn integerValue] == 101) {
+            [HudHelper showSuccessWithStatus:@"设置失败"];
+            return;
+        }
+        [self showErrorWithStatusWhithCode:result.code];
     }
 }
 
@@ -189,7 +197,7 @@
     if (!_valuelb) {
         _valuelb = [UILabel new];
         _valuelb.font = [UIFont sf_systemFontOfSize:12];
-        _valuelb.text = @"0";
+        _valuelb.text = @"10%";
     }
     return _valuelb;
 }

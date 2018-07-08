@@ -56,6 +56,8 @@
                                                   kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"日落模式设置",
                                                   }];
+    self.dev.delegate = self;
+    [self.dev getDeviceStatus:@[@"M4"]];
 }
 
 - (void)initUI
@@ -128,12 +130,12 @@
 
 - (void)settingBtnClicked
 {
+    float sliderValue = self.slider.value;
     if (self.dev) {
-        self.dev.delegate = self;
-        [self.dev write:@{@"M4":@(self.slider.value)} withSN:104];
+        [self.dev write:@{@"M4":@(sliderValue)} withSN:104];
     }else
     {
-        NSDictionary *body = @{@"attrs":@{@"M4":@(self.slider.value)}};
+        NSDictionary *body = @{@"attrs":@{@"M4":@(sliderValue)}};
         [NetworkHelper sendRequest:body Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
             if (!data || error) {
                 [HudHelper showErrorWithStatus:@"设置失败"];
@@ -147,12 +149,21 @@
 - (void)device:(GizWifiDevice *)device didReceiveData:(NSError *)result data:(NSDictionary<NSString *,id> *)dataMap withSN:(NSNumber *)sn
 {
     if (result.code == GIZ_SDK_SUCCESS) {
+        if (sn == 0) {
+            NSDictionary *data = dataMap[@"data"];
+            self.slider.value = [[data objectForKey:@"M4"] floatValue];
+        }
+        
         if ([sn integerValue] == 104) {
             [HudHelper showSuccessWithStatus:@"设置成功"];
         }
     }else
     {
-        [HudHelper showErrorWithStatus:@"设置失败"];
+        if ([sn integerValue] == 101) {
+            [HudHelper showSuccessWithStatus:@"设置失败"];
+            return;
+        }
+        [self showErrorWithStatusWhithCode:result.code];
     }
 }
 
@@ -189,7 +200,7 @@
     if (!_valuelb) {
         _valuelb = [UILabel new];
         _valuelb.font = [UIFont sf_systemFontOfSize:12];
-        _valuelb.text = @"0";
+        _valuelb.text = @"10%";
     }
     return _valuelb;
 }
@@ -208,7 +219,7 @@
 {
     if (!_slider) {
         _slider = [BaseSlider new];
-        _slider.minimumValue = 0;
+        _slider.minimumValue = 10;
         _slider.maximumValue = 100;
         _slider.minimumTrackTintColor = kAPPThemeColor;
         [_slider setThumbImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];

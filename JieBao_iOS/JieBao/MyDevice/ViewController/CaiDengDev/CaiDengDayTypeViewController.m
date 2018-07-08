@@ -56,6 +56,8 @@
                                                   kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"白天模式设置",
                                                   }];
+    self.dev.delegate = self;
+    [self.dev getDeviceStatus:@[@"M3"]];
 }
 
 - (void)initUI
@@ -129,7 +131,6 @@
 - (void)settingBtnClicked
 {
     if (self.dev) {
-        self.dev.delegate = self;
         [self.dev write:@{@"M3":@(self.slider.value)} withSN:103];
     }else
     {
@@ -147,15 +148,26 @@
 - (void)device:(GizWifiDevice *)device didReceiveData:(NSError *)result data:(NSDictionary<NSString *,id> *)dataMap withSN:(NSNumber *)sn
 {
     if (result.code == GIZ_SDK_SUCCESS) {
+        if (sn == 0) {
+            NSDictionary *data = dataMap[@"data"];
+            self.slider.value = [[data objectForKey:@"M5"] floatValue];
+        }
+        
         if ([sn integerValue] == 103) {
             [HudHelper showSuccessWithStatus:@"设置成功"];
         }
     }else
     {
-        [HudHelper showErrorWithStatus:@"设置失败"];
+        if ([sn integerValue] == 101) {
+            [HudHelper showSuccessWithStatus:@"设置失败"];
+            return;
+        }
+        
+        [self showErrorWithStatusWhithCode:result.code];
     }
 }
 
+#pragma mark - getter
 - (UIImageView *)nightImgView
 {
     if (!_nightImgView) {
@@ -189,7 +201,7 @@
     if (!_valuelb) {
         _valuelb = [UILabel new];
         _valuelb.font = [UIFont sf_systemFontOfSize:12];
-        _valuelb.text = @"0";
+        _valuelb.text = @"1%0";
     }
     return _valuelb;
 }

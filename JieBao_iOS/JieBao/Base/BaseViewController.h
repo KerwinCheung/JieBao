@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "BaseCustomNavigationBarView.h"
 
-@interface BaseViewController : UIViewController
+@interface BaseViewController : UIViewController<GizWifiSDKDelegate>
 
 @property (nonatomic, strong, readonly) UIView *bgView;
 
 @property (nonatomic, strong, readonly) BaseCustomNavigationBarView *naviBar;
 
+-(void)showErrorWithStatusWhithCode:(GizWifiErrorCode)code;
 @end

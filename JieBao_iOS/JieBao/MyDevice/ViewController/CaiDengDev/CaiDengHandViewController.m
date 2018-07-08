@@ -48,8 +48,6 @@
     [super viewWillAppear:animated];
     LHWeakSelf(self)
     
-    self.dev.delegate = self;
-    
     ActionBlock leftAction = ^(UIButton *btn){
         [weakself.navigationController popViewControllerAnimated:YES];
         LHLog(@"left");
@@ -65,7 +63,7 @@
                                                   kCustomNaviBarRightImgKey:@"设定",
                                                   kCustomNaviBarRightActionKey:rightAction
                                                   }];
-    
+    self.dev.delegate = self;
     [self setSliderValue];
 }
 
@@ -210,6 +208,12 @@
             [HudHelper showSuccessWithStatus:@"设置成功"];
             self.count = 0;
         }
+    }else{
+        if ([sn integerValue] == 101) {
+            [HudHelper showSuccessWithStatus:@"设置失败"];
+            return;
+        }
+        [self showErrorWithStatusWhithCode:result.code];
     }
 }
 

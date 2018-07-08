@@ -42,6 +42,33 @@
     LHLog(@"delloc:%@",NSStringFromClass([self class]));
 }
 
+#pragma mark - hud
+-(void)showErrorWithStatusWhithCode:(GizWifiErrorCode)code {
+    NSString *showString;
+    switch (code) {
+        case GIZ_SDK_DEVICE_NOT_READY:
+            showString = @"设备未就绪";
+            break;
+        case GIZ_SDK_DEVICE_NOT_SUBSCRIBED:
+            showString = @"设备未订阅";
+            break;
+        case GIZ_SDK_DEVICE_NO_RESPONSE:
+            showString = @"设备未响应";
+            break;
+        case GIZ_SDK_DEVICE_GET_STATUS_FAILED:
+            showString = @"设备状态查询失败";
+            break;
+            case GIZ_SDK_DEVICE_NOT_CENTERCONTROL:
+            showString = @"设备不是终控设备";
+            break;
+        default:
+            showString = @"设备状态错误";
+            break;
+    }
+    [HudHelper showErrorWithStatus:showString];
+}
+
+#pragma mark - getter
 - (UIView *)bgView
 {
     if (!_bgView) {

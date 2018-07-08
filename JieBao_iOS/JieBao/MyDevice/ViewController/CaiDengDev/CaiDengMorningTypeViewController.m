@@ -56,6 +56,8 @@
                                                   kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"早晨模式设置",
                                                   }];
+    self.dev.delegate = self;
+    [self.dev getDeviceStatus:@[@"M1"]];
 }
 
 - (void)initUI
@@ -129,7 +131,6 @@
 - (void)settingBtnClicked
 {
     if (self.dev) {
-        self.dev.delegate = self;
         [self.dev write:@{@"M1":@(self.slider.value)} withSN:101];
     }else
     {
@@ -147,12 +148,21 @@
 - (void)device:(GizWifiDevice *)device didReceiveData:(NSError *)result data:(NSDictionary<NSString *,id> *)dataMap withSN:(NSNumber *)sn
 {
     if (result.code == GIZ_SDK_SUCCESS) {
+        if (sn == 0) {
+            NSDictionary *data = dataMap[@"data"];
+            self.slider.value = [[data objectForKey:@"M5"] floatValue];
+        }
+        
         if ([sn integerValue] == 101) {
             [HudHelper showSuccessWithStatus:@"设置成功"];
         }
     }else
     {
-        [HudHelper showErrorWithStatus:@"设置失败"];
+        if ([sn integerValue] == 101) {
+            [HudHelper showSuccessWithStatus:@"设置失败"];
+            return;
+        }
+        [self showErrorWithStatusWhithCode:result.code];
     }
 }
 
@@ -189,7 +199,7 @@
     if (!_valuelb) {
         _valuelb = [UILabel new];
         _valuelb.font = [UIFont sf_systemFontOfSize:12];
-        _valuelb.text = @"0";
+        _valuelb.text = @"10%";
     }
     return _valuelb;
 }
@@ -208,7 +218,7 @@
 {
     if (!_slider) {
         _slider = [BaseSlider new];
-        _slider.minimumValue = 0;
+        _slider.minimumValue = 10;
         _slider.maximumValue = 100;
         _slider.minimumTrackTintColor = kAPPThemeColor;
         [_slider setThumbImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
