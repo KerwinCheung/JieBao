@@ -56,8 +56,10 @@
                                                   kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"日落模式设置",
                                                   }];
-    self.dev.delegate = self;
-    [self.dev getDeviceStatus:@[@"M4"]];
+    if (self.dev) {
+        self.dev.delegate = self;
+        [self.dev getDeviceStatus:@[@"M4"]];
+    }
 }
 
 - (void)initUI

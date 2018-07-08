@@ -63,8 +63,10 @@
                                                   kCustomNaviBarRightImgKey:@"设定",
                                                   kCustomNaviBarRightActionKey:rightAction
                                                   }];
-    self.dev.delegate = self;
-    [self setSliderValue];
+    if (self.dev) {
+        self.dev.delegate = self;
+        [self.dev getDeviceStatus:@[@"color_white",@"color_blue1",@"color_blue2",@"color_green",@"color_red",@"volor_violet"]];
+    }
 }
 
 - (void)viewDidLoad {
@@ -72,8 +74,6 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = kAPPBackGround;
     [self initUI];
-    
-//    [self setSliderValue];
 }
 
 - (void)initUI
@@ -142,11 +142,6 @@
         make.top.equalTo(weakself.redSlider.mas_bottom);
     }];
     
-}
-
-#pragma mark - setSliderValue
-- (void)setSliderValue {
-    [self.dev getDeviceStatus:@[@"color_white",@"color_blue1",@"color_blue2",@"color_green",@"color_red",@"volor_violet"]];
 }
 
 #pragma mark - navigationRightBtnAction

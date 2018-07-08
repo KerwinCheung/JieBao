@@ -54,8 +54,11 @@
     [self.naviBar  configNavigationBarWithAttrs:@{kCustomNaviBarLeftActionKey:leftAction,
                                                   kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"夜晚模式设置",}];
-    self.dev.delegate = self;
-    [self.dev getDeviceStatus:@[@"M5"]];
+    if (self.dev) {
+        self.dev.delegate = self;
+        [self.dev getDeviceStatus:@[@"M5"]];
+    }
+    
 }
 
 - (void)initUI

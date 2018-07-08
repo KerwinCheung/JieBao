@@ -56,8 +56,10 @@
                                                   kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"日出模式设置",
                                                   }];
-    self.dev.delegate = self;
-    [self.dev getDeviceStatus:@[@"M2"]];
+    if (self.dev) {
+        self.dev.delegate = self;
+        [self.dev getDeviceStatus:@[@"M2"]];
+    }
 }
 
 - (void)initUI

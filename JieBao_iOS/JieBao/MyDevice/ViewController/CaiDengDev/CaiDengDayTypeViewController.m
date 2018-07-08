@@ -56,8 +56,11 @@
                                                   kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"白天模式设置",
                                                   }];
-    self.dev.delegate = self;
-    [self.dev getDeviceStatus:@[@"M3"]];
+    if (self.dev) {
+        self.dev.delegate = self;
+        [self.dev getDeviceStatus:@[@"M3"]];
+    }
+    
 }
 
 - (void)initUI

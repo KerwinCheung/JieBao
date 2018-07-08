@@ -56,8 +56,10 @@
                                                   kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"早晨模式设置",
                                                   }];
-    self.dev.delegate = self;
-    [self.dev getDeviceStatus:@[@"M1"]];
+    if (self.dev) {
+        self.dev.delegate = self;
+        [self.dev getDeviceStatus:@[@"M1"]];
+    }
 }
 
 - (void)initUI
