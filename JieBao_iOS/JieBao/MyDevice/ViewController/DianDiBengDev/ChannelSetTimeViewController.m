@@ -1,5 +1,4 @@
 //
-//  IntervalTimeViewController.m
 //  JieBao
 //
 //  Created by yangzhenmin on 2018/5/14.

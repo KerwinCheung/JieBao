@@ -39,6 +39,10 @@
 
 @implementation CaiDengTimingTypeViewController
 
+-(void)dealloc {
+    [SVProgressHUD dismiss];
+}
+
 - (instancetype)init
 {
     if (self = [super init]) {
@@ -88,9 +92,9 @@
         DeviceSchedulerTask *task = nil;
         for (int i = 0; i< list.count; i++) {
             DeviceCommonSchulder *sch = [DeviceCommonSchulder yy_modelWithJSON:list[i]];
-//            [NetworkHelper sendRequest:nil Method:@"DELETE" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler/%@",sch.sid] callback:^(NSData *data, NSError *error) {
-//
-//            }];
+            [NetworkHelper sendRequest:nil Method:@"DELETE" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler/%@",sch.sid] callback:^(NSData *data, NSError *error) {
+
+            }];
             if (![taskName isEqualToString:sch.remark]) {
                 arr = [NSMutableArray array];
                 taskName = sch.remark;
@@ -129,7 +133,6 @@
                                                   kCustomNaviBarTitleKey:@"定时程序",
                                                   kCustomNaviBarRightImgKey:@"bianji",
                                                   kCustomNaviBarRightActionKey:rightAction
-                                                  
                                                   }];
 }
 

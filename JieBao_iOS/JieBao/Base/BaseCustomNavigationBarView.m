@@ -94,6 +94,7 @@
     }else
     {
         [self.rightBtn setImage:rightImg forState:UIControlStateNormal];
+        [self.rightBtn sizeToFit];
     }
     
     [self.leftTitleLb setText:attrs[kCustomNaviBarLeftTextKey]];

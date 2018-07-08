@@ -69,7 +69,7 @@
 - (UIImageView *)successImgView
 {
     if (!_successImgView) {
-        _successImgView = [UIImageView alloc];
+        _successImgView = [[UIImageView alloc]init];
         _successImgView.image = [UIImage imageNamed:@"queren"];
     }
     return _successImgView;
@@ -78,7 +78,7 @@
 - (UILabel *)tipLb
 {
     if (!_tipLb) {
-        _tipLb = [UILabel new];
+        _tipLb = [[UILabel alloc]init];
         _tipLb.font = [UIFont sf_systemFontOfSize:15];
         _tipLb.text = @"恭喜您账号已经注册成功!";
     }

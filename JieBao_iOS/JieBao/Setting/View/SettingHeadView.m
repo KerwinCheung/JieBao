@@ -98,7 +98,7 @@
 - (UIImageView *)headImgView
 {
     if (!_headImgView) {
-        _headImgView = [UIImageView new];
+        _headImgView = [[UIImageView alloc]init];
         _headImgView.layer.masksToBounds = YES;
         _headImgView.layer.cornerRadius = CurrentDeviceSize(40);
         _headImgView.userInteractionEnabled = YES;
@@ -111,7 +111,7 @@
 - (UILabel *)usrLb
 {
     if (!_usrLb) {
-        _usrLb = [UILabel new];
+        _usrLb = [[UILabel alloc]init];
         _usrLb.font = [UIFont sf_systemFontOfSize:13];
         _usrLb.textAlignment = NSTextAlignmentCenter;
     }

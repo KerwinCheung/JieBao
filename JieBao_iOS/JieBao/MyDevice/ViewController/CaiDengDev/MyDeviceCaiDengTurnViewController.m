@@ -226,6 +226,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
         imageview.userInteractionEnabled = YES;
         // 添加点击手势，点击相应图标，跳转到某一界面
         UILongPressGestureRecognizer *tap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressWithTag:)];
+        
         [imageview addGestureRecognizer:tap];
         imageview.tag = 100 + i;
     }
@@ -365,52 +366,54 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 
 - (void)longPressWithTag:(UILongPressGestureRecognizer *)ges
 {
-    if (ges.state != UIGestureRecognizerStateEnded) {
-        return;
+    if (ges.state == UIGestureRecognizerStateBegan) {
+        NSInteger tempTag = ges.view.tag;
+        if (tempTag == CaiDengTypeZaoChen) {
+            CaiDengMorningTypeViewController *morVC = [CaiDengMorningTypeViewController new];
+            morVC.group = self.group;
+            morVC.dev = self.dev;
+            [self.navigationController pushViewController:morVC animated:YES];
+        }
+        else if (tempTag == CaiDengTypeRiChu){
+            CaiDengRiChuTypeViewController *richuVC = [CaiDengRiChuTypeViewController new];
+            richuVC.dev = self.dev;
+            richuVC.group = self.group;
+            [self.navigationController pushViewController:richuVC animated:YES];
+        }
+        else if (tempTag == CaiDengTypeRiLuo){
+            CaiDengRiLuoTypeViewController *riluoVC = [CaiDengRiLuoTypeViewController new];
+            riluoVC.dev = self.dev;
+            riluoVC.group = self.group;
+            [self.navigationController pushViewController:riluoVC animated:YES];
+        }
+        else if (tempTag == CaiDengTypeDay){
+            CaiDengDayTypeViewController *dayVC = [CaiDengDayTypeViewController new];
+            dayVC.dev = self.dev;
+            dayVC.group = self.group;
+            [self.navigationController pushViewController:dayVC animated:YES];
+        }
+        else if (tempTag == CaiDengTypeNight){
+            CaiDengNightTypeViewController *nightVC = [CaiDengNightTypeViewController new];
+            nightVC.dev = self.dev;
+            nightVC.group = self.group;
+            [self.navigationController pushViewController:nightVC animated:YES];
+        }
+        else if (tempTag == CaiDengTypeShouDong){
+            CaiDengHandViewController *handVC = [CaiDengHandViewController new];
+            handVC.dev = self.dev;
+            handVC.group = self.group;
+            [self.navigationController pushViewController:handVC animated:YES];
+        }
+        else if (tempTag == CaiDengTypeTiming){
+            CaiDengTimingTypeViewController *timeVC = [CaiDengTimingTypeViewController new];
+            timeVC.dev = self.dev;
+            timeVC.group = self.group;
+            [self.navigationController pushViewController:timeVC animated:YES];
+        }
     }
-    NSInteger tempTag = ges.view.tag;
-    if (tempTag == CaiDengTypeZaoChen) {
-        CaiDengMorningTypeViewController *morVC = [CaiDengMorningTypeViewController new];
-        morVC.group = self.group;
-        morVC.dev = self.dev;
-        [self.navigationController pushViewController:morVC animated:YES];
-    }
-    else if (tempTag == CaiDengTypeRiChu){
-        CaiDengRiChuTypeViewController *richuVC = [CaiDengRiChuTypeViewController new];
-        richuVC.dev = self.dev;
-        richuVC.group = self.group;
-        [self.navigationController pushViewController:richuVC animated:YES];
-    }
-    else if (tempTag == CaiDengTypeRiLuo){
-        CaiDengRiLuoTypeViewController *riluoVC = [CaiDengRiLuoTypeViewController new];
-        riluoVC.dev = self.dev;
-        riluoVC.group = self.group;
-        [self.navigationController pushViewController:riluoVC animated:YES];
-    }
-    else if (tempTag == CaiDengTypeDay){
-        CaiDengDayTypeViewController *dayVC = [CaiDengDayTypeViewController new];
-        dayVC.dev = self.dev;
-        dayVC.group = self.group;
-        [self.navigationController pushViewController:dayVC animated:YES];
-    }
-    else if (tempTag == CaiDengTypeNight){
-        CaiDengNightTypeViewController *nightVC = [CaiDengNightTypeViewController new];
-        nightVC.dev = self.dev;
-        nightVC.group = self.group;
-        [self.navigationController pushViewController:nightVC animated:YES];
-    }
-    else if (tempTag == CaiDengTypeShouDong){
-        CaiDengHandViewController *handVC = [CaiDengHandViewController new];
-        handVC.dev = self.dev;
-        handVC.group = self.group;
-        [self.navigationController pushViewController:handVC animated:YES];
-    }
-    else if (tempTag == CaiDengTypeTiming){
-        CaiDengTimingTypeViewController *timeVC = [CaiDengTimingTypeViewController new];
-        timeVC.dev = self.dev;
-        timeVC.group = self.group;
-        [self.navigationController pushViewController:timeVC animated:YES];
-    }
+//    if (ges.state != UIGestureRecognizerStateEnded) {
+//        return;
+//    }
 }
 
 #pragma mark --CircleDelegate
@@ -559,7 +562,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 - (UIImageView *)currentImgView
 {
     if (!_currentImgView) {
-        _currentImgView = [UIImageView new];
+        _currentImgView = [[UIImageView alloc]init];
     }
     return _currentImgView;
 }
@@ -569,7 +572,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     if (!_currentModelLb) {
         _currentModelLb = [UILabel new];
         _currentModelLb.font = [UIFont  sf_systemFontOfSize:15];
-        _currentModelLb.hidden = YES;
+        _currentModelLb.hidden = NO;
     }
     return _currentModelLb;
 }

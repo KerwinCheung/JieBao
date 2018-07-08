@@ -192,7 +192,7 @@
 
 - (void)longPress:(UILongPressGestureRecognizer *)ges
 {
-    if (ges.state == UIGestureRecognizerStateEnded) {
+    if (ges.state == UIGestureRecognizerStateBegan) {
         [self deviceCellGroupDidSelected:((DeviceCollectionViewCell *)ges.view).dataDic];
     }
 }

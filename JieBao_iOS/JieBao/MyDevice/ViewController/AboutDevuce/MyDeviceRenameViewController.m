@@ -52,7 +52,7 @@
                                                   kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"设备重命名",
                                                   kCustomNaviBarRightActionKey:rightAction,
-                                                  kCustomNaviBarRightImgKey:@"保存"
+                                                  kCustomNaviBarRightImgKey:@"baocun"
                                                   }];
 }
 

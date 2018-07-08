@@ -263,8 +263,7 @@
 - (UIImageView *)headImgView
 {
     if (!_headImgView) {
-        _headImgView = [UIImageView new];
-        _headImgView.image = [UIImage imageNamed:@"head"];
+        _headImgView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"head"]];
     }
     return _headImgView;
 }

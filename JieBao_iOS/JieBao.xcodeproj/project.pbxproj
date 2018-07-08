@@ -391,8 +391,8 @@
 		E0CEAFE820DCCB0D00225922 /* icon_m_wind@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_m_wind@2x.png"; sourceTree = "<group>"; };
 		E0CEAFF320DD4E8A00225922 /* SuiBengWeiShiCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SuiBengWeiShiCell.h; sourceTree = "<group>"; };
 		E0CEAFF420DD4E8A00225922 /* SuiBengWeiShiCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SuiBengWeiShiCell.m; sourceTree = "<group>"; };
-		E0CEAFF620DD4EE800225922 /* WeiShiSetStopViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WeiShiSetStopViewController.h; path = Addition/WeiShiSetStopViewController.h; sourceTree = "<group>"; };
-		E0CEAFF720DD4EE800225922 /* WeiShiSetStopViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = WeiShiSetStopViewController.m; path = Addition/WeiShiSetStopViewController.m; sourceTree = "<group>"; };
+		E0CEAFF620DD4EE800225922 /* WeiShiSetStopViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeiShiSetStopViewController.h; sourceTree = "<group>"; };
+		E0CEAFF720DD4EE800225922 /* WeiShiSetStopViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeiShiSetStopViewController.m; sourceTree = "<group>"; };
 		E0CEAFF920DD51AB00225922 /* ShuiBengTimingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShuiBengTimingCell.h; sourceTree = "<group>"; };
 		E0CEAFFA20DD51AC00225922 /* ShuiBengTimingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShuiBengTimingCell.m; sourceTree = "<group>"; };
 		E0CEAFFC20DD5E4900225922 /* HudHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HudHelper.h; sourceTree = "<group>"; };
@@ -710,14 +710,6 @@
 		E0D3DC89207F327A00F14860 /* JieBao */ = {
 			isa = PBXGroup;
 			children = (
-				E0ECF05F20883554001530CE /* loading.gif */,
-				E0D3DCF4207F652100F14860 /* UserHelper */,
-				E0D3DCE1207F4A7E00F14860 /* Category */,
-				E0D3DCD8207F417E00F14860 /* Public */,
-				E0D3DCC6207F3B0000F14860 /* Setting */,
-				E0D3DCC5207F3AF400F14860 /* MyGroup */,
-				E0D3DCC4207F3ABE00F14860 /* MyDevice */,
-				E0D3DCBC207F37F300F14860 /* Base */,
 				E0D3DC8A207F327A00F14860 /* AppDelegate.h */,
 				E0D3DC8B207F327A00F14860 /* AppDelegate.m */,
 				E0D3DC8D207F327A00F14860 /* ViewController.h */,
@@ -728,6 +720,14 @@
 				E0D3DC98207F327A00F14860 /* Info.plist */,
 				E0D3DC99207F327A00F14860 /* main.m */,
 				E0B164CA20A1A68B005D294B /* JieBao-Bridging-Header.h */,
+				E0D3DCBC207F37F300F14860 /* Base */,
+				E0ECF05F20883554001530CE /* loading.gif */,
+				E0D3DCC6207F3B0000F14860 /* Setting */,
+				E0D3DCC5207F3AF400F14860 /* MyGroup */,
+				E0D3DCC4207F3ABE00F14860 /* MyDevice */,
+				E0D3DCF4207F652100F14860 /* UserHelper */,
+				E0D3DCE1207F4A7E00F14860 /* Category */,
+				E0D3DCD8207F417E00F14860 /* Public */,
 			);
 			path = JieBao;
 			sourceTree = "<group>";
@@ -780,9 +780,9 @@
 		E0D3DCC4207F3ABE00F14860 /* MyDevice */ = {
 			isa = PBXGroup;
 			children = (
+				E0D3DCEA207F613600F14860 /* ViewController */,
 				E0D3DCE8207F613600F14860 /* Model */,
 				E0D3DCE9207F613600F14860 /* View */,
-				E0D3DCEA207F613600F14860 /* ViewController */,
 			);
 			path = MyDevice;
 			sourceTree = "<group>";
@@ -800,9 +800,9 @@
 		E0D3DCC6207F3B0000F14860 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				E0D3DCC7207F3B5000F14860 /* ViewController */,
 				E0D3DCC9207F3B6300F14860 /* Model */,
 				E0D3DCC8207F3B5D00F14860 /* View */,
-				E0D3DCC7207F3B5000F14860 /* ViewController */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -957,101 +957,15 @@
 		E0D3DCEA207F613600F14860 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				E0F34B9F20BA8811001281AB /* Addition */,
 				E0D3DCF1207F615B00F14860 /* MyDeviceViewController.h */,
 				E0D3DCF2207F615B00F14860 /* MyDeviceViewController.m */,
-				E0ECF04A208732C7001530CE /* MyDeviceAddNextViewController.h */,
-				E0ECF04B208732C7001530CE /* MyDeviceAddNextViewController.m */,
-				E0ECF04D20873488001530CE /* MyDeviceWIFIViewController.h */,
-				E0ECF04E20873488001530CE /* MyDeviceWIFIViewController.m */,
-				E0ECF050208740B9001530CE /* MyDevicecContractViewController.h */,
-				E0ECF051208740B9001530CE /* MyDevicecContractViewController.m */,
-				E0ECF05320874405001530CE /* MyDevicecContractErrorViewController.h */,
-				E0ECF05420874405001530CE /* MyDevicecContractErrorViewController.m */,
-				E0ECF05620874B11001530CE /* MyDeviceAddDeviceViewController.h */,
-				E0ECF05720874B11001530CE /* MyDeviceAddDeviceViewController.m */,
-				E0ECF05920874D3A001530CE /* MyDeviceAddSuccessViewController.h */,
-				E0ECF05A20874D3A001530CE /* MyDeviceAddSuccessViewController.m */,
-				E0ECF0472087325E001530CE /* MyDeviceAddViewController.h */,
-				E0ECF0482087325E001530CE /* MyDeviceAddViewController.m */,
-				E0ECF061208836CA001530CE /* MyDeviceRenameViewController.h */,
-				E0ECF062208836CA001530CE /* MyDeviceRenameViewController.m */,
-				E0ECF06420883E5A001530CE /* MyDeviceShareViewController.h */,
-				E0ECF06520883E5A001530CE /* MyDeviceShareViewController.m */,
-				E0ECF06720886F60001530CE /* MyDeviceWirelessTurnViewController.h */,
-				E0ECF06820886F60001530CE /* MyDeviceWirelessTurnViewController.m */,
-				E0E2241620AC684500133DA3 /* WirelessTurnSettingViewController.h */,
-				E0E2241720AC684500133DA3 /* WirelessTurnSettingViewController.m */,
-				E0E2241920AC695A00133DA3 /* WirelessTurnDetailViewController.h */,
-				E0E2241A20AC695A00133DA3 /* WirelessTurnDetailViewController.m */,
-				E0E2241C20AC6A9700133DA3 /* WirelessTurnSetTimingViewController.h */,
-				E0E2241D20AC6A9700133DA3 /* WirelessTurnSetTimingViewController.m */,
-				E0ECF06A20887080001530CE /* MyDeviceAPControlViewController.h */,
-				E0ECF06B20887080001530CE /* MyDeviceAPControlViewController.m */,
-				E0ECF06D208870B9001530CE /* MyDeviceAPControlNextViewController.h */,
-				E0ECF06E208870B9001530CE /* MyDeviceAPControlNextViewController.m */,
-				E0ECF070208870FB001530CE /* MyDeviceConnectViewController.h */,
-				E0ECF071208870FB001530CE /* MyDeviceConnectViewController.m */,
-				E0ECF07620887B77001530CE /* MyDeviceCaiDengTurnViewController.h */,
-				E0ECF07720887B77001530CE /* MyDeviceCaiDengTurnViewController.m */,
-				E0B519062089D6D40010D552 /* CaiDengNightTypeViewController.h */,
-				E0B519072089D6D40010D552 /* CaiDengNightTypeViewController.m */,
-				E0B5191E208DC1480010D552 /* CaiDengDayTypeViewController.h */,
-				E0B5191F208DC1480010D552 /* CaiDengDayTypeViewController.m */,
-				E0B51921208DC15F0010D552 /* CaiDengRiLuoTypeViewController.h */,
-				E0B51922208DC15F0010D552 /* CaiDengRiLuoTypeViewController.m */,
-				E0B51927208DC2C20010D552 /* CaiDengRiChuTypeViewController.h */,
-				E0B51928208DC2C20010D552 /* CaiDengRiChuTypeViewController.m */,
-				E0B51924208DC1770010D552 /* CaiDengMorningTypeViewController.h */,
-				E0B51925208DC1770010D552 /* CaiDengMorningTypeViewController.m */,
-				E0B519092089E1290010D552 /* CaiDengTimingTypeViewController.h */,
-				E0B5190A2089E1290010D552 /* CaiDengTimingTypeViewController.m */,
-				E0B51912208D8D170010D552 /* CaiDengHandViewController.h */,
-				E0B51913208D8D170010D552 /* CaiDengHandViewController.m */,
-				E0B164D320A293E6005D294B /* TimingSettingViewController.h */,
-				E0B164D420A293E6005D294B /* TimingSettingViewController.m */,
-				E0B5191B208DC0160010D552 /* DianDiBengViewController.h */,
-				E0B5191C208DC0160010D552 /* DianDiBengViewController.m */,
-				E0947F78209AE99F00FEFA43 /* BuYangYeJiaoZhunViewController.h */,
-				E0947F79209AE99F00FEFA43 /* BuYangYeJiaoZhunViewController.m */,
-				E0947F7B209AFAFD00FEFA43 /* ChannelSettingViewController.h */,
-				E0947F7C209AFAFD00FEFA43 /* ChannelSettingViewController.m */,
-				E0B1651A20A97B3A005D294B /* ChannelDetailViewController.h */,
-				E0B1651B20A97B3A005D294B /* ChannelDetailViewController.m */,
-				E0B1652020A98686005D294B /* IntervalTimeViewController.h */,
-				E0B1652120A98686005D294B /* IntervalTimeViewController.m */,
-				E0B1652320A986C5005D294B /* ChannelSetTimeViewController.h */,
-				E0B1652420A986C5005D294B /* ChannelSetTimeViewController.m */,
-				E0E2241F20AC72D300133DA3 /* ShuiBengViewController.h */,
-				E0E2242020AC72D300133DA3 /* ShuiBengViewController.m */,
-				E0E2242520AC7B2D00133DA3 /* ShuiBengWeiShiViewController.h */,
-				E0E2242620AC7B2D00133DA3 /* ShuiBengWeiShiViewController.m */,
-				E0E2243620AEAC5600133DA3 /* WeiShiSetStartViewController.h */,
-				E0E2243720AEAC5600133DA3 /* WeiShiSetStartViewController.m */,
-				E0CEAFF620DD4EE800225922 /* WeiShiSetStopViewController.h */,
-				E0CEAFF720DD4EE800225922 /* WeiShiSetStopViewController.m */,
-				E0E2243C20B2AD8000133DA3 /* WeiShiTimingViewController.h */,
-				E0E2243D20B2AD8000133DA3 /* WeiShiTimingViewController.m */,
-				E05B9F3720D7A5BF002CBC2A /* ZaoLangBengViewController.h */,
-				E05B9F3820D7A5BF002CBC2A /* ZaoLangBengViewController.m */,
-				E05B9F3A20D8FF3E002CBC2A /* ZaoLangBengStartViewController.h */,
-				E05B9F3B20D8FF3E002CBC2A /* ZaoLangBengStartViewController.m */,
-				E05B9F4020D93931002CBC2A /* ZaoLangBengJingDianViewController.h */,
-				E05B9F4120D93931002CBC2A /* ZaoLangBengJingDianViewController.m */,
-				E05B9F4320D9394B002CBC2A /* ZaoLangBengZhengXianViewController.h */,
-				E05B9F4420D9394B002CBC2A /* ZaoLangBengZhengXianViewController.m */,
-				E05B9F4620D93962002CBC2A /* ZaoLangBengSuiJiViewController.h */,
-				E05B9F4720D93962002CBC2A /* ZaoLangBengSuiJiViewController.m */,
-				E05B9F4920D9397A002CBC2A /* ZaoLangBengYeJianViewController.h */,
-				E05B9F4A20D9397A002CBC2A /* ZaoLangBengYeJianViewController.m */,
-				E05B9F4C20D93A00002CBC2A /* ZaoLangBengHengLiuViewController.h */,
-				E05B9F4D20D93A00002CBC2A /* ZaoLangBengHengLiuViewController.m */,
-				E05B9F3D20D93919002CBC2A /* ZaoLangBengWeiShiViewController.h */,
-				E05B9F3E20D93919002CBC2A /* ZaoLangBengWeiShiViewController.m */,
-				E05B9F4F20D94B9B002CBC2A /* ZaoLangBengWeiShiStartTimeViewController.h */,
-				E05B9F5020D94B9B002CBC2A /* ZaoLangBengWeiShiStartTimeViewController.m */,
-				E05B9F5220D94C8C002CBC2A /* ZaoLangBengWeiShiStopTimeViewController.h */,
-				E05B9F5320D94C8C002CBC2A /* ZaoLangBengWeiShiStopTimeViewController.m */,
+				F5C1310520F1EF1900FF8CBC /* AboutDevuce */,
+				F5C1310720F1F07B00FF8CBC /* ShuiBengDev */,
+				F5C1310620F1F06E00FF8CBC /* ZaoLangBengDev */,
+				E0F34B9F20BA8811001281AB /* Addition */,
+				F5C1310420F1EED500FF8CBC /* WirelessDev */,
+				F5C1310320F1EE0600FF8CBC /* DianDiBengDev */,
+				F5C1310220F1ED8600FF8CBC /* CaiDengDev */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1149,8 +1063,8 @@
 		E0E5824320CD35AF00EEFB44 /* CricleView */ = {
 			isa = PBXGroup;
 			children = (
-				E0E5824420CD35AF00EEFB44 /* CircleView.m */,
 				E0E5824520CD35AF00EEFB44 /* CircleView.h */,
+				E0E5824420CD35AF00EEFB44 /* CircleView.m */,
 			);
 			path = CricleView;
 			sourceTree = "<group>";
@@ -1171,6 +1085,140 @@
 				E0F34BB120BA88B1001281AB /* ScanViewController.m */,
 			);
 			path = Addition;
+			sourceTree = "<group>";
+		};
+		F5C1310220F1ED8600FF8CBC /* CaiDengDev */ = {
+			isa = PBXGroup;
+			children = (
+				E0ECF07620887B77001530CE /* MyDeviceCaiDengTurnViewController.h */,
+				E0ECF07720887B77001530CE /* MyDeviceCaiDengTurnViewController.m */,
+				E0B519062089D6D40010D552 /* CaiDengNightTypeViewController.h */,
+				E0B519072089D6D40010D552 /* CaiDengNightTypeViewController.m */,
+				E0B5191E208DC1480010D552 /* CaiDengDayTypeViewController.h */,
+				E0B5191F208DC1480010D552 /* CaiDengDayTypeViewController.m */,
+				E0B51921208DC15F0010D552 /* CaiDengRiLuoTypeViewController.h */,
+				E0B51922208DC15F0010D552 /* CaiDengRiLuoTypeViewController.m */,
+				E0B51927208DC2C20010D552 /* CaiDengRiChuTypeViewController.h */,
+				E0B51928208DC2C20010D552 /* CaiDengRiChuTypeViewController.m */,
+				E0B51924208DC1770010D552 /* CaiDengMorningTypeViewController.h */,
+				E0B51925208DC1770010D552 /* CaiDengMorningTypeViewController.m */,
+				E0B519092089E1290010D552 /* CaiDengTimingTypeViewController.h */,
+				E0B5190A2089E1290010D552 /* CaiDengTimingTypeViewController.m */,
+				E0B51912208D8D170010D552 /* CaiDengHandViewController.h */,
+				E0B51913208D8D170010D552 /* CaiDengHandViewController.m */,
+				E0B164D320A293E6005D294B /* TimingSettingViewController.h */,
+				E0B164D420A293E6005D294B /* TimingSettingViewController.m */,
+			);
+			path = CaiDengDev;
+			sourceTree = "<group>";
+		};
+		F5C1310320F1EE0600FF8CBC /* DianDiBengDev */ = {
+			isa = PBXGroup;
+			children = (
+				E0B5191B208DC0160010D552 /* DianDiBengViewController.h */,
+				E0B5191C208DC0160010D552 /* DianDiBengViewController.m */,
+				E0947F78209AE99F00FEFA43 /* BuYangYeJiaoZhunViewController.h */,
+				E0947F79209AE99F00FEFA43 /* BuYangYeJiaoZhunViewController.m */,
+				E0947F7B209AFAFD00FEFA43 /* ChannelSettingViewController.h */,
+				E0947F7C209AFAFD00FEFA43 /* ChannelSettingViewController.m */,
+				E0B1651A20A97B3A005D294B /* ChannelDetailViewController.h */,
+				E0B1651B20A97B3A005D294B /* ChannelDetailViewController.m */,
+				E0B1652320A986C5005D294B /* ChannelSetTimeViewController.h */,
+				E0B1652420A986C5005D294B /* ChannelSetTimeViewController.m */,
+				E0B1652020A98686005D294B /* IntervalTimeViewController.h */,
+				E0B1652120A98686005D294B /* IntervalTimeViewController.m */,
+			);
+			path = DianDiBengDev;
+			sourceTree = "<group>";
+		};
+		F5C1310420F1EED500FF8CBC /* WirelessDev */ = {
+			isa = PBXGroup;
+			children = (
+				E0ECF06720886F60001530CE /* MyDeviceWirelessTurnViewController.h */,
+				E0ECF06820886F60001530CE /* MyDeviceWirelessTurnViewController.m */,
+				E0E2241620AC684500133DA3 /* WirelessTurnSettingViewController.h */,
+				E0E2241720AC684500133DA3 /* WirelessTurnSettingViewController.m */,
+				E0E2241920AC695A00133DA3 /* WirelessTurnDetailViewController.h */,
+				E0E2241A20AC695A00133DA3 /* WirelessTurnDetailViewController.m */,
+				E0E2241C20AC6A9700133DA3 /* WirelessTurnSetTimingViewController.h */,
+				E0E2241D20AC6A9700133DA3 /* WirelessTurnSetTimingViewController.m */,
+			);
+			path = WirelessDev;
+			sourceTree = "<group>";
+		};
+		F5C1310520F1EF1900FF8CBC /* AboutDevuce */ = {
+			isa = PBXGroup;
+			children = (
+				E0ECF04A208732C7001530CE /* MyDeviceAddNextViewController.h */,
+				E0ECF04B208732C7001530CE /* MyDeviceAddNextViewController.m */,
+				E0ECF04D20873488001530CE /* MyDeviceWIFIViewController.h */,
+				E0ECF04E20873488001530CE /* MyDeviceWIFIViewController.m */,
+				E0ECF050208740B9001530CE /* MyDevicecContractViewController.h */,
+				E0ECF051208740B9001530CE /* MyDevicecContractViewController.m */,
+				E0ECF05320874405001530CE /* MyDevicecContractErrorViewController.h */,
+				E0ECF05420874405001530CE /* MyDevicecContractErrorViewController.m */,
+				E0ECF05620874B11001530CE /* MyDeviceAddDeviceViewController.h */,
+				E0ECF05720874B11001530CE /* MyDeviceAddDeviceViewController.m */,
+				E0ECF05920874D3A001530CE /* MyDeviceAddSuccessViewController.h */,
+				E0ECF05A20874D3A001530CE /* MyDeviceAddSuccessViewController.m */,
+				E0ECF0472087325E001530CE /* MyDeviceAddViewController.h */,
+				E0ECF0482087325E001530CE /* MyDeviceAddViewController.m */,
+				E0ECF061208836CA001530CE /* MyDeviceRenameViewController.h */,
+				E0ECF062208836CA001530CE /* MyDeviceRenameViewController.m */,
+				E0ECF06420883E5A001530CE /* MyDeviceShareViewController.h */,
+				E0ECF06520883E5A001530CE /* MyDeviceShareViewController.m */,
+				E0ECF06A20887080001530CE /* MyDeviceAPControlViewController.h */,
+				E0ECF06B20887080001530CE /* MyDeviceAPControlViewController.m */,
+				E0ECF06D208870B9001530CE /* MyDeviceAPControlNextViewController.h */,
+				E0ECF06E208870B9001530CE /* MyDeviceAPControlNextViewController.m */,
+				E0ECF070208870FB001530CE /* MyDeviceConnectViewController.h */,
+				E0ECF071208870FB001530CE /* MyDeviceConnectViewController.m */,
+			);
+			path = AboutDevuce;
+			sourceTree = "<group>";
+		};
+		F5C1310620F1F06E00FF8CBC /* ZaoLangBengDev */ = {
+			isa = PBXGroup;
+			children = (
+				E05B9F3720D7A5BF002CBC2A /* ZaoLangBengViewController.h */,
+				E05B9F3820D7A5BF002CBC2A /* ZaoLangBengViewController.m */,
+				E05B9F3A20D8FF3E002CBC2A /* ZaoLangBengStartViewController.h */,
+				E05B9F3B20D8FF3E002CBC2A /* ZaoLangBengStartViewController.m */,
+				E05B9F4020D93931002CBC2A /* ZaoLangBengJingDianViewController.h */,
+				E05B9F4120D93931002CBC2A /* ZaoLangBengJingDianViewController.m */,
+				E05B9F4320D9394B002CBC2A /* ZaoLangBengZhengXianViewController.h */,
+				E05B9F4420D9394B002CBC2A /* ZaoLangBengZhengXianViewController.m */,
+				E05B9F4620D93962002CBC2A /* ZaoLangBengSuiJiViewController.h */,
+				E05B9F4720D93962002CBC2A /* ZaoLangBengSuiJiViewController.m */,
+				E05B9F4920D9397A002CBC2A /* ZaoLangBengYeJianViewController.h */,
+				E05B9F4A20D9397A002CBC2A /* ZaoLangBengYeJianViewController.m */,
+				E05B9F4C20D93A00002CBC2A /* ZaoLangBengHengLiuViewController.h */,
+				E05B9F4D20D93A00002CBC2A /* ZaoLangBengHengLiuViewController.m */,
+				E05B9F3D20D93919002CBC2A /* ZaoLangBengWeiShiViewController.h */,
+				E05B9F3E20D93919002CBC2A /* ZaoLangBengWeiShiViewController.m */,
+				E05B9F4F20D94B9B002CBC2A /* ZaoLangBengWeiShiStartTimeViewController.h */,
+				E05B9F5020D94B9B002CBC2A /* ZaoLangBengWeiShiStartTimeViewController.m */,
+				E05B9F5220D94C8C002CBC2A /* ZaoLangBengWeiShiStopTimeViewController.h */,
+				E05B9F5320D94C8C002CBC2A /* ZaoLangBengWeiShiStopTimeViewController.m */,
+			);
+			path = ZaoLangBengDev;
+			sourceTree = "<group>";
+		};
+		F5C1310720F1F07B00FF8CBC /* ShuiBengDev */ = {
+			isa = PBXGroup;
+			children = (
+				E0E2241F20AC72D300133DA3 /* ShuiBengViewController.h */,
+				E0E2242020AC72D300133DA3 /* ShuiBengViewController.m */,
+				E0E2242520AC7B2D00133DA3 /* ShuiBengWeiShiViewController.h */,
+				E0E2242620AC7B2D00133DA3 /* ShuiBengWeiShiViewController.m */,
+				E0E2243620AEAC5600133DA3 /* WeiShiSetStartViewController.h */,
+				E0E2243720AEAC5600133DA3 /* WeiShiSetStartViewController.m */,
+				E0CEAFF620DD4EE800225922 /* WeiShiSetStopViewController.h */,
+				E0CEAFF720DD4EE800225922 /* WeiShiSetStopViewController.m */,
+				E0E2243C20B2AD8000133DA3 /* WeiShiTimingViewController.h */,
+				E0E2243D20B2AD8000133DA3 /* WeiShiTimingViewController.m */,
+			);
+			path = ShuiBengDev;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

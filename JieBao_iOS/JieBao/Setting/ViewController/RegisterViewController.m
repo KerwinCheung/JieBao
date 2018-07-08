@@ -334,7 +334,7 @@
         }
     }else if([textField isEqual:self.validateTextView])
     {
-        if (self.validateTextView.text.length == 4) {
+        if (self.validateTextView.text.length == 6) {
             return NO;
         }
     }else if([textField isEqual:self.pswTextView])
@@ -411,7 +411,7 @@
         _pswTextView = [UITextField new];
         _pswTextView.placeholder = @"请输入6-16位的密码";
         _pswTextView.delegate = self;
-        _pswTextView.font = [UIFont sf_systemFontOfSize:13];
+        _pswTextView.font = [UIFont systemFontOfSize:13];
         _pswTextView.clearButtonMode = UITextFieldViewModeWhileEditing;
         [_pswTextView setSecureTextEntry:YES];
     }
