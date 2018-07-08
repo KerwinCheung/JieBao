@@ -210,8 +210,9 @@
     if(result.code == GIZ_SDK_SUCCESS) {
         // 订阅或取消订阅成功
         if (isSubscribed) {
-            BOOL isSwitch = [self.currentCell isSwitchOn];
-            [device write:@{@"switch":@(isSwitch)} withSN:500];
+            BOOL isSwitch = ![self.currentCell isSwitchOn];
+            NSNumber *switchNum = [NSNumber numberWithBool:isSwitch];
+            [device write:@{@"switch":switchNum} withSN:500];
             LHLog(@"订阅成功");
         }else
         {
