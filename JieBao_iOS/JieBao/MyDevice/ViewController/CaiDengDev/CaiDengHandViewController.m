@@ -29,19 +29,17 @@
 
 @property (nonatomic, assign) NSInteger count;
 
-
-
 @end
 
 @implementation CaiDengHandViewController
 
-- (instancetype)init
-{
-    if (self = [super init]) {
-        
-    }
-    return self;
-}
+//- (instancetype)init
+//{
+//    if (self = [super init]) {
+//
+//    }
+//    return self;
+//}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -76,6 +74,7 @@
         self.dev.delegate = self;
         [self.dev getDeviceStatus:@[@"color_white",@"color_blue1",@"color_blue2",@"color_green",@"color_red",@"volor_violet"]];
     }
+    [self performSelectorOnMainThread:@selector(setSliderValue) withObject:nil waitUntilDone:NO];
 }
 
 - (void)initUI
@@ -204,12 +203,15 @@
         
         if (self.dev && sn.integerValue == 0) {
             NSDictionary *data = dataMap[@"data"];
-            self.whiteSlider.value = [[data objectForKey:@"color_white"] floatValue];
-            self.sapphireBlueSlider.value = [[data objectForKey:@"color_blue1"] floatValue];
-            self.blueSlider.value = [[data objectForKey:@"color_blue2"] floatValue];
-            self.greenSlider.value = [[data objectForKey:@"color_green"] floatValue];
-            self.redSlider.value = [[data objectForKey:@"color_red"] floatValue];
-            self.purpleSlider.value = [[data objectForKey:@"volor_violet"] floatValue];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self performSelectorOnMainThread:@selector(setSliderValue) withObject:nil waitUntilDone:NO];
+                self.whiteSlider.value = [[data objectForKey:@"color_white"] floatValue];
+                self.sapphireBlueSlider.value = [[data objectForKey:@"color_blue1"] floatValue];
+                self.blueSlider.value = [[data objectForKey:@"color_blue2"] floatValue];
+                self.greenSlider.value = [[data objectForKey:@"color_green"] floatValue];
+                self.redSlider.value = [[data objectForKey:@"color_red"] floatValue];
+                self.purpleSlider.value = [[data objectForKey:@"volor_violet"] floatValue];
+            });
             return;
         }
         
@@ -232,6 +234,10 @@
         }
         [self showErrorWithStatusWhithCode:result.code];
     }
+}
+
+- (void)setSliderValue {
+    [self.whiteSlider setValue:60];
 }
 
 #pragma mark - getter
@@ -257,7 +263,7 @@
 - (SliderView *)whiteSlider
 {
     if (!_whiteSlider) {
-        _whiteSlider = [SliderView new];
+        _whiteSlider = [[SliderView alloc]init];
         [_whiteSlider setTrickImg:@"wirte"];
     }
     return _whiteSlider;

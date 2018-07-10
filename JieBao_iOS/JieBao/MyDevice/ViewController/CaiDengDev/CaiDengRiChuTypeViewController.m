@@ -41,6 +41,11 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = UICOLORFROMRGB(0xededed);
     [self initUI];
+    
+    if (self.dev) {
+        self.dev.delegate = self;
+        [self.dev getDeviceStatus:@[@"M2"]];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -56,10 +61,6 @@
                                                   kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"日出模式设置",
                                                   }];
-    if (self.dev) {
-        self.dev.delegate = self;
-        [self.dev getDeviceStatus:@[@"M2"]];
-    }
 }
 
 - (void)initUI
@@ -133,10 +134,10 @@
 - (void)settingBtnClicked
 {
     if (self.dev) {
-        [self.dev write:@{@"M2":@(self.slider.value)} withSN:102];
+        [self.dev write:@{@"M2":@(self.slider.value),@"Timer":@(0)} withSN:102];
     }else
     {
-        NSDictionary *body = @{@"attrs":@{@"M2":@(self.slider.value)}};
+        NSDictionary *body = @{@"attrs":@{@"M2":@(self.slider.value),@"Timer":@(0)}};
         [NetworkHelper sendRequest:body Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
             if (!data || error) {
                 [HudHelper showErrorWithStatus:@"设置失败"];
@@ -150,9 +151,10 @@
 - (void)device:(GizWifiDevice *)device didReceiveData:(NSError *)result data:(NSDictionary<NSString *,id> *)dataMap withSN:(NSNumber *)sn
 {
     if (result.code == GIZ_SDK_SUCCESS) {
-        if (sn == 0) {
+        if (sn.integerValue == 0) {
             NSDictionary *data = dataMap[@"data"];
             self.slider.value = [[data objectForKey:@"M2"] floatValue];
+            [self sliderValueChanged];
         }
         
         if ([sn integerValue] == 102) {

@@ -130,6 +130,10 @@
     return self.slider.value;
 }
 
+- (void)setValue:(CGFloat)value {
+    self.slider.value = value;
+}
+
 - (void)setTitle:(NSString *)title
 {
     _title = title;

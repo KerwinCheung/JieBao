@@ -41,6 +41,10 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = UICOLORFROMRGB(0xededed);
     [self initUI];
+    if (self.dev) {
+        self.dev.delegate = self;
+        [self.dev getDeviceStatus:@[@"M5"]];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -54,11 +58,6 @@
     [self.naviBar  configNavigationBarWithAttrs:@{kCustomNaviBarLeftActionKey:leftAction,
                                                   kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"夜晚模式设置",}];
-    if (self.dev) {
-        self.dev.delegate = self;
-        [self.dev getDeviceStatus:@[@"M5"]];
-    }
-    
 }
 
 - (void)initUI
@@ -133,9 +132,9 @@
 {
     if (self.dev) {
         float sliderValue = self.slider.value;
-        [self.dev write:@{@"M5":@(sliderValue)} withSN:105];
+        [self.dev write:@{@"M5":@(sliderValue),@"Timer":@(0)} withSN:105];
     }else{
-        NSDictionary *body = @{@"attrs":@{@"M5":@(self.slider.value)}};
+        NSDictionary *body = @{@"attrs":@{@"M5":@(self.slider.value),@"Timer":@(0)}};
         [NetworkHelper sendRequest:body Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
             if (!data || error) {
                 [HudHelper showErrorWithStatus:@"设置失败"];
@@ -149,9 +148,10 @@
 - (void)device:(GizWifiDevice *)device didReceiveData:(NSError *)result data:(NSDictionary<NSString *,id> *)dataMap withSN:(NSNumber *)sn
 {
     if (result.code == GIZ_SDK_SUCCESS) {
-        if (self.dev && sn == 0) {
+        if (self.dev && sn.integerValue == 0) {
             NSDictionary *data = dataMap[@"data"];
             self.slider.value = [[data objectForKey:@"M5"] floatValue];
+            [self sliderValueChanged];
             return;
         }
         
