@@ -15,11 +15,8 @@
 
 @end
 
-@interface CircleView : UIView
-<
-UIGestureRecognizerDelegate
->{
-    @private
+@interface CircleView : UIView<UIGestureRecognizerDelegate>{
+@private
     //圆的半径
     CGFloat radius;
     //圆心（在CircleView上的位置）

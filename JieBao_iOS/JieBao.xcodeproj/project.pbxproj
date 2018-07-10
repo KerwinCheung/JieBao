@@ -1232,7 +1232,6 @@
 				E0D3DC83207F327A00F14860 /* Sources */,
 				E0D3DC84207F327A00F14860 /* Frameworks */,
 				E0D3DC85207F327A00F14860 /* Resources */,
-				62A4AAE9CA56FB84E46E6FDF /* [CP] Embed Pods Frameworks */,
 				2093CC990DD2F6DAE3EA93CF /* [CP] Copy Pods Resources */,
 				E0B164D020A1A6B5005D294B /* Embed Frameworks */,
 			);
@@ -1253,8 +1252,6 @@
 				E0D3DC9B207F327B00F14860 /* Sources */,
 				E0D3DC9C207F327B00F14860 /* Frameworks */,
 				E0D3DC9D207F327B00F14860 /* Resources */,
-				A1198E81C8D1BD064948CC88 /* [CP] Embed Pods Frameworks */,
-				3976B903E98CFE051DE4677D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1274,8 +1271,6 @@
 				E0D3DCA6207F327B00F14860 /* Sources */,
 				E0D3DCA7207F327B00F14860 /* Frameworks */,
 				E0D3DCA8207F327B00F14860 /* Resources */,
-				28AA7101F0388530DC5D869D /* [CP] Embed Pods Frameworks */,
-				C81E98547E14CAB63E338FEF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1299,7 +1294,7 @@
 					E0D3DC86207F327A00F14860 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0930;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					E0D3DC9E207F327B00F14860 = {
 						CreatedOnToolsVersion = 9.2;
@@ -1404,41 +1399,12 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBao/Pods-JieBao-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		28AA7101F0388530DC5D869D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoUITests/Pods-JieBaoUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3976B903E98CFE051DE4677D /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoTests/Pods-JieBaoTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5F9A722C73A36F28F96DE497 /* [CP] Check Pods Manifest.lock */ = {
@@ -1457,60 +1423,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		62A4AAE9CA56FB84E46E6FDF /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-JieBao/Pods-JieBao-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
-				"${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework",
-				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManager.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBao/Pods-JieBao-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A1198E81C8D1BD064948CC88 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoTests/Pods-JieBaoTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C81E98547E14CAB63E338FEF /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoUITests/Pods-JieBaoUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C9A002C1C316B2084709305D /* [CP] Check Pods Manifest.lock */ = {
@@ -1852,7 +1764,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = Y9XNLL45PT;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1862,7 +1774,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/JieBao/Public/PrefixHeader.pch";
 				INFOPLIST_FILE = JieBao/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1870,8 +1782,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiebao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "1c440ba6-adf1-40c1-9718-9824987bb983";
+				PROVISIONING_PROFILE_SPECIFIER = JieBaoDevolop;
 				SWIFT_OBJC_BRIDGING_HEADER = "JieBao/JieBao-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -1888,7 +1800,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = Y9XNLL45PT;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1898,7 +1810,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/JieBao/Public/PrefixHeader.pch";
 				INFOPLIST_FILE = JieBao/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1906,7 +1818,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiebao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b71fc33d-b4fa-4b87-9ad6-860a6bedbd88";
+				PROVISIONING_PROFILE = "af1fe31a-f524-442a-867c-75d634d68d13";
 				PROVISIONING_PROFILE_SPECIFIER = jebao;
 				SWIFT_OBJC_BRIDGING_HEADER = "JieBao/JieBao-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;

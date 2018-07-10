@@ -148,34 +148,50 @@
 - (void)setConfig
 {
     if (self.dev) {
-        [self.dev write:@{@"mode":@(0),@"color_white":@(self.whiteSlider.value)} withSN:201];
-        [self.dev write:@{@"mode":@(0),@"color_blue1":@(self.sapphireBlueSlider.value)} withSN:202];
-        [self.dev write:@{@"mode":@(0),@"color_blue2":@(self.blueSlider.value)} withSN:203];
-        [self.dev write:@{@"mode":@(0),@"color_green":@(self.greenSlider.value)} withSN:204];
-        [self.dev write:@{@"mode":@(0),@"color_red":@(self.redSlider.value)} withSN:205];
-        [self.dev write:@{@"mode":@(0),@"volor_violet":@(self.purpleSlider.value)} withSN:206];
+        [self.dev write:@{@"mode":@(0),
+                          @"color_white":@(self.whiteSlider.value),
+                          @"color_blue1":@(self.sapphireBlueSlider.value),
+                          @"color_blue2":@(self.blueSlider.value),
+                          @"color_green":@(self.greenSlider.value),
+                          @"color_red":@(self.redSlider.value),
+                          @"volor_violet":@(self.purpleSlider.value),
+                          @"Timer":@(0)}
+                 withSN:201];
+//        [self.dev write:@{@"mode":@(0),@"color_blue1":@(self.sapphireBlueSlider.value)} withSN:202];
+//        [self.dev write:@{@"mode":@(0),@"color_blue2":@(self.blueSlider.value)} withSN:203];
+//        [self.dev write:@{@"mode":@(0),@"color_green":@(self.greenSlider.value)} withSN:204];
+//        [self.dev write:@{@"mode":@(0),@"color_red":@(self.redSlider.value)} withSN:205];
+//        [self.dev write:@{@"mode":@(0),@"volor_violet":@(self.purpleSlider.value)} withSN:206];
     }else{
-        NSArray *arr = @[@{@"mode":@(0),@"color_white":@(self.whiteSlider.value)},
-                         @{@"mode":@(0),@"color_blue1":@(self.sapphireBlueSlider.value)},
-                         @{@"mode":@(0),@"color_blue2":@(self.blueSlider.value)},
-                         @{@"mode":@(0),@"color_green":@(self.greenSlider.value)},
-                         @{@"mode":@(0),@"color_red":@(self.redSlider.value)},
-                         @{@"mode":@(0),@"volor_violet":@(self.purpleSlider.value)}];
-        for (NSDictionary *dic in arr) {
-            NSDictionary *body = @{@"attrs":dic};
-            [NetworkHelper sendRequest:body Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
+//        NSArray *arr = @[@{@"mode":@(0),@"color_white":@(self.whiteSlider.value)},
+//                         @{@"mode":@(0),@"color_blue1":@(self.sapphireBlueSlider.value)},
+//                         @{@"mode":@(0),@"color_blue2":@(self.blueSlider.value)},
+//                         @{@"mode":@(0),@"color_green":@(self.greenSlider.value)},
+//                         @{@"mode":@(0),@"color_red":@(self.redSlider.value)},
+//                         @{@"mode":@(0),@"volor_violet":@(self.purpleSlider.value)}];
+//        for (NSDictionary *dic in arr) {
+//            NSDictionary *body = @{@"attrs":dic};
+        NSDictionary *sendDataDic = @{@"mode":@(0),
+                                      @"color_white":@(self.whiteSlider.value),
+                                      @"color_blue1":@(self.sapphireBlueSlider.value),
+                                      @"color_blue2":@(self.blueSlider.value),
+                                      @"color_green":@(self.greenSlider.value),
+                                      @"color_red":@(self.redSlider.value),
+                                      @"volor_violet":@(self.purpleSlider.value),
+                                      @"Timer":@(0)};
+            [NetworkHelper sendRequest:sendDataDic Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
                 if (!data || error) {
                     return ;
                 }
-                @synchronized(self)
-                {
-                    self.count++;
-                }
-                if (self.count == 6) {
+//                @synchronized(self)
+//                {
+//                    self.count++;
+//                }
+//                if (self.count == 6) {
                     [HudHelper showSuccessWithStatus:@"设置成功"];
-                }
+//                }
             }];
-        }
+//        }
     }
 }
 
@@ -195,14 +211,14 @@
             return;
         }
         
-        @synchronized(self)
-        {
-            self.count++;
-        }
-        if (self.count == 6) {
-            [HudHelper showSuccessWithStatus:@"设置成功"];
-            self.count = 0;
-        }
+//        @synchronized(self)
+//        {
+//            self.count++;
+//        }
+//        if (self.count == 6) {
+//            [HudHelper showSuccessWithStatus:@"设置成功"];
+//            self.count = 0;
+//        }
     }else{
         if ([sn integerValue] == 101) {
             [HudHelper showSuccessWithStatus:@"设置失败"];
