@@ -63,10 +63,7 @@
                                                   kCustomNaviBarRightImgKey:@"设定",
                                                   kCustomNaviBarRightActionKey:rightAction
                                                   }];
-    if (self.dev) {
-        self.dev.delegate = self;
-        [self.dev getDeviceStatus:@[@"color_white",@"color_blue1",@"color_blue2",@"color_green",@"color_red",@"volor_violet"]];
-    }
+    
 }
 
 - (void)viewDidLoad {
@@ -74,6 +71,11 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = kAPPBackGround;
     [self initUI];
+    
+    if (self.dev) {
+        self.dev.delegate = self;
+        [self.dev getDeviceStatus:@[@"color_white",@"color_blue1",@"color_blue2",@"color_green",@"color_red",@"volor_violet"]];
+    }
 }
 
 - (void)initUI
@@ -200,7 +202,7 @@
 {
     if (result.code == GIZ_SDK_SUCCESS) {
         
-        if (self.dev && sn == 0) {
+        if (self.dev && sn.integerValue == 0) {
             NSDictionary *data = dataMap[@"data"];
             self.whiteSlider.value = [[data objectForKey:@"color_white"] floatValue];
             self.sapphireBlueSlider.value = [[data objectForKey:@"color_blue1"] floatValue];
@@ -219,6 +221,10 @@
 //            [HudHelper showSuccessWithStatus:@"设置成功"];
 //            self.count = 0;
 //        }
+        
+        if (sn.integerValue == 201) {
+            [HudHelper showSuccessWithStatus:@"设置成功"];
+        }
     }else{
         if ([sn integerValue] == 101) {
             [HudHelper showSuccessWithStatus:@"设置失败"];
