@@ -53,5 +53,15 @@
 
 #define SystemVersion [[UIDevice currentDevice] systemVersion].floatValue
 
+#ifdef DEBUG
+#define NSLog(...) \
+do {\
+NSDateFormatter *dateFormatter = [NSDateFormatter new];\
+[dateFormatter setTimeZone:[NSTimeZone localTimeZone]];\
+[dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];\
+NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];\
+printf("%s [%s:%zd]🐷: %s\n",dateString.UTF8String,strrchr(__FILE__,'/')+1,[[NSNumber numberWithInt:__LINE__] integerValue],[[NSString stringWithFormat:__VA_ARGS__]UTF8String]);\
+} while(0)
+#endif
 
 #endif /* Define_h */

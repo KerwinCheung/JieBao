@@ -135,10 +135,10 @@
 {
     float sliderValue = self.slider.value;
     if (self.dev) {
-        [self.dev write:@{@"M4":@(sliderValue),@"Timer":@(0)} withSN:104];
+        [self.dev write:@{@"M4":@(sliderValue),@"Timer":@(0),@"mode":@(4)} withSN:104];
     }else
     {
-        NSDictionary *body = @{@"attrs":@{@"M4":@(sliderValue),@"Timer":@(0)}};
+        NSDictionary *body = @{@"attrs":@{@"M4":@(sliderValue),@"Timer":@(0),@"mode":@(4)}};
         [NetworkHelper sendRequest:body Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
             if (!data || error) {
                 [HudHelper showErrorWithStatus:@"设置失败"];

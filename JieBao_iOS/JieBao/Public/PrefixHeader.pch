@@ -33,4 +33,6 @@
 #import "DateTools.h"
 #import "HudHelper.h"
 
+#import "EXTScope.h"
+
 #endif /* PrefixHeader_pch */

@@ -233,8 +233,11 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
         DragImageView *imageview = [self.arrImage objectAtIndex:i];
         imageview.userInteractionEnabled = YES;
         // 添加点击手势，点击相应图标，跳转到某一界面
-        UILongPressGestureRecognizer *tap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressWithTag:)];
+        UILongPressGestureRecognizer *longtap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressWithTag:)];
         
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
+        
+        [imageview addGestureRecognizer:longtap];
         [imageview addGestureRecognizer:tap];
         imageview.tag = 100 + i;
     }
@@ -324,52 +327,92 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 #pragma mark --CircleViewDelegate
 - (void)imgSelected:(NSInteger)tag
 {
-    NSInteger Tag = tag - 100;
-    DragImageView *imgView = self.arrImage[Tag];
-    NSString *imgStr = imgView.selectImgName;
-    UIImage *img = [UIImage imageNamed:imgStr];
-    self.currentImgView.image = img;
-    NSInteger mode = 0;
-    if (Tag == 0) {
-        self.currentModelLb.text = @"早晨模式";
-        mode = 1;
-    }else if(Tag == 1)
-    {
-        self.currentModelLb.text = @"日出模式";
-         mode = 2;
-    }else if(Tag == 2)
-    {
-        self.currentModelLb.text = @"日落模式";
-        mode = 4;
-    }else if(Tag == 3)
-    {
-        self.currentModelLb.text = @"白天模式";
-        mode = 3;
-    }else if(Tag == 4)
-    {
-        self.currentModelLb.text = @"夜晚模式";
-        mode = 5;
-    }else if(Tag == 5)
-    {
-        self.currentModelLb.text = @"手动模式";
-        mode = 0;
-    }else if(Tag == 6)
-    {
-        self.currentModelLb.text = @"定时模式";
-        mode = 7;
+//    NSInteger Tag = tag - 100;
+//    DragImageView *imgView = self.arrImage[Tag];
+//    NSString *imgStr = imgView.selectImgName;
+//    UIImage *img = [UIImage imageNamed:imgStr];
+//    self.currentImgView.image = img;
+//    NSInteger mode = 0;
+//    if (Tag == 0) {
+//        self.currentModelLb.text = @"早晨模式";
+//        mode = 1;
+//    }else if(Tag == 1)
+//    {
+//        self.currentModelLb.text = @"日出模式";
+//         mode = 2;
+//    }else if(Tag == 2)
+//    {
+//        self.currentModelLb.text = @"日落模式";
+//        mode = 4;
+//    }else if(Tag == 3)
+//    {
+//        self.currentModelLb.text = @"白天模式";
+//        mode = 3;
+//    }else if(Tag == 4)
+//    {
+//        self.currentModelLb.text = @"夜晚模式";
+//        mode = 5;
+//    }else if(Tag == 5)
+//    {
+//        self.currentModelLb.text = @"手动模式";
+//        mode = 0;
+//    }else if(Tag == 6)
+//    {
+//        self.currentModelLb.text = @"定时模式";
+//        mode = 7;
+//    }
+//    if (self.dev) {
+//        [self.dev write:@{@"mode":@(mode)} withSN:100];
+//    }else
+//    {
+//        //group
+//        NSDictionary *body = @{@"attrs":@{@"mode":@(mode)}};
+//        [NetworkHelper sendRequest:body Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
+//            if (!data || error) {
+//                return ;
+//            }
+//        }];
+//    }
+}
+
+#pragma mark - 手势事件
+- (void)tapAction:(UITapGestureRecognizer *)ges {
+//    0.手动 1.早晨 2.日出 3.白天 4.日落 5.夜晚 6.定时
+    NSInteger tempTag = ges.view.tag;
+    NSNumber *modeNum;
+    if(tempTag == CaiDengTypeShouDong){
+        modeNum = @(0);
+    }else if (tempTag == CaiDengTypeZaoChen) {
+        modeNum = @(1);
+    }else if (tempTag == CaiDengTypeRiChu){
+        modeNum = @(2);
+    }else if (tempTag == CaiDengTypeDay){
+        modeNum = @(3);
+    }else if (tempTag == CaiDengTypeRiLuo){
+        modeNum = @(4);
+    }else if (tempTag == CaiDengTypeNight){
+        modeNum = @(5);
+    }else if (tempTag == CaiDengTypeTiming){
+        modeNum = @(6);
     }
+    NSDictionary *controlDic = @{@"mode":modeNum};
+    
     if (self.dev) {
-        [self.dev write:@{@"mode":@(mode)} withSN:100];
-    }else
-    {
-        //group
-        NSDictionary *body = @{@"attrs":@{@"mode":@(mode)}};
-        [NetworkHelper sendRequest:body Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
-            if (!data || error) {
-                return ;
-            }
-        }];
+        [self.dev write:controlDic withSN:999];
+    }else{
+        [self sendGroupControlWith:controlDic];
     }
+}
+
+- (void)sendGroupControlWith:(NSDictionary *)dic {
+    NSDictionary *body = @{@"attrs":dic};
+    [NetworkHelper sendRequest:body Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
+        if (!data || error) {
+            [HudHelper showErrorWithStatus:@"设置失败"];
+            return ;
+        }
+        [HudHelper showSuccessWithStatus:@"设置成功"];
+    }];
 }
 
 - (void)longPressWithTag:(UILongPressGestureRecognizer *)ges
@@ -440,6 +483,8 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     return CGSizeMake(CurrentDeviceSize(40), CurrentDeviceSize(40));
 }
 
+
+#pragma mark - device Delegate
 - (void)device:(GizWifiDevice *)device didSetSubscribe:(NSError *)result isSubscribed:(BOOL)isSubscribed
 {
     if(result.code == GIZ_SDK_SUCCESS) {
@@ -455,13 +500,10 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 
 - (void)device:(GizWifiDevice *)device didReceiveData:(NSError *)result data:(NSDictionary<NSString *,id> *)dataMap withSN:(NSNumber *)sn
 {
-    LHWeakSelf(self)
     if(result.code == GIZ_SDK_SUCCESS) {
         if ([sn integerValue] == 0) {
-            LHLog(@"属性%@",dataMap);
+            NSLog(@"属性%@",dataMap);
             NSDictionary *data = dataMap[@"data"];
-            BOOL turnStatus = [data[@"switch"] boolValue];
-            NSInteger modeStatus = [data[@"mode"] integerValue];
             BOOL Fault_UART = [data[@"Fault_UART"] boolValue];
             if (Fault_UART) {
                 NSString *errStr = @"串口连接故障";
@@ -476,55 +518,68 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
                 error.time = dateStr;
                 [UtilHelper setErrorList:error];
             }
-            
-            if (turnStatus) {
-                weakself.turnBtn.selected = turnStatus;
-            }
-            switch (modeStatus) {
-                case 0:
-                {
-                    weakself.currentImgView.image = [UIImage imageNamed:@"shoudong1"];
-                    weakself.currentModelLb.text = @"手动模式";
-                }
-                    break;
-                case 1:
-                {
-                    weakself.currentImgView.image = [UIImage imageNamed:@"zaocheng1"];
-                    weakself.currentModelLb.text = @"早晨模式";
-                }
-                    break;
-                case 2:
-                {
-                    weakself.currentImgView.image = [UIImage imageNamed:@"richu1"];
-                    weakself.currentModelLb.text = @"日出模式";
-                }
-                    break;
-                case 3:
-                {
-                    weakself.currentImgView.image = [UIImage imageNamed:@"sun1"];
-                    weakself.currentModelLb.text = @"白天模式";
-                }
-                    break;
-                case 4:
-                {
-                    weakself.currentImgView.image = [UIImage imageNamed:@"riluo1"];
-                    weakself.currentModelLb.text = @"日落模式";
-                }
-                    break;
-                case 5:
-                {
-                    weakself.currentImgView.image = [UIImage imageNamed:@"yewan1"];
-                    weakself.currentModelLb.text = @"夜晚模式";
-                }
-                    break;
-
-                default:
-                    break;
-            }
+            BOOL turnStatus = [data[@"switch"] boolValue];
+            NSInteger modeStatus = [data[@"mode"] integerValue];
+            [self setTurnBtnWhithStatus:turnStatus currentViewWhith:modeStatus];
         }
+        
+//        if (sn.integerValue == 999) {
+//            NSDictionary *data = dataMap[@"data"];
+//            BOOL turnStatus = [data[@"switch"] boolValue];
+//            NSInteger modeStatus = [data[@"mode"] integerValue];
+//            [self setTurnBtnWhithStatus:turnStatus currentViewWhith:modeStatus];
+//        }
     }
 }
 
+- (void)setTurnBtnWhithStatus:(BOOL)status currentViewWhith:(NSInteger)modeStatus {
+    if (status) {
+        self.turnBtn.selected = status;
+    }
+    switch (modeStatus) {
+        case 0:
+        {
+            self.currentImgView.image = [UIImage imageNamed:@"shoudong1"];
+            self.currentModelLb.text = @"手动模式";
+        }
+            break;
+        case 1:
+        {
+            self.currentImgView.image = [UIImage imageNamed:@"zaocheng1"];
+            self.currentModelLb.text = @"早晨模式";
+        }
+            break;
+        case 2:
+        {
+            self.currentImgView.image = [UIImage imageNamed:@"richu1"];
+            self.currentModelLb.text = @"日出模式";
+        }
+            break;
+        case 3:
+        {
+            self.currentImgView.image = [UIImage imageNamed:@"sun1"];
+            self.currentModelLb.text = @"白天模式";
+        }
+            break;
+        case 4:
+        {
+            self.currentImgView.image = [UIImage imageNamed:@"riluo1"];
+            self.currentModelLb.text = @"日落模式";
+        }
+            break;
+        case 5:
+        {
+            self.currentImgView.image = [UIImage imageNamed:@"yewan1"];
+            self.currentModelLb.text = @"夜晚模式";
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - getter
 - (UIButton *)turnBtn
 {
     if (!_turnBtn) {

@@ -185,6 +185,7 @@
 		E0FC65422084DBC60070E9B3 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FC65412084DBC60070E9B3 /* HelpViewController.m */; };
 		E0FC654520858B850070E9B3 /* APNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FC654420858B850070E9B3 /* APNextViewController.m */; };
 		EA939CD2B3BFD8998263AC61 /* libPods-JieBao.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E86079D5CEA048F420DC48 /* libPods-JieBao.a */; };
+		F58C217720F62B5E0073B85E /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = F58C217520F62B5E0073B85E /* EXTScope.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -561,6 +562,9 @@
 		E0FC65412084DBC60070E9B3 /* HelpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
 		E0FC654320858B850070E9B3 /* APNextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APNextViewController.h; sourceTree = "<group>"; };
 		E0FC654420858B850070E9B3 /* APNextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APNextViewController.m; sourceTree = "<group>"; };
+		F58C217420F62B5E0073B85E /* EXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
+		F58C217520F62B5E0073B85E /* EXTScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTScope.m; sourceTree = "<group>"; };
+		F58C217620F62B5E0073B85E /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -727,6 +731,7 @@
 				E0D3DCC4207F3ABE00F14860 /* MyDevice */,
 				E0D3DCF4207F652100F14860 /* UserHelper */,
 				E0D3DCE1207F4A7E00F14860 /* Category */,
+				F58C217220F62B450073B85E /* Helper */,
 				E0D3DCD8207F417E00F14860 /* Public */,
 			);
 			path = JieBao;
@@ -1085,6 +1090,24 @@
 				E0F34BB120BA88B1001281AB /* ScanViewController.m */,
 			);
 			path = Addition;
+			sourceTree = "<group>";
+		};
+		F58C217220F62B450073B85E /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				F58C217320F62B5E0073B85E /* EXTScope */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		F58C217320F62B5E0073B85E /* EXTScope */ = {
+			isa = PBXGroup;
+			children = (
+				F58C217420F62B5E0073B85E /* EXTScope.h */,
+				F58C217520F62B5E0073B85E /* EXTScope.m */,
+				F58C217620F62B5E0073B85E /* metamacros.h */,
+			);
+			path = EXTScope;
 			sourceTree = "<group>";
 		};
 		F5C1310220F1ED8600FF8CBC /* CaiDengDev */ = {
@@ -1503,6 +1526,7 @@
 				E0E2241820AC684500133DA3 /* WirelessTurnSettingViewController.m in Sources */,
 				E0B1651F20A98068005D294B /* ChannelDetailCell.m in Sources */,
 				E0D3DC9A207F327A00F14860 /* main.m in Sources */,
+				F58C217720F62B5E0073B85E /* EXTScope.m in Sources */,
 				E028572B20C8224300FD1A8F /* BaseCollectionView.m in Sources */,
 				E0C19FD420CFF940000224D3 /* ErrorModel.m in Sources */,
 				E0E2243520AE766500133DA3 /* WeiShiCell.m in Sources */,
