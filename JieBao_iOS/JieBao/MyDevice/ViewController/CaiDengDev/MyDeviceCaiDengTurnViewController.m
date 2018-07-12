@@ -189,6 +189,65 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 }
 
 - (void)initDragImageView{
+    [self setCircleBtnImageInNoSelect];
+    // 添加转盘中心图标
+    imageviewCenterQuick = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    // 图标集合
+    self.arrImage = [[NSMutableArray alloc] initWithObjects:imageviewCharitiesOne, imageviewPressOne, imageviewDetailOne, imageviewCharitiesTwo, imageviewPressTwo,imageviewDetailTwo,imageviewDetailThree, nil];
+    
+    for (int i = 0; i < self.arrImage.count; i ++) {
+        DragImageView *imageview = [self.arrImage objectAtIndex:i];
+        imageview.userInteractionEnabled = YES;
+        // 添加点击手势，点击相应图标，跳转到某一界面
+        UILongPressGestureRecognizer *longtap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressWithTag:)];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
+        
+        [imageview addGestureRecognizer:longtap];
+        [imageview addGestureRecognizer:tap];
+        imageview.tag = 100 + i;
+    }
+}
+
+- (void)setCircleBtnImageInNoSelect {
+    // 添加转盘上图标1
+    imageviewCharitiesOne = [[DragImageView alloc] initWithFrame:CGRectMake(0, 0, ImageWidth, ImageHeight)];
+    imageviewCharitiesOne.image = [UIImage imageNamed:@"zaocheng"];
+    imageviewCharitiesOne.imgName = @"zaocheng";
+    imageviewCharitiesOne.selectImgName = @"zaocheng";
+    // 添加转盘上图标2
+    imageviewPressOne = [[DragImageView alloc] initWithFrame:CGRectMake(0, 0, ImageWidth, ImageHeight)];
+    imageviewPressOne.image = [UIImage imageNamed:@"richu"];
+    imageviewPressOne.imgName = @"richu";
+    imageviewPressOne.selectImgName = @"richu";
+    // 添加转盘上图标3
+    imageviewDetailOne = [[DragImageView alloc] initWithFrame:CGRectMake(0, 0, ImageWidth, ImageHeight)];
+    imageviewDetailOne.image = [UIImage imageNamed:@"riluo"];
+    imageviewDetailOne.imgName = @"riluo";
+    imageviewDetailOne.selectImgName = @"riluo";
+    // 添加转盘上图标4
+    imageviewCharitiesTwo = [[DragImageView alloc] initWithFrame:CGRectMake(0, 0, ImageWidth, ImageHeight)];
+    imageviewCharitiesTwo.image = [UIImage imageNamed:@"sun"];
+    imageviewCharitiesTwo.imgName = @"sun";
+    imageviewCharitiesTwo.selectImgName = @"sun";
+    // 添加转盘上图标5
+    imageviewPressTwo = [[DragImageView alloc] initWithFrame:CGRectMake(0, 0, ImageWidth, ImageHeight)];
+    imageviewPressTwo.image = [UIImage imageNamed:@"yewan"];
+    imageviewPressTwo.imgName = @"yewan";
+    imageviewPressTwo.selectImgName = @"yewan";
+    // 添加转盘上图标6
+    imageviewDetailTwo = [[DragImageView alloc] initWithFrame:CGRectMake(0, 0, ImageWidth, ImageHeight)];
+    imageviewDetailTwo.image = [UIImage imageNamed:@"shoudong"];
+    imageviewDetailTwo.imgName = @"shoudong";
+    imageviewDetailTwo.selectImgName = @"shoudong";
+    // 添加转盘上图标7
+    imageviewDetailThree = [[DragImageView alloc] initWithFrame:CGRectMake(0, 0, ImageWidth, ImageHeight)];
+    imageviewDetailThree.image = [UIImage imageNamed:@"dingshi2"];
+    imageviewDetailThree.imgName =@"dingshi2";
+    imageviewDetailThree.selectImgName = @"dingshi2";
+}
+
+- (void)setCircleBtnImage {
     // 添加转盘上图标1
     imageviewCharitiesOne = [[DragImageView alloc] initWithFrame:CGRectMake(0, 0, ImageWidth, ImageHeight)];
     imageviewCharitiesOne.image = [UIImage imageNamed:@"zaocheng"];
@@ -219,28 +278,11 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     imageviewDetailTwo.image = [UIImage imageNamed:@"shoudong"];
     imageviewDetailTwo.imgName = @"shoudong";
     imageviewDetailTwo.selectImgName = @"shoudong1";
-     // 添加转盘上图标7
+    // 添加转盘上图标7
     imageviewDetailThree = [[DragImageView alloc] initWithFrame:CGRectMake(0, 0, ImageWidth, ImageHeight)];
     imageviewDetailThree.image = [UIImage imageNamed:@"dinggshi"];
-    imageviewDetailThree.imgName = @"dinggshi";
-    imageviewDetailThree.selectImgName = @"dinggshi";
-    // 添加转盘中心图标
-    imageviewCenterQuick = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    // 图标集合
-    self.arrImage = [[NSMutableArray alloc] initWithObjects:imageviewCharitiesOne, imageviewPressOne, imageviewDetailOne, imageviewCharitiesTwo, imageviewPressTwo,imageviewDetailTwo,imageviewDetailThree, nil];
-    
-    for (int i = 0; i < self.arrImage.count; i ++) {
-        DragImageView *imageview = [self.arrImage objectAtIndex:i];
-        imageview.userInteractionEnabled = YES;
-        // 添加点击手势，点击相应图标，跳转到某一界面
-        UILongPressGestureRecognizer *longtap = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressWithTag:)];
-        
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
-        
-        [imageview addGestureRecognizer:longtap];
-        [imageview addGestureRecognizer:tap];
-        imageview.tag = 100 + i;
-    }
+    imageviewDetailThree.imgName =@"dingshi2";
+    imageviewDetailThree.selectImgName = @"dingshi1";
 }
 
 - (void)showImage{
@@ -327,6 +369,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 #pragma mark --CircleViewDelegate
 - (void)imgSelected:(NSInteger)tag
 {
+    NSLog(@"imageTag>>>>%zd",tag);
 //    NSInteger Tag = tag - 100;
 //    DragImageView *imgView = self.arrImage[Tag];
 //    NSString *imgStr = imgView.selectImgName;

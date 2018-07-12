@@ -38,6 +38,7 @@
     [self.bgView addSubview:self.imgView];
     [self.bgView addSubview:self.textLb];
     [self.bgView addSubview:self.tranferImgView];
+    self.backgroundColor = [UIColor whiteColor];
     
     [self makeContraints];
 }
@@ -54,7 +55,7 @@
     [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(weakself.mas_centerY);
         make.left.equalTo(@(CurrentDeviceSize(20)));
-        make.size.mas_equalTo(CGSizeMake(20, 20));
+        make.size.mas_equalTo(CGSizeMake(40, 40));
     }];
     
     [self.textLb mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -66,7 +67,7 @@
     [self.tranferImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(weakself.bgView.mas_centerY);
         make.right.equalTo(weakself.bgView.mas_right).offset(-CurrentDeviceSize(20));
-        make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(10), CurrentDeviceSize(20)));
+        make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(20), CurrentDeviceSize(20)));
     }];
 }
 
@@ -102,7 +103,7 @@
 {
     if (!_bgView) {
         _bgView = [UIView new];
-        _bgView.backgroundColor = [UIColor whiteColor];
+//        _bgView.backgroundColor = [UIColor whiteColor];
     }
     return _bgView;
 }

@@ -11,5 +11,4 @@
 @interface EditGroupCell : UITableViewCell
 
 @property (nonatomic, strong) NSDictionary *dataDic;
-
 @end

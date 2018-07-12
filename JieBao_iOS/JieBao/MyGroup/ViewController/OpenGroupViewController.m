@@ -4,7 +4,7 @@
 //
 //  Created by yangzhenmin on 2018/4/13.
 //  Copyright © 2018年 yangzhenmin. All rights reserved.
-//
+//  分组详情
 
 #import "OpenGroupViewController.h"
 #import "UIViewController+Custom.h"
@@ -151,10 +151,15 @@
     ConfirmCallback editCallBack = ^(void){
         EditGroupViewController *vc = [EditGroupViewController new];
         NSMutableArray *tempArr = [NSMutableArray array];
-        for (NSArray<CustomDevice *> *arr in self.dataSource) {
-            for (CustomDevice *dev in arr) {
+//        for (NSArray<CustomDevice *> *arr in self.dataSource) {
+//            for (CustomDevice *dev in arr) {
+//                [tempArr addObject:dev];
+//            }
+//        }
+        for (CustomDevice *dev in self.dataSource) {
+        
                 [tempArr addObject:dev];
-            }
+            
         }
         self.group.devs = tempArr;
         vc.group = self.group;
@@ -228,6 +233,7 @@
     [self.navigationController pushViewController:[NSClassFromString(@"MyDeviceAddViewController") new] animated:YES];
 }
 
+#pragma mark - collection DataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.dataSource.count;

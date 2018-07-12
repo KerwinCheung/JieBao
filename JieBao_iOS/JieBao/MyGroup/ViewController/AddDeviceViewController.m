@@ -22,6 +22,9 @@
 
 @property (nonatomic, strong) NSMutableArray<CustomDevice *> *temps;
 
+@property (nonatomic, strong) UIButton *sureBtn;
+@property (nonatomic,strong) UIView *sureBgView;
+
 @end
 
 @implementation AddDeviceViewController
@@ -35,17 +38,17 @@
             LHLog(@"left");
         };
         
-        ActionBlock rightAction = ^(UIButton *btn){
-            [weakself confirm];
-            LHLog(@"left");
-        };
+//        ActionBlock rightAction = ^(UIButton *btn){
+//            [weakself confirm];
+//            LHLog(@"left");
+//        };
         
         [self.naviBar  configNavigationBarWithAttrs:@{
                                                       kCustomNaviBarLeftActionKey:leftAction,
                                                       kCustomNaviBarLeftImgKey:@"back",
                                                       kCustomNaviBarTitleKey:@"添加设备",
-                                                      kCustomNaviBarRightActionKey:rightAction,
-                                                      kCustomNaviBarRightImgKey:@"确定"
+//                                                      kCustomNaviBarRightActionKey:rightAction,
+                                                      kCustomNaviBarRightImgKey:@""
                                                       }];
     }
     return self;
@@ -53,7 +56,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.view.backgroundColor = UICOLORFROMRGB(0xededed);
     [self initUI];
     [self discoverDevice];
@@ -74,6 +76,8 @@
 - (void)initUI
 {
     [self.view addSubview:self.tb];
+    [self.sureBgView addSubview:self.sureBtn];
+    self.tb.tableFooterView = self.sureBgView;
 }
 
 - (void)discoverDevice
@@ -127,16 +131,14 @@
         [arr addObjectsFromArray:self.temps];
         self.group.devs = arr;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self alertShowMessage:@"添加成功" title:@"提示" confirmCallback:^{
-                if (weakself.callback) {
-                    weakself.callback(weakself.group);
-                }
-                [self.navigationController popViewControllerAnimated:YES];
-            } cancelCallback:nil];
+            [HudHelper showSuccessWithStatus:@"添加成功"];
+            [self.navigationController popViewControllerAnimated:YES];
+
         });
     }];
 }
 
+#pragma mark - tableView Delegate|DataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"EditAddGroupCell";
@@ -160,7 +162,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CurrentDeviceSize(44);
+    return CurrentDeviceSize(50);
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -175,18 +177,39 @@
     }
 }
 
+#pragma mark - lazy init 
 - (BaseTableView *)tb
 {
     if (!_tb) {
         _tb = [[BaseTableView alloc] initWithFrame:CGRectMake(0, CurrentDeviceSize(40 + LL_StatusBarAndNavigationBarHeight), LL_ScreenWidth, LL_ScreenHeight) style:UITableViewStylePlain];
         _tb.backgroundColor = [UIColor clearColor];
-        _tb.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tb.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _tb.scrollEnabled = NO;
         _tb.dataSource = self;
         _tb.delegate = self;
         _tb.tableFooterView = [UIView new];
     }
     return _tb;
+}
+-(UIButton *)sureBtn{
+    if (!_sureBtn) {
+        _sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_sureBtn setBackgroundImage:[UIImage imageNamed:@"btn_590"] forState:UIControlStateNormal];
+        [_sureBtn setTitle:@"确认添加" forState:UIControlStateNormal];
+        [_sureBtn setTintColor:[UIColor whiteColor]];
+        [_sureBtn addTarget:self action:@selector(confirm) forControlEvents:UIControlEventTouchUpInside];
+        _sureBtn.frame = CGRectMake((LL_ScreenWidth - 313)*0.5, 30,313,50);
+    }
+    return _sureBtn;
+}
+
+-(UIView *)sureBgView{
+    if (!_sureBgView) {
+        _sureBgView = [[UIView alloc] init];
+        _sureBgView.backgroundColor = [UIColor clearColor];
+        _sureBgView.frame = CGRectMake(0, 0, LL_ScreenWidth, 100);
+    }
+    return _sureBgView;
 }
 
 - (NSMutableArray<CustomDevice *> *)temps

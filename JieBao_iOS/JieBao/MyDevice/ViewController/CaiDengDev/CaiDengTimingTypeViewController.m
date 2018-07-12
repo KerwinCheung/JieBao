@@ -62,7 +62,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    LHWeakSelf(self)
+    @weakify(self);
     [SVProgressHUD show];
     [NetworkHelper sendRequest:nil Method:@"GET" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler?%@&limit=200",self.dev?[NSString stringWithFormat:@"did=%@",self.dev.did]:[NSString stringWithFormat:@"group_id=%@",self.group.gid]] callback:^(NSData *data, NSError *error) {
         [SVProgressHUD dismiss];
@@ -70,13 +70,12 @@
             return ;
         }
         NSArray *list =  [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        
 //        if (list.count == 0) {
 //            [HudHelper showStatus:@"没有查询到定时任务"];
 //            return;
 //        }
-        
-        [weakself.dataSource removeAllObjects];
+        @strongify(self);
+        [self.dataSource removeAllObjects];
         DeviceSchedulerTask *LPStask = [DeviceSchedulerTask new];
         LPStask.taskLogo = @"dingshichengxu";
         LPStask.taskName = @"LPS程序";
@@ -85,8 +84,8 @@
         SPStask.taskName = @"SPS程序";
         SPStask.taskLogo = @"dingshichengxu";
         
-        [weakself.dataSource addObject:LPStask];
-        [weakself.dataSource addObject:SPStask];
+        [self.dataSource addObject:LPStask];
+        [self.dataSource addObject:SPStask];
         
         NSString *taskName = nil;
         NSMutableArray *arr = nil;
@@ -107,26 +106,27 @@
             }
             [arr addObject:sch];
             if (arr.count == 24) {
-                [weakself.dataSource addObject:task];
+                [self.dataSource addObject:task];
             }
         }
 
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakself.tb mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.size.equalTo(@((weakself.dataSource.count + (weakself.isEdit && weakself.dataSource.count < 8 ? 0:1))*CurrentDeviceSize(44)));
+            [self.tb mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.size.equalTo(@((self.dataSource.count + (self.isEdit && self.dataSource.count < 8 ? 0:1))*CurrentDeviceSize(44)));
             }];
-            [weakself.tb reloadData];
+            [self.tb reloadData];
         });
     }];
 
     
     ActionBlock leftAction = ^(UIButton *btn){
-        [weakself.navigationController popViewControllerAnimated:YES];
-        LHLog(@"left");
+        @strongify(self);
+        [self.navigationController popViewControllerAnimated:YES];
     };
     
     ActionBlock rightAction = ^(UIButton *btn){
-        [weakself showEdit];
+        @strongify(self);
+        [self showEdit];
     };
     [self.naviBar  configNavigationBarWithAttrs:@{
                                                   kCustomNaviBarLeftActionKey:leftAction,

@@ -35,7 +35,7 @@
 - (void)initUI
 {
     [self addSubview:self.bgView];
-    [self.bgView addSubview:self.imgView];
+//    [self.bgView addSubview:self.imgView];
     [self.bgView addSubview:self.textLb];
     [self.bgView addSubview:self.tranferImgView];
     
@@ -51,15 +51,15 @@
         make.right.equalTo(weakself.mas_right);
     }];
     
-    [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(weakself.mas_centerY);
-        make.left.equalTo(@(CurrentDeviceSize(20)));
-        make.size.mas_equalTo(CGSizeMake(20, 20));
-    }];
+//    [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(weakself.mas_centerY);
+//        make.left.equalTo(@(CurrentDeviceSize(20)));
+//        make.size.mas_equalTo(CGSizeMake(20, 20));
+//    }];
     
     [self.textLb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(weakself.mas_centerY);
-        make.left.equalTo(weakself.imgView.mas_right).offset(CurrentDeviceSize(10));
+        make.left.equalTo(@(CurrentDeviceSize(20)));
         make.width.lessThanOrEqualTo(@100);
     }];
     
@@ -112,5 +112,7 @@
     self.tranferImgView.image = [UIImage imageNamed:dataDic[kSettingRightImgKey]?dataDic[kSettingRightImgKey]:@""];
     self.textLb.text = dataDic[kSettingTextKey];
 }
+
+
 @end
 

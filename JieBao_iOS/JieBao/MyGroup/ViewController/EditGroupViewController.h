@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) CustomDeviceGroup *group;
 
+
+
 @end

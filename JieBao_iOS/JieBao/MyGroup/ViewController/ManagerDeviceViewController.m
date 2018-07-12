@@ -4,7 +4,7 @@
 //
 //  Created by yangzhenmin on 2018/4/14.
 //  Copyright © 2018年 yangzhenmin. All rights reserved.
-//
+//  分组设备列表管理界面
 
 #import "ManagerDeviceViewController.h"
 #import "BaseTableView.h"
@@ -16,8 +16,10 @@
 
 @property (nonatomic, strong) BaseTableView *tb;
 
+
 @property (nonatomic, strong) UIView *addBgview;
 
+/**添加按钮*/
 @property (nonatomic, strong) UIButton *addBtn;
 
 @property (nonatomic, strong) NSMutableArray<CustomDevice *> *dataSource;
@@ -26,17 +28,10 @@
 
 @implementation ManagerDeviceViewController
 
-- (instancetype)init
-{
-    if (self = [super init]) {
-        
-    }
-    return self;
-}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.view.backgroundColor = UICOLORFROMRGB(0xededed);
     [self initUI];
 }
@@ -45,6 +40,58 @@
 {
     [super viewWillAppear:animated];
     [self.tabBarController.tabBar setHidden:YES];
+   
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.tabBarController.tabBar setHidden:NO];
+}
+
+- (void)initUI
+{
+    [self configNavBarWithEdit:NO];
+    [self.view addSubview:self.tb];
+    [self.addBgview addSubview:self.addBtn];
+    self.tb.tableFooterView = self.addBgview;
+    self.addBgview.hidden = YES;
+//    LHWeakSelf(self)
+//    [self.addBgview mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@(CurrentDeviceSize(80)));
+//        make.bottom.equalTo(weakself.view.mas_bottom).offset(-CurrentDeviceSize(100));
+//        make.left.right.equalTo(@0);
+//        make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(40), CurrentDeviceSize(40)));
+//
+//    }];
+//
+//    [self.addBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.center.equalTo(weakself.addBgview);
+//        make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(40), CurrentDeviceSize(40)));
+//    }];
+}
+
+- (void)showEdit
+{
+    self.addBgview.hidden = NO;
+    [self.tb setEditing:YES animated:YES];
+    [self configNavBarWithEdit:YES];
+    self.tb.tableFooterView = self.addBgview;
+
+}
+
+- (void)finishEdit
+{
+    self.addBgview.hidden = YES;
+    [self.tb setEditing:NO animated:YES];
+    [self configNavBarWithEdit:NO];
+
+
+}
+
+-(void)configNavBarWithEdit:(BOOL)isEdit{
+    
     LHWeakSelf(self)
     ActionBlock rightAction = ^(UIButton *btn){
         if (btn.isSelected) {
@@ -60,52 +107,24 @@
         [weakself.navigationController popViewControllerAnimated:YES];
         LHLog(@"left");
     };
-    [self.naviBar  configNavigationBarWithAttrs:@{
-                                                  kCustomNaviBarLeftActionKey:leftAction,
-                                                  kCustomNaviBarLeftImgKey:@"back",
-                                                  kCustomNaviBarTitleKey:@"管理分组设备",
-                                                  kCustomNaviBarRightImgKey:@"编辑",
-                                                  kCustomNaviBarRightActionKey:rightAction
-                                                  }];
-    
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self.tabBarController.tabBar setHidden:NO];
-}
-
-- (void)initUI
-{
-    [self.view addSubview:self.tb];
-    [self.view addSubview:self.addBgview];
-    [self.addBgview addSubview:self.addBtn];
-    
-    LHWeakSelf(self)
-    [self.addBgview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(CurrentDeviceSize(80)));
-        make.bottom.equalTo(weakself.view.mas_bottom).offset(-CurrentDeviceSize(100));
-        make.left.right.equalTo(@0);
-    }];
-    
-    [self.addBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(weakself.addBgview);
-        make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(80), CurrentDeviceSize(80)));
-    }];
-}
-
-- (void)showEdit
-{
-    self.addBgview.hidden = NO;
-    [self.tb setEditing:YES animated:YES];
-    
-}
-
-- (void)finishEdit
-{
-    self.addBgview.hidden = YES;
-    [self.tb setEditing:NO animated:YES];
+    if (isEdit) {
+        [self.naviBar  configNavigationBarWithAttrs:@{
+                                                      kCustomNaviBarLeftActionKey:leftAction,
+                                                      kCustomNaviBarLeftImgKey:@"back",
+                                                      kCustomNaviBarTitleKey:@"管理分组设备",
+                                                    kCustomNaviBarRightImgKey:@"queding1",
+                                                kCustomNaviBarRightActionKey:rightAction
+                                                      }];
+    }else{
+        [self.naviBar  configNavigationBarWithAttrs:@{
+                                                      kCustomNaviBarLeftActionKey:leftAction,
+                                                      kCustomNaviBarLeftImgKey:@"back",
+                                                      kCustomNaviBarTitleKey:@"管理分组设备",
+                                                      kCustomNaviBarRightImgKey:@"bianji",
+                                                      kCustomNaviBarRightActionKey:rightAction
+                                                      }];
+    }
+   
 }
 
 - (void)addBtnClicked
@@ -120,6 +139,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+#pragma mark - tableView Delegate|DataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"GroupEditCell";
@@ -175,16 +195,17 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CurrentDeviceSize(44);
+    return CurrentDeviceSize(50);
 }
 
 
+#pragma mark - lazy init 
 - (BaseTableView *)tb
 {
     if (!_tb) {
         _tb = [[BaseTableView alloc] initWithFrame:CGRectMake(0, CurrentDeviceSize(40 + LL_StatusBarAndNavigationBarHeight), LL_ScreenWidth, LL_ScreenHeight) style:UITableViewStylePlain];
         _tb.backgroundColor = [UIColor clearColor];
-        _tb.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tb.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _tb.scrollEnabled = NO;
         _tb.dataSource = self;
         _tb.delegate = self;
@@ -197,8 +218,9 @@
 {
     if (!_addBtn) {
         _addBtn = [UIButton new];
-        [_addBtn setBackgroundImage:[UIImage imageNamed:@"tianji1"] forState:UIControlStateNormal];
+        [_addBtn setBackgroundImage:[UIImage imageNamed:@"tianjia3"] forState:UIControlStateNormal];
         [_addBtn addTarget:self action:@selector(addBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+        _addBtn.frame = CGRectMake((LL_ScreenWidth - 40)*0.5,20, 40, 40);
         _addBtn.hidden = NO;
     }
     return _addBtn;
@@ -209,7 +231,8 @@
 {
     if (!_addBgview) {
         _addBgview = [UIView new];
-        _addBgview.backgroundColor = UICOLORFROMRGB(0xFFFFFF);
+        _addBgview.backgroundColor = [UIColor clearColor];
+        _addBgview.frame = CGRectMake(0, 0,LL_ScreenWidth, 80);
     }
     return _addBgview;
 }

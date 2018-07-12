@@ -4,7 +4,7 @@
 //
 //  Created by yangzhenmin on 2018/4/14.
 //  Copyright © 2018年 yangzhenmin. All rights reserved.
-//
+//   编辑分组
 
 #import "EditGroupViewController.h"
 #import "BaseTableView.h"
@@ -65,7 +65,7 @@
                                                   kCustomNaviBarLeftActionKey:leftAction,
                                                   kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"编辑分组",
-                                                  kCustomNaviBarRightImgKey:@"保存",
+                                                  kCustomNaviBarRightImgKey:@"baocun",
                                                   kCustomNaviBarRightActionKey:rightAction
                                                   }];
 }
@@ -131,6 +131,7 @@
     }];
 }
 
+#pragma mark - tableView Delegate|DataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"EditAddGroupCell";
@@ -164,6 +165,8 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+
+#pragma mark - lazy init
 - (BaseTableView *)tb
 {
     if (!_tb) {

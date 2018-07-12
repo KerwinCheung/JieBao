@@ -82,6 +82,6 @@
 {
     _dataDic = dataDic;
     self.img.image = [SelectImageHelper selectDeviceImageWithTpye:dataDic.product_key];
-    self.lb.text = dataDic.verbose_name;
+    self.lb.text = dataDic.dev_alias;
 }
 @end
