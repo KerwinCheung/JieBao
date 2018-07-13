@@ -65,8 +65,9 @@
     if (!dic) {
         dic = [NSMutableDictionary dictionary];
     }
-    [dic setObject:wifi[kUserWIFINameKey] forKey:wifi[kUserWIFIPSWKey]];
-    SetUserDefaultObject(kUserWIFIKey, dic);
+#warning 有时会崩溃所以屏蔽掉，貌似是存wifi密码
+//    [dic setObject:wifi[kUserWIFINameKey] forKey:wifi[kUserWIFIPSWKey]];
+//    SetUserDefaultObject(kUserWIFIKey, dic);
 }
 
 + (NSMutableDictionary *)getWifi

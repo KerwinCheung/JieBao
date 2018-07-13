@@ -263,7 +263,9 @@
 - (UIImageView *)headImgView
 {
     if (!_headImgView) {
+#warning 暂时屏蔽，真机第二次就崩溃
         _headImgView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"head"]];
+//        _headImgView = [[UIImageView alloc] init];
     }
     return _headImgView;
 }

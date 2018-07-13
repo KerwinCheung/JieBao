@@ -4,7 +4,7 @@
 //
 //  Created by yangzhenmin on 2018/4/17.
 //  Copyright © 2018年 yangzhenmin. All rights reserved.
-//
+//  配网loading
 
 #import "MyDevicecContractViewController.h"
 
@@ -40,6 +40,7 @@
     [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
     [self.view addSubview:self.timelb];
     [self.view addSubview:self.loadImgView];
+    self.timelb.text = [NSString stringWithFormat:@"设备连接中 %ld",self.timeCount];
     [self makeContraints];
     [self contract];
 }
@@ -122,6 +123,7 @@
     [self.navigationController pushViewController:[NSClassFromString(@"MyDeviceAddDeviceViewController") new] animated:YES];
 }
 
+#pragma mark - lazy init
 - (UILabel *)timelb
 {
     if (!_timelb) {

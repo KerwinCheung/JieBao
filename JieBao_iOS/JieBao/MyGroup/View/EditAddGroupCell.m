@@ -127,7 +127,7 @@
 {
     _dataDic = dataDic;
     self.imgView.image = [SelectImageHelper selectDeviceImageWithTpye:dataDic.productKey];
-    self.textLb.text = dataDic.alias.length >0 ? dataDic.alias:dataDic.productName;
+    self.textLb.text = dataDic.alias.length >0 ? dataDic.alias:dataDic.macAddress;
 }
 
 - (void)setSelected

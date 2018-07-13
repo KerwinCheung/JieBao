@@ -83,6 +83,7 @@
     [self.navigationController popToViewController:self.navigationController.topViewController animated:YES];
 }
 
+#pragma mark - lazy init 
 - (UIImageView *)successImgView
 {
     if (!_successImgView) {

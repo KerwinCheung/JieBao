@@ -18,7 +18,7 @@
 
 @property (nonatomic, strong) UIButton *confirmBtn;
 
-@property (nonatomic, strong) NSArray<GizWifiDevice *> *dataSource;
+@property (nonatomic, strong) NSMutableArray<GizWifiDevice *> *dataSource;
 
 @property (nonatomic, strong) NSMutableArray<GizWifiDevice *> *temps;
 
@@ -30,9 +30,11 @@
 {
     if (self = [super init]) {
         _temps = [NSMutableArray array];
+        _dataSource = [NSMutableArray array];
     }
     return self;
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -93,8 +95,65 @@
     LHWeakSelf(self)
     [SDKHelper shareInstance].discoverDeviceBlock = ^(NSArray *devs) {
         if (devs) {
-            weakself.dataSource = devs;
+            //增加过滤
+            // 增加设备过滤，只显示未绑定过且属于捷宝的产品
+            weakself.dataSource = [NSMutableArray array];
+            for (GizWifiDevice *devcie in devs) {
+                BOOL isAPPDev = NO;
+                
+                if ([devcie.productKey isEqualToString:kProductKeys[@"六路彩灯"]]) {
+                    isAPPDev = YES;
+                    if (devcie.isBind) {
+                        isAPPDev = NO;
+                    }else{
+                        isAPPDev = YES;
+                    }
+                }else if ([devcie.productKey isEqualToString:kProductKeys[@"滴定泵"]]){
+                    isAPPDev = YES;
+
+                    if (devcie.isBind) {
+                        isAPPDev = NO;
+                    }else{
+                        isAPPDev = YES;
+                    }
+                }else if ([devcie.productKey isEqualToString:kProductKeys[@"无线开关"]]){
+                    isAPPDev = YES;
+
+                    if (devcie.isBind) {
+                        isAPPDev = NO;
+                    }else{
+                        isAPPDev = YES;
+                    }
+                }else if ([devcie.productKey isEqualToString:kProductKeys[@"造浪泵"]]){
+                    isAPPDev = YES;
+
+                    if (devcie.isBind) {
+                        isAPPDev = NO;
+                    }else{
+                        isAPPDev = YES;
+                    }
+                }else if ([devcie.productKey isEqualToString:kProductKeys[@"水泵"]]){
+                    isAPPDev = YES;
+
+                    if (devcie.isBind) {
+                        isAPPDev = NO;
+                    }else{
+                        isAPPDev = YES;
+                    }
+                }else{
+                    isAPPDev = NO;
+                   
+                }
+                
+                
+                if (isAPPDev) {
+                    [weakself.dataSource addObject:devcie];
+                }
+            }
             [weakself.tb reloadData];
+
+            
+            
         }
     };
     [[GizWifiSDK sharedInstance] getBoundDevices:[UserHelper getCurrentUser].uid token:[UserHelper getCurrentUser].token];
@@ -107,7 +166,7 @@
             [self.navigationController pushViewController:[NSClassFromString(@"MyDeviceAddSuccessViewController") new] animated:YES];
         }else
         {
-            [self alertShowMessage:@"绑定失败" title:@"提示" confirmBtnText:@"确定" confirmCallback:nil];
+            [HudHelper showErrorWithStatus:@"绑定失败"];
         }
     };
     for (GizWifiDevice * dev in self.temps) {
@@ -115,6 +174,7 @@
     }
 }
 
+#pragma mark - tableView Delegate|DataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"EditAddGroupCell";
@@ -153,6 +213,7 @@
     }
 }
 
+#pragma mark - lazy init
 - (BaseTableView *)tb
 {
     if (!_tb) {

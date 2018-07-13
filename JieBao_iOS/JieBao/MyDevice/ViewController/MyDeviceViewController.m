@@ -95,9 +95,41 @@
     LHWeakSelf(self)
     [SDKHelper shareInstance].discoverDeviceBlock = ^(NSArray<GizWifiDevice *> *devs) {
         [self.dataSource removeAllObjects];
+        
         if (devs.count > 0) {
             weakself.noDeviceView.hidden = YES;
-            [weakself.dataSource addObjectsFromArray:devs];
+            // 增加设备过滤，只显示绑定过且属性捷宝的产品
+            for (GizWifiDevice *devcie in devs) {
+                BOOL isAPPDev = NO;
+
+                if ([devcie.productKey isEqualToString:kProductKeys[@"六路彩灯"]]) {
+                    isAPPDev = YES;
+                }else if ([devcie.productKey isEqualToString:kProductKeys[@"滴定泵"]]){
+                    isAPPDev = YES;
+
+                }else if ([devcie.productKey isEqualToString:kProductKeys[@"无线开关"]]){
+                    isAPPDev = YES;
+
+                }else if ([devcie.productKey isEqualToString:kProductKeys[@"造浪泵"]]){
+                    isAPPDev = YES;
+
+                }else if ([devcie.productKey isEqualToString:kProductKeys[@"水泵"]]){
+                    isAPPDev = YES;
+
+                }else{
+                    
+                    isAPPDev = NO;
+                }
+                if (devcie.isBind) {
+                    isAPPDev = YES;
+                }else{
+                    isAPPDev = NO;
+                }
+            
+                if (isAPPDev) {
+                    [self.dataSource addObject:devcie];
+                }
+            }
         }else
         {
             weakself.noDeviceView.hidden = NO;
