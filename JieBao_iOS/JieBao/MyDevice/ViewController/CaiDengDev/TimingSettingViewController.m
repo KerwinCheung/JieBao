@@ -57,6 +57,15 @@
 
 @property (nonatomic, assign) int yusheSelected;
 
+
+//颜色数值数组
+@property (nonatomic, strong) NSMutableArray <NSNumber *> *whiteValues;
+@property (nonatomic, strong) NSMutableArray <NSNumber *> *blue1Values;
+@property (nonatomic, strong) NSMutableArray <NSNumber *> *blue2Values;
+@property (nonatomic, strong) NSMutableArray <NSNumber *> *greenValues;
+@property (nonatomic, strong) NSMutableArray <NSNumber *> *redValues;
+@property (nonatomic, strong) NSMutableArray <NSNumber *> *violetValues;
+
 @end
 
 @implementation TimingSettingViewController
