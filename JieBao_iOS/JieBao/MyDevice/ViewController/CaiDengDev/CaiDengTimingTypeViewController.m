@@ -92,9 +92,9 @@
         DeviceSchedulerTask *task = nil;
         for (int i = 0; i< list.count; i++) {
             DeviceCommonSchulder *sch = [DeviceCommonSchulder yy_modelWithJSON:list[i]];
-            [NetworkHelper sendRequest:nil Method:@"DELETE" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler/%@",sch.sid] callback:^(NSData *data, NSError *error) {
-
-            }];
+//            [NetworkHelper sendRequest:nil Method:@"DELETE" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler/%@",sch.sid] callback:^(NSData *data, NSError *error) {
+//
+//            }];
             if (![taskName isEqualToString:sch.remark]) {
                 arr = [NSMutableArray array];
                 taskName = sch.remark;
@@ -170,109 +170,7 @@
     [self.tb reloadData];
 }
 
-- (void)confirmBtnClicked
-{
-    self.count = 0;
-    self.sucCount = 0;
-//    if (self.currentIndex == 0) {
-//
-//    }else if(self.currentIndex == 1){
-//        [SVProgressHUD show];
-//        for (int i = 0; i < 24; i++) {
-//            NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{@"attrs":@{@"color_white":@(((NSString *)kSPS[0][i]).integerValue)},@"date":[[NSDate dateWithTimeInterval:24*60*60 sinceDate:[NSDate date]] formattedDateWithFormat:@"yyyy-MM-dd"],@"time":[NSString stringWithFormat:@"%02d:00",i],@"repeat":@"none",@"enabled":@(NO),@"remark":@"SPS"}];
-//            if (self.dev) {
-//                [body setObject:self.dev.did forKey:@"did"];
-//            }else
-//            {
-//                [body setObject:self.group.gid forKey:@"group_id"];
-//            }
-//
-//            [NetworkHelper sendRequest:body Method:@"POST" Path:@"https://api.gizwits.com/app/common_scheduler" callback:^(NSData *data, NSError *error) {
-//                @synchronized(self)
-//                {
-//                    self.count++;
-//                }
-//                if (self.count == 24) {
-//                    [HudHelper dismiss];
-//                }
-//
-//                if (!data || error) {
-//                    LHLog(@"创建定时失败");
-//                    return ;
-//                }
-//                NSDictionary *jsonObj =  [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-//
-//                if (!jsonObj) {
-//                    return;
-//                }
-//
-//                @synchronized(self)
-//                {
-//                    self.sucCount++;
-//                }
-//                if (self.count == 24) {
-//                    if (self.sucCount == 24) {
-//                        [HudHelper showSuccessWithStatus:@"设置成功"];
-//                        dispatch_async(dispatch_get_main_queue(), ^{
-//                            [self.navigationController popViewControllerAnimated:YES];
-//                        });
-//                    }else
-//                    {
-//                        [HudHelper showErrorWithStatus:@"设置失败"];
-//                    }
-//                    self.sucCount = 0;
-//                    self.count = 0;
-//                }
-//                LHLog(@"创建定时成功%@==%@",jsonObj[@"id"],jsonObj);
-//            }];
-//        }
-//    }
-    self.count = 0;
-    self.sucCount = 0;
-    //开启定时任务
-    [SVProgressHUD show];
-    DeviceSchedulerTask *schTask = self.temps.firstObject;
-    
-    if (schTask.sches.count == 0) {
-        [SVProgressHUD dismiss];
-        [HudHelper showErrorWithStatus:@"设置失败"];
-        return;
-    }
-    for (DeviceCommonSchulder *sch in schTask.sches) {
-        sch.enabled = YES;
-        NSDictionary *dic = [sch yy_modelToJSONObject];
-        NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:dic];
-        [body setObject:sch.sid forKey:@"id"];
-        [body removeObjectForKey:@"sid"];
-        [NetworkHelper sendRequest:body Method:@"PUT" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler/%@",sch.sid] callback:^(NSData *data, NSError *error) {
-            @synchronized(self)
-            {
-                self.count++;
-            }
-            if (self.count == 24) {
-                [HudHelper dismiss];
-            }
-            if (!data || error) {
-                return ;
-            }
-            
-            @synchronized(self)
-            {
-                self.sucCount++;
-            }
-            if (self.count == 24) {
-                if (self.sucCount == 24) {
-                    [HudHelper showSuccessWithStatus:@"设置成功"];
-                }else
-                {
-                    [HudHelper showErrorWithStatus:@"设置失败"];
-                }
-                self.sucCount = 0;
-                self.count = 0;
-            }
-        }];
-    }
-}
+
 
 #pragma mark - tableView Delegate
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -350,10 +248,12 @@
         if(indexPath.row == 0)
         {
             vc.type = @"LPS";
-        }else if (indexPath.row ==1)
+        }
+        else if (indexPath.row ==1)
         {
             vc.type = @"SPS";
-        }else
+        }
+        else
         {
             vc.schTask = ((CaiDengTimingCell *)cell).dataDic;
         }
@@ -361,6 +261,7 @@
     }
 }
 
+#pragma mark - btnAction
 - (void)addSchBtnClicked
 {
     if (self.dataSource.count >= 8) {
@@ -372,6 +273,8 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+
+#pragma mark setter & getter
 - (BaseTableView *)tb
 {
     if (!_tb) {
@@ -384,6 +287,140 @@
         _tb.tableFooterView = [UIView new];
     }
     return _tb;
+}
+
+- (void)confirmBtnClicked
+{
+    self.count = 0;
+    self.sucCount = 0;
+    //    if (self.currentIndex == 0) {
+    //
+    //    }else if(self.currentIndex == 1){
+    //        [SVProgressHUD show];
+    //        for (int i = 0; i < 24; i++) {
+    //            NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{@"attrs":@{@"color_white":@(((NSString *)kSPS[0][i]).integerValue)},@"date":[[NSDate dateWithTimeInterval:24*60*60 sinceDate:[NSDate date]] formattedDateWithFormat:@"yyyy-MM-dd"],@"time":[NSString stringWithFormat:@"%02d:00",i],@"repeat":@"none",@"enabled":@(NO),@"remark":@"SPS"}];
+    //            if (self.dev) {
+    //                [body setObject:self.dev.did forKey:@"did"];
+    //            }else
+    //            {
+    //                [body setObject:self.group.gid forKey:@"group_id"];
+    //            }
+    //
+    //            [NetworkHelper sendRequest:body Method:@"POST" Path:@"https://api.gizwits.com/app/common_scheduler" callback:^(NSData *data, NSError *error) {
+    //                @synchronized(self)
+    //                {
+    //                    self.count++;
+    //                }
+    //                if (self.count == 24) {
+    //                    [HudHelper dismiss];
+    //                }
+    //
+    //                if (!data || error) {
+    //                    LHLog(@"创建定时失败");
+    //                    return ;
+    //                }
+    //                NSDictionary *jsonObj =  [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    //
+    //                if (!jsonObj) {
+    //                    return;
+    //                }
+    //
+    //                @synchronized(self)
+    //                {
+    //                    self.sucCount++;
+    //                }
+    //                if (self.count == 24) {
+    //                    if (self.sucCount == 24) {
+    //                        [HudHelper showSuccessWithStatus:@"设置成功"];
+    //                        dispatch_async(dispatch_get_main_queue(), ^{
+    //                            [self.navigationController popViewControllerAnimated:YES];
+    //                        });
+    //                    }else
+    //                    {
+    //                        [HudHelper showErrorWithStatus:@"设置失败"];
+    //                    }
+    //                    self.sucCount = 0;
+    //                    self.count = 0;
+    //                }
+    //                LHLog(@"创建定时成功%@==%@",jsonObj[@"id"],jsonObj);
+    //            }];
+    //        }
+    //    }
+    self.count = 0;
+    self.sucCount = 0;
+    //开启定时任务
+    [SVProgressHUD show];
+    DeviceSchedulerTask *schTask = self.temps.firstObject;
+    
+    if (schTask.sches.count == 0) {
+        [SVProgressHUD dismiss];
+        [HudHelper showErrorWithStatus:@"设置失败"];
+        return;
+    }
+    for (DeviceCommonSchulder *sch in schTask.sches) {
+        sch.enabled = YES;
+//        NSDictionary *dic = [sch yy_modelToJSONObject];
+//        NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:dic];
+//        [body removeObjectForKey:@"id"];
+
+        /*
+         {
+         "attrs": {
+         "color_red" : 10
+         },
+         "time": "11:00",
+         "repeat": "none",
+         "enabled": 1,
+         "remark": "string",
+         "date":"2018-07-13"
+         }
+         */
+        NSMutableDictionary *body = [NSMutableDictionary dictionary];
+        [body setObject:sch.sid forKey:@"id"];
+        [body setObject:sch.attrs forKey:@"attrs"];
+        [body setObject:sch.time forKey:@"time"];
+        [body setObject:sch.repeat forKey:@"repeat"];
+        [body setObject:@(1) forKey:@"enabled"];
+        [body setObject:sch.date forKey:@"date"];
+        [body setObject:sch.remark forKey:@"remark"];
+
+        @weakify(self);
+        [NetworkHelper sendRequest:body Method:@"PUT" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler/%@",sch.sid] callback:^(NSData *data, NSError *error) {
+            @strongify(self);
+//            @synchronized(self)
+//            {
+//                self.count++;
+//            }
+            self.count++;
+            if (self.count == 24) {
+                [HudHelper dismiss];
+            }
+            
+            if (data != nil) {
+                NSDictionary *tempDic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                NSLog(@"%@",tempDic);
+            }
+            
+            if (!data || error) {
+                return ;
+            }
+            
+            @synchronized(self)
+            {
+                self.sucCount++;
+            }
+            if (self.count == 24) {
+                if (self.sucCount == 24) {
+                    [HudHelper showSuccessWithStatus:@"设置成功"];
+                }else
+                {
+                    [HudHelper showErrorWithStatus:@"设置失败"];
+                }
+                self.sucCount = 0;
+                self.count = 0;
+            }
+        }];
+    }
 }
 
 - (UIButton *)confirmBtn

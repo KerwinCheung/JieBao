@@ -10,4 +10,12 @@
 
 @implementation DeviceSchedulerTask
 
+- (void)setTempLpsSches {
+    
+}
+
+- (void)setTempSpsSches {
+    
+}
+
 @end

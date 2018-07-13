@@ -64,7 +64,8 @@
             make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(14), CurrentDeviceSize(14)));
         }];
         self.btn.layer.cornerRadius = CurrentDeviceSize(7);
-    }else
+    }
+    else
     {
         [self.btn mas_updateConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(10), CurrentDeviceSize(10)));

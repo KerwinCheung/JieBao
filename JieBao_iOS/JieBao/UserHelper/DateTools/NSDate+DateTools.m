@@ -1640,7 +1640,7 @@ static NSCalendar *implicitCalendar = nil;
  *  @return NSString representing the formatted date string
  */
 -(NSString *)formattedDateWithFormat:(NSString *)format{
-    return [self formattedDateWithFormat:format timeZone:[NSTimeZone systemTimeZone] locale:[NSLocale autoupdatingCurrentLocale]];
+    return [self formattedDateWithFormat:format timeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"] locale:[NSLocale autoupdatingCurrentLocale]];
 }
 
 /**

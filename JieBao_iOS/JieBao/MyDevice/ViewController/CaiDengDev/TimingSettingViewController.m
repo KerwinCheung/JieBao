@@ -79,6 +79,8 @@
                                              selector:@selector(handleDeviceOrientationDidChange:)
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationToPortrait:) name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -236,14 +238,20 @@
     }];
 }
 
+
+#pragma mark - buttonAction
 - (void)spsBtnClicked
 {
     self.selectView.hidden = NO;
 }
 
+#pragma mark 载入预设值
 - (void)lpsSelected
 {
+//    NSArray *temp = [NSArray arrayWithArray:kLPS];
     [self.lineChartView setChartSchValues:kLPS[self.currentIndex]];
+//   @[ @[@"0",@"0",@"0",@"0",@"0",@"0",@"5",@"10",@"15",@"20",@"25",@"30",@"40",@"51",@"62",@"62",@"51",@"40",@"30",@"25",@"20",@"15",@"10",@"0"], @[@"0",@"0",@"0",@"0",@"0",@"0",@"3",@"8",@"20",@"30",@"40",@"50",@"60",@"70",@"80",@"80",@"70",@"60",@"50",@"40",@"30",@"20",@"8",@"0"], @[@"0",@"0",@"0",@"0",@"0",@"0",@"5",@"15",@"30",@"45",@"56",@"68",@"75",@"85",@"90",@"90",@"85",@"75",@"68",@"56",@"45",@"30",@"15",@"0"], @[@"0",@"0",@"0",@"0",@"0",@"0",@"3",@"5",@"8",@"10",@"12",@"15",@"20",@"25",@"30",@"30",@"25",@"20",@"15",@"12",@"10",@"8",@"5",@"0"], @[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"3",@"3",@"6",@"8",@"10",@"13",@"17",@"20",@"20",@"17",@"13",@"10",@"8",@"6",@"3",@"3",@"0"], @[@"0",@"0",@"0",@"0",@"0",@"0",@"3",@"6",@"18",@"20",@"25",@"30",@"40",@"51",@"62",@"62",@"51",@"40",@"30",@"25",@"20",@"18",@"6",@"0"]
+//  ];
 }
 
 - (void)spsSelected
@@ -261,6 +269,7 @@
     [self.lineChartView setChartSchValues:kReef[self.currentIndex]];
 }
 
+#pragma mark 保存按钮
 - (void)saveBtnClicked
 {
     if ([self.nameSoure containsObject:self.timingTextView.text]) {
@@ -269,23 +278,47 @@
     }
 
     NSString *str = self.dic[@(self.currentIndex)];
+//    NSMutableDictionary *attrsDic = [NSMutableDictionary dictionary];
+//    @weakify(attrsDic);
+//    [self.dic enumerateKeysAndObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+//        @strongify(attrsDic);
+//        [attrsDic setObject:@"" forKey:obj];
+//    }];
+    
     [SVProgressHUD show];
     self.count = 0;
     self.sucCount = 0;
-    for (int i = 0; i < 24; i++) {
-        NSMutableDictionary *body = [NSMutableDictionary dictionaryWithDictionary:@{@"attrs":@{str:@([self.lineChartView getChartValues][i].integerValue)},@"date":[[NSDate dateWithTimeInterval:24*60*60 sinceDate:[NSDate date]] formattedDateWithFormat:@"yyyy-MM-dd"],@"time":[NSString stringWithFormat:@"%02d:00",i],@"repeat":@"none",@"enabled":@(NO),@"remark":self.timingTextView.text}];
+    @weakify(self);
+    for (int i = 0; i < 24; i++)
+    {
+        NSMutableDictionary *body = [NSMutableDictionary
+                                     dictionaryWithDictionary:@{
+                                                                @"attrs":@{str:@([self.lineChartView getChartValues][i].integerValue),
+                                                                           @"Timer" :@(1)
+                                                                           },
+                                                                @"date":[[NSDate dateWithTimeInterval:24*60*60 sinceDate:[NSDate date]] formattedDateWithFormat:@"yyyy-MM-dd"],
+                                                                @"time":[NSString stringWithFormat:@"%02d:00",i],
+                                                                @"repeat":@"none",
+                                                                @"enabled":@(NO),
+                                                                @"remark":self.timingTextView.text}];
         if (self.dev) {
             [body setObject:self.dev.did forKey:@"did"];
         }else
         {
             [body setObject:self.group.gid forKey:@"group_id"];
         }
-        
         [NetworkHelper sendRequest:body Method:@"POST" Path:@"https://api.gizwits.com/app/common_scheduler" callback:^(NSData *data, NSError *error) {
-            @synchronized(self)
-            {
-                self.count++;
+            @strongify(self);
+//            @synchronized(self)
+//            {
+//                self.count++;
+//            }
+            if (data != nil) {
+                NSDictionary *tempDic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                NSLog(@"%@",tempDic);
             }
+            self.count++;
+            NSLog(@"发送定时任务%zd次",self.count);
             if (self.count == 24) {
                 [HudHelper dismiss];
             }
@@ -322,6 +355,7 @@
     }
 }
 
+#pragma mark 删除按钮
 - (void)deleteBtnClicked
 {
     if (self.schTask.sches.count == 0) {
@@ -366,37 +400,51 @@
     }
 }
 
+#pragma mark 右上角关闭按钮
 - (void)closeBtnClicked
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark 上方颜色按钮回调
 - (void)colorBlockClicked:(id)view
 {
     if (self.currentSelectView) {
         self.currentSelectView.isClicked = NO;
     }
-    if ([view isEqual:self.whiteLcView]) {
+    
+    if ([view isEqual:self.whiteLcView])
+    {
         [self.lineChartView setSelectedIndex:0];
         self.currentIndex = 0;
         self.currentSelectView = self.whiteLcView;
-    }else if ([view isEqual:self.sapphireBlueLcView]){
+    }
+    else if ([view isEqual:self.sapphireBlueLcView])
+    {
         [self.lineChartView setSelectedIndex:1];
         self.currentIndex = 1;
         self.currentSelectView = self.sapphireBlueLcView;
-    }else if ([view isEqual:self.blueLcView]){
+    }
+    else if ([view isEqual:self.blueLcView])
+    {
         [self.lineChartView setSelectedIndex:2];
         self.currentIndex = 2;
         self.currentSelectView = self.blueLcView;
-    }else if ([view isEqual:self.greenLcView]){
+    }
+    else if ([view isEqual:self.greenLcView])
+    {
         [self.lineChartView setSelectedIndex:3];
         self.currentIndex = 3;
         self.currentSelectView = self.greenLcView;
-    }else if ([view isEqual:self.redLcView]){
+    }
+    else if ([view isEqual:self.redLcView])
+    {
         [self.lineChartView setSelectedIndex:4];
         self.currentIndex = 4;
         self.currentSelectView = self.redLcView;
-    }else if ([view isEqual:self.puepleLcView]){
+    }
+    else if ([view isEqual:self.puepleLcView])
+    {
         [self.lineChartView setSelectedIndex:5];
         self.currentIndex = 5;
         self.currentSelectView = self.puepleLcView;
@@ -409,18 +457,21 @@
 
 - (void)selectIndex:(NSInteger)index
 {
-    self.yusheSelected = index;
+    self.yusheSelected = (int)index;
     if (0 == index)
     {
         [self spsSelected];
-    }else if (1 == index)
-        {
+    }
+    else if (1 == index)
+    {
         [self lpsSelected];
     }
-    else if (2 == index){
+    else if (2 == index)
+    {
         [self growthSelected];
     }
-    else if (3 == index){
+    else if (3 == index)
+    {
         [self reefAquariumSelected];
     }
     self.selectView.hidden = YES;
@@ -431,6 +482,17 @@
     self.currentSelectView.value = value;
 }
 
+#pragma mark - notifacation
+- (void)orientationToPortrait:(UIInterfaceOrientation)orientation {
+    
+    NSNumber *orientationUnknown = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
+    [[UIDevice currentDevice] setValue:orientationUnknown forKey:@"orientation"];
+    
+    NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
+    [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
+}
+
+#pragma mark - setter & getter
 - (UITextField *)timingTextView
 {
     if (!_timingTextView) {
