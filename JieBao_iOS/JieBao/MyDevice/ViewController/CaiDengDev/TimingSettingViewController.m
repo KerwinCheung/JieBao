@@ -288,7 +288,9 @@
         return;
     }
     
-    NSString *str = self.dic[@(self.currentIndex)];
+    [self getValuesWhithSelectedIndex];
+    
+    //    NSString *str = self.dic[@(self.currentIndex)];
     //    NSMutableDictionary *attrsDic = [NSMutableDictionary dictionary];
     //    @weakify(attrsDic);
     //    [self.dic enumerateKeysAndObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
@@ -436,36 +438,42 @@
         [self.lineChartView setSelectedIndex:0];
         self.currentIndex = 0;
         self.currentSelectView = self.whiteLcView;
+        [self.lineChartView setChartSchValues:self.whiteValues];
     }
     else if ([view isEqual:self.sapphireBlueLcView])
     {
         [self.lineChartView setSelectedIndex:1];
         self.currentIndex = 1;
         self.currentSelectView = self.sapphireBlueLcView;
+        [self.lineChartView setChartSchValues:self.blue1Values];
     }
     else if ([view isEqual:self.blueLcView])
     {
         [self.lineChartView setSelectedIndex:2];
         self.currentIndex = 2;
         self.currentSelectView = self.blueLcView;
+        [self.lineChartView setChartSchValues:self.blue2Values];
     }
     else if ([view isEqual:self.greenLcView])
     {
         [self.lineChartView setSelectedIndex:3];
         self.currentIndex = 3;
         self.currentSelectView = self.greenLcView;
+        [self.lineChartView setChartSchValues:self.greenValues];
     }
     else if ([view isEqual:self.redLcView])
     {
         [self.lineChartView setSelectedIndex:4];
         self.currentIndex = 4;
         self.currentSelectView = self.redLcView;
+        [self.lineChartView setChartSchValues:self.redValues];
     }
     else if ([view isEqual:self.puepleLcView])
     {
         [self.lineChartView setSelectedIndex:5];
         self.currentIndex = 5;
         self.currentSelectView = self.puepleLcView;
+        [self.lineChartView setChartSchValues:self.violetValues];
     }
     
 //    if (self.yusheSelected < 0) {
