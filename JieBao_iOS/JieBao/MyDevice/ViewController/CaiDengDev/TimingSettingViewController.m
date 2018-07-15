@@ -59,12 +59,16 @@
 
 
 //颜色数值数组
-@property (nonatomic, strong) NSMutableArray <NSNumber *> *whiteValues;
-@property (nonatomic, strong) NSMutableArray <NSNumber *> *blue1Values;
-@property (nonatomic, strong) NSMutableArray <NSNumber *> *blue2Values;
-@property (nonatomic, strong) NSMutableArray <NSNumber *> *greenValues;
-@property (nonatomic, strong) NSMutableArray <NSNumber *> *redValues;
-@property (nonatomic, strong) NSMutableArray <NSNumber *> *violetValues;
+@property (nonatomic, strong) NSMutableArray *whiteValues;
+@property (nonatomic, strong) NSMutableArray *blue1Values;
+@property (nonatomic, strong) NSMutableArray *blue2Values;
+@property (nonatomic, strong) NSMutableArray *greenValues;
+@property (nonatomic, strong) NSMutableArray *redValues;
+@property (nonatomic, strong) NSMutableArray *violetValues;
+
+//预设数值数组
+@property (nonatomic, strong) NSMutableArray <NSNumber *> *lpsDemo;
+@property (nonatomic, strong) NSMutableArray <NSNumber *> *spsDemo;
 
 @end
 
@@ -90,6 +94,7 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationToPortrait:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -197,7 +202,7 @@
         make.top.equalTo(weakself.whiteLcView);
         make.left.equalTo(weakself.redLcView.mas_right);
     }];
-     
+    
     [self.lineChartView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(CurrentDeviceSize(10)));
         make.top.equalTo(weakself.whiteLcView.mas_bottom).offset(CurrentDeviceSize(10));
@@ -257,15 +262,12 @@
 #pragma mark 载入预设值
 - (void)lpsSelected
 {
-//    NSArray *temp = [NSArray arrayWithArray:kLPS];
     [self.lineChartView setChartSchValues:kLPS[self.currentIndex]];
-//   @[ @[@"0",@"0",@"0",@"0",@"0",@"0",@"5",@"10",@"15",@"20",@"25",@"30",@"40",@"51",@"62",@"62",@"51",@"40",@"30",@"25",@"20",@"15",@"10",@"0"], @[@"0",@"0",@"0",@"0",@"0",@"0",@"3",@"8",@"20",@"30",@"40",@"50",@"60",@"70",@"80",@"80",@"70",@"60",@"50",@"40",@"30",@"20",@"8",@"0"], @[@"0",@"0",@"0",@"0",@"0",@"0",@"5",@"15",@"30",@"45",@"56",@"68",@"75",@"85",@"90",@"90",@"85",@"75",@"68",@"56",@"45",@"30",@"15",@"0"], @[@"0",@"0",@"0",@"0",@"0",@"0",@"3",@"5",@"8",@"10",@"12",@"15",@"20",@"25",@"30",@"30",@"25",@"20",@"15",@"12",@"10",@"8",@"5",@"0"], @[@"0",@"0",@"0",@"0",@"0",@"0",@"0",@"3",@"3",@"6",@"8",@"10",@"13",@"17",@"20",@"20",@"17",@"13",@"10",@"8",@"6",@"3",@"3",@"0"], @[@"0",@"0",@"0",@"0",@"0",@"0",@"3",@"6",@"18",@"20",@"25",@"30",@"40",@"51",@"62",@"62",@"51",@"40",@"30",@"25",@"20",@"18",@"6",@"0"]
-//  ];
 }
 
 - (void)spsSelected
 {
-  [self.lineChartView setChartSchValues:kSPS[self.currentIndex]];
+    [self.lineChartView setChartSchValues:kSPS[self.currentIndex]];
 }
 
 - (void)growthSelected
@@ -285,14 +287,14 @@
         [HudHelper showInfoWithStatus:@"请修改定时任务名字"];
         return;
     }
-
+    
     NSString *str = self.dic[@(self.currentIndex)];
-//    NSMutableDictionary *attrsDic = [NSMutableDictionary dictionary];
-//    @weakify(attrsDic);
-//    [self.dic enumerateKeysAndObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-//        @strongify(attrsDic);
-//        [attrsDic setObject:@"" forKey:obj];
-//    }];
+    //    NSMutableDictionary *attrsDic = [NSMutableDictionary dictionary];
+    //    @weakify(attrsDic);
+    //    [self.dic enumerateKeysAndObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+    //        @strongify(attrsDic);
+    //        [attrsDic setObject:@"" forKey:obj];
+    //    }];
     
     [SVProgressHUD show];
     self.count = 0;
@@ -302,13 +304,18 @@
     {
         NSMutableDictionary *body = [NSMutableDictionary
                                      dictionaryWithDictionary:@{
-                                                                @"attrs":@{str:@([self.lineChartView getChartValues][i].integerValue),
+                                                                @"attrs":@{@"color_white":@([self.whiteValues[i] integerValue]),
+                                                                           @"color_blue1":@([self.blue1Values[i] integerValue]),
+                                                                           @"color_blue2":@([self.blue2Values[i] integerValue]),
+                                                                           @"color_green":@([self.greenValues[i] integerValue]),
+                                                                           @"color_red":@([self.redValues[i] integerValue]),
+                                                                           @"color_violet":@([self.violetValues[i] integerValue]),
                                                                            @"Timer" :@(1)
                                                                            },
                                                                 @"date":[[NSDate dateWithTimeInterval:24*60*60 sinceDate:[NSDate date]] formattedDateWithFormat:@"yyyy-MM-dd"],
                                                                 @"time":[NSString stringWithFormat:@"%02d:00",i],
-                                                                @"repeat":@"none",
-                                                                @"enabled":@(NO),
+                                                                @"repeat":@"mon,tue,wed,thu,fri,sat,sun",
+                                                                @"enabled":@(0),
                                                                 @"remark":self.timingTextView.text}];
         if (self.dev) {
             [body setObject:self.dev.did forKey:@"did"];
@@ -318,10 +325,10 @@
         }
         [NetworkHelper sendRequest:body Method:@"POST" Path:@"https://api.gizwits.com/app/common_scheduler" callback:^(NSData *data, NSError *error) {
             @strongify(self);
-//            @synchronized(self)
-//            {
-//                self.count++;
-//            }
+            //            @synchronized(self)
+            //            {
+            //                self.count++;
+            //            }
             if (data != nil) {
                 NSDictionary *tempDic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
                 NSLog(@"%@",tempDic);
@@ -422,6 +429,8 @@
         self.currentSelectView.isClicked = NO;
     }
     
+    [self getValuesWhithSelectedIndex];
+    
     if ([view isEqual:self.whiteLcView])
     {
         [self.lineChartView setSelectedIndex:0];
@@ -459,8 +468,45 @@
         self.currentSelectView = self.puepleLcView;
     }
     
-    if (self.yusheSelected >= 0) {
-        [self selectIndex:self.yusheSelected];
+//    if (self.yusheSelected < 0) {
+//        [self selectIndex:self.yusheSelected];
+//    }
+}
+
+- (void)getValuesWhithSelectedIndex {
+    switch (self.currentIndex) {
+        case 0:
+        {
+            self.whiteValues = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
+        }
+            break;
+        case 1:
+        {
+            self.blue1Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
+        }
+            break;
+        case 2:
+        {
+            self.blue2Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
+        }
+            break;
+        case 3:
+        {
+            self.greenValues = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
+        }
+            break;
+        case 4:
+        {
+            self.redValues = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
+        }
+            break;
+        case 5:
+        {
+            self.violetValues = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
+        }
+            break;
+        default:
+            break;
     }
 }
 
@@ -470,26 +516,40 @@
     if (0 == index)
     {
         [self spsSelected];
+        [self setupTempValuesWithArrays:kSPS];
     }
     else if (1 == index)
     {
         [self lpsSelected];
+        [self setupTempValuesWithArrays:kLPS];
     }
     else if (2 == index)
     {
         [self growthSelected];
+        [self setupTempValuesWithArrays:kGrowth];
     }
     else if (3 == index)
     {
         [self reefAquariumSelected];
+        [self setupTempValuesWithArrays:kReef];
     }
     self.selectView.hidden = YES;
+}
+
+- (void)setupTempValuesWithArrays:(NSArray *)array {
+    self.whiteValues = array[0];
+    self.blue1Values = array[1];
+    self.blue2Values = array[2];
+    self.greenValues = array[3];
+    self.redValues = array[4];
+    self.violetValues = array[5];
 }
 
 - (void)timingChartViewValueChange:(NSInteger)value
 {
     self.currentSelectView.value = value;
 }
+
 
 #pragma mark - notifacation
 - (void)orientationToPortrait:(UIInterfaceOrientation)orientation {
@@ -726,14 +786,81 @@
     self.timingTextView.text = type;
     if ([type isEqualToString:@"LPS"]) {
         [self.lineChartView setChartSchValues:kLPS[0]];
+        [self setupTempValuesWithArrays:kLPS];
         self.yusheSelected = 1;
     }else if ([type isEqualToString:@"SPS"])
     {
         [self.lineChartView setChartSchValues:kSPS[0]];
+        [self setupTempValuesWithArrays:kSPS];
         self.yusheSelected = 0;
     }
     [self.lineChartView setSelectedIndex:0];
     self.currentIndex = 0;
     self.currentSelectView = self.whiteLcView;
+}
+
+#pragma mark 颜色值数组
+- (NSMutableArray *)whiteValues {
+    //白
+    if (!_whiteValues) {
+        _whiteValues = [NSMutableArray array];
+    }
+    return _whiteValues;
+}
+
+- (NSMutableArray *)blue1Values {
+    //浅蓝
+    if (!_blue1Values) {
+        _blue1Values = [NSMutableArray array];
+    }
+    return _blue1Values;
+}
+
+- (NSMutableArray *)blue2Values {
+    //蓝
+    if (!_blue2Values) {
+        _blue2Values = [NSMutableArray array];
+    }
+    return _blue2Values;
+}
+
+- (NSMutableArray *)greenValues {
+    //绿
+    if (!_greenValues) {
+        _greenValues = [NSMutableArray array];
+    }
+    return _greenValues;
+}
+
+- (NSMutableArray *)redValues {
+    //红
+    if (!_redValues) {
+        _redValues = [NSMutableArray array];
+    }
+    return _redValues;
+}
+
+- (NSMutableArray *)violetValues {
+    //紫?
+    if (!_violetValues) {
+        _violetValues = [NSMutableArray array];
+    }
+    return _violetValues;
+}
+
+#pragma mark 预设颜色数组 暂时还没动
+- (NSMutableArray *)lpsDemo {
+    if (!_lpsDemo) {
+        _lpsDemo = [NSMutableArray array];
+    }
+    return _lpsDemo;
+}
+
+- (NSMutableArray *)spsDemo {
+    
+    if (!_spsDemo) {
+        _spsDemo = [NSMutableArray array];
+    }
+    return _spsDemo;
 }
 @end

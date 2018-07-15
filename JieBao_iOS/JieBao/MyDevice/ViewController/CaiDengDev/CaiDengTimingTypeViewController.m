@@ -79,11 +79,11 @@
         DeviceSchedulerTask *LPStask = [DeviceSchedulerTask new];
         LPStask.taskLogo = @"dingshichengxu";
         LPStask.taskName = @"LPS程序";
-      
+
         DeviceSchedulerTask *SPStask = [DeviceSchedulerTask new];
         SPStask.taskName = @"SPS程序";
         SPStask.taskLogo = @"dingshichengxu";
-        
+
         [self.dataSource addObject:LPStask];
         [self.dataSource addObject:SPStask];
         
@@ -92,9 +92,11 @@
         DeviceSchedulerTask *task = nil;
         for (int i = 0; i< list.count; i++) {
             DeviceCommonSchulder *sch = [DeviceCommonSchulder yy_modelWithJSON:list[i]];
+            
 //            [NetworkHelper sendRequest:nil Method:@"DELETE" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler/%@",sch.sid] callback:^(NSData *data, NSError *error) {
 //
 //            }];
+            
             if (![taskName isEqualToString:sch.remark]) {
                 arr = [NSMutableArray array];
                 taskName = sch.remark;
@@ -249,7 +251,7 @@
         {
             vc.type = @"LPS";
         }
-        else if (indexPath.row ==1)
+        else if (indexPath.row == 1)
         {
             vc.type = @"SPS";
         }
@@ -291,8 +293,8 @@
 
 - (void)confirmBtnClicked
 {
-    self.count = 0;
-    self.sucCount = 0;
+    //    self.count = 0;
+    //    self.sucCount = 0;
     //    if (self.currentIndex == 0) {
     //
     //    }else if(self.currentIndex == 1){
@@ -405,10 +407,11 @@
                 return ;
             }
             
-            @synchronized(self)
-            {
-                self.sucCount++;
-            }
+//            @synchronized(self)
+//            {
+//                self.sucCount++;
+//            }
+            self.sucCount++;
             if (self.count == 24) {
                 if (self.sucCount == 24) {
                     [HudHelper showSuccessWithStatus:@"设置成功"];

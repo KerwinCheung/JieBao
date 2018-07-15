@@ -83,14 +83,15 @@
         for (int i = 0; i <24; i++) {
             LHWeakSelf(self)
             UISlider *slider = [self viewWithTag:100+i];
+            slider.backgroundColor = [UIColor clearColor];
             CGFloat width = self.bounds.size.width;
             CGFloat cenX = ((CGFloat)(i)/24)*(width-CurrentDeviceSize(10));
             CGPoint point = CGPointMake(cenX, (1-((CGFloat)(slider.value/100)))*self.bounds.size.height);
             self.points[i] = [NSValue valueWithCGPoint:point];
             
             [slider mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.width.equalTo(@(weakself.bounds.size.height));
-                make.height.equalTo(@(CurrentDeviceSize(4)));
+                make.width.equalTo(@(weakself.bounds.size.height + 2));
+                make.height.equalTo(@(CurrentDeviceSize(6)));
                 make.left.equalTo(@(cenX - ((CGFloat)(weakself.bounds.size.height/2))));
                 make.centerY.equalTo(weakself.mas_centerY);
             }];
