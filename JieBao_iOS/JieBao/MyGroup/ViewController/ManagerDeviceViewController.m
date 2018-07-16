@@ -40,8 +40,6 @@
 {
     [super viewWillAppear:animated];
     [self.tabBarController.tabBar setHidden:YES];
-   
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -57,19 +55,7 @@
     [self.addBgview addSubview:self.addBtn];
     self.tb.tableFooterView = self.addBgview;
     self.addBgview.hidden = YES;
-//    LHWeakSelf(self)
-//    [self.addBgview mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.height.equalTo(@(CurrentDeviceSize(80)));
-//        make.bottom.equalTo(weakself.view.mas_bottom).offset(-CurrentDeviceSize(100));
-//        make.left.right.equalTo(@0);
-//        make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(40), CurrentDeviceSize(40)));
-//
-//    }];
-//
-//    [self.addBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.center.equalTo(weakself.addBgview);
-//        make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(40), CurrentDeviceSize(40)));
-//    }];
+
 }
 
 - (void)showEdit

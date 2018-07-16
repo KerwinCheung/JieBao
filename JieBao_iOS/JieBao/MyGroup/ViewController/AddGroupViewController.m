@@ -97,6 +97,8 @@
     }];
 }
 
+
+#pragma mark - tableView Delegate|DataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"AddGroupCell";
@@ -129,6 +131,7 @@
     [self.navigationController pushViewController:[NSClassFromString(@"EditAddGroupViewController") new] animated:YES];
 }
 
+#pragma mark - lazy init
 - (BaseTableView *)tb
 {
     if (!_tb) {

@@ -84,6 +84,7 @@
     self.valuelb.text = [NSString stringWithFormat:@"%ld%%",(NSInteger)self.slider.value];
 }
 
+
 - (UIView *)sliderBGView
 {
     if (!_sliderBGView) {
@@ -98,7 +99,7 @@
     if (!_valuelb) {
         _valuelb = [UILabel new];
         _valuelb.font = [UIFont sf_systemFontOfSize:12];
-        _valuelb.text = @"0.0%";
+        _valuelb.text = @"0%";
     }
     return _valuelb;
 }

@@ -61,7 +61,7 @@
     [self.naviBar  configNavigationBarWithAttrs:@{
                                                   kCustomNaviBarLeftActionKey:leftAction,
                                                   kCustomNaviBarLeftImgKey:@"back",
-                                                  kCustomNaviBarTitleKey:@"编辑分组",
+                                                  kCustomNaviBarTitleKey:@"添加分组",
                                                   }];
     [self.tabBarController.tabBar setHidden:YES];
 }
@@ -145,7 +145,7 @@
 - (void)confirmBtnClicked
 {
     if (self.temps.count == 0) {
-        [self alertShowMessage:@"请添加设备" title:@"提示" confirmCallback:nil cancelCallback:nil];
+        [HudHelper showErrorWithStatus:@"请选择设备"];
         return;
     }
     NSString *path = @"https://api.gizwits.com/app/group";
@@ -176,12 +176,14 @@
             return;
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self alertShowMessage:@"添加成功" title:@"提示" confirmCallback:nil cancelCallback:nil];
-            [self.navigationController popViewControllerAnimated:YES];
+
+            [HudHelper showSuccessWithStatus:@"添加成功"];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         });
     }];
 }
 
+#pragma mark - tableView Delegate|DataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"OpenGroupCell";
@@ -220,6 +222,7 @@
     }
 }
 
+#pragma mark - lazy init
 - (BaseTableView *)tb
 {
     if (!_tb) {

@@ -4,7 +4,7 @@
 //
 //  Created by yangzhenmin on 2018/4/23.
 //  Copyright © 2018年 yangzhenmin. All rights reserved.
-//
+//  手动模式
 
 #import "CaiDengHandViewController.h"
 #import "SliderView.h"
@@ -158,20 +158,9 @@
                           @"volor_violet":@(self.purpleSlider.value),
                           @"Timer":@(0)}
                  withSN:201];
-//        [self.dev write:@{@"mode":@(0),@"color_blue1":@(self.sapphireBlueSlider.value)} withSN:202];
-//        [self.dev write:@{@"mode":@(0),@"color_blue2":@(self.blueSlider.value)} withSN:203];
-//        [self.dev write:@{@"mode":@(0),@"color_green":@(self.greenSlider.value)} withSN:204];
-//        [self.dev write:@{@"mode":@(0),@"color_red":@(self.redSlider.value)} withSN:205];
-//        [self.dev write:@{@"mode":@(0),@"volor_violet":@(self.purpleSlider.value)} withSN:206];
+
     }else{
-//        NSArray *arr = @[@{@"mode":@(0),@"color_white":@(self.whiteSlider.value)},
-//                         @{@"mode":@(0),@"color_blue1":@(self.sapphireBlueSlider.value)},
-//                         @{@"mode":@(0),@"color_blue2":@(self.blueSlider.value)},
-//                         @{@"mode":@(0),@"color_green":@(self.greenSlider.value)},
-//                         @{@"mode":@(0),@"color_red":@(self.redSlider.value)},
-//                         @{@"mode":@(0),@"volor_violet":@(self.purpleSlider.value)}];
-//        for (NSDictionary *dic in arr) {
-//            NSDictionary *body = @{@"attrs":dic};
+
         NSDictionary *sendDataDic = @{@"mode":@(0),
                                       @"color_white":@(self.whiteSlider.value),
                                       @"color_blue1":@(self.sapphireBlueSlider.value),
@@ -184,15 +173,9 @@
                 if (!data || error) {
                     return ;
                 }
-//                @synchronized(self)
-//                {
-//                    self.count++;
-//                }
-//                if (self.count == 6) {
+
                     [HudHelper showSuccessWithStatus:@"设置成功"];
-//                }
             }];
-//        }
     }
 }
 
@@ -265,6 +248,7 @@
     if (!_whiteSlider) {
         _whiteSlider = [[SliderView alloc]init];
         [_whiteSlider setTrickImg:@"wirte"];
+        _whiteSlider.title = @"白色";
     }
     return _whiteSlider;
 }
@@ -274,6 +258,7 @@
     if (!_sapphireBlueSlider) {
         _sapphireBlueSlider = [SliderView new];
         [_sapphireBlueSlider setTrickImg:@"bluue1"];
+        _sapphireBlueSlider.title = @"宝蓝色";
     }
     return _sapphireBlueSlider;
 }
@@ -283,6 +268,7 @@
     if (!_blueSlider) {
         _blueSlider = [SliderView new];
         [_blueSlider setTrickImg:@"sblue"];
+        _blueSlider.title = @"蓝色";
     }
     return _blueSlider;
 }
@@ -292,6 +278,7 @@
     if (!_greenSlider) {
         _greenSlider = [SliderView new];
         [_greenSlider setTrickImg:@"gree"];;
+        _blueSlider.title = @"绿色";
     }
     return _greenSlider;
 }
@@ -301,6 +288,7 @@
     if (!_redSlider) {
         _redSlider = [SliderView new];
         [_redSlider setTrickImg:@"sred"];
+        _redSlider.title = @"红色";
     }
     return _redSlider;
 }
@@ -310,6 +298,7 @@
     if (!_purpleSlider) {
         _purpleSlider = [SliderView new];
         [_purpleSlider setTrickImg:@"szi"];
+        _purpleSlider.title = @"紫色";
     }
     return _purpleSlider;
 }

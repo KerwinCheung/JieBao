@@ -162,6 +162,7 @@
     }];
 }
 
+#pragma mark - UI事件
 - (void)loginBtnEnable
 {
     self.loginBtn.userInteractionEnabled = YES;
@@ -179,12 +180,13 @@
 {
     LHWeakSelf(self)
     if (self.usrTextView.text.length != 11) {
-        [HudHelper showStatus:@"请输入正确手机号码"];
+        [HudHelper showErrorWithStatus:@"请输入正确手机号码"];
         return;
     }
     
     if (self.pswTextView.text.length < 6 || self.pswTextView.text.length > 16) {
-        [HudHelper showStatus:@"请按提示输入密码"];
+        [HudHelper showErrorWithStatus:@"请输入6-16位密码"];
+
         return;
     }
     
@@ -260,6 +262,8 @@
     return YES;
 }
 
+
+#pragma mark - lazy init
 - (UIImageView *)headImgView
 {
     if (!_headImgView) {

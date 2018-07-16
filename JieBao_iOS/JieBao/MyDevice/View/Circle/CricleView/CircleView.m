@@ -61,8 +61,8 @@
  */
 - (void)showImage{
 //    self.backgroundColor = [UIColor grayColor];
-    _bgImageView = [[UIImageView alloc ]initWithFrame:self.bounds];
-//    _bgImageView.image = [UIImage imageNamed:@"转盘"];
+    _bgImageView = [[UIImageView alloc ]init];
+    _bgImageView.image = [UIImage imageNamed:@"quan"];
     [self addSubview:_bgImageView];
      __weak typeof (self) weakSelf = self;
     [self addSubview:_centerImgView];
@@ -78,11 +78,17 @@
     CGFloat heigh = dragImageView.frame.size.height;
     //计算半径
     radius = MIN(self.frame.size.width-width, self.frame.size.height-heigh)/2.0 - 10 * kScale;
+    
+    // 根据半径算出背景图片的坐标
+    _bgImageView.frame = CGRectMake((self.bounds.size.width*0.5 - radius), (self.bounds.size.height*0.5 - radius),2*radius, 2*radius);
+    
     for (int i=0; i<arrImages.count; i++) {
+        
         fRadina = [self getRadinaByRadian:i*average_radina]-0.3;
         CGPoint point = [self getPointByRadian:fRadina centreOfCircle:center radiusOfCircle:radius];
         DragImageView *imageview = [arrImages objectAtIndex:i];
         imageview.center = point;
+        imageview.backgroundColor = [UIColor whiteColor];
         imageview.current_radian = fRadina;
         imageview.radian = fRadina;
         imageview.view_point = point;

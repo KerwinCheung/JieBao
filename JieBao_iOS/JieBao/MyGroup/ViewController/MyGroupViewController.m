@@ -66,8 +66,11 @@
                                                   kCustomNaviBarRightImgKey:@"tianjia",
                                                   kCustomNaviBarRightActionKey:rightAction
                                                   }];
+    [self.tabBarController.tabBar setHidden:NO];
+
 }
 
+#pragma mark - 获取分组列表
 - (void)requestGroups
 {
     NSString *path = @"https://api.gizwits.com/app/group";
@@ -93,6 +96,7 @@
     }];
 }
 
+#pragma mark - collection Delegate|DataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.dataSource.count;
@@ -115,6 +119,7 @@
     return cell;
 }
 
+#pragma mark - 手势
 - (void)longPress:(UILongPressGestureRecognizer *)ges
 {
     if (ges.state == UIGestureRecognizerStateEnded) {
@@ -147,6 +152,13 @@
     [self.navigationController pushViewController:[NSClassFromString(@"AddGroupViewController") new] animated:YES];
 }
 
+#pragma mark - NoGroupView Delegate
+-(void)addBtnClicked{
+    [self addGroupDidSelected];
+}
+
+
+#pragma mark - lazy init
 - (BaseCollectionView *)cv
 {
     if (!_cv) {

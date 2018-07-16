@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface SliderView : UIView
 
 @property (nonatomic, assign) CGFloat value;

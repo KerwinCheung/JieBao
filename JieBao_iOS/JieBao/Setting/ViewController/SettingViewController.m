@@ -93,6 +93,7 @@
     [self.navigationController pushViewController:[LoginViewController new] animated:YES];
 }
 
+#pragma mark - tableView Delegate |DataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"SettingContentCell";
@@ -103,7 +104,7 @@
     cell.dataDic = self.dataSource[indexPath.row];
     if (indexPath.row == self.dataSource.count - 1) {
         cell.dataDic = self.dataSource[indexPath.row];
-        cell.versionStr = [NSString stringWithFormat:@"V%@",[[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey]];
+        cell.versionStr = [NSString stringWithFormat:@"V%@.%@",[[[NSBundle mainBundle]infoDictionary] objectForKey:@"CFBundleShortVersionString"],[[[NSBundle mainBundle]infoDictionary] objectForKey:@"CFBundleVersion"]];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -147,6 +148,7 @@
     }
 }
 
+#pragma mark - lazy init
 - (SettingHeadView *)headView
 {
     if (!_headView) {
