@@ -304,17 +304,16 @@
     @weakify(self);
     for (int i = 0; i < 24; i++)
     {
+        //@"date":[[NSDate dateWithTimeInterval:24*60*60 sinceDate:[NSDate date]] formattedDateWithFormat:@"yyyy-MM-dd"],
         NSMutableDictionary *body = [NSMutableDictionary
-                                     dictionaryWithDictionary:@{
-                                                                @"attrs":@{@"color_white":@([self.whiteValues[i] integerValue]),
+                                     dictionaryWithDictionary:@{@"attrs":@{@"color_white":@([self.whiteValues[i] integerValue]),
                                                                            @"color_blue1":@([self.blue1Values[i] integerValue]),
                                                                            @"color_blue2":@([self.blue2Values[i] integerValue]),
                                                                            @"color_green":@([self.greenValues[i] integerValue]),
                                                                            @"color_red":@([self.redValues[i] integerValue]),
-                                                                           @"color_violet":@([self.violetValues[i] integerValue]),
-                                                                           @"Timer" :@(1)
+                                                                           @"volor_violet":@([self.violetValues[i] integerValue]),
+                                                                           @"Timer" :@YES
                                                                            },
-                                                                @"date":[[NSDate dateWithTimeInterval:24*60*60 sinceDate:[NSDate date]] formattedDateWithFormat:@"yyyy-MM-dd"],
                                                                 @"time":[NSString stringWithFormat:@"%02d:00",i],
                                                                 @"repeat":@"mon,tue,wed,thu,fri,sat,sun",
                                                                 @"enabled":@(0),
