@@ -112,7 +112,8 @@
     }];
     
     [self.valuelb mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakself.slider.mas_centerX);
+//        make.centerX.equalTo(weakself.slider.mas_centerX);
+         make.right.equalTo(weakself.sliderBGView.mas_right).offset(-CurrentDeviceSize(20));
         make.top.equalTo(@(CurrentDeviceSize(20)));
         make.width.lessThanOrEqualTo(@200);
     }];
@@ -129,6 +130,7 @@
 - (void)sliderValueChanged
 {
     self.valuelb.text = [NSString stringWithFormat:@"%ld%%",(NSInteger)self.slider.value];
+    [self settingBtnClicked];
 }
 
 - (void)settingBtnClicked
@@ -144,7 +146,7 @@
                 [HudHelper showErrorWithStatus:@"设置失败"];
                 return ;
             }
-            [HudHelper showSuccessWithStatus:@"设置成功"];
+//            [HudHelper showSuccessWithStatus:@"设置成功"];
         }];
     }
 }
@@ -159,7 +161,7 @@
         }
         
         if ([sn integerValue] == 104) {
-            [HudHelper showSuccessWithStatus:@"设置成功"];
+//            [HudHelper showSuccessWithStatus:@"设置成功"];
         }
     }else
     {
@@ -171,6 +173,7 @@
     }
 }
 
+#pragma mark - lazy init
 - (UIImageView *)nightImgView
 {
     if (!_nightImgView) {

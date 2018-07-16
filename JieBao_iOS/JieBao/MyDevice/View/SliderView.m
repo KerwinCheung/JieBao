@@ -82,6 +82,10 @@
 - (void)sliderValueChanged:(BaseSlider *)slider
 {
     self.valuelb.text = [NSString stringWithFormat:@"%ld%%",(NSInteger)self.slider.value];
+    
+    if ([self.delegate respondsToSelector:@selector(SliderViewChanged:withSliderView:)]) {
+        [self.delegate SliderViewChanged:self.slider.value withSliderView:self];
+    }
 }
 
 
@@ -133,6 +137,7 @@
 
 - (void)setValue:(CGFloat)value {
     self.slider.value = value;
+    self.valuelb.text = [NSString stringWithFormat:@"%ld%%",(NSInteger)value];
 }
 
 - (void)setTitle:(NSString *)title

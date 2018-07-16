@@ -9,7 +9,7 @@
 #import "CaiDengHandViewController.h"
 #import "SliderView.h"
 
-@interface CaiDengHandViewController ()<GizWifiDeviceDelegate>
+@interface CaiDengHandViewController ()<GizWifiDeviceDelegate,SliderViewDelegate>
 
 @property (nonatomic, strong) UIImageView *imgView;
 
@@ -51,22 +51,18 @@
         LHLog(@"left");
     };
     
-    ActionBlock rightAction = ^(UIButton *btn){
-        [weakself setConfig];
-    };
+
     [self.naviBar  configNavigationBarWithAttrs:@{
                                                   kCustomNaviBarLeftActionKey:leftAction,
                                                   kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"手动设置模式",
-                                                  kCustomNaviBarRightImgKey:@"设定",
-                                                  kCustomNaviBarRightActionKey:rightAction
+                                                 
                                                   }];
     
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.view.backgroundColor = kAPPBackGround;
     [self initUI];
     
@@ -74,7 +70,6 @@
         self.dev.delegate = self;
         [self.dev getDeviceStatus:@[@"color_white",@"color_blue1",@"color_blue2",@"color_green",@"color_red",@"volor_violet"]];
     }
-    [self performSelectorOnMainThread:@selector(setSliderValue) withObject:nil waitUntilDone:NO];
 }
 
 - (void)initUI
@@ -146,37 +141,147 @@
 }
 
 #pragma mark - navigationRightBtnAction
-- (void)setConfig
+- (void)setConfigWithTag:(NSInteger )tag
 {
     if (self.dev) {
-        [self.dev write:@{@"mode":@(0),
-                          @"color_white":@(self.whiteSlider.value),
-                          @"color_blue1":@(self.sapphireBlueSlider.value),
-                          @"color_blue2":@(self.blueSlider.value),
-                          @"color_green":@(self.greenSlider.value),
-                          @"color_red":@(self.redSlider.value),
-                          @"volor_violet":@(self.purpleSlider.value),
-                          @"Timer":@(0)}
-                 withSN:201];
+        switch (tag) {
+            case 100:
+                [self.dev write:@{@"mode":@(0),
+                                  @"color_white":@(self.whiteSlider.value),
+                                  @"Timer":@(0)}
+                         withSN:201];
+                break;
+            case 101:
+                [self.dev write:@{@"mode":@(0),
+                                  @"color_blue1":@(self.sapphireBlueSlider.value),
+                               
+                                  @"Timer":@(0)}
+                         withSN:201];
+                break;
+            case 102:
+                [self.dev write:@{@"mode":@(0),
+                                 
+                                  @"color_blue2":@(self.blueSlider.value),
+                                 
+                                  @"Timer":@(0)}
+                         withSN:201];
+                break;
+            case 103:
+                [self.dev write:@{@"mode":@(0),
+                                  
+                                  @"color_green":@(self.greenSlider.value),
+                                 
+                                  @"Timer":@(0)}
+                         withSN:201];
+                break;
+            case 104:
+                [self.dev write:@{@"mode":@(0),
+                                 
+                                  @"color_red":@(self.redSlider.value),
+                                 
+                                  @"Timer":@(0)}
+                         withSN:201];
+                break;
+            case 105:
+                [self.dev write:@{@"mode":@(0),
+                                
+                                  @"volor_violet":@(self.purpleSlider.value),
+                                  @"Timer":@(0)}
+                         withSN:201];
+                break;
+                
+            default:
+                break;
+        }
+        
 
     }else{
-
-        NSDictionary *sendDataDic = @{@"mode":@(0),
-                                      @"color_white":@(self.whiteSlider.value),
-                                      @"color_blue1":@(self.sapphireBlueSlider.value),
-                                      @"color_blue2":@(self.blueSlider.value),
-                                      @"color_green":@(self.greenSlider.value),
-                                      @"color_red":@(self.redSlider.value),
-                                      @"volor_violet":@(self.purpleSlider.value),
-                                      @"Timer":@(0)};
-            [NetworkHelper sendRequest:sendDataDic Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
-                if (!data || error) {
-                    return ;
-                }
-
-                    [HudHelper showSuccessWithStatus:@"设置成功"];
-            }];
+        [self setGroupInstructionWithTag:tag];
+        
+//        NSDictionary *sendDataDic = @{@"mode":@(0),
+//                                      @"color_white":@(self.whiteSlider.value),
+//                                      @"color_blue1":@(self.sapphireBlueSlider.value),
+//                                      @"color_blue2":@(self.blueSlider.value),
+//                                      @"color_green":@(self.greenSlider.value),
+//                                      @"color_red":@(self.redSlider.value),
+//                                      @"volor_violet":@(self.purpleSlider.value),
+//                                      @"Timer":@(0)};
+//
+//
+//
+//
+//
+//            [NetworkHelper sendRequest:sendDataDic Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
+//                if (!data || error) {
+//                    return ;
+//                }
+//
+//            }];
     }
+}
+
+-(void)setGroupInstructionWithTag:(NSInteger)tag{
+    
+    NSDictionary *sendDataDic = [NSDictionary dictionary];
+    switch (tag) {
+        case 100:
+           
+            sendDataDic = @{@"mode":@(0),
+                            @"color_white":@(self.whiteSlider.value),
+                          
+                            @"Timer":@(0)};
+            break;
+        case 101:
+            
+            sendDataDic = @{@"mode":@(0),
+                            @"color_blue1":@(self.sapphireBlueSlider.value),
+                          
+                            @"Timer":@(0)};
+            break;
+        case 102:
+           
+            sendDataDic = @{@"mode":@(0),
+                          
+                            @"color_blue2":@(self.blueSlider.value),
+                        
+                            @"Timer":@(0)};
+            break;
+        case 103:
+          
+            sendDataDic = @{@"mode":@(0),
+                           
+                            @"color_green":@(self.greenSlider.value),
+                          
+                            @"Timer":@(0)};
+            break;
+        case 104:
+          
+            sendDataDic = @{@"mode":@(0),
+                           
+                            @"color_red":@(self.redSlider.value),
+                            @"Timer":@(0)};
+            break;
+        case 105:
+          
+            sendDataDic = @{@"mode":@(0),
+                           
+                            @"volor_violet":@(self.purpleSlider.value),
+                            @"Timer":@(0)};
+            break;
+            
+        default:
+            break;
+    }
+    
+    if (sendDataDic.count > 0) {
+        [NetworkHelper sendRequest:sendDataDic Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
+            if (!data || error) {
+                return ;
+            }
+            
+        }];
+    }
+    
 }
 
 #pragma mark - device delegate
@@ -208,19 +313,61 @@
 //        }
         
         if (sn.integerValue == 201) {
-            [HudHelper showSuccessWithStatus:@"设置成功"];
+//            [HudHelper showSuccessWithStatus:@"设置成功"];
         }
     }else{
         if ([sn integerValue] == 101) {
             [HudHelper showSuccessWithStatus:@"设置失败"];
             return;
         }
-        [self showErrorWithStatusWhithCode:result.code];
+//        [self showErrorWithStatusWhithCode:result.code];
     }
 }
 
-- (void)setSliderValue {
-    [self.whiteSlider setValue:60];
+
+
+#pragma mark - SliderView Delegate
+-(void)SliderViewChanged:(float)value withSliderView:(SliderView *)sliderView{
+    switch (sliderView.tag) {
+        case 100:
+        {
+            [self setConfigWithTag:100];
+        }
+            break;
+        case 101:
+        {
+            [self setConfigWithTag:101];
+
+        }
+            break;
+        case 102:
+        {
+            [self setConfigWithTag:102];
+
+        }
+            break;
+        case 103:
+        {
+            [self setConfigWithTag:103];
+
+        }
+            break;
+        case 104:
+        {
+            [self setConfigWithTag:104];
+
+        }
+            break;
+        case 105:
+        {
+            [self setConfigWithTag:105];
+
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - getter
@@ -249,6 +396,8 @@
         _whiteSlider = [[SliderView alloc]init];
         [_whiteSlider setTrickImg:@"wirte"];
         _whiteSlider.title = @"白色";
+        _whiteSlider.tag = 100;
+        _whiteSlider.delegate = self;
     }
     return _whiteSlider;
 }
@@ -259,6 +408,8 @@
         _sapphireBlueSlider = [SliderView new];
         [_sapphireBlueSlider setTrickImg:@"bluue1"];
         _sapphireBlueSlider.title = @"宝蓝色";
+        _sapphireBlueSlider.tag = 101;
+        _sapphireBlueSlider.delegate = self;
     }
     return _sapphireBlueSlider;
 }
@@ -269,6 +420,8 @@
         _blueSlider = [SliderView new];
         [_blueSlider setTrickImg:@"sblue"];
         _blueSlider.title = @"蓝色";
+        _blueSlider.tag = 102;
+        _blueSlider.delegate = self;
     }
     return _blueSlider;
 }
@@ -278,7 +431,9 @@
     if (!_greenSlider) {
         _greenSlider = [SliderView new];
         [_greenSlider setTrickImg:@"gree"];;
-        _blueSlider.title = @"绿色";
+        _greenSlider.title = @"绿色";
+        _greenSlider.tag = 103;
+        _greenSlider.delegate = self;
     }
     return _greenSlider;
 }
@@ -289,6 +444,8 @@
         _redSlider = [SliderView new];
         [_redSlider setTrickImg:@"sred"];
         _redSlider.title = @"红色";
+        _redSlider.tag = 104;
+        _redSlider.delegate = self;
     }
     return _redSlider;
 }
@@ -299,6 +456,8 @@
         _purpleSlider = [SliderView new];
         [_purpleSlider setTrickImg:@"szi"];
         _purpleSlider.title = @"紫色";
+        _purpleSlider.tag = 105;
+        _purpleSlider.delegate = self;
     }
     return _purpleSlider;
 }

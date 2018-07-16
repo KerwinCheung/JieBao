@@ -8,9 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class SliderView;
+@protocol SliderViewDelegate<NSObject>
+
+- (void)SliderViewChanged:(float)value withSliderView:(SliderView *)sliderView;
+
+@end
 
 @interface SliderView : UIView
 
+@property (nonatomic, assign)id<SliderViewDelegate>delegate;
 @property (nonatomic, assign) CGFloat value;
 
 @property (nonatomic, copy) NSString *title;
