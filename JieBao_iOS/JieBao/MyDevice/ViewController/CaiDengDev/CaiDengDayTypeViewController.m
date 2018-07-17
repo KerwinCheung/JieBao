@@ -230,7 +230,7 @@
         _slider.maximumValue = 100;
         _slider.minimumTrackTintColor = kAPPThemeColor;
         [_slider setThumbImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
-        [_slider addTarget:self action:@selector(sliderValueChanged) forControlEvents:UIControlEventValueChanged];
+        [_slider addTarget:self action:@selector(sliderValueChanged) forControlEvents:UIControlEventTouchUpInside];
         [_slider setMinimumTrackImage:[UIImage imageNamed:@"bluue1"] forState:UIControlStateNormal];
     }
     return _slider;

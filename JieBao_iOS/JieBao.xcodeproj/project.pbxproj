@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		64835F3803A7D5575A74A12F /* libPods-JieBaoUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEDAE18DC06BAB8956839337 /* libPods-JieBaoUITests.a */; };
 		8DB3FBD37C6E6DC862A122AE /* libPods-JieBaoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C534CAD771B30F6AAED0BC16 /* libPods-JieBaoTests.a */; };
+		A2F219E320FDEB4600180CDC /* LightsDataPointModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F219E220FDEB4600180CDC /* LightsDataPointModel.m */; };
 		E0221A7620994F9800156753 /* DeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E0221A7420994F9700156753 /* DeviceModel.m */; };
 		E0221A7920994FE000156753 /* AddDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0221A7820994FE000156753 /* AddDeviceCell.m */; };
 		E02856DD20C66E1500FD1A8F /* NetworkHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E02856DC20C66E1500FD1A8F /* NetworkHelper.m */; };
@@ -224,6 +225,8 @@
 		394D2F32FD0F3C418FD9D599 /* Pods-JieBao.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JieBao.release.xcconfig"; path = "Pods/Target Support Files/Pods-JieBao/Pods-JieBao.release.xcconfig"; sourceTree = "<group>"; };
 		56E86079D5CEA048F420DC48 /* libPods-JieBao.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JieBao.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EF937847B456B68FD7BBEBE /* Pods-JieBao.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JieBao.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JieBao/Pods-JieBao.debug.xcconfig"; sourceTree = "<group>"; };
+		A2F219E120FDEB4600180CDC /* LightsDataPointModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightsDataPointModel.h; sourceTree = "<group>"; };
+		A2F219E220FDEB4600180CDC /* LightsDataPointModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LightsDataPointModel.m; sourceTree = "<group>"; };
 		BE41390BAC3B4CC214AED7C0 /* Pods-JieBaoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JieBaoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JieBaoTests/Pods-JieBaoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BEDAE18DC06BAB8956839337 /* libPods-JieBaoUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JieBaoUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C534CAD771B30F6AAED0BC16 /* libPods-JieBaoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JieBaoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -617,6 +620,16 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		A2F219E020FDEB1C00180CDC /* DataPointModel */ = {
+			isa = PBXGroup;
+			children = (
+				A2F219E120FDEB4600180CDC /* LightsDataPointModel.h */,
+				A2F219E220FDEB4600180CDC /* LightsDataPointModel.m */,
+			);
+			name = DataPointModel;
+			path = JieBao/DataPointModel;
+			sourceTree = SOURCE_ROOT;
+		};
 		B14BFE29599BDC9CCA2688E9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -724,6 +737,7 @@
 				E0D3DC98207F327A00F14860 /* Info.plist */,
 				E0D3DC99207F327A00F14860 /* main.m */,
 				E0B164CA20A1A68B005D294B /* JieBao-Bridging-Header.h */,
+				A2F219E020FDEB1C00180CDC /* DataPointModel */,
 				E0D3DCBC207F37F300F14860 /* Base */,
 				E0ECF05F20883554001530CE /* loading.gif */,
 				E0D3DCC6207F3B0000F14860 /* Setting */,
@@ -1257,6 +1271,7 @@
 				E0D3DC85207F327A00F14860 /* Resources */,
 				2093CC990DD2F6DAE3EA93CF /* [CP] Copy Pods Resources */,
 				E0B164D020A1A6B5005D294B /* Embed Frameworks */,
+				1770616D17CF57871A104C19 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1275,6 +1290,8 @@
 				E0D3DC9B207F327B00F14860 /* Sources */,
 				E0D3DC9C207F327B00F14860 /* Frameworks */,
 				E0D3DC9D207F327B00F14860 /* Resources */,
+				526A1A7405115FA77EDBF7B5 /* [CP] Embed Pods Frameworks */,
+				5AE35D6847B83D49EDD70A54 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1294,6 +1311,8 @@
 				E0D3DCA6207F327B00F14860 /* Sources */,
 				E0D3DCA7207F327B00F14860 /* Frameworks */,
 				E0D3DCA8207F327B00F14860 /* Resources */,
+				B81F86A6FCB6F706E03D0F03 /* [CP] Embed Pods Frameworks */,
+				31BACB48612CEC555A6CDDF5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1392,6 +1411,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1770616D17CF57871A104C19 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBao/Pods-JieBao-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		1DB9717A4A756C316A439B44 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1430,6 +1464,51 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBao/Pods-JieBao-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		31BACB48612CEC555A6CDDF5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoUITests/Pods-JieBaoUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		526A1A7405115FA77EDBF7B5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoTests/Pods-JieBaoTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5AE35D6847B83D49EDD70A54 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoTests/Pods-JieBaoTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5F9A722C73A36F28F96DE497 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1446,6 +1525,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B81F86A6FCB6F706E03D0F03 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoUITests/Pods-JieBaoUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C9A002C1C316B2084709305D /* [CP] Check Pods Manifest.lock */ = {
@@ -1598,6 +1692,7 @@
 				E0D3DCF7207F653F00F14860 /* UserHelper.m in Sources */,
 				E0ECF05B20874D3A001530CE /* MyDeviceAddSuccessViewController.m in Sources */,
 				E0C19FEC20CFFFDC000224D3 /* DTTimePeriodCollection.m in Sources */,
+				A2F219E320FDEB4600180CDC /* LightsDataPointModel.m in Sources */,
 				E0D3DCF3207F615B00F14860 /* MyDeviceViewController.m in Sources */,
 				E0ECF052208740B9001530CE /* MyDevicecContractViewController.m in Sources */,
 				E0ECF05E20882FB7001530CE /* LoadingHelper.m in Sources */,

@@ -21,6 +21,8 @@ static SDKHelper *helper = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         helper = [[super allocWithZone:NULL] init];
+        helper.statusDic = [NSMutableDictionary dictionary];
+        helper.deviceArray = [NSMutableArray array];
     });
     return helper;
 }
@@ -51,7 +53,7 @@ static SDKHelper *helper = nil;
         }
     }else if (result.code ==  GIZ_OPENAPI_CODE_INVALID)
     {
-        [HudHelper showStatus:@"验证码错误"];
+        [HudHelper showErrorWithStatus:@"验证码错误"];
     }
     else
     {
@@ -75,16 +77,16 @@ static SDKHelper *helper = nil;
         }
     }else if (result.code ==  GIZ_OPENAPI_PHONE_UNAVALIABLE)
     {
-       [HudHelper showStatus:@"输入正确手机号"];
+       [HudHelper showErrorWithStatus:@"输入正确手机号"];
     }else if (result.code ==  GIZ_OPENAPI_USERNAME_PASSWORD_ERROR)
     {
-        [HudHelper showStatus:@"密码错误"];
+        [HudHelper showErrorWithStatus:@"密码错误"];
     }else if (result.code ==  GIZ_OPENAPI_CODE_INVALID)
     {
-        [HudHelper showStatus:@"验证码错误"];
+        [HudHelper showErrorWithStatus:@"验证码错误"];
     }else if (result.code == GIZ_OPENAPI_USER_NOT_EXIST)
     {
-        [HudHelper showStatus:@"手机号未注册"];
+        [HudHelper showErrorWithStatus:@"手机号未注册"];
     }
     else
     {

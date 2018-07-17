@@ -125,7 +125,7 @@
         _slider.minimumValue = 0;
         _slider.maximumValue = 100;
         [_slider setThumbImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
-        [_slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+        [_slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _slider;
 }

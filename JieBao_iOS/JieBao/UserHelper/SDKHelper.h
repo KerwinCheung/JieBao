@@ -28,6 +28,11 @@
 
 @property (nonatomic, copy) ScheduleCallBackBlock scheduleCallBackBlock;
 
+@property (nonatomic, strong) NSMutableDictionary *statusDic;
+
+//绑定的设备数组 GizWifiDevice对象
+@property (nonatomic, strong) NSMutableArray *deviceArray;
+
 + (instancetype)shareInstance;
 
 @end

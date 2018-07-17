@@ -63,6 +63,10 @@
     {
         self.img.image = [SelectImageHelper selectDeviceImageWithTpye:self.dataDic.productKey];
     }
+    
+    if (_dataDic.netStatus == GizDeviceOffline) {
+        self.img.image = [SelectImageHelper selectDeviceNoConnectedWithTpye:self.dataDic.productKey];
+    }
 }
 
 - (BOOL)isSwitchOn
@@ -98,6 +102,11 @@
     {
         self.img.image = [SelectImageHelper selectDeviceImageWithTpye:self.dataDic.productKey];
     }
+    
+    if (dataDic.netStatus == GizDeviceOffline) {
+        self.img.image = [SelectImageHelper selectDeviceNoConnectedWithTpye:self.dataDic.productKey];
+    }
+    
     self.lb.text =  dataDic.alias.length >0 ? dataDic.alias:dataDic.productName;
 }
 @end

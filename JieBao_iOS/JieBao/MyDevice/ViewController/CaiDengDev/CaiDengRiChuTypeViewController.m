@@ -82,7 +82,7 @@
     
     [self.nightImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(@0);
-        make.top.equalTo(@(CurrentDeviceSize(20)));
+        make.top.equalTo(@(CurrentDeviceSize(0)));
         make.height.equalTo(@(LL_ScreenHeight/3));
     }];
     
@@ -229,7 +229,7 @@
         _slider.maximumValue = 100;
         _slider.minimumTrackTintColor = kAPPThemeColor;
         [_slider setThumbImage:[UIImage imageNamed:@"button"] forState:UIControlStateNormal];
-        [_slider addTarget:self action:@selector(sliderValueChanged) forControlEvents:UIControlEventValueChanged];
+        [_slider addTarget:self action:@selector(sliderValueChanged) forControlEvents:UIControlEventTouchUpInside];
         [_slider setMinimumTrackImage:[UIImage imageNamed:@"bluue1"] forState:UIControlStateNormal];
     }
     return _slider;

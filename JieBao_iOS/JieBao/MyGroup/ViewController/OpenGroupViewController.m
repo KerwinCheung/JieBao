@@ -248,6 +248,8 @@
 {
     OpenGroupCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"OpenGroupCollectionViewCell" forIndexPath:indexPath];
     cell.dataDic = self.dataSource[indexPath.row];
+    
+    
     UILongPressGestureRecognizer *ges = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(tap:)];

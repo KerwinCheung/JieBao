@@ -29,6 +29,8 @@
 
 @property (nonatomic, strong) DeviceCollectionViewCell *currentCell;
 
+
+
 @end
 
 @implementation MyDeviceViewController
@@ -130,6 +132,15 @@
                     [self.dataSource addObject:devcie];
                 }
             }
+            for (GizWifiDevice *dev in self.dataSource) {
+                dev.delegate = self;
+                [dev setSubscribe:dev.productKey subscribed:YES];
+                
+                [[SDKHelper shareInstance].statusDic setObject:@NO forKey:dev.did];
+            }
+            
+            [SDKHelper shareInstance].deviceArray = [NSMutableArray array];
+            [[SDKHelper shareInstance].deviceArray addObject:self.dataSource];
         }else
         {
             weakself.noDeviceView.hidden = NO;
@@ -172,7 +183,13 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DeviceCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceCollectionViewCell" forIndexPath:indexPath];
+    
+    BOOL isSwitch = [[SDKHelper shareInstance].statusDic objectForKey:cell.dataDic.did];
+    [cell cellSetSelectedWithStatus:isSwitch];
     cell.dataDic = self.dataSource[indexPath.row];
+    
+    
+    
     UILongPressGestureRecognizer *ges = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                           action:@selector(tap:)];
@@ -221,9 +238,11 @@
 - (void)tap:(UITapGestureRecognizer *)ges
 {
     GizWifiDevice *dev = ((DeviceCollectionViewCell *)ges.view).dataDic;
-    [dev setSubscribe:dev.productKey subscribed:YES];
     self.currentCell = (DeviceCollectionViewCell *)ges.view;
-    dev.delegate = self;
+    
+    BOOL isSwitch = ![self.currentCell isSwitchOn];
+    NSNumber *switchNum = [NSNumber numberWithBool:isSwitch];
+    [dev write:@{@"switch":switchNum} withSN:500];
 }
 
 #pragma mark - device contro delegate
@@ -232,9 +251,7 @@
     if(result.code == GIZ_SDK_SUCCESS) {
         // 订阅或取消订阅成功
         if (isSubscribed) {
-            BOOL isSwitch = ![self.currentCell isSwitchOn];
-            NSNumber *switchNum = [NSNumber numberWithBool:isSwitch];
-            [device write:@{@"switch":switchNum} withSN:500];
+            
             LHLog(@"订阅成功");
         }else{
             LHLog(@"订阅失败");
@@ -247,17 +264,19 @@
     if(result.code == GIZ_SDK_SUCCESS) {
         // 命令序号相符，开灯指令执行成功
         NSDictionary *data = dataMap[@"data"];
-        BOOL turnStatus = [data[@"switch"] boolValue];
-        if ([sn integerValue] == 500) {
-            [self.currentCell cellSetSelectedWithStatus:turnStatus];
-        }else if ([sn integerValue] == 0)
-        {
-            [self.currentCell cellSetSelectedWithStatus:turnStatus];
+
+        if ([device.productKey isEqualToString:kProductKeys[@"六路彩灯"]]) {
+            [[SDKHelper shareInstance].statusDic setObject:data[@"switch"] forKey:device.did];
         }
+        
+        [self.cv performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+        
+
     }
 }
 
-#pragma mark - getter
+#pragma mark - lazy init
+
 - (BaseCollectionView *)cv
 {
     if (!_cv) {

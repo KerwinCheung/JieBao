@@ -291,36 +291,29 @@
         
         if (self.dev && sn.integerValue == 0) {
             NSDictionary *data = dataMap[@"data"];
+            
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self performSelectorOnMainThread:@selector(setSliderValue) withObject:nil waitUntilDone:NO];
                 self.whiteSlider.value = [[data objectForKey:@"color_white"] floatValue];
                 self.sapphireBlueSlider.value = [[data objectForKey:@"color_blue1"] floatValue];
                 self.blueSlider.value = [[data objectForKey:@"color_blue2"] floatValue];
                 self.greenSlider.value = [[data objectForKey:@"color_green"] floatValue];
                 self.redSlider.value = [[data objectForKey:@"color_red"] floatValue];
                 self.purpleSlider.value = [[data objectForKey:@"volor_violet"] floatValue];
+                
+                LHLog(@"color_white=%f color_blue1=%f color_blue2 =%f color_green =%f color_red=%f volor_violet=%f ",[[data objectForKey:@"color_white"] floatValue],[[data objectForKey:@"color_blue1"] floatValue],[[data objectForKey:@"color_blue2"] floatValue],[[data objectForKey:@"color_green"] floatValue],[[data objectForKey:@"color_red"] floatValue],[[data objectForKey:@"volor_violet"] floatValue]);
             });
             return;
         }
         
-//        @synchronized(self)
-//        {
-//            self.count++;
-//        }
-//        if (self.count == 6) {
-//            [HudHelper showSuccessWithStatus:@"设置成功"];
-//            self.count = 0;
-//        }
         
         if (sn.integerValue == 201) {
 //            [HudHelper showSuccessWithStatus:@"设置成功"];
         }
     }else{
         if ([sn integerValue] == 101) {
-            [HudHelper showSuccessWithStatus:@"设置失败"];
+            [HudHelper showErrorWithStatus:@"设置失败"];
             return;
         }
-//        [self showErrorWithStatusWhithCode:result.code];
     }
 }
 

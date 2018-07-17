@@ -545,7 +545,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 {
     if(result.code == GIZ_SDK_SUCCESS) {
         if ([sn integerValue] == 0) {
-            NSLog(@"属性%@",dataMap);
+//            NSLog(@"属性%@",dataMap);
             NSDictionary *data = dataMap[@"data"];
             BOOL Fault_UART = [data[@"Fault_UART"] boolValue];
             if (Fault_UART) {
@@ -614,6 +614,12 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
         {
             self.currentImgView.image = [UIImage imageNamed:@"yewan1"];
             self.currentModelLb.text = @"夜晚模式";
+        }
+            break;
+        case 6:
+        {
+            self.currentImgView.image = [UIImage imageNamed:@"dingshi1"];
+            self.currentModelLb.text = @"定时模式";
         }
             break;
             

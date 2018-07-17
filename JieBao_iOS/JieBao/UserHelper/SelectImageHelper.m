@@ -137,4 +137,29 @@
     return [UIImage imageNamed:str];
 }
 
++ (UIImage *)selectDeviceNoConnectedWithTpye:(NSString *)type
+{
+    NSString *str = nil;
+    if ([type isEqualToString:kProductKeys[@"六路彩灯"]]) {
+        str = @"31";
+    }else if ([type isEqualToString:kProductKeys[@"滴定泵"]]){
+        str = @"42";
+    }
+    else if ([type isEqualToString:kProductKeys[@"无线开关"]]){
+        str = @"52";
+    }
+    else if ([type isEqualToString:kProductKeys[@"造浪泵"]]){
+        str = @"12";
+    }
+    else if ([type isEqualToString:kProductKeys[@"水泵"]]){
+        str = @"22";
+    }
+    else
+    {
+        str = @"tianjia2";
+    }
+    return [UIImage imageNamed:str];
+}
+
+
 @end

@@ -132,6 +132,7 @@
     [UserHelper shareInstance].productSecretKey = self.secKeys[indexPath.row];
 }
 
+#pragma mark - lazy init
 - (BaseTableView *)tb
 {
     if (!_tb) {
