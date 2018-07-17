@@ -460,12 +460,16 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
                                    @"color_white":@([[obj.attrs objectForKey:@"color_white"] integerValue]),
                                    @"color_blue1":@([[obj.attrs objectForKey:@"color_blue1"] integerValue]),
                                    @"color_blue2":@([[obj.attrs objectForKey:@"color_blue2"] integerValue]),
-                                   @"color_green":@([[obj.attrs objectForKey:@"color_green"] integerValue
-                                                     ]),
+                                   @"color_green":@([[obj.attrs objectForKey:@"color_green"] integerValue]),
                                    @"color_red":@([[obj.attrs objectForKey:@"color_red"] integerValue]),
                                    @"volor_violet":@([[obj.attrs objectForKey:@"volor_violet"] integerValue])
                                    };
                     *stop = YES;
+                    if (self.dev) {
+                        [self.dev write:controlDic withSN:999];
+                    }else{
+                        [self sendGroupControlWith:controlDic];
+                    }
                 }
             }];
         }else{
@@ -474,13 +478,11 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     }else{
         @strongify(controlDic);
         controlDic = @{@"mode":modeNum};
-    }
-    
-    
-    if (self.dev) {
-        [self.dev write:controlDic withSN:999];
-    }else{
-        [self sendGroupControlWith:controlDic];
+        if (self.dev) {
+            [self.dev write:controlDic withSN:999];
+        }else{
+            [self sendGroupControlWith:controlDic];
+        }
     }
 }
 
@@ -582,6 +584,9 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 - (void)device:(GizWifiDevice *)device didReceiveData:(NSError *)result data:(NSDictionary<NSString *,id> *)dataMap withSN:(NSNumber *)sn
 {
     if(result.code == GIZ_SDK_SUCCESS) {
+        if (sn.integerValue == 999) {
+            NSLog(@"发送成功了");
+        }
         if ([sn integerValue] == 0) {
 //            NSLog(@"属性%@",dataMap);
             NSDictionary *data = dataMap[@"data"];
