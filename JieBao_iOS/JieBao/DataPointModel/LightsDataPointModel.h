@@ -10,8 +10,8 @@
 
 @interface LightsDataPointModel : NSObject
 
-/**设备id 机智云 */
-@property (nonatomic, strong) NSString *dId;
+/**设备 机智云 */
+@property (nonatomic, strong) GizWifiDevice *device;
 
 @property (nonatomic, strong) NSNumber *switchNum;
 @property (nonatomic, strong) NSNumber *modelNum;
@@ -32,7 +32,7 @@
 @property (nonatomic, strong) NSNumber *Fault_UARTNum;
 @property (nonatomic, strong) NSNumber *TimerNum;
 
--(instancetype)initWithData:(NSDictionary *)dic withDid:(NSString *)did;
+-(instancetype)initWithData:(NSDictionary *)dic withDevice:(GizWifiDevice *)device;
 
 
 @end

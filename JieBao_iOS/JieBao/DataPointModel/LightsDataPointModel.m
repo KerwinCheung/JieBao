@@ -10,7 +10,7 @@
 
 @implementation LightsDataPointModel
 
--(instancetype)initWithData:(NSDictionary *)dic withDid:(NSString *)did{
+-(instancetype)initWithData:(NSDictionary *)dic withDevice:(GizWifiDevice *)device{
     self = [super init];
     if (self) {
         /*{
@@ -62,7 +62,7 @@
         self.Fault_FanNum = faults[@"Fault_Fan"];
         self.Fault_UARTNum = faults[@"Fault_UART"];
         
-        self.dId = did;
+        self.device = device;
     }
     return self;
 }
