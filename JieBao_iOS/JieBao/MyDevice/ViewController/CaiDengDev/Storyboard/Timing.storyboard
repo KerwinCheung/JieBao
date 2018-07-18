@@ -325,18 +325,18 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="43V-p2-SW0" customClass="EditorCharts" customModule="JieBao" customModuleProvider="target">
-                                <rect key="frame" x="59" y="139" width="612" height="201"/>
+                                <rect key="frame" x="59" y="139" width="632" height="215"/>
                                 <color key="backgroundColor" red="1" green="0.8459194202291298" blue="0.81963299636396758" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H4d-6O-hTb">
-                                <rect key="frame" x="677" y="60" width="120" height="254"/>
+                                <rect key="frame" x="697" y="60" width="100" height="254"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="psc-Jt-bfb">
-                                        <rect key="frame" x="0.0" y="0.0" width="120" height="35"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="XzE-GC-SWU"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="载入预设LPS" backgroundImage="btnBg">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -347,8 +347,8 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="atu-Yq-D6g">
-                                        <rect key="frame" x="0.0" y="70" width="120" height="38"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="70" width="100" height="38"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="载入预设SPS" backgroundImage="btnBg">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -359,8 +359,8 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5x-NS-MdM">
-                                        <rect key="frame" x="0.0" y="216" width="120" height="38"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="216" width="100" height="38"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="删除" backgroundImage="btnBg">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -371,8 +371,8 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q4U-h6-Lol">
-                                        <rect key="frame" x="0.0" y="143" width="120" height="38"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="143" width="100" height="38"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="保存" backgroundImage="btnBg">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -394,7 +394,7 @@
                                     <constraint firstAttribute="trailing" secondItem="l5x-NS-MdM" secondAttribute="trailing" id="O7W-7d-LkO"/>
                                     <constraint firstAttribute="trailing" secondItem="psc-Jt-bfb" secondAttribute="trailing" id="XVq-J2-pq7"/>
                                     <constraint firstItem="l5x-NS-MdM" firstAttribute="leading" secondItem="H4d-6O-hTb" secondAttribute="leading" id="XuU-FR-sJl"/>
-                                    <constraint firstAttribute="width" constant="120" id="kAX-NH-vuV"/>
+                                    <constraint firstAttribute="width" constant="100" id="kAX-NH-vuV"/>
                                     <constraint firstAttribute="trailing" secondItem="atu-Yq-D6g" secondAttribute="trailing" id="n4B-gj-zer"/>
                                     <constraint firstItem="atu-Yq-D6g" firstAttribute="leading" secondItem="H4d-6O-hTb" secondAttribute="leading" id="o73-3k-EDZ"/>
                                     <constraint firstItem="Q4U-h6-Lol" firstAttribute="leading" secondItem="H4d-6O-hTb" secondAttribute="leading" id="ses-vu-yzn"/>
@@ -410,7 +410,7 @@
                             <constraint firstItem="Xoj-WK-OBC" firstAttribute="top" secondItem="iiL-ir-1cU" secondAttribute="bottom" constant="10" id="GRW-85-ZgN"/>
                             <constraint firstItem="iiL-ir-1cU" firstAttribute="leading" secondItem="5ir-Ff-dNH" secondAttribute="leading" constant="17" id="IeN-BJ-o3C"/>
                             <constraint firstItem="5ir-Ff-dNH" firstAttribute="bottom" secondItem="H4d-6O-hTb" secondAttribute="bottom" constant="40" id="K98-Tt-UJf"/>
-                            <constraint firstItem="5ir-Ff-dNH" firstAttribute="bottom" secondItem="43V-p2-SW0" secondAttribute="bottom" constant="14" id="L0T-d2-WR5"/>
+                            <constraint firstItem="5ir-Ff-dNH" firstAttribute="bottom" secondItem="43V-p2-SW0" secondAttribute="bottom" id="L0T-d2-WR5"/>
                             <constraint firstItem="43V-p2-SW0" firstAttribute="top" secondItem="n6i-bF-Dz3" secondAttribute="bottom" constant="10" id="LIE-4E-kSi"/>
                             <constraint firstItem="mhB-hi-vWl" firstAttribute="top" secondItem="s0P-A4-tFg" secondAttribute="bottom" constant="14" id="OSK-Bh-ZKL"/>
                             <constraint firstItem="5ir-Ff-dNH" firstAttribute="trailing" secondItem="Zvf-xM-Kao" secondAttribute="trailing" constant="17" id="Tg8-iF-ZnT"/>

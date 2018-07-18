@@ -18,9 +18,44 @@
 
 @implementation NewTimingViewController
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    NSNumber *orientationUnknown = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
+    [[UIDevice currentDevice] setValue:orientationUnknown forKey:@"orientation"];
+    
+    NSNumber *orientationTarget = [NSNumber numberWithInt:UIDeviceOrientationLandscapeRight];
+    [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleDeviceOrientationDidChange:)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationToPortrait:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+
+    [self setupCharts];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
+    [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
+}
+
+- (void)setupCharts {
     self.chartsView.backgroundColor = [UIColor whiteColor];
     self.chartsView.yValue = @[@(25),@(35),@(340),@(60),@(70),@(50),@(20),@(18),@(19),@(9),@(35),@(100),@(25),@(35),@(340),@(60),@(70),@(50),@(20),@(18),@(19),@(9),@(60),@(70)];
     self.chartsView.lineColor = [UIColor redColor];
@@ -30,6 +65,25 @@
         NSLog(@"%zd",array[1].integerValue);
     };
 }
+
+#pragma mark - notifacation
+- (void)handleDeviceOrientationDidChange:(UIInterfaceOrientation)interfaceOrientation
+{
+    if ([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight) {
+        [self setupCharts];
+    }
+}
+
+- (void)orientationToPortrait:(UIInterfaceOrientation)orientation {
+    
+    NSNumber *orientationUnknown = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
+    [[UIDevice currentDevice] setValue:orientationUnknown forKey:@"orientation"];
+    
+    NSNumber *orientationTarget = [NSNumber numberWithInt:UIDeviceOrientationLandscapeRight];
+    [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
+}
+
+
 
 - (IBAction)saveBtnAction:(UIButton *)sender {
     //保存定时

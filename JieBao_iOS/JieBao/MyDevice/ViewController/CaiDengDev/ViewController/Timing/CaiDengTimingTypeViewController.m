@@ -242,26 +242,26 @@
         [self.temps removeAllObjects];
         [self.temps addObject:self.dataSource[self.currentIndex]];
     }else{
-        UIViewController *vc = [self loadViewControllerWithStoryboardName:@"Timing" withViewControllerName:@"NewTimingViewController"];
-        [self.navigationController pushViewController:vc animated:YES];
-        
-//        TimingSettingViewController *vc = [TimingSettingViewController new];
-//        vc.dev = self.dev;
-//        vc.group = self.group;
-//        vc.nameSoure = self.nameSoure;
-//        if(indexPath.row == 0)
-//        {
-//            vc.type = @"LPS";
-//        }
-//        else if (indexPath.row == 1)
-//        {
-//            vc.type = @"SPS";
-//        }
-//        else
-//        {
-//            vc.schTask = ((CaiDengTimingCell *)cell).dataDic;
-//        }
+//        UIViewController *vc = [self loadViewControllerWithStoryboardName:@"Timing" withViewControllerName:@"NewTimingViewController"];
 //        [self.navigationController pushViewController:vc animated:YES];
+        
+        TimingSettingViewController *vc = [TimingSettingViewController new];
+        vc.dev = self.dev;
+        vc.group = self.group;
+        vc.nameSoure = self.nameSoure;
+        if(indexPath.row == 0)
+        {
+            vc.type = @"LPS";
+        }
+        else if (indexPath.row == 1)
+        {
+            vc.type = @"SPS";
+        }
+        else
+        {
+            vc.schTask = ((CaiDengTimingCell *)cell).dataDic;
+        }
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 

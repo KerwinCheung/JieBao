@@ -53,16 +53,26 @@ class EditorCharts: UIView {
         self.ySpace = frame.size.height / 7.0
         
 //        self.maxYValue = self.maxYValue / ySpace!
-
+        print("33333")
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+         super.init(coder: aDecoder)
+        
+        self.backgroundColor = UIColor.white
+        //x轴
+        xValue = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
+        
+        //最大值
+        self.maxHeight = self.frame.size.height
+        //
+        self.space = (self.frame.size.width - 20)/CGFloat(((xValue?.count)! - 1))
+        self.ySpace = self.frame.size.height/10
+//        fatalError("init(coder:) has not been implemented")
     }
     
     override func draw(_ rect: CGRect) {
-        
-        
+
         //是否显示圆圈
         if isChangeShowCircle {
         
@@ -74,9 +84,7 @@ class EditorCharts: UIView {
             hasDrawCircle = false
             isChangeShowCircle = false
         }
-        
-       
-        
+
         drawXYline() //画x,y
         
         drawValue()//画折现
@@ -94,9 +102,9 @@ class EditorCharts: UIView {
                 if index! != self.xValue!.count - 1{
                 
                 
-                let circleLabel = UILabel.init(frame: CGRect.init(x:0, y: 0, width: 20, height: 20))
+                let circleLabel = UILabel.init(frame: CGRect.init(x:0, y: 0, width: 10, height: 10))
                 circleLabel.center = CGPoint.init(x: 20 + CGFloat(self.xValue![index!]) * space!, y: ((1-(self.yValue![index!])/self.maxYValue)) * self.maxHeight!)
-                circleLabel.layer.cornerRadius = 10
+                circleLabel.layer.cornerRadius = 5
                 circleLabel.layer.masksToBounds = true
                 circleLabel.tag = 1000 + index!
                 circleLabel.isUserInteractionEnabled = true
