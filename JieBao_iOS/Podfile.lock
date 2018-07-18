@@ -14,7 +14,22 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
-  - IQKeyboardManager (6.1.0)
+  - BlocksKit (2.2.5):
+    - BlocksKit/All (= 2.2.5)
+  - BlocksKit/All (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+    - BlocksKit/MessageUI
+    - BlocksKit/UIKit
+  - BlocksKit/Core (2.2.5)
+  - BlocksKit/DynamicDelegate (2.2.5)
+  - BlocksKit/MessageUI (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - BlocksKit/UIKit (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - IQKeyboardManager (6.0.3)
   - Masonry (1.1.0)
   - SDWebImage (4.4.1):
     - SDWebImage/Core (= 4.4.1)
@@ -24,20 +39,32 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - BlocksKit
   - IQKeyboardManager
   - Masonry
   - SDWebImage
   - SVProgressHUD
   - YYModel
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - AFNetworking
+    - BlocksKit
+    - IQKeyboardManager
+    - Masonry
+    - SDWebImage
+    - SVProgressHUD
+    - YYModel
+
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
-  IQKeyboardManager: f520b0f411eaefa08058532cb50c48bfeffa8535
+  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
+  IQKeyboardManager: c390e612f4b98c8fd748016470138537dc163ead
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   SDWebImage: 47e9b5b925cbce75946c23f0c42dd19464189af4
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 218d852a7b358e866769537037fabb541d8ccb09
+PODFILE CHECKSUM: 701d76e4c0462d51d09428f8ce78f80116628f03
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0

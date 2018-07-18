@@ -10,6 +10,9 @@
 #import <JieBao-Swift.h>
 
 @interface NewTimingViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *timingNameLabel;
+@property (weak, nonatomic) IBOutlet UITextField *nameField;
+@property (weak, nonatomic) IBOutlet EditorCharts *chartsView;
 
 @end
 
@@ -17,19 +20,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    CGFloat width = UIScreen.mainScreen.bounds.size.height - 75;
-    CGFloat height = UIScreen.mainScreen.bounds.size.width - 90;
-    EditorCharts *chartsView = [[EditorCharts alloc]initWithFrame:CGRectMake(45, 70, width, height)];
-    chartsView.yValue = @[@(25),@(35),@(340),@(60),@(70),@(50),@(20),@(18),@(19),@(9),@(35),@(100),@(25),@(35),@(340),@(60),@(70),@(50),@(20),@(18),@(19),@(9),@(60),@(70)];
-    chartsView.lineColor = [UIColor redColor];
-    [chartsView showCircleWithIsShow:true];
-    chartsView.callBackYValueArray = ^(NSArray<NSNumber *> * _Nullable array) {
+
+    self.chartsView.backgroundColor = [UIColor whiteColor];
+    self.chartsView.yValue = @[@(25),@(35),@(340),@(60),@(70),@(50),@(20),@(18),@(19),@(9),@(35),@(100),@(25),@(35),@(340),@(60),@(70),@(50),@(20),@(18),@(19),@(9),@(60),@(70)];
+    self.chartsView.lineColor = [UIColor redColor];
+    [self.chartsView showCircleWithIsShow:true];
+    self.chartsView.callBackYValueArray = ^(NSArray<NSNumber *> * _Nullable array) {
         NSLog(@"%@",array);
         NSLog(@"%zd",array[1].integerValue);
     };
-    
-    [self.view addSubview:chartsView];
 }
 
 - (IBAction)saveBtnAction:(UIButton *)sender {
@@ -37,7 +36,7 @@
 }
 
 - (IBAction)cancelBtnAction:(UIButton *)sender {
-    //取消
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)deleteBtnAction:(UIButton *)sender {

@@ -188,6 +188,9 @@
 		E0FC654520858B850070E9B3 /* APNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FC654420858B850070E9B3 /* APNextViewController.m */; };
 		EA939CD2B3BFD8998263AC61 /* libPods-JieBao.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E86079D5CEA048F420DC48 /* libPods-JieBao.a */; };
 		F58C217720F62B5E0073B85E /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = F58C217520F62B5E0073B85E /* EXTScope.m */; };
+		F5C8F86A20FF84190024ED6A /* UIview+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C8F86820FF84180024ED6A /* UIview+Extension.m */; };
+		F5C8F86D20FF8E060024ED6A /* UIViewController+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C8F86B20FF8E060024ED6A /* UIViewController+Extension.m */; };
+		F5C8F87020FF8FE60024ED6A /* UIAlertController+showOnWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C8F86E20FF8FE60024ED6A /* UIAlertController+showOnWindow.m */; };
 		F5E3026520FE3A5B004C34FB /* EditorCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E3026420FE3A5B004C34FB /* EditorCharts.swift */; };
 		F5E3026820FE3BF7004C34FB /* NewTimingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E3026720FE3BF7004C34FB /* NewTimingViewController.m */; };
 		F5E3027520FE4964004C34FB /* Timing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5E3027420FE4964004C34FB /* Timing.storyboard */; };
@@ -573,6 +576,12 @@
 		F58C217420F62B5E0073B85E /* EXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
 		F58C217520F62B5E0073B85E /* EXTScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTScope.m; sourceTree = "<group>"; };
 		F58C217620F62B5E0073B85E /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
+		F5C8F86820FF84180024ED6A /* UIview+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIview+Extension.m"; sourceTree = "<group>"; };
+		F5C8F86920FF84190024ED6A /* UIview+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIview+Extension.h"; sourceTree = "<group>"; };
+		F5C8F86B20FF8E060024ED6A /* UIViewController+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Extension.m"; sourceTree = "<group>"; };
+		F5C8F86C20FF8E060024ED6A /* UIViewController+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Extension.h"; sourceTree = "<group>"; };
+		F5C8F86E20FF8FE60024ED6A /* UIAlertController+showOnWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+showOnWindow.m"; sourceTree = "<group>"; };
+		F5C8F86F20FF8FE60024ED6A /* UIAlertController+showOnWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+showOnWindow.h"; sourceTree = "<group>"; };
 		F5E3026420FE3A5B004C34FB /* EditorCharts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorCharts.swift; sourceTree = "<group>"; };
 		F5E3026620FE3BF7004C34FB /* NewTimingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewTimingViewController.h; sourceTree = "<group>"; };
 		F5E3026720FE3BF7004C34FB /* NewTimingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewTimingViewController.m; sourceTree = "<group>"; };
@@ -796,7 +805,7 @@
 				E0D3DCF4207F652100F14860 /* UserHelper */,
 				E0D3DCE1207F4A7E00F14860 /* Category */,
 				F58C217220F62B450073B85E /* Helper */,
-				E0D3DCD8207F417E00F14860 /* Public */,
+				E0D3DCD8207F417E00F14860 /* SupportFiles */,
 			);
 			path = JieBao;
 			sourceTree = "<group>";
@@ -933,7 +942,7 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		E0D3DCD8207F417E00F14860 /* Public */ = {
+		E0D3DCD8207F417E00F14860 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
 				E0D3DCDA207F421500F14860 /* PrefixHeader.pch */,
@@ -941,16 +950,22 @@
 				E0D3DD04207F75A700F14860 /* SpecificDefine.h */,
 				E0FC653920849B760070E9B3 /* BlockDefine.h */,
 			);
-			path = Public;
+			path = SupportFiles;
 			sourceTree = "<group>";
 		};
 		E0D3DCE1207F4A7E00F14860 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				E0D3DCE2207F4AA400F14860 /* UIFont+Custom.h */,
-				E0D3DCE3207F4AA400F14860 /* UIFont+Custom.m */,
+				F5C8F86F20FF8FE60024ED6A /* UIAlertController+showOnWindow.h */,
+				F5C8F86E20FF8FE60024ED6A /* UIAlertController+showOnWindow.m */,
+				F5C8F86C20FF8E060024ED6A /* UIViewController+Extension.h */,
+				F5C8F86B20FF8E060024ED6A /* UIViewController+Extension.m */,
+				F5C8F86920FF84190024ED6A /* UIview+Extension.h */,
+				F5C8F86820FF84180024ED6A /* UIview+Extension.m */,
 				E0FC650A2081DB0E0070E9B3 /* UIViewController+Custom.h */,
 				E0FC650B2081DB0E0070E9B3 /* UIViewController+Custom.m */,
+				E0D3DCE2207F4AA400F14860 /* UIFont+Custom.h */,
+				E0D3DCE3207F4AA400F14860 /* UIFont+Custom.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1397,7 +1412,6 @@
 				E0D3DC85207F327A00F14860 /* Resources */,
 				2093CC990DD2F6DAE3EA93CF /* [CP] Copy Pods Resources */,
 				E0B164D020A1A6B5005D294B /* Embed Frameworks */,
-				34A25BD9B4246B87976BA1F9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1416,8 +1430,6 @@
 				E0D3DC9B207F327B00F14860 /* Sources */,
 				E0D3DC9C207F327B00F14860 /* Frameworks */,
 				E0D3DC9D207F327B00F14860 /* Resources */,
-				84D3955BA491ACD27FA0BCC2 /* [CP] Embed Pods Frameworks */,
-				0263C069DAAB0E2D353CEB03 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1437,8 +1449,6 @@
 				E0D3DCA6207F327B00F14860 /* Sources */,
 				E0D3DCA7207F327B00F14860 /* Frameworks */,
 				E0D3DCA8207F327B00F14860 /* Resources */,
-				0B267D0EFBF1DB4EE36FB706 /* [CP] Embed Pods Frameworks */,
-				0E27FCDE3C026162589057FE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1539,51 +1549,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0263C069DAAB0E2D353CEB03 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoTests/Pods-JieBaoTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		0B267D0EFBF1DB4EE36FB706 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoUITests/Pods-JieBaoUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		0E27FCDE3C026162589057FE /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoUITests/Pods-JieBaoUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		1DB9717A4A756C316A439B44 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1622,21 +1587,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBao/Pods-JieBao-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		34A25BD9B4246B87976BA1F9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBao/Pods-JieBao-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		5F9A722C73A36F28F96DE497 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1653,21 +1603,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84D3955BA491ACD27FA0BCC2 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoTests/Pods-JieBaoTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C9A002C1C316B2084709305D /* [CP] Check Pods Manifest.lock */ = {
@@ -1753,6 +1688,7 @@
 				E028572B20C8224300FD1A8F /* BaseCollectionView.m in Sources */,
 				E0C19FD420CFF940000224D3 /* ErrorModel.m in Sources */,
 				E0E2243520AE766500133DA3 /* WeiShiCell.m in Sources */,
+				F5C8F86D20FF8E060024ED6A /* UIViewController+Extension.m in Sources */,
 				E0947F7D209AFAFD00FEFA43 /* ChannelSettingViewController.m in Sources */,
 				E03F2FC52092C34B0093C55E /* NoGroupView.m in Sources */,
 				E0B5191D208DC0160010D552 /* DianDiBengViewController.m in Sources */,
@@ -1800,6 +1736,7 @@
 				E0F34BAE20BA8871001281AB /* WSLNativeScanTool.m in Sources */,
 				E0D3DD2520809E9400F14860 /* OpenGroupCell.m in Sources */,
 				E05B9F5120D94B9B002CBC2A /* ZaoLangBengWeiShiStartTimeViewController.m in Sources */,
+				F5C8F87020FF8FE60024ED6A /* UIAlertController+showOnWindow.m in Sources */,
 				E0D3DC8C207F327A00F14860 /* AppDelegate.m in Sources */,
 				E0D8EB0920CE565E0085CE91 /* ShareModel.m in Sources */,
 				E0D3DD07207F76F500F14860 /* SettingContentCell.m in Sources */,
@@ -1825,6 +1762,7 @@
 				E0D3DCF3207F615B00F14860 /* MyDeviceViewController.m in Sources */,
 				E0ECF052208740B9001530CE /* MyDevicecContractViewController.m in Sources */,
 				E0ECF05E20882FB7001530CE /* LoadingHelper.m in Sources */,
+				F5C8F86A20FF84190024ED6A /* UIview+Extension.m in Sources */,
 				E0E2241E20AC6A9700133DA3 /* WirelessTurnSetTimingViewController.m in Sources */,
 				E0D3DCE7207F609B00F14860 /* SettingViewController.m in Sources */,
 				E0E5824720CD35AF00EEFB44 /* CircleView.m in Sources */,
@@ -2022,7 +1960,7 @@
 					"$(PROJECT_DIR)/JieBao/lib",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/JieBao/Public/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/JieBao/SupportFiles/PrefixHeader.pch";
 				INFOPLIST_FILE = JieBao/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2060,7 +1998,7 @@
 					"$(PROJECT_DIR)/JieBao/lib",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/JieBao/Public/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/JieBao/SupportFiles/PrefixHeader.pch";
 				INFOPLIST_FILE = JieBao/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

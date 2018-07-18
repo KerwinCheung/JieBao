@@ -53,10 +53,7 @@ class EditorCharts: UIView {
         self.ySpace = frame.size.height / 7.0
         
 //        self.maxYValue = self.maxYValue / ySpace!
-        
-        
-        
-        
+
     }
     
     required init?(coder aDecoder: NSCoder) {

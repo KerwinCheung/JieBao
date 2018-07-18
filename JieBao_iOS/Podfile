@@ -14,6 +14,7 @@ target 'JieBao' do
   pod 'AFNetworking'
   pod 'YYModel'
   pod 'SVProgressHUD'
+  pod 'BlocksKit'
 
 
   # source 'https://github.com/gizwits/PodSpecs.git'

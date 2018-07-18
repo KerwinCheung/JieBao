@@ -548,7 +548,6 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
             [self.navigationController pushViewController:handVC animated:YES];
         }
         else if (tempTag == CaiDengTypeTiming){
-//            NewTimingViewController *timeVC = [[NewTimingViewController alloc]init];
             CaiDengTimingTypeViewController *timeVC = [CaiDengTimingTypeViewController new];
             timeVC.dev = self.dev;
             timeVC.group = self.group;
