@@ -264,14 +264,13 @@
     if(result.code == GIZ_SDK_SUCCESS) {
         // 命令序号相符，开灯指令执行成功
         NSDictionary *data = dataMap[@"data"];
-
-        if ([device.productKey isEqualToString:kProductKeys[@"六路彩灯"]]) {
-            [[SDKHelper shareInstance].statusDic setObject:data[@"switch"] forKey:device.did];
+        if (data != nil) {
+            if ([device.productKey isEqualToString:kProductKeys[@"六路彩灯"]]) {
+                [[SDKHelper shareInstance].statusDic setObject:data[@"switch"] forKey:device.did];
+            }
+            
+            [self.cv performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
         }
-        
-        [self.cv performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-        
-
     }
 }
 

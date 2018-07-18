@@ -187,6 +187,9 @@
 		E0FC654520858B850070E9B3 /* APNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FC654420858B850070E9B3 /* APNextViewController.m */; };
 		EA939CD2B3BFD8998263AC61 /* libPods-JieBao.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E86079D5CEA048F420DC48 /* libPods-JieBao.a */; };
 		F58C217720F62B5E0073B85E /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = F58C217520F62B5E0073B85E /* EXTScope.m */; };
+		F5E3026520FE3A5B004C34FB /* EditorCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E3026420FE3A5B004C34FB /* EditorCharts.swift */; };
+		F5E3026820FE3BF7004C34FB /* NewTimingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E3026720FE3BF7004C34FB /* NewTimingViewController.m */; };
+		F5E3027520FE4964004C34FB /* Timing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5E3027420FE4964004C34FB /* Timing.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -568,6 +571,10 @@
 		F58C217420F62B5E0073B85E /* EXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
 		F58C217520F62B5E0073B85E /* EXTScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTScope.m; sourceTree = "<group>"; };
 		F58C217620F62B5E0073B85E /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
+		F5E3026420FE3A5B004C34FB /* EditorCharts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorCharts.swift; sourceTree = "<group>"; };
+		F5E3026620FE3BF7004C34FB /* NewTimingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewTimingViewController.h; sourceTree = "<group>"; };
+		F5E3026720FE3BF7004C34FB /* NewTimingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewTimingViewController.m; sourceTree = "<group>"; };
+		F5E3027420FE4964004C34FB /* Timing.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Timing.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1109,6 +1116,7 @@
 		F58C217220F62B450073B85E /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				F5E3026420FE3A5B004C34FB /* EditorCharts.swift */,
 				F58C217320F62B5E0073B85E /* EXTScope */,
 			);
 			path = Helper;
@@ -1127,24 +1135,8 @@
 		F5C1310220F1ED8600FF8CBC /* CaiDengDev */ = {
 			isa = PBXGroup;
 			children = (
-				E0ECF07620887B77001530CE /* MyDeviceCaiDengTurnViewController.h */,
-				E0ECF07720887B77001530CE /* MyDeviceCaiDengTurnViewController.m */,
-				E0B519062089D6D40010D552 /* CaiDengNightTypeViewController.h */,
-				E0B519072089D6D40010D552 /* CaiDengNightTypeViewController.m */,
-				E0B5191E208DC1480010D552 /* CaiDengDayTypeViewController.h */,
-				E0B5191F208DC1480010D552 /* CaiDengDayTypeViewController.m */,
-				E0B51921208DC15F0010D552 /* CaiDengRiLuoTypeViewController.h */,
-				E0B51922208DC15F0010D552 /* CaiDengRiLuoTypeViewController.m */,
-				E0B51927208DC2C20010D552 /* CaiDengRiChuTypeViewController.h */,
-				E0B51928208DC2C20010D552 /* CaiDengRiChuTypeViewController.m */,
-				E0B51924208DC1770010D552 /* CaiDengMorningTypeViewController.h */,
-				E0B51925208DC1770010D552 /* CaiDengMorningTypeViewController.m */,
-				E0B51912208D8D170010D552 /* CaiDengHandViewController.h */,
-				E0B51913208D8D170010D552 /* CaiDengHandViewController.m */,
-				E0B519092089E1290010D552 /* CaiDengTimingTypeViewController.h */,
-				E0B5190A2089E1290010D552 /* CaiDengTimingTypeViewController.m */,
-				E0B164D320A293E6005D294B /* TimingSettingViewController.h */,
-				E0B164D420A293E6005D294B /* TimingSettingViewController.m */,
+				F5E3027320FE494F004C34FB /* Storyboard */,
+				F5E3026920FE3BFB004C34FB /* ViewController */,
 			);
 			path = CaiDengDev;
 			sourceTree = "<group>";
@@ -1258,6 +1250,105 @@
 			path = ShuiBengDev;
 			sourceTree = "<group>";
 		};
+		F5E3026920FE3BFB004C34FB /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E0ECF07620887B77001530CE /* MyDeviceCaiDengTurnViewController.h */,
+				E0ECF07720887B77001530CE /* MyDeviceCaiDengTurnViewController.m */,
+				F5E3027020FE3C31004C34FB /* Day */,
+				F5E3026F20FE3C2F004C34FB /* Night */,
+				F5E3026E20FE3C2E004C34FB /* Sunset */,
+				F5E3026D20FE3C2C004C34FB /* Sunrise */,
+				F5E3026C20FE3C2A004C34FB /* Morning */,
+				F5E3027120FE3C78004C34FB /* Hand */,
+				F5E3026B20FE3C15004C34FB /* Timing */,
+				F5E3027220FE3C91004C34FB /* NewTiming */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		F5E3026B20FE3C15004C34FB /* Timing */ = {
+			isa = PBXGroup;
+			children = (
+				E0B519092089E1290010D552 /* CaiDengTimingTypeViewController.h */,
+				E0B5190A2089E1290010D552 /* CaiDengTimingTypeViewController.m */,
+				E0B164D320A293E6005D294B /* TimingSettingViewController.h */,
+				E0B164D420A293E6005D294B /* TimingSettingViewController.m */,
+			);
+			path = Timing;
+			sourceTree = "<group>";
+		};
+		F5E3026C20FE3C2A004C34FB /* Morning */ = {
+			isa = PBXGroup;
+			children = (
+				E0B51924208DC1770010D552 /* CaiDengMorningTypeViewController.h */,
+				E0B51925208DC1770010D552 /* CaiDengMorningTypeViewController.m */,
+			);
+			path = Morning;
+			sourceTree = "<group>";
+		};
+		F5E3026D20FE3C2C004C34FB /* Sunrise */ = {
+			isa = PBXGroup;
+			children = (
+				E0B51927208DC2C20010D552 /* CaiDengRiChuTypeViewController.h */,
+				E0B51928208DC2C20010D552 /* CaiDengRiChuTypeViewController.m */,
+			);
+			path = Sunrise;
+			sourceTree = "<group>";
+		};
+		F5E3026E20FE3C2E004C34FB /* Sunset */ = {
+			isa = PBXGroup;
+			children = (
+				E0B51921208DC15F0010D552 /* CaiDengRiLuoTypeViewController.h */,
+				E0B51922208DC15F0010D552 /* CaiDengRiLuoTypeViewController.m */,
+			);
+			path = Sunset;
+			sourceTree = "<group>";
+		};
+		F5E3026F20FE3C2F004C34FB /* Night */ = {
+			isa = PBXGroup;
+			children = (
+				E0B519062089D6D40010D552 /* CaiDengNightTypeViewController.h */,
+				E0B519072089D6D40010D552 /* CaiDengNightTypeViewController.m */,
+			);
+			path = Night;
+			sourceTree = "<group>";
+		};
+		F5E3027020FE3C31004C34FB /* Day */ = {
+			isa = PBXGroup;
+			children = (
+				E0B5191E208DC1480010D552 /* CaiDengDayTypeViewController.h */,
+				E0B5191F208DC1480010D552 /* CaiDengDayTypeViewController.m */,
+			);
+			path = Day;
+			sourceTree = "<group>";
+		};
+		F5E3027120FE3C78004C34FB /* Hand */ = {
+			isa = PBXGroup;
+			children = (
+				E0B51912208D8D170010D552 /* CaiDengHandViewController.h */,
+				E0B51913208D8D170010D552 /* CaiDengHandViewController.m */,
+			);
+			path = Hand;
+			sourceTree = "<group>";
+		};
+		F5E3027220FE3C91004C34FB /* NewTiming */ = {
+			isa = PBXGroup;
+			children = (
+				F5E3026620FE3BF7004C34FB /* NewTimingViewController.h */,
+				F5E3026720FE3BF7004C34FB /* NewTimingViewController.m */,
+			);
+			path = NewTiming;
+			sourceTree = "<group>";
+		};
+		F5E3027320FE494F004C34FB /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				F5E3027420FE4964004C34FB /* Timing.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1271,7 +1362,6 @@
 				E0D3DC85207F327A00F14860 /* Resources */,
 				2093CC990DD2F6DAE3EA93CF /* [CP] Copy Pods Resources */,
 				E0B164D020A1A6B5005D294B /* Embed Frameworks */,
-				1770616D17CF57871A104C19 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1290,8 +1380,6 @@
 				E0D3DC9B207F327B00F14860 /* Sources */,
 				E0D3DC9C207F327B00F14860 /* Frameworks */,
 				E0D3DC9D207F327B00F14860 /* Resources */,
-				526A1A7405115FA77EDBF7B5 /* [CP] Embed Pods Frameworks */,
-				5AE35D6847B83D49EDD70A54 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1311,8 +1399,6 @@
 				E0D3DCA6207F327B00F14860 /* Sources */,
 				E0D3DCA7207F327B00F14860 /* Frameworks */,
 				E0D3DCA8207F327B00F14860 /* Resources */,
-				B81F86A6FCB6F706E03D0F03 /* [CP] Embed Pods Frameworks */,
-				31BACB48612CEC555A6CDDF5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1375,6 +1461,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5E3027520FE4964004C34FB /* Timing.storyboard in Resources */,
 				E0CEAFF020DCCB0E00225922 /* icon_m_auto@2x.png in Resources */,
 				E0F34BA820BA8853001281AB /* WechatIMG1 1.jpeg in Resources */,
 				E0CEAFEF20DCCB0E00225922 /* icon_m_chushi@2x.png in Resources */,
@@ -1411,21 +1498,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1770616D17CF57871A104C19 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBao/Pods-JieBao-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		1DB9717A4A756C316A439B44 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1464,51 +1536,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBao/Pods-JieBao-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		31BACB48612CEC555A6CDDF5 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoUITests/Pods-JieBaoUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		526A1A7405115FA77EDBF7B5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoTests/Pods-JieBaoTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5AE35D6847B83D49EDD70A54 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoTests/Pods-JieBaoTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		5F9A722C73A36F28F96DE497 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1525,21 +1552,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B81F86A6FCB6F706E03D0F03 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoUITests/Pods-JieBaoUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C9A002C1C316B2084709305D /* [CP] Check Pods Manifest.lock */ = {
@@ -1615,6 +1627,7 @@
 				E05B9F4E20D93A00002CBC2A /* ZaoLangBengHengLiuViewController.m in Sources */,
 				E03F2F68209065220093C55E /* SDKHelper.m in Sources */,
 				E0FC651E2081E4250070E9B3 /* EditAddGroupCell.m in Sources */,
+				F5E3026520FE3A5B004C34FB /* EditorCharts.swift in Sources */,
 				E05B9F4820D93962002CBC2A /* ZaoLangBengSuiJiViewController.m in Sources */,
 				E0B1651620A41FD0005D294B /* TimingChartView.m in Sources */,
 				E0E2241820AC684500133DA3 /* WirelessTurnSettingViewController.m in Sources */,
@@ -1707,6 +1720,7 @@
 				E0ECF0312085DEFF001530CE /* TurnViewController.m in Sources */,
 				E0FC65422084DBC60070E9B3 /* HelpViewController.m in Sources */,
 				E0ECF04F20873488001530CE /* MyDeviceWIFIViewController.m in Sources */,
+				F5E3026820FE3BF7004C34FB /* NewTimingViewController.m in Sources */,
 				E0CEAFEE20DCCB0E00225922 /* WDCircleAnimationView.m in Sources */,
 				E0FC653520820ACE0070E9B3 /* AddDeviceViewController.m in Sources */,
 				E0D3DCDD207F465500F14860 /* RegisterViewController.m in Sources */,
@@ -1884,6 +1898,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = Y9XNLL45PT;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1900,10 +1915,11 @@
 					"$(PROJECT_DIR)/JieBao/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiebao;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8a6cc2aa-75c9-4b09-a88a-ff4e15787e5e";
 				PROVISIONING_PROFILE_SPECIFIER = JieBaoDevolop;
-				SWIFT_OBJC_BRIDGING_HEADER = "JieBao/JieBao-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/JieBao/JieBao-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1920,6 +1936,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = Y9XNLL45PT;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1936,10 +1953,11 @@
 					"$(PROJECT_DIR)/JieBao/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiebao;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "af1fe31a-f524-442a-867c-75d634d68d13";
 				PROVISIONING_PROFILE_SPECIFIER = jebao;
-				SWIFT_OBJC_BRIDGING_HEADER = "JieBao/JieBao-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/JieBao/JieBao-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = " $(PODS_ROOT)";
@@ -1950,6 +1968,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BE41390BAC3B4CC214AED7C0 /* Pods-JieBaoTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 25M88832R7;
@@ -1966,6 +1985,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C73C57ADAD2A4C17230BED84 /* Pods-JieBaoTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 25M88832R7;
@@ -1982,6 +2002,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 245B627E1E172D52BEE286A6 /* Pods-JieBaoUITests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 25M88832R7;
 				INFOPLIST_FILE = JieBaoUITests/Info.plist;
@@ -1997,6 +2018,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 29F8E9EA717F581ED6F75F0F /* Pods-JieBaoUITests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 25M88832R7;
 				INFOPLIST_FILE = JieBaoUITests/Info.plist;

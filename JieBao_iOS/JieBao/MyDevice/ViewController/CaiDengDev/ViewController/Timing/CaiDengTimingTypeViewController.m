@@ -96,7 +96,6 @@
 //            [NetworkHelper sendRequest:nil Method:@"DELETE" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler/%@",sch.sid] callback:^(NSData *data, NSError *error) {
 //
 //            }];
-            
             if (![taskName isEqualToString:sch.remark]) {
                 arr = [NSMutableArray array];
                 taskName = sch.remark;

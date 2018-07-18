@@ -32,6 +32,9 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 #import "DragImageView.h"
 #import "CircleView.h"
 
+#import "DeviceSchedulerTask.h"
+#import "NewTimingViewController.h"
+
 @interface MyDeviceCaiDengTurnViewController ()<GizWifiDeviceDelegate,CircleViewDelegate>
 {
     DragImageView *imageviewCharitiesOne;
@@ -76,6 +79,8 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 
 @property (nonatomic, strong) NSMutableArray<DragImageView *> *arrImage;
 
+@property (nonatomic, strong) DeviceSchedulerTask *deviceSchedulerTask;
+
 @end
 
 @implementation MyDeviceCaiDengTurnViewController
@@ -99,6 +104,8 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
         [self.dev setSubscribe:self.dev.productKey subscribed:YES];
         [self.dev getDeviceStatus:@[@"mode",@"switch"]];
     }
+    
+    [self getTiming];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -438,12 +445,44 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     }else if (tempTag == CaiDengTypeTiming){
         modeNum = @(6);
     }
-    NSDictionary *controlDic = @{@"mode":modeNum};
     
-    if (self.dev) {
-        [self.dev write:controlDic withSN:999];
+    NSDictionary *controlDic = [NSDictionary dictionary];
+    @weakify(controlDic);
+    if (modeNum.integerValue == 6) {
+        if (self.deviceSchedulerTask.sches.count > 0 ) {
+            [self.deviceSchedulerTask.sches enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(DeviceCommonSchulder * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                @strongify(controlDic);
+                NSString *nowHour = [[NSDate date] formattedDateWithFormat:@"HH"];
+                NSArray *timeArray = [obj.time componentsSeparatedByString:@":"];
+                if ([timeArray.firstObject isEqualToString:nowHour]) {
+                    controlDic = @{@"mode":modeNum,
+                                   @"Timer":@YES,
+                                   @"color_white":@([[obj.attrs objectForKey:@"color_white"] integerValue]),
+                                   @"color_blue1":@([[obj.attrs objectForKey:@"color_blue1"] integerValue]),
+                                   @"color_blue2":@([[obj.attrs objectForKey:@"color_blue2"] integerValue]),
+                                   @"color_green":@([[obj.attrs objectForKey:@"color_green"] integerValue]),
+                                   @"color_red":@([[obj.attrs objectForKey:@"color_red"] integerValue]),
+                                   @"volor_violet":@([[obj.attrs objectForKey:@"volor_violet"] integerValue])
+                                   };
+                    *stop = YES;
+                    if (self.dev) {
+                        [self.dev write:controlDic withSN:999];
+                    }else{
+                        [self sendGroupControlWith:controlDic];
+                    }
+                }
+            }];
+        }else{
+            [HudHelper showErrorWithStatus:@"当前没有设置定时任务"];
+        }
     }else{
-        [self sendGroupControlWith:controlDic];
+        @strongify(controlDic);
+        controlDic = @{@"mode":modeNum};
+        if (self.dev) {
+            [self.dev write:controlDic withSN:999];
+        }else{
+            [self sendGroupControlWith:controlDic];
+        }
     }
 }
 
@@ -499,6 +538,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
             [self.navigationController pushViewController:handVC animated:YES];
         }
         else if (tempTag == CaiDengTypeTiming){
+//            NewTimingViewController *timeVC = [[NewTimingViewController alloc]init];
             CaiDengTimingTypeViewController *timeVC = [CaiDengTimingTypeViewController new];
             timeVC.dev = self.dev;
             timeVC.group = self.group;
@@ -544,6 +584,9 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 - (void)device:(GizWifiDevice *)device didReceiveData:(NSError *)result data:(NSDictionary<NSString *,id> *)dataMap withSN:(NSNumber *)sn
 {
     if(result.code == GIZ_SDK_SUCCESS) {
+        if (sn.integerValue == 999) {
+            NSLog(@"发送成功了");
+        }
         if ([sn integerValue] == 0) {
 //            NSLog(@"属性%@",dataMap);
             NSDictionary *data = dataMap[@"data"];
@@ -628,6 +671,34 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     }
 }
 
+#pragma mark - get Timing Action
+- (void)getTiming {
+    @weakify(self);
+    [NetworkHelper sendRequest:nil Method:@"GET" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler?%@&limit=200",self.dev?[NSString stringWithFormat:@"did=%@",self.dev.did]:[NSString stringWithFormat:@"group_id=%@",self.group.gid]] callback:^(NSData *data, NSError *error) {
+        
+        if (!data || error) {
+            return ;
+        }
+        
+        NSArray *list =  [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        if (list.count == 0) {
+            return;
+        }
+        
+        @strongify(self);
+        NSMutableArray<DeviceCommonSchulder *> *sches = [NSMutableArray array];
+        for (int i = 0; i< list.count; i++) {
+            DeviceCommonSchulder *sch = [DeviceCommonSchulder yy_modelWithJSON:list[i]];
+            if (sch.enabled == YES) {
+                [sches addObject:sch];
+                if (sches.count == 24) {
+                    self.deviceSchedulerTask.sches = sches;
+                }
+            }
+        }
+    }];
+}
+
 #pragma mark - getter
 - (UIButton *)turnBtn
 {
@@ -687,6 +758,14 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
         _currentModelLb.hidden = NO;
     }
     return _currentModelLb;
+}
+
+- (DeviceSchedulerTask *)deviceSchedulerTask {
+    if (!_deviceSchedulerTask) {
+        _deviceSchedulerTask = [[DeviceSchedulerTask alloc]init];
+    }
+    
+    return _deviceSchedulerTask;
 }
 
 @end
