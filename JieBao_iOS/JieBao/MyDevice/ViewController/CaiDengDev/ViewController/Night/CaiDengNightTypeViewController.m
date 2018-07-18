@@ -7,7 +7,7 @@
 //
 
 #import "CaiDengNightTypeViewController.h"
-
+#import "LightsDataPointModel.h"
 @interface CaiDengNightTypeViewController ()<GizWifiDeviceDelegate>
 
 @property (nonatomic, strong) UIImageView *nightImgView;
@@ -44,6 +44,16 @@
     if (self.dev) {
         self.dev.delegate = self;
         [self.dev getDeviceStatus:@[@"M5"]];
+    }else{
+        //设置分组初始状态,使用某一台设备的状态
+        for (CustomDevice *customDev in self.group.devs) {
+            if ([SDKHELPER.statusDic.allKeys containsObject:customDev.did]) {
+                LightsDataPointModel *lightStatusModel = [SDKHELPER.statusDic objectForKey:customDev.did];
+                self.slider.value = lightStatusModel.M5Num.floatValue;
+                self.valuelb.text = [NSString stringWithFormat:@"%ld%%",(NSInteger)self.slider.value];
+                return;
+            }
+        }
     }
 }
 
@@ -148,13 +158,15 @@
     }
 }
 
+    
+#pragma mark - 
 - (void)device:(GizWifiDevice *)device didReceiveData:(NSError *)result data:(NSDictionary<NSString *,id> *)dataMap withSN:(NSNumber *)sn
 {
     if (result.code == GIZ_SDK_SUCCESS) {
         if (self.dev && sn.integerValue == 0) {
             NSDictionary *data = dataMap[@"data"];
             self.slider.value = [[data objectForKey:@"M5"] floatValue];
-            [self sliderValueChanged];
+            self.valuelb.text = [NSString stringWithFormat:@"%ld%%",(NSInteger)self.slider.value];
             return;
         }
         

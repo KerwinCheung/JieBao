@@ -9,12 +9,21 @@
 #import "BaseCollectionViewCell.h"
 #import "CustomDevice.h"
 
+@class OpenGroupCollectionViewCell;
+@protocol OpenGroupCollectionViewCellDelegate<NSObject>
+
+-(void)OpenGroupCollectionViewCell:(OpenGroupCollectionViewCell *)cell longTapWithIndexPath:(NSIndexPath *)indexPath;
+
+@end
+
 @interface OpenGroupCollectionViewCell : BaseCollectionViewCell
 
-@property (nonatomic, strong) CustomDevice *dataDic;
+@property (nonatomic, strong) CustomDevice *customDev;
+@property (nonatomic, strong) NSIndexPath *indexPath;
+@property (nonatomic, weak) id<OpenGroupCollectionViewCellDelegate>delegate;
 
-- (void)cellSetSelected;
-
+-(void)setCellStatus:(BOOL)isStatus;
+-(void)setCellNoConnected;
 - (BOOL)isSwitchOn;
 
 @end

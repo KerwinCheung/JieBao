@@ -126,7 +126,7 @@
             return ;
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self alertShowMessage:@"编辑成功" title:@"提示" confirmCallback:nil cancelCallback:nil];
+            [HudHelper showSuccessWithStatus:@"编辑成功"];
         });
     }];
 }

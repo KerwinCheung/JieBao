@@ -31,26 +31,64 @@
             make.top.equalTo(weakself.img.mas_bottom).offset(CurrentDeviceSize(5));
             make.width.lessThanOrEqualTo(@100);
         }];
+        
+        [self addGest];
     }
     return self;
 }
 
+#pragma mark - 手势
+-(void)addGest{
+    UILongPressGestureRecognizer *ges = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    [self addGestureRecognizer:ges];
+}
+
+-(void)longPress:(UIGestureRecognizer *)tap{
+    // 长按
+    if (tap.state == UIGestureRecognizerStateEnded) {
+        if ([self.delegate respondsToSelector:@selector(GroupCollectionViewCellCell:longTapWithIndexPath:)]) {
+            [self.delegate GroupCollectionViewCellCell:self longTapWithIndexPath:self.indexPath];
+        }
+    }
+    
+}
+
+#pragma mark - method
 - (void)cellSetSelected
 {
     self.clicked = !self.clicked;
     if (self.clicked) {
-        self.img.image = [SelectImageHelper selectGroupSelectedImageWithTpye:self.dataDic.product_key];
+        self.img.image = [SelectImageHelper selectGroupSelectedImageWithTpye:self.group.product_key];
     }else
     {
-        self.img.image = [SelectImageHelper selectGroupImageWithTpye:self.dataDic.product_key];
+        self.img.image = [SelectImageHelper selectGroupImageWithTpye:self.group.product_key];
     }
 }
+
+-(void)setCellStatus:(BOOL)isStatus{
+    self.clicked = isStatus;
+    if (self.clicked) {
+        self.img.image = [SelectImageHelper selectGroupSelectedImageWithTpye:self.group.product_key];
+    }else
+    {
+        self.img.image = [SelectImageHelper selectGroupImageWithTpye:self.group.product_key];
+    }
+}
+
 
 - (BOOL)isSwitchOn
 {
     return self.clicked;
 }
 
+-(void)setGroup:(CustomDeviceGroup *)group{
+    _group = group;
+    self.img.image = [SelectImageHelper selectGroupImageWithTpye:group.product_key];
+    self.lb.text = group.group_name;
+}
+
+
+#pragma mark - lazy init
 - (UILabel *)lb
 {
     if (!_lb) {
@@ -70,11 +108,7 @@
     return _img;
 }
 
-- (void)setDataDic:(CustomDeviceGroup *)dataDic
-{
-    _dataDic = dataDic;
-    self.img.image = [SelectImageHelper selectGroupImageWithTpye:dataDic.product_key];
-    self.lb.text = dataDic.group_name;
-}
+
+
 
 @end

@@ -34,7 +34,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 
 #import "DeviceSchedulerTask.h"
 #import "NewTimingViewController.h"
-
+#import "LightsDataPointModel.h"
 @interface MyDeviceCaiDengTurnViewController ()<GizWifiDeviceDelegate,CircleViewDelegate>
 {
     DragImageView *imageviewCharitiesOne;
@@ -98,14 +98,24 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self initUI];
+    [self getTiming];
+
     if (self.dev) {
         NSLog(@"%@",self.dev.macAddress);
         self.dev.delegate = self;
         [self.dev setSubscribe:self.dev.productKey subscribed:YES];
         [self.dev getDeviceStatus:@[@"mode",@"switch"]];
+    }else{
+        //设置分组初始状态,使用某一台设备的状态
+        for (CustomDevice *customDev in self.group.devs) {
+            if ([SDKHELPER.statusDic.allKeys containsObject:customDev.did]) {
+                LightsDataPointModel *lightStatusModel = [SDKHELPER.statusDic objectForKey:customDev.did];
+                [self setTurnBtnWhithStatus:lightStatusModel.switchNum.boolValue currentViewWhith:lightStatusModel.modelNum.integerValue];
+                return;
+            }
+        }
     }
     
-    [self getTiming];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -373,7 +383,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     [self.navigationController pushViewController:[NSClassFromString(@"MyDeviceAPControlViewController") new] animated:YES];
 }
 
-#pragma mark --CircleViewDelegate
+#pragma mark - CircleViewDelegate
 - (void)imgSelected:(NSInteger)tag
 {
     NSLog(@"imageTag>>>>%zd",tag);
@@ -707,7 +717,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
         [_turnBtn addTarget:self action:@selector(turnBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         _turnBtn.backgroundColor = [UIColor whiteColor];
         [_turnBtn setImage:[UIImage imageNamed:@"open"] forState:UIControlStateSelected];
-        [_turnBtn setImage:[UIImage imageNamed:@"shuibeng_close"] forState:UIControlStateNormal];
+        [_turnBtn setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
     }
     return _turnBtn;
 }

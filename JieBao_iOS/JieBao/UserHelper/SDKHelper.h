@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define SDKHELPER [SDKHelper shareInstance]
+
 @interface SDKHelper : NSObject<GizWifiSDKDelegate,GizDeviceGroupCenterDelegate,GizDeviceSharingDelegate,GizDeviceSchedulerCenterDelegate>
 
 @property (nonatomic, copy) RegisterCallBackBlock registerBlock;
@@ -28,10 +30,12 @@
 
 @property (nonatomic, copy) ScheduleCallBackBlock scheduleCallBackBlock;
 
+/**设备状态字典    key 为设备did value 为数据点模型*/
 @property (nonatomic, strong) NSMutableDictionary *statusDic;
 
 //绑定的设备数组 GizWifiDevice对象
 @property (nonatomic, strong) NSMutableArray *deviceArray;
+
 
 + (instancetype)shareInstance;
 

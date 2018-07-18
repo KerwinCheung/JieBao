@@ -7,7 +7,7 @@
 //
 
 #import "SDKHelper.h"
-
+#import "LightsDataPointModel.h"
 static SDKHelper *helper = nil;
 
 @interface SDKHelper()
@@ -203,5 +203,10 @@ static SDKHelper *helper = nil;
         }
     }
 }
+
+
+
+
+
 
 @end

@@ -21,8 +21,8 @@
 #import "ZaoLangBengViewController.h"
 
 #import "CaiDengGroupController.h"
-
-@interface OpenGroupViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
+#import "LightsDataPointModel.h"
+@interface OpenGroupViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,OpenGroupCollectionViewCellDelegate>
 
 @property (nonatomic, strong) BaseCollectionView *cv;
 
@@ -119,6 +119,7 @@
 
 - (void)setBtnClicked
 {
+    // 设置
     NSString *type = self.group.product_key;
     if ([type isEqualToString:kProductKeys[@"六路彩灯"]]) {
         MyDeviceCaiDengTurnViewController *vc = [MyDeviceCaiDengTurnViewController new];
@@ -151,11 +152,7 @@
     ConfirmCallback editCallBack = ^(void){
         EditGroupViewController *vc = [EditGroupViewController new];
         NSMutableArray *tempArr = [NSMutableArray array];
-//        for (NSArray<CustomDevice *> *arr in self.dataSource) {
-//            for (CustomDevice *dev in arr) {
-//                [tempArr addObject:dev];
-//            }
-//        }
+
         for (CustomDevice *dev in self.dataSource) {
         
                 [tempArr addObject:dev];
@@ -181,53 +178,6 @@
     [self actionSheetShowMessage:@[@"编辑分组",@"删除分组"] confirmCallbacks:@[editCallBack,deleteCallBack] cancelCallback:nil];
 }
 
-- (void)longPress:(UILongPressGestureRecognizer *)ges
-{
-#pragma mark -- 先取消
-//    CustomDevice *dev = ((OpenGroupCollectionViewCell *)ges.view).dataDic;
-//
-//    GizWifiDevice *gizDev = [GizWifiDevice new];
-//    [gizDev setValue:dev.did forKey:@"did"];
-//    [gizDev setValue:dev.product_key forKey:@"productKey"];
-//    [gizDev setValue:dev.dev_alias forKey:@"alias"];
-//    [gizDev setValue:dev.remark forKey:@"remark"];
-//    if (ges.state == UIGestureRecognizerStateEnded) {
-//        if ([dev.product_key isEqualToString:kProductKeys[@"六路彩灯"]]) {
-//            MyDeviceCaiDengTurnViewController *vc = [MyDeviceCaiDengTurnViewController new];
-//            vc.dev = gizDev;
-//        }
-//        else if ([dev.product_key isEqualToString:kProductKeys[@"滴定泵"]]){
-//            DianDiBengViewController *vc = [DianDiBengViewController new];
-//            vc.dev = gizDev;
-//        }
-//        else if ([dev.product_key isEqualToString:kProductKeys[@"无线开关"]]){
-//            MyDeviceWirelessTurnViewController *vc = [MyDeviceWirelessTurnViewController new];
-//            vc.dev = gizDev;
-//        }
-//        else if ([dev.product_key isEqualToString:kProductKeys[@"造浪泵"]]){
-//            ZaoLangBengViewController *vc = [ZaoLangBengViewController new];
-//            vc.dev = gizDev;
-//        }
-//        else if ([dev.product_key isEqualToString:kProductKeys[@"水泵"]]){
-//            ShuiBengViewController *vc = [ShuiBengViewController new];
-//            vc.dev = gizDev;
-//        }
-//    }
-}
-
-- (void)tap:(UITapGestureRecognizer *)ges
-{
-    CustomDevice *dev = ((OpenGroupCollectionViewCell *)ges.view).dataDic;
-    [(OpenGroupCollectionViewCell *)ges.view cellSetSelected];
-    BOOL isSwitch = [(OpenGroupCollectionViewCell *)ges.view isSwitchOn];
-    NSDictionary *body = @{@"attrs":@{@"switch":@(isSwitch)}};
-    [NetworkHelper sendRequest:body Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/control/%@",dev.did] callback:^(NSData *data, NSError *error) {
-        if (!data || error) {
-            return ;
-        }
-    }];
-}
-
 - (void)addBtnClicked
 {
     [self.navigationController pushViewController:[NSClassFromString(@"MyDeviceAddViewController") new] animated:YES];
@@ -247,17 +197,78 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     OpenGroupCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"OpenGroupCollectionViewCell" forIndexPath:indexPath];
-    cell.dataDic = self.dataSource[indexPath.row];
+    CustomDevice *customeDev = self.dataSource[indexPath.row];
+    cell.customDev = customeDev;
+    cell.delegate = self;
+    cell.indexPath = indexPath;
     
+    //初始化状态
+    if ([customeDev.product_key isEqualToString:kProductKeys[@"六路彩灯"]]) {
+        
+        if ([SDKHELPER.statusDic.allKeys containsObject:customeDev.did]) {
+            LightsDataPointModel *lightStatusModel = [SDKHELPER.statusDic objectForKey:customeDev.did];
+            [cell setCellStatus:lightStatusModel.switchNum.boolValue];
+            
+        }
+        
+        for (GizWifiDevice *gizDev in SDKHELPER.deviceArray) {
+            if ([gizDev.did isEqualToString:customeDev.did]) {
+                if (gizDev.netStatus == GizDeviceOffline) {
+                    [cell setCellNoConnected];
+                }
+            }
+        }
+       
+        
+    }else if ([customeDev.product_key isEqualToString:kProductKeys[@"滴定泵"]]){
+        
+    }else if ([customeDev.product_key isEqualToString:kProductKeys[@"无线开关"]]){
+        
+    }else if ([customeDev.product_key isEqualToString:kProductKeys[@"造浪泵"]]){
+        
+    }else if ([customeDev.product_key isEqualToString:kProductKeys[@"水泵"]]){
+        
+    }
     
-    UILongPressGestureRecognizer *ges = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                          action:@selector(tap:)];
-    [cell addGestureRecognizer:ges];
-    [cell addGestureRecognizer:tap];
     return cell;
 }
 
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    CustomDevice *dev = self.dataSource[indexPath.row] ;
+    OpenGroupCollectionViewCell *cell = (OpenGroupCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    
+    
+    if ([dev.product_key isEqualToString:kProductKeys[@"六路彩灯"]]) {
+        
+        if ([SDKHELPER.statusDic.allKeys containsObject:dev.did]) {
+            //只有能够获取状态的设备才可控
+            LightsDataPointModel *lightStatusModel = [SDKHELPER.statusDic objectForKey:dev.did];
+            BOOL isSwitch = !lightStatusModel.switchNum.boolValue;
+            
+            NSNumber *switchNum = [NSNumber numberWithBool:isSwitch];
+            [lightStatusModel.device write:@{@"switch":switchNum} withSN:500];
+            [cell setCellStatus:isSwitch];
+        }
+ 
+    }else if ([dev.product_key isEqualToString:kProductKeys[@"滴定泵"]]){
+        
+    }else if ([dev.product_key isEqualToString:kProductKeys[@"无线开关"]]){
+        
+    }else if ([dev.product_key isEqualToString:kProductKeys[@"造浪泵"]]){
+        
+    }else if ([dev.product_key isEqualToString:kProductKeys[@"水泵"]]){
+        
+    }
+}
+
+#pragma mark - OpenGroupCollectionViewCell Delegate
+- (void)OpenGroupCollectionViewCell:(OpenGroupCollectionViewCell *)cell longTapWithIndexPath:(NSIndexPath *)indexPath{
+    //长按
+}
+
+
+#pragma mark - lazy init
 - (BaseCollectionView *)cv
 {
     if (!_cv) {

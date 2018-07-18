@@ -8,9 +8,20 @@
 
 #import "BaseCollectionViewCell.h"
 
+@class DeviceCollectionViewCell;
+@protocol DeviceCollectionViewCellDelegate<NSObject>
+
+-(void)DeviceCollectionViewCell:(DeviceCollectionViewCell *)cell longTapWithIndexPath:(NSIndexPath *)indexPath;
+
+@end
+
 @interface DeviceCollectionViewCell : BaseCollectionViewCell
 
 @property (nonatomic, strong) GizWifiDevice *dataDic;
+
+@property (nonatomic, strong) NSIndexPath *indexPath;
+
+@property (nonatomic, weak) id<DeviceCollectionViewCellDelegate>delegate;
 
 - (void)cellSetSelected;
 

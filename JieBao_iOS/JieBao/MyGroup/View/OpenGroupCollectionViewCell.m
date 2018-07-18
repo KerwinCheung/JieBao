@@ -39,19 +39,43 @@
             make.top.equalTo(weakself.img.mas_bottom).offset(CurrentDeviceSize(5));
             make.width.lessThanOrEqualTo(@100);
         }];
+        [self addGest];
     }
     return self;
 }
 
-- (void)cellSetSelected
-{
-    self.clicked = !self.clicked;
+#pragma mark - 手势
+-(void)addGest{
+    UILongPressGestureRecognizer *ges = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    [self addGestureRecognizer:ges];
+}
+
+-(void)longPress:(UIGestureRecognizer *)tap{
+    // 长按
+    if (tap.state == UIGestureRecognizerStateEnded) {
+        if ([self.delegate respondsToSelector:@selector(OpenGroupCollectionViewCell:longTapWithIndexPath:)]) {
+            [self.delegate OpenGroupCollectionViewCell:self longTapWithIndexPath:self.indexPath];
+        }
+    }
+    
+}
+
+#pragma mark - method
+
+-(void)setCellStatus:(BOOL)isStatus{
+    //设置开启或关闭状态
+    self.clicked = isStatus;
     if (self.clicked) {
-        self.img.image = [SelectImageHelper selectDeviceSelectedImageWithTpye:self.dataDic.product_key];
+        self.img.image = [SelectImageHelper selectDeviceSelectedImageWithTpye:self.customDev.product_key];
     }else
     {
-        self.img.image = [SelectImageHelper selectDeviceImageWithTpye:self.dataDic.product_key];
+        self.img.image = [SelectImageHelper selectDeviceImageWithTpye:self.customDev.product_key];
     }
+}
+
+-(void)setCellNoConnected{
+    // 设置未连接状态
+        self.img.image = [SelectImageHelper selectDeviceNoConnectedWithTpye:self.customDev.product_key];
 }
 
 - (BOOL)isSwitchOn
@@ -59,6 +83,14 @@
     return self.clicked;
 }
 
+-(void)setCustomDev:(CustomDevice *)customDev{
+    _customDev = customDev;
+    self.img.image = [SelectImageHelper selectDeviceImageWithTpye:customDev
+                      .product_key];
+    self.lb.text = customDev.dev_alias;
+}
+
+#pragma mark - lazy init
 - (UILabel *)lb
 {
     if (!_lb) {
@@ -78,10 +110,4 @@
     return _img;
 }
 
-- (void)setDataDic:(CustomDevice *)dataDic
-{
-    _dataDic = dataDic;
-    self.img.image = [SelectImageHelper selectDeviceImageWithTpye:dataDic.product_key];
-    self.lb.text = dataDic.dev_alias;
-}
 @end

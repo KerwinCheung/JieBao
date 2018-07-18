@@ -38,16 +38,11 @@
             LHLog(@"left");
         };
         
-//        ActionBlock rightAction = ^(UIButton *btn){
-//            [weakself confirm];
-//            LHLog(@"left");
-//        };
         
         [self.naviBar  configNavigationBarWithAttrs:@{
                                                       kCustomNaviBarLeftActionKey:leftAction,
                                                       kCustomNaviBarLeftImgKey:@"back",
                                                       kCustomNaviBarTitleKey:@"添加设备",
-//                                                      kCustomNaviBarRightActionKey:rightAction,
                                                       kCustomNaviBarRightImgKey:@""
                                                       }];
     }
@@ -130,6 +125,7 @@
         NSMutableArray *arr = [NSMutableArray arrayWithArray:self.group.devs];
         [arr addObjectsFromArray:self.temps];
         self.group.devs = arr;
+        self.callback(self.group);
         dispatch_async(dispatch_get_main_queue(), ^{
             [HudHelper showSuccessWithStatus:@"添加成功"];
             [self.navigationController popViewControllerAnimated:YES];

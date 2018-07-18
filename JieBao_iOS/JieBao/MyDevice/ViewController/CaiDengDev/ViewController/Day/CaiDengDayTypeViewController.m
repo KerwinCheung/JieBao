@@ -7,7 +7,7 @@
 //
 
 #import "CaiDengDayTypeViewController.h"
-
+#import "LightsDataPointModel.h"
 @interface CaiDengDayTypeViewController ()<GizWifiDeviceDelegate>
 
 @property (nonatomic, strong) UIImageView *nightImgView;
@@ -45,6 +45,16 @@
     if (self.dev) {
         self.dev.delegate = self;
         [self.dev getDeviceStatus:@[@"M3"]];
+    }else{
+        //设置分组初始状态,使用某一台设备的状态
+        for (CustomDevice *customDev in self.group.devs) {
+            if ([SDKHELPER.statusDic.allKeys containsObject:customDev.did]) {
+                LightsDataPointModel *lightStatusModel = [SDKHELPER.statusDic objectForKey:customDev.did];
+                self.slider.value = lightStatusModel.M3Num.floatValue;
+                self.valuelb.text = [NSString stringWithFormat:@"%ld%%",(NSInteger)self.slider.value];
+                return;
+            }
+        }
     }
 }
 
@@ -156,7 +166,7 @@
         if (sn.integerValue == 0) {
             NSDictionary *data = dataMap[@"data"];
             self.slider.value = [[data objectForKey:@"M3"] floatValue];
-            [self sliderValueChanged];
+            self.valuelb.text = [NSString stringWithFormat:@"%ld%%",(NSInteger)self.slider.value];
         }
         
         if ([sn integerValue] == 103) {

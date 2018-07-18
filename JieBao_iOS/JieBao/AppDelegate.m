@@ -12,7 +12,6 @@
 
 @interface AppDelegate ()
 
-@property (nonatomic, strong) SDKHelper *sdkHelper;
 
 @end
 

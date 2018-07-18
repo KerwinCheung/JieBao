@@ -39,9 +39,31 @@
             make.top.equalTo(weakself.img.mas_bottom).offset(CurrentDeviceSize(5));
             make.width.lessThanOrEqualTo(@100);
         }];
+        
+        [self addGest];
     }
     return self;
 }
+
+#pragma mark - 手势
+-(void)addGest{
+    UILongPressGestureRecognizer *ges = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+     [self addGestureRecognizer:ges];
+}
+
+-(void)longPress:(UIGestureRecognizer *)tap{
+    // 长按
+    if (tap.state == UIGestureRecognizerStateEnded) {
+        if ([self.delegate respondsToSelector:@selector(DeviceCollectionViewCell:longTapWithIndexPath:)]) {
+            [self.delegate DeviceCollectionViewCell:self longTapWithIndexPath:self.indexPath];
+        }
+    }
+    
+}
+
+
+
+
 
 - (void)cellSetSelected
 {

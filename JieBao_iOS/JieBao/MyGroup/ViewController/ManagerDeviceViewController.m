@@ -118,9 +118,12 @@
     AddDeviceViewController *vc = [AddDeviceViewController new];
     vc.group = self.group;
     vc.callback = ^(CustomDeviceGroup *obj) {
-        [self finishEdit];
-        self.dataSource = obj.devs;
-        [self.tb reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self finishEdit];
+            self.dataSource = obj.devs;
+            [self.tb reloadData];
+        });
+        
     };
     [self.navigationController pushViewController:vc animated:YES];
 }

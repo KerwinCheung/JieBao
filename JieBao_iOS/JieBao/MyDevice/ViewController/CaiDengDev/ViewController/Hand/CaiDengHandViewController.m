@@ -2,13 +2,13 @@
 //  CaiDengHandViewController.m
 //  JieBao
 //
-//  Created by yangzhenmin on 2018/4/23.
+//  Created by wen on 2018/4/23.
 //  Copyright © 2018年 yangzhenmin. All rights reserved.
 //  手动模式
 
 #import "CaiDengHandViewController.h"
 #import "SliderView.h"
-
+#import "LightsDataPointModel.h"
 @interface CaiDengHandViewController ()<GizWifiDeviceDelegate,SliderViewDelegate>
 
 @property (nonatomic, strong) UIImageView *imgView;
@@ -69,6 +69,20 @@
     if (self.dev) {
         self.dev.delegate = self;
         [self.dev getDeviceStatus:@[@"color_white",@"color_blue1",@"color_blue2",@"color_green",@"color_red",@"volor_violet"]];
+    }else{
+        //设置分组初始状态,使用某一台设备的状态
+        for (CustomDevice *customDev in self.group.devs) {
+            if ([SDKHELPER.statusDic.allKeys containsObject:customDev.did]) {
+                LightsDataPointModel *lightStatusModel = [SDKHELPER.statusDic objectForKey:customDev.did];
+                self.whiteSlider.value = [lightStatusModel.color_whiteNum floatValue];
+                self.sapphireBlueSlider.value = [lightStatusModel.color_blue1Num floatValue];
+                self.blueSlider.value = [lightStatusModel.color_blue2Num floatValue];
+                self.greenSlider.value = [lightStatusModel.color_greenNum floatValue];
+                self.redSlider.value = [lightStatusModel.color_redNum floatValue];
+                self.purpleSlider.value = [lightStatusModel.volor_violetNum floatValue];
+                return;
+            }
+        }
     }
 }
 

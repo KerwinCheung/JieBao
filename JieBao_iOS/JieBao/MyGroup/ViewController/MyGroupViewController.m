@@ -2,7 +2,7 @@
 //  MyGroupViewController.m
 //  JieBao
 //
-//  Created by yangzhenmin on 2018/4/12.
+//  Created by wen on 2018/4/12.
 //  Copyright © 2018年 yangzhenmin. All rights reserved.
 //  分组列表
 
@@ -13,8 +13,8 @@
 #import "YYModel.h"
 #import "OpenGroupViewController.h"
 #import "GroupCollectionViewCell.h"
-
-@interface MyGroupViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,NoGroupViewDelegate>
+#import "LightsDataPointModel.h"
+@interface MyGroupViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,NoGroupViewDelegate,GroupCollectionViewCellCellDelegate>
 
 @property (nonatomic, strong) BaseCollectionView *cv;
 
@@ -86,14 +86,72 @@
         [self.dataSource removeAllObjects];
         for (NSDictionary *dic in jsonObject) {
             CustomDeviceGroup *group = [CustomDeviceGroup yy_modelWithJSON:dic];
+            [self requestDevicesWithGroup:group];
             [self.dataSource addObject:group];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.cv reloadData];
+                self.noGroupView.hidden = self.dataSource.count != 0;
+            });
         }
-       
+ 
+    }];
+}
+
+- (void)requestDevicesWithGroup:(CustomDeviceGroup *)group
+{
+    NSString *path = [NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/devices",group.gid];
+    NSString *method = @"GET";
+    [NetworkHelper sendRequest:nil Method:method Path:path callback:^(NSData *data, NSError *error) {
+        if (!data || error) {
+            return;
+        }
+        NSArray *jsonObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        NSMutableArray *deviceArr = [NSMutableArray array];
+        for (NSDictionary *dic in jsonObject) {
+            CustomDevice *dev = [CustomDevice yy_modelWithJSON:dic];
+            [deviceArr addObject:dev];
+        }
+        group.devs = deviceArr;
+
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.cv reloadData];
             self.noGroupView.hidden = self.dataSource.count != 0;
         });
     }];
+}
+
+#pragma mark - method
+-(BOOL)checkGroupStatusWithGroup:(CustomDeviceGroup *)group{
+    BOOL isStatus = NO;
+    NSInteger check = 0;
+    for (CustomDevice *customDev in group.devs) {
+        
+        if ([group.product_key isEqualToString:kProductKeys[@"六路彩灯"]]) {
+            LightsDataPointModel *lightStatusModel = [SDKHELPER.statusDic objectForKey:customDev.did];
+            if (lightStatusModel.switchNum.boolValue) {
+                check++;
+            }
+            
+        }else if ([group.product_key isEqualToString:kProductKeys[@"滴定泵"]]){
+            
+        }else if ([group.product_key isEqualToString:kProductKeys[@"无线开关"]]){
+            
+        }else if ([group.product_key isEqualToString:kProductKeys[@"造浪泵"]]){
+            
+        }else if ([group.product_key isEqualToString:kProductKeys[@"水泵"]]){
+            
+        }
+    }
+    NSInteger checkStandard = 1;
+    if (group.devs) {
+        checkStandard =  group.devs.count/2;
+    }
+    
+    if (check >= checkStandard) {
+        isStatus = YES;
+    }
+    
+    return isStatus;
 }
 
 #pragma mark - collection Delegate|DataSource
@@ -110,42 +168,46 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     GroupCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"GroupCollectionViewCell" forIndexPath:indexPath];
-    cell.dataDic = self.dataSource[indexPath.row];
-    UILongPressGestureRecognizer *ges = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                          action:@selector(tap:)];
-    [cell addGestureRecognizer:ges];
-    [cell addGestureRecognizer:tap];
+    CustomDeviceGroup *group = self.dataSource[indexPath.row];
+    cell.group = group;
+    cell.delegate = self;
+    cell.indexPath = indexPath;
+    BOOL isSwitch = [self checkGroupStatusWithGroup:group];
+    [cell setCellStatus:isSwitch];
+    
     return cell;
 }
 
-#pragma mark - 手势
-- (void)longPress:(UILongPressGestureRecognizer *)ges
-{
-    if (ges.state == UIGestureRecognizerStateEnded) {
-        CustomDeviceGroup *group = ((GroupCollectionViewCell *)ges.view).dataDic;
-        OpenGroupViewController *vc = [OpenGroupViewController new];
-        vc.group = group;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-}
-
-- (void)tap:(UITapGestureRecognizer *)ges
-{
-    CustomDeviceGroup *group = ((GroupCollectionViewCell *)ges.view).dataDic;
-    [(GroupCollectionViewCell *)ges.view cellSetSelected];
-    BOOL isSwitch = [(GroupCollectionViewCell *)ges.view isSwitchOn];
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    CustomDeviceGroup *group = [self.dataSource objectAtIndex:indexPath.row];
+    GroupCollectionViewCell *cell = (GroupCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [cell cellSetSelected];
+    BOOL isSwitch = [cell isSwitchOn];
     
     NSString *path = [NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",group.gid];
     NSString *method = @"POST";
     NSDictionary *body = @{@"attrs":@{@"switch":@(isSwitch)}};
     [NetworkHelper sendRequest:body Method:method Path:path callback:^(NSData *data, NSError *error) {
         if (!data || error) {
+            LHLog(@"分组控制失败");
             return;
         }
         NSArray *jsonObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
     }];
 }
+
+
+#pragma mark - GroupCollectionViewCellCell Delegate
+- (void)GroupCollectionViewCellCell:(GroupCollectionViewCell *)cell longTapWithIndexPath:(NSIndexPath *)indexPath{
+    
+    //长按
+    CustomDeviceGroup *group = [self.dataSource objectAtIndex:indexPath.row];
+    OpenGroupViewController *vc = [OpenGroupViewController new];
+    vc.group = group;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 
 - (void)addGroupDidSelected
 {
@@ -154,6 +216,7 @@
 
 #pragma mark - NoGroupView Delegate
 -(void)addBtnClicked{
+    // 添加分组
     [self addGroupDidSelected];
 }
 
@@ -185,11 +248,12 @@
     return _noGroupView;
 }
 
-- (NSMutableArray<NSArray<CustomDeviceGroup *> *> *)dataSource
-{
-    if (!_dataSource) {
-        _dataSource = [NSMutableArray array];
-    }
-    return _dataSource;
+-(NSMutableArray<CustomDeviceGroup *> *)dataSource{
+        if (!_dataSource) {
+            _dataSource = [NSMutableArray array];
+        }
+        return _dataSource;
 }
+
+
 @end
