@@ -10,6 +10,7 @@
 		64835F3803A7D5575A74A12F /* libPods-JieBaoUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEDAE18DC06BAB8956839337 /* libPods-JieBaoUITests.a */; };
 		8DB3FBD37C6E6DC862A122AE /* libPods-JieBaoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C534CAD771B30F6AAED0BC16 /* libPods-JieBaoTests.a */; };
 		A2F219E320FDEB4600180CDC /* LightsDataPointModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F219E220FDEB4600180CDC /* LightsDataPointModel.m */; };
+		A2F219E920FF4FE600180CDC /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2F219E820FF4FE600180CDC /* LoginStoryboard.storyboard */; };
 		E0221A7620994F9800156753 /* DeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E0221A7420994F9700156753 /* DeviceModel.m */; };
 		E0221A7920994FE000156753 /* AddDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0221A7820994FE000156753 /* AddDeviceCell.m */; };
 		E02856DD20C66E1500FD1A8F /* NetworkHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E02856DC20C66E1500FD1A8F /* NetworkHelper.m */; };
@@ -230,6 +231,7 @@
 		6EF937847B456B68FD7BBEBE /* Pods-JieBao.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JieBao.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JieBao/Pods-JieBao.debug.xcconfig"; sourceTree = "<group>"; };
 		A2F219E120FDEB4600180CDC /* LightsDataPointModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightsDataPointModel.h; sourceTree = "<group>"; };
 		A2F219E220FDEB4600180CDC /* LightsDataPointModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LightsDataPointModel.m; sourceTree = "<group>"; };
+		A2F219E820FF4FE600180CDC /* LoginStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginStoryboard.storyboard; sourceTree = "<group>"; };
 		BE41390BAC3B4CC214AED7C0 /* Pods-JieBaoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JieBaoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JieBaoTests/Pods-JieBaoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BEDAE18DC06BAB8956839337 /* libPods-JieBaoUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JieBaoUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C534CAD771B30F6AAED0BC16 /* libPods-JieBaoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JieBaoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -637,6 +639,46 @@
 			path = JieBao/DataPointModel;
 			sourceTree = SOURCE_ROOT;
 		};
+		A2F219E420FF4F7900180CDC /* LoginAndRegister */ = {
+			isa = PBXGroup;
+			children = (
+				A2F219E520FF4F7900180CDC /* Model */,
+				A2F219E620FF4F7900180CDC /* view */,
+				A2F219E720FF4F7900180CDC /* viewController */,
+			);
+			path = LoginAndRegister;
+			sourceTree = "<group>";
+		};
+		A2F219E520FF4F7900180CDC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A2F219E620FF4F7900180CDC /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		A2F219E720FF4F7900180CDC /* viewController */ = {
+			isa = PBXGroup;
+			children = (
+				E0D3DCD0207F3BA200F14860 /* LoginViewController.h */,
+				E0D3DCD1207F3BA200F14860 /* LoginViewController.m */,
+				E0D3DCDB207F465500F14860 /* RegisterViewController.h */,
+				E0D3DCDC207F465500F14860 /* RegisterViewController.m */,
+				E03F2F69209070100093C55E /* RegisterSuccessViewController.h */,
+				E03F2F6A209070100093C55E /* RegisterSuccessViewController.m */,
+				E0D3DD0B208056EF00F14860 /* FogotPswViewController.h */,
+				E0D3DD0C208056EF00F14860 /* FogotPswViewController.m */,
+				A2F219E820FF4FE600180CDC /* LoginStoryboard.storyboard */,
+			);
+			path = viewController;
+			sourceTree = "<group>";
+		};
 		B14BFE29599BDC9CCA2688E9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -747,6 +789,7 @@
 				A2F219E020FDEB1C00180CDC /* DataPointModel */,
 				E0D3DCBC207F37F300F14860 /* Base */,
 				E0ECF05F20883554001530CE /* loading.gif */,
+				A2F219E420FF4F7900180CDC /* LoginAndRegister */,
 				E0D3DCC6207F3B0000F14860 /* Setting */,
 				E0D3DCC5207F3AF400F14860 /* MyGroup */,
 				E0D3DCC4207F3ABE00F14860 /* MyDevice */,
@@ -836,14 +879,6 @@
 		E0D3DCC7207F3B5000F14860 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				E0D3DCD0207F3BA200F14860 /* LoginViewController.h */,
-				E0D3DCD1207F3BA200F14860 /* LoginViewController.m */,
-				E0D3DCDB207F465500F14860 /* RegisterViewController.h */,
-				E0D3DCDC207F465500F14860 /* RegisterViewController.m */,
-				E03F2F69209070100093C55E /* RegisterSuccessViewController.h */,
-				E03F2F6A209070100093C55E /* RegisterSuccessViewController.m */,
-				E0D3DD0B208056EF00F14860 /* FogotPswViewController.h */,
-				E0D3DD0C208056EF00F14860 /* FogotPswViewController.m */,
 				E0D3DCE5207F609B00F14860 /* SettingViewController.h */,
 				E0D3DCE6207F609B00F14860 /* SettingViewController.m */,
 				E0FC653D2084DA6E0070E9B3 /* APControlViewController.h */,
@@ -1475,6 +1510,7 @@
 				E0CEAFF220DCCB0E00225922 /* icon_m_wind@2x.png in Resources */,
 				E0CEAFE920DCCB0E00225922 /* sk_kongtiao_bg@2x.png in Resources */,
 				E0ECF06020883555001530CE /* loading.gif in Resources */,
+				A2F219E920FF4FE600180CDC /* LoginStoryboard.storyboard in Resources */,
 				E0F34BA720BA8853001281AB /* piao.png in Resources */,
 				E0D3DC94207F327A00F14860 /* Assets.xcassets in Resources */,
 				E0D3DC92207F327A00F14860 /* Main.storyboard in Resources */,

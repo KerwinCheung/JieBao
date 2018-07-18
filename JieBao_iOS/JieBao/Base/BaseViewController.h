@@ -16,4 +16,5 @@
 @property (nonatomic, strong, readonly) BaseCustomNavigationBarView *naviBar;
 
 -(void)showErrorWithStatusWhithCode:(GizWifiErrorCode)code;
+
 @end

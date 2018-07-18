@@ -13,7 +13,6 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) SDKHelper *sdkHelper;
 
-- (void)originalUI;
 
 - (void)changeRootViewController;
 

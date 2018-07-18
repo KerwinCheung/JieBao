@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "BaseNavigationController.h"
 #import "SDKHelper.h"
-
+#import "LoginViewController.h"
 @interface AppDelegate ()
 
 
@@ -20,21 +20,24 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [self originalUI];
     self.sdkHelper = [SDKHelper shareInstance];
     [GizWifiSDK sharedInstance].delegate = self.sdkHelper;
     GizDeviceGroupCenter.delegate = self.sdkHelper;
     [GizDeviceSharing setDelegate:self.sdkHelper];
     [GizDeviceSchedulerCenter setDelegate:self.sdkHelper];
     [GizWifiSDK startWithAppInfo:@{@"appId":kAppId,@"appSecret":kAppSecrect} productInfo:nil cloudServiceInfo:nil autoSetDeviceDomain:NO];
+    
+    
+    UIStoryboard *loginSB = [UIStoryboard storyboardWithName:@"LoginStoryboard" bundle:nil];
+    LoginViewController *loginVC = [loginSB instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    
+    UINavigationController *vc = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    
+    
+    self.window.rootViewController = vc;
     return YES;
 }
 
-- (void)originalUI
-{
-    UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:[NSClassFromString(@"LoginViewController") new]];
-    self.window.rootViewController = vc;
-}
 
 - (void)changeRootViewController
 {

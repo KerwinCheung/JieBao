@@ -1,17 +1,15 @@
 //
-//  RegisterViewController.m
+//  FogotPswViewController.m
 //  JieBao
 //
-//  Created by yangzhenmin on 2018/4/12.
+//  Created by yangzhenmin on 2018/4/13.
 //  Copyright © 2018年 yangzhenmin. All rights reserved.
 //
 
-#import "RegisterViewController.h"
-#import "UserModel.h"
-#include "UIViewController+Custom.h"
+#import "FogotPswViewController.h"
+#import "UIViewController+Custom.h"
 
-
-@interface RegisterViewController ()<UITextFieldDelegate>
+@interface FogotPswViewController ()<UITextFieldDelegate>
 
 @property (nonatomic, strong) UIImageView *phoneImgView;
 
@@ -33,7 +31,7 @@
 
 @property (nonatomic, strong) UIButton *rePswVisableBtn;
 
-@property (nonatomic, strong) UIButton *registerBtn;
+@property (nonatomic, strong) UIButton *nextBtn;
 
 @property (nonatomic, strong) UIView *userSepLine;
 
@@ -47,20 +45,23 @@
 
 @property (nonatomic, assign) NSInteger secs;
 
+
 @end
 
-@implementation RegisterViewController
+@implementation FogotPswViewController
 
 - (instancetype)init
 {
     if (self = [super init]) {
         self.secs = kTimeSecs;
+
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     [self.rePswTextView addTarget:self action:@selector(passConTextChange:) forControlEvents:UIControlEventEditingChanged];
     [self initUI];
@@ -77,16 +78,8 @@
     [self.naviBar  configNavigationBarWithAttrs:@{
                                                   kCustomNaviBarLeftActionKey:leftAction,
                                                   kCustomNaviBarLeftImgKey:@"back",
-                                                  kCustomNaviBarTitleKey:@"注册账号"
+                                                  kCustomNaviBarTitleKey:@"忘记密码"
                                                   }];
-}
-
-- (void)dealloc
-{
-    if (self.timer) {
-        [self.timer invalidate];
-        self.timer = nil;
-    }
 }
 
 - (void)initUI
@@ -101,11 +94,11 @@
     [self.bgView  addSubview:self.getValidateBtn];
     [self.bgView  addSubview:self.pswVisableBtn];
     [self.bgView  addSubview:self.rePswVisableBtn];
-    [self.bgView  addSubview:self.registerBtn];
     [self.bgView addSubview:self.userSepLine];
     [self.bgView addSubview:self.validateSepLine];
     [self.bgView addSubview:self.pswSepLine];
     [self.bgView addSubview:self.repswSepLine];
+    [self.bgView addSubview:self.nextBtn];
     
     [self makeContraints];
 }
@@ -114,22 +107,22 @@
 {
     LHWeakSelf(self)
     [self.phoneImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@(CurrentDeviceSize(40)));
+        make.left.equalTo(@(CurrentDeviceSize(20)));
         make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(20), CurrentDeviceSize(30)));
         make.top.equalTo(@(CurrentDeviceSize(60)));
     }];
     
     [self.validateImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakself.phoneImgView.mas_left);
-        make.width.equalTo(weakself.phoneImgView.mas_width);
-        make.height.equalTo(weakself.phoneImgView.mas_height);
+        make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(22), CurrentDeviceSize(27)));
+
         make.top.equalTo(weakself.phoneImgView.mas_bottom).offset(CurrentDeviceSize(30));
     }];
     
     [self.pswImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakself.phoneImgView.mas_left);
-        make.width.equalTo(weakself.phoneImgView.mas_width);
-        make.height.equalTo(weakself.phoneImgView.mas_height);
+        make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(22), CurrentDeviceSize(27)));
+
         make.top.equalTo(weakself.validateImgView.mas_bottom).offset(CurrentDeviceSize(30));
     }];
     
@@ -180,7 +173,7 @@
         make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(30), CurrentDeviceSize(30)));
     }];
     
-    [self.registerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakself.phoneImgView);
         make.right.equalTo(weakself.userSepLine);
         make.top.equalTo(weakself.rePswTextView.mas_bottom).offset(CurrentDeviceSize(30));
@@ -230,8 +223,7 @@
     }
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeCount) userInfo:nil repeats:YES];
-    [self.getValidateBtn setBackgroundImage:nil forState:UIControlStateNormal];
-    [self.getValidateBtn setBackgroundColor:[UIColor grayColor]];
+    [self.getValidateBtn setBackgroundColor:[UIColor clearColor]];
 }
 
 - (void)timeCount
@@ -244,18 +236,17 @@
         self.secs = kTimeSecs;
         [self.timer invalidate];
         self.timer = nil;
-        
-       [self.getValidateBtn setBackgroundColor:[UIColor clearColor]];
-       [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
-       [self.getValidateBtn.titleLabel setTextColor:[UIColor whiteColor]];
-       [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+
+        [self.getValidateBtn setBackgroundColor:[UIColor clearColor]];
+        [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
+        [self.getValidateBtn.titleLabel setTextColor:[UIColor whiteColor]];
+        [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     }
 }
 
 - (void)pswVisableBtnClicked:(UIButton *)btn
 {
     btn.selected = !btn.selected;
-
     [self.pswTextView setSecureTextEntry:!btn.selected];
     NSString *tempStr = self.pswTextView.text;
     self.pswTextView.text = nil;
@@ -271,7 +262,7 @@
     self.rePswTextView.text = tempStr;
 }
 
-- (void)registerBtnCilcked
+- (void)nextBtnCilcked
 {
     if (self.usrTextView.text.length != 11 || ![UtilHelper isValidateMobile:self.usrTextView.text]) {
         [HudHelper showStatus:@"请输入正确手机号码"];
@@ -293,36 +284,28 @@
     }
     
     [SVProgressHUD show];
-    [[GizWifiSDK sharedInstance] registerUser:self.usrTextView.text password:self.pswTextView.text verifyCode:self.validateTextView.text accountType:GizUserPhone];
-    LHWeakSelf(self)
-    [SDKHelper shareInstance].registerBlock = ^(BOOL success) {
+    [SDKHelper shareInstance].resetPswBlock = ^(BOOL success) {
         [SVProgressHUD dismiss];
         if (success) {
-            [weakself.navigationController pushViewController:[NSClassFromString(@"RegisterSuccessViewController") new] animated:YES];
             
-            UserModel *model = [UserHelper getCurrentUser];
-            model.userName = self.usrTextView.text;
-            model.psw = self.pswTextView.text;
-            [UserHelper setCurrentUser:model];
         }else
         {
-            LHLog(@"注册失败");
+            
         }
     };
+    [[GizWifiSDK sharedInstance] resetPassword:self.usrTextView.text verifyCode:self.validateTextView.text newPassword:self.pswTextView.text accountType:GizUserPhone];
+    
 }
-
 
 - (void)passConTextChange:(UITextField *)textField
 {
     if (self.usrTextView.text.length != 0 && self.validateTextView.text.length != 0&& self.pswTextView.text.length != 0 &&self.rePswTextView.text.length != 0) {
-        self.registerBtn.userInteractionEnabled = YES;
-        [self.registerBtn setBackgroundColor:[UIColor clearColor]];
-        [self.registerBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
+        [self.nextBtn setBackgroundColor:[UIColor clearColor]];
+        [self.nextBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
+        self.nextBtn.enabled = YES;
     }else
     {
-        self.registerBtn.userInteractionEnabled = NO;
-        [self.registerBtn setBackgroundImage:nil forState:UIControlStateNormal];
-        [self.registerBtn setBackgroundColor:[UIColor grayColor]];
+        self.nextBtn.enabled = NO;
     }
 }
 
@@ -334,7 +317,7 @@
         }
     }else if([textField isEqual:self.validateTextView])
     {
-        if (self.validateTextView.text.length == 6) {
+        if (self.validateTextView.text.length == 4) {
             return NO;
         }
     }else if([textField isEqual:self.pswTextView])
@@ -351,6 +334,7 @@
     return YES;
 }
 
+#pragma mark - lazy init
 - (UIImageView *)phoneImgView
 {
     if (!_phoneImgView) {
@@ -387,7 +371,6 @@
         _usrTextView.font = [UIFont sf_systemFontOfSize:13];
         _usrTextView.keyboardType = UIKeyboardTypeNumberPad;
         _usrTextView.clearButtonMode = UITextFieldViewModeWhileEditing;
-
     }
     return _usrTextView;
 }
@@ -411,7 +394,7 @@
         _pswTextView = [UITextField new];
         _pswTextView.placeholder = @"请输入6-16位的密码";
         _pswTextView.delegate = self;
-        _pswTextView.font = [UIFont systemFontOfSize:13];
+        _pswTextView.font = [UIFont sf_systemFontOfSize:13];
         _pswTextView.clearButtonMode = UITextFieldViewModeWhileEditing;
         [_pswTextView setSecureTextEntry:YES];
     }
@@ -468,22 +451,21 @@
     return _rePswVisableBtn;
 }
 
-- (UIButton *)registerBtn
+- (UIButton *)nextBtn
 {
-    if (!_registerBtn) {
-        _registerBtn = [UIButton new];
-        _registerBtn.userInteractionEnabled = NO;
-        [_registerBtn addTarget:self action:@selector(registerBtnCilcked) forControlEvents:UIControlEventTouchUpInside];
-        [_registerBtn.titleLabel setFont:[UIFont sf_systemFontOfSize:16]];
-        [_registerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _registerBtn.layer.masksToBounds = YES;
-        _registerBtn.layer.cornerRadius = 5;
-        [_registerBtn setTitle:@"注册" forState:UIControlStateNormal];
-        _registerBtn.layer.masksToBounds = YES;
-        _registerBtn.layer.cornerRadius = CurrentDeviceSize(5);
-        [_registerBtn setBackgroundColor:[UIColor grayColor]];
+    if (!_nextBtn) {
+        _nextBtn = [UIButton new];
+        [_nextBtn addTarget:self action:@selector(nextBtnCilcked) forControlEvents:UIControlEventTouchUpInside];
+        [_nextBtn.titleLabel setFont:[UIFont sf_systemFontOfSize:16]];
+        [_nextBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _nextBtn.layer.masksToBounds = YES;
+        _nextBtn.layer.cornerRadius = 5;
+        [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
+        [_nextBtn setBackgroundColor:[UIColor clearColor]];
+        [_nextBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
+        _nextBtn.enabled = NO;
     }
-    return _registerBtn;
+    return _nextBtn;
 }
 
 - (UIView *)userSepLine

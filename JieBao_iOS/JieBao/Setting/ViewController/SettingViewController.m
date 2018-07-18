@@ -11,7 +11,7 @@
 #import "LoginViewController.h"
 #import "BaseTableView.h"
 #import "SettingContentCell.h"
-
+#import "AppDelegate.h"
 @interface SettingViewController ()<UITableViewDataSource,UITableViewDelegate,SettingHeadViewDelegate>
 
 @property (nonatomic, strong) SettingHeadView *headView;
@@ -48,6 +48,7 @@
 
 - (void)initUI
 {
+    self.view.backgroundColor = UICOLORFROMRGB(0xf0f0f0);
     [self.view addSubview:self.headView];
     [self.view addSubview:self.tb];
     [self.view addSubview:self.logoutBtn];
@@ -85,13 +86,16 @@
 
 - (void)logoutBtnCilcked
 {
-    [[[UIApplication sharedApplication] delegate] performSelector:@selector(originalUI) withObject:nil];
+    UIStoryboard *loginSB = [UIStoryboard storyboardWithName:@"LoginStoryboard" bundle:nil];
+    LoginViewController *loginVC = [loginSB instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    
+    UINavigationController *vc = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    delegate.window.rootViewController = vc;
+    [delegate.window makeKeyAndVisible];
 }
 
-- (void)headImgTap
-{
-    [self.navigationController pushViewController:[LoginViewController new] animated:YES];
-}
+
 
 #pragma mark - tableView Delegate |DataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -154,7 +158,7 @@
     if (!_headView) {
         _headView = [[SettingHeadView alloc] init];
         _headView.currentUser = [UserHelper getCurrentUser];
-        _headView.delegate = self;
+//        _headView.delegate = self;
     }
     return _headView;
 }

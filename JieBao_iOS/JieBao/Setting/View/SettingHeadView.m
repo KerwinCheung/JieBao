@@ -100,7 +100,7 @@
     if (!_headImgView) {
         _headImgView = [[UIImageView alloc]init];
         _headImgView.layer.masksToBounds = YES;
-        _headImgView.layer.cornerRadius = CurrentDeviceSize(40);
+        _headImgView.layer.cornerRadius = CurrentDeviceSize(10);
         _headImgView.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headImgViewTap)];
         [_headImgView addGestureRecognizer:tap];
