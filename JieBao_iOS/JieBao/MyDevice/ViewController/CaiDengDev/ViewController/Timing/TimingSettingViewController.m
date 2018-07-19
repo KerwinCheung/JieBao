@@ -94,7 +94,9 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationToPortrait:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(willEnterForegroundNoti:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [self configInitialValues];
+    self.view.backgroundColor = UICOLORFROMRGB(0xf0f0f0);
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -250,6 +252,52 @@
         make.center.equalTo(weakself.view);
         make.size.mas_offset(CGSizeMake(LL_ScreenWidth/2, CurrentDeviceSize(CurrentDeviceSize(44*2+30))));
     }];
+}
+
+#pragma mark - 配置初始值
+-(void)configInitialValues{
+    // 配置颜色数组初始值
+    if (self.schTask.sches.count == 0) {
+        //新增
+        for (NSInteger i = 0; i< 24; i++) {
+            [self.whiteValues addObject:@50];
+            [self.blue1Values addObject:@50];
+            [self.blue2Values addObject:@50];
+            [self.greenValues addObject:@50];
+            [self.redValues addObject:@50];
+            [self.violetValues addObject:@50];
+        }
+        
+    }else{
+        //编辑
+        for (NSInteger i = 0; i < 24; i++) {
+            if (self.schTask.sches.count > i) {
+                DeviceCommonSchulder *timer = [self.schTask.sches objectAtIndex:i];
+              NSNumber *color_white =  [timer.attrs objectForKey:@"color_white"];
+              NSNumber *color_blue1 =    [timer.attrs objectForKey:@"color_blue1"];
+              NSNumber *color_blue2 =   [timer.attrs objectForKey:@"color_blue2"];
+              NSNumber *color_green =   [timer.attrs objectForKey:@"color_green"];
+              NSNumber *color_red =   [timer.attrs objectForKey:@"color_red"];
+              NSNumber *volor_violet =   [timer.attrs objectForKey:@"volor_violet"];
+                
+                [self.whiteValues addObject:color_white];
+                [self.blue1Values addObject:color_blue1];
+                [self.blue2Values addObject:color_blue2];
+                [self.greenValues addObject:color_green];
+                [self.redValues addObject:color_red];
+                [self.violetValues addObject:volor_violet];
+                
+            }else{
+                [self.whiteValues addObject:@50];
+                [self.blue1Values addObject:@50];
+                [self.blue2Values addObject:@50];
+                [self.greenValues addObject:@50];
+                [self.redValues addObject:@50];
+                [self.violetValues addObject:@50];
+            }
+        }
+        
+    }
 }
 
 
@@ -425,14 +473,14 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark 上方颜色按钮回调
+#pragma mark - 上方颜色选择按钮回调
 - (void)colorBlockClicked:(id)view
 {
     if (self.currentSelectView) {
         self.currentSelectView.isClicked = NO;
     }
     
-    [self getValuesWhithSelectedIndex];
+//    [self getValuesWhithSelectedIndex];
     
     if ([view isEqual:self.whiteLcView])
     {
@@ -476,10 +524,6 @@
         self.currentSelectView = self.puepleLcView;
         [self.lineChartView setChartSchValues:self.violetValues];
     }
-    
-//    if (self.yusheSelected < 0) {
-//        [self selectIndex:self.yusheSelected];
-//    }
 }
 
 - (void)getValuesWhithSelectedIndex {
@@ -569,6 +613,17 @@
     NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
     [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
 }
+
+-(void)willEnterForegroundNoti:(NSNotification *)noti{
+    
+    // 设置屏幕为横屏
+    NSNumber *orientationUnknown = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
+    [[UIDevice currentDevice] setValue:orientationUnknown forKey:@"orientation"];
+    
+    NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
+    [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
+}
+
 
 #pragma mark - setter & getter
 - (UITextField *)timingTextView
@@ -736,47 +791,47 @@
     return _selectView;
 }
 
-- (void)setSchTask:(DeviceSchedulerTask *)schTask
-{
-    _schTask = schTask;
-    NSArray<DeviceCommonSchulder *> *sches = schTask.sches;
-    NSString *key = sches[0].attrs.allKeys.firstObject;
-    NSDictionary *dic = @{@"color_white":@0,@"color_blue1":@1,@"color_blue2":@2,@"color_green":@3,@"color_red":@4,@"volor_violet":@5};
-    for (int i=0; i<sches.count; i++) {
-        id value = sches[i].attrs[key];
-        NSInteger index = [sches[i].time componentsSeparatedByString:@":"].firstObject.integerValue;
-        [self.tempArr replaceObjectAtIndex:index withObject:value];
-    }
-    NSInteger selecteIndex = [dic[key] integerValue];
-    self.timingTextView.text = schTask.taskName;
-    [self.lineChartView setChartSchValues:self.tempArr];
-    
-    if (selecteIndex == 0) {
-        [self.lineChartView setSelectedIndex:0];
-        self.currentIndex = 0;
-        self.currentSelectView = self.whiteLcView;
-    }else if (selecteIndex == 1){
-        [self.lineChartView setSelectedIndex:1];
-        self.currentIndex = 1;
-        self.currentSelectView = self.sapphireBlueLcView;
-    }else if (selecteIndex == 2){
-        [self.lineChartView setSelectedIndex:2];
-        self.currentIndex = 2;
-        self.currentSelectView = self.blueLcView;
-    }else if (selecteIndex == 3){
-        [self.lineChartView setSelectedIndex:3];
-        self.currentIndex = 3;
-        self.currentSelectView = self.greenLcView;
-    }else if (selecteIndex == 4){
-        [self.lineChartView setSelectedIndex:4];
-        self.currentIndex = 4;
-        self.currentSelectView = self.redLcView;
-    }else if (selecteIndex == 5){
-        [self.lineChartView setSelectedIndex:5];
-        self.currentIndex = 5;
-        self.currentSelectView = self.puepleLcView;
-    }
-}
+//- (void)setSchTask:(DeviceSchedulerTask *)schTask
+//{
+//    _schTask = schTask;
+//    NSArray<DeviceCommonSchulder *> *sches = schTask.sches;
+//    NSString *key = sches[0].attrs.allKeys.firstObject;
+//    NSDictionary *dic = @{@"color_white":@0,@"color_blue1":@1,@"color_blue2":@2,@"color_green":@3,@"color_red":@4,@"volor_violet":@5};
+//    for (int i=0; i<sches.count; i++) {
+//        id value = sches[i].attrs[key];
+//        NSInteger index = [sches[i].time componentsSeparatedByString:@":"].firstObject.integerValue;
+//        [self.tempArr replaceObjectAtIndex:index withObject:value];
+//    }
+//    NSInteger selecteIndex = [dic[key] integerValue];
+//    self.timingTextView.text = schTask.taskName;
+//    [self.lineChartView setChartSchValues:self.tempArr];
+//
+//    if (selecteIndex == 0) {
+//        [self.lineChartView setSelectedIndex:0];
+//        self.currentIndex = 0;
+//        self.currentSelectView = self.whiteLcView;
+//    }else if (selecteIndex == 1){
+//        [self.lineChartView setSelectedIndex:1];
+//        self.currentIndex = 1;
+//        self.currentSelectView = self.sapphireBlueLcView;
+//    }else if (selecteIndex == 2){
+//        [self.lineChartView setSelectedIndex:2];
+//        self.currentIndex = 2;
+//        self.currentSelectView = self.blueLcView;
+//    }else if (selecteIndex == 3){
+//        [self.lineChartView setSelectedIndex:3];
+//        self.currentIndex = 3;
+//        self.currentSelectView = self.greenLcView;
+//    }else if (selecteIndex == 4){
+//        [self.lineChartView setSelectedIndex:4];
+//        self.currentIndex = 4;
+//        self.currentSelectView = self.redLcView;
+//    }else if (selecteIndex == 5){
+//        [self.lineChartView setSelectedIndex:5];
+//        self.currentIndex = 5;
+//        self.currentSelectView = self.puepleLcView;
+//    }
+//}
 
 - (NSMutableArray *)tempArr
 {
@@ -808,7 +863,7 @@
     self.currentSelectView = self.whiteLcView;
 }
 
-#pragma mark 颜色值数组
+#pragma mark - 颜色值数组
 - (NSMutableArray *)whiteValues {
     //白
     if (!_whiteValues) {
@@ -872,4 +927,5 @@
     }
     return _spsDemo;
 }
+
 @end

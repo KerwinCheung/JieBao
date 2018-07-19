@@ -110,7 +110,7 @@
 {
     if (!_zeroLb) {
         _zeroLb = [UILabel new];
-        _zeroLb.font = [UIFont sf_systemFontOfSize:13];
+        _zeroLb.font = [UIFont sf_systemFontOfSize:8];
         _zeroLb.textAlignment = NSTextAlignmentRight;
         _zeroLb.text = @"0";
     }
@@ -123,7 +123,7 @@
         _yMaxLb = [UILabel new];
         _yMaxLb.font = [UIFont sf_systemFontOfSize:8];
         _yMaxLb.textAlignment = NSTextAlignmentRight;
-        _yMaxLb.text = @"100";
+        _yMaxLb.text = @"100%";
     }
     return _yMaxLb;
 }
@@ -132,9 +132,9 @@
 {
     if (!_xMaxLb) {
         _xMaxLb = [UILabel new];
-        _xMaxLb.font = [UIFont sf_systemFontOfSize:13];
+        _xMaxLb.font = [UIFont sf_systemFontOfSize:8];
         _xMaxLb.textAlignment = NSTextAlignmentRight;
-        _xMaxLb.text = @"24h";
+        _xMaxLb.text = @"24";
     }
     return _xMaxLb;
 }

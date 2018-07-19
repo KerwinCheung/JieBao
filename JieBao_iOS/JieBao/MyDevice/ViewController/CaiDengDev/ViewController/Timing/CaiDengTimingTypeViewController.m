@@ -298,6 +298,7 @@
     }
     
     if (self.isEdit) {
+        
         if (![cell isKindOfClass:[CaiDengTimingCell class]]) {
             return;
         }
@@ -312,34 +313,49 @@
         vc.dev = self.dev;
         vc.group = self.group;
         vc.nameSoure = self.nameSoure;
-        if(indexPath.row == 0)
-        {
-            vc.type = @"LPS";
-        }
-        else if (indexPath.row == 1)
-        {
-            vc.type = @"SPS";
-        }
-        else
-        {
-            vc.schTask = ((CaiDengTimingCell *)cell).dataDic;
-        }
+        if (indexPath.section == 0) {
+            if(indexPath.row == 0)
+            {
+                vc.type = @"LPS";
+            }
+            else if (indexPath.row == 1)
+            {
+                vc.type = @"SPS";
+            }
+            else
+            {
+                NSString *taskName = [self.nameSoure objectAtIndex:indexPath.row];
+                DeviceSchedulerTask *task = [self.dataSourceDic objectForKey:taskName];
+                vc.schTask = task;
+            }
+            [self.navigationController pushViewController:vc animated:YES];
+        }else{
+            if (self.nameSoure.count >= 8) {
+                [HudHelper showErrorWithStatus:@"最多添加8个定时任务"];
+                return;
+            }
+        TimingSettingViewController *vc = [TimingSettingViewController new];
+        vc.dev = self.dev;
+        vc.group = self.group;
         [self.navigationController pushViewController:vc animated:YES];
+        
+      }
     }
 }
 
 #pragma mark - btnAction
-- (void)addSchBtnClicked
-{
-    if (self.nameSoure.count >= 8) {
-        [HudHelper showErrorWithStatus:@"最多添加8个定时任务"];
-        return;
-    }
-    TimingSettingViewController *vc = [TimingSettingViewController new];
-    vc.dev = self.dev;
-    vc.group = self.group;
-    [self.navigationController pushViewController:vc animated:YES];
-}
+//- (void)addSchBtnClicked
+//{
+////    if (self.nameSoure.count >= 8) {
+////        [HudHelper showErrorWithStatus:@"最多添加8个定时任务"];
+////        return;
+////    }
+////    TimingSettingViewController *vc = [TimingSettingViewController new];
+////    vc.dev = self.dev;
+////    vc.group = self.group;
+////    [self.navigationController pushViewController:vc animated:YES];
+//}
+    
 - (void)confirmBtnClicked
 {
     //开启定时任务

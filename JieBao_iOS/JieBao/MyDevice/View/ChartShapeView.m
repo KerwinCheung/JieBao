@@ -30,7 +30,7 @@
         self.backgroundColor = [UIColor clearColor];
         self.lineColor = [UIColor blueColor];
         self.colors = @[[UIColor whiteColor],UICOLORFROMRGB(0x69cef9),[UIColor blueColor],[UIColor greenColor],[UIColor redColor],[UIColor purpleColor]];
-        self.imgs = @[@"write",@"blue1",@"blue",@"green",@"red",@"zi"];
+        self.imgs = @[@"write20",@"blue20",@"blue220",@"green20",@"red20",@"zi20"];
         UIView *vBorder = [UIView new];
         UIView *hBorder = [UIView new];
         vBorder.backgroundColor = hBorder.backgroundColor = [UIColor lightGrayColor];
@@ -99,18 +99,6 @@
             slider.transform = CGAffineTransformMakeRotation(-M_PI_2);
         }
         
-//            if (self.schValues.count > 0) {
-//                for (int i = 0; i <24; i++) {
-//                    UISlider *slider = [self viewWithTag:100+i];
-//                    [slider setValue:[self.schValues[i] floatValue]];
-//                    self.points[i] = [NSValue valueWithCGPoint:CGPointMake([self.points[i] CGPointValue].x, (1-((CGFloat)([self.schValues[i] floatValue]/100)))*self.bounds.size.height)];
-//                }
-//            }else{
-//                for (int i = 0; i <24; i++) {
-//                    UISlider *slider = [self viewWithTag:100+i];
-//                    [self.schValues addObject:@((NSInteger)slider.value)];
-//                }
-//            }
         
         self.count = 1;
         [self setNeedsDisplay];
@@ -152,6 +140,33 @@
     [path stroke];
     CGContextAddPath(ctx, path.CGPath);
 }
+
+-(void)addDefaultLineWithStartPoint:(CGPoint )startPoint withEndPoint:(CGPoint )endPoint{
+    
+    //1、获取图形上下文
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    //2、描述路径
+    //创建路径
+    CGMutablePathRef path =  CGPathCreateMutable();
+    //设置起点
+    CGPathMoveToPoint(path, NULL, 50, 150);
+    //设置终点
+    CGPathAddLineToPoint(path, NULL, 100, 100);
+    //颜色
+    [UICOLORFROMRGB(0x69cef9) setStroke];
+    //线宽
+    CGContextSetLineWidth(ctx, 5);
+    //设置连接样式
+    CGContextSetLineJoin(ctx, kCGLineJoinBevel);
+    
+    CGContextSetLineCap(ctx, kCGLineCapButt);
+    
+    CGContextAddPath(ctx, path);
+    CGContextStrokePath(ctx);
+
+}
+
+
 
 - (void)setSchValues:(NSMutableArray<NSNumber *> *)schValues
 {
