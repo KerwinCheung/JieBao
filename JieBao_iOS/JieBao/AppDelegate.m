@@ -47,6 +47,7 @@
     NSArray *selectedImgs = @[@"shebei",@"zuhe",@"shezhi"];
     NSArray *textCols = @[UICOLORFROMRGB(0xcb480e),UICOLORFROMRGB(0xa3d822),UICOLORFROMRGB(0x2a87d0)];
     UITabBarController *tabarVc = [[UITabBarController alloc] init];
+    [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
     NSMutableArray *arr = [NSMutableArray array];
     for (int i = 0 ; i < vcs.count;i++) {
         NSString *name = vcs[i];

@@ -217,7 +217,7 @@
     if (!_valuelb) {
         _valuelb = [UILabel new];
         _valuelb.font = [UIFont sf_systemFontOfSize:12];
-        _valuelb.text = @"1%0";
+        _valuelb.text = @"10%";
     }
     return _valuelb;
 }

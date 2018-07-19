@@ -12,7 +12,7 @@
 #import "BaseTableView.h"
 #import "SettingContentCell.h"
 #import "AppDelegate.h"
-@interface SettingViewController ()<UITableViewDataSource,UITableViewDelegate,SettingHeadViewDelegate>
+@interface SettingViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) SettingHeadView *headView;
 
@@ -64,7 +64,7 @@
     [self.tb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(CurrentDeviceSize(30)));
         make.right.equalTo(weakself.view.mas_right).offset(-CurrentDeviceSize(30));
-        make.height.equalTo(@(self.dataSource.count*44));
+        make.height.equalTo(@(self.dataSource.count*CurrentDeviceSize(44)));
         make.top.equalTo(weakself.headView.mas_bottom).offset(-CurrentDeviceSize(20));
     }];
     
@@ -109,6 +109,7 @@
     if (indexPath.row == self.dataSource.count - 1) {
         cell.dataDic = self.dataSource[indexPath.row];
         cell.versionStr = [NSString stringWithFormat:@"V%@.%@",[[[NSBundle mainBundle]infoDictionary] objectForKey:@"CFBundleShortVersionString"],[[[NSBundle mainBundle]infoDictionary] objectForKey:@"CFBundleVersion"]];
+        
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;

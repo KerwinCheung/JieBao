@@ -81,6 +81,8 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 
 @property (nonatomic, strong) DeviceSchedulerTask *deviceSchedulerTask;
 
+@property (nonatomic, strong) NSMutableDictionary  *dataSourceDic;
+
 @end
 
 @implementation MyDeviceCaiDengTurnViewController
@@ -559,7 +561,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 //    }
 }
 
-#pragma mark --CircleDelegate
+#pragma mark - CircleDelegate
 
 - (NSArray *)buttonImageWithItems{
     return @[@"zaocheng",@"richu",@"riluo",@"sun",@"yewan",@"shoudong",@"dinggshi"];
@@ -694,21 +696,56 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
             return;
         }
         
-        @strongify(self);
-        NSMutableArray<DeviceCommonSchulder *> *sches = [NSMutableArray array];
         for (int i = 0; i< list.count; i++) {
             DeviceCommonSchulder *sch = [DeviceCommonSchulder yy_modelWithJSON:list[i]];
-            if (sch.enabled == YES) {
-                [sches addObject:sch];
-                if (sches.count == 24) {
-                    self.deviceSchedulerTask.sches = sches;
-                }
+            DeviceSchedulerTask *task = nil;
+            
+            if ([self.dataSourceDic.allKeys containsObject:sch.remark]) {
+                //字典中包含此定时名字的 task
+                task = [self.dataSourceDic objectForKey:sch.remark];
+                NSMutableArray *marr = [NSMutableArray arrayWithArray:task.sches];
+                [marr addObject:sch];
+                task.sches = marr;
+                
+            }else{
+                //字典中不包含此定时名字的 task
+                NSMutableArray *marr = [NSMutableArray array];
+                task = [DeviceSchedulerTask new];
+                task.taskName = sch.remark;
+                [marr addObject:sch];
+                task.sches = marr;
+                task.taskLogo = @"dingshichengxu";
+                [self.dataSourceDic setObject:task forKey:task.taskName];
+                
             }
         }
+        
+        for (NSInteger i = 0; i< self.dataSourceDic.allKeys.count; i++) {
+            NSString *taskName = [self.dataSourceDic.allKeys objectAtIndex:i];
+            DeviceSchedulerTask *task = [self.dataSourceDic objectForKey:taskName];
+            BOOL isEnable = [UtilHelper checkTaskIsEnabledWithTask:task];
+            if (isEnable) {
+                self.deviceSchedulerTask = task;
+            }
+            
+        }
+
     }];
 }
 
+
+
+
+
 #pragma mark - getter
+
+-(NSMutableDictionary *)dataSourceDic{
+    if (!_dataSourceDic) {
+        _dataSourceDic = [NSMutableDictionary dictionary];
+    }
+    return _dataSourceDic;
+}
+
 - (UIButton *)turnBtn
 {
     if (!_turnBtn) {

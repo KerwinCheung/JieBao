@@ -259,7 +259,7 @@
     self.selectView.hidden = NO;
 }
 
-#pragma mark 载入预设值
+#pragma mark - 载入预设值
 - (void)lpsSelected
 {
     [self.lineChartView setChartSchValues:kLPS[self.currentIndex]];
@@ -280,31 +280,35 @@
     [self.lineChartView setChartSchValues:kReef[self.currentIndex]];
 }
 
-#pragma mark 保存按钮
+#pragma mark - 保存按钮
 - (void)saveBtnClicked
 {
     if ([self.nameSoure containsObject:self.timingTextView.text]) {
-        [HudHelper showInfoWithStatus:@"请修改定时任务名字"];
+        [HudHelper showErrorWithStatus:@"请修改定时任务名字"];
         return;
     }
     
     [self getValuesWhithSelectedIndex];
+
+    // 定时器的命名规则为：名称_时间戳
+    NSString *taskName = [NSString stringWithFormat:@"%@_%@",self.timingTextView.text,[UtilHelper getTimeStampStr]];
     
-    //    NSString *str = self.dic[@(self.currentIndex)];
-    //    NSMutableDictionary *attrsDic = [NSMutableDictionary dictionary];
-    //    @weakify(attrsDic);
-    //    [self.dic enumerateKeysAndObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-    //        @strongify(attrsDic);
-    //        [attrsDic setObject:@"" forKey:obj];
-    //    }];
     
     [SVProgressHUD show];
     self.count = 0;
     self.sucCount = 0;
     @weakify(self);
+    NSString *dateStr = [UtilHelper stringFromDate:[NSDate date]];
+
     for (int i = 0; i < 24; i++)
     {
         //@"date":[[NSDate dateWithTimeInterval:24*60*60 sinceDate:[NSDate date]] formattedDateWithFormat:@"yyyy-MM-dd"],
+        
+        NSString *originTimerStr = [NSString stringWithFormat:@"%02d:00",i];
+        NSString *str = [NSString stringWithFormat:@"%@ %@",dateStr,originTimerStr];
+        NSDate *setDate = [UtilHelper dateFromString:str];
+        NSString *utcTimerStr = [setDate formattedDateWithFormat:@"HH:mm"];
+        
         NSMutableDictionary *body = [NSMutableDictionary
                                      dictionaryWithDictionary:@{@"attrs":@{@"color_white":@([self.whiteValues[i] integerValue]),
                                                                            @"color_blue1":@([self.blue1Values[i] integerValue]),
@@ -314,10 +318,10 @@
                                                                            @"volor_violet":@([self.violetValues[i] integerValue]),
                                                                            @"Timer" :@YES
                                                                            },
-                                                                @"time":[NSString stringWithFormat:@"%02d:00",i],
+                                                                @"time":utcTimerStr,
                                                                 @"repeat":@"mon,tue,wed,thu,fri,sat,sun",
                                                                 @"enabled":@(0),
-                                                                @"remark":self.timingTextView.text}];
+                                                                @"remark":taskName}];
         if (self.dev) {
             [body setObject:self.dev.did forKey:@"did"];
         }else
@@ -326,10 +330,7 @@
         }
         [NetworkHelper sendRequest:body Method:@"POST" Path:@"https://api.gizwits.com/app/common_scheduler" callback:^(NSData *data, NSError *error) {
             @strongify(self);
-            //            @synchronized(self)
-            //            {
-            //                self.count++;
-            //            }
+           
             if (data != nil) {
                 NSDictionary *tempDic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
                 NSLog(@"%@",tempDic);
@@ -372,6 +373,8 @@
     }
 }
 
+
+
 #pragma mark 删除按钮
 - (void)deleteBtnClicked
 {
@@ -405,8 +408,7 @@
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.navigationController popViewControllerAnimated:YES];
                     });
-                }else
-                {
+                }else{
                     [HudHelper showErrorWithStatus:@"删除失败"];
                 }
                 self.sucCount = 0;
@@ -848,7 +850,7 @@
 }
 
 - (NSMutableArray *)violetValues {
-    //紫?
+    //紫
     if (!_violetValues) {
         _violetValues = [NSMutableArray array];
     }

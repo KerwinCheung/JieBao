@@ -9,8 +9,63 @@
 #import "UtilHelper.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 #import "CommonCrypto/CommonDigest.h"
-
+#import "DeviceSchedulerTask.h"
 @implementation UtilHelper
+
+//NSDate转NSString
++ (NSString *)stringFromDate:(NSDate *)date
+{
+    //获取系统当前时间
+    NSDate *currentDate = [NSDate date];
+    //用于格式化NSDate对象
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //设置格式：zzz表示时区
+    [dateFormatter setDateFormat:@"yyyy-MM-dd "];
+    //NSDate转NSString
+    NSString *currentDateString = [dateFormatter stringFromDate:currentDate];
+    //输出currentDateString
+    NSLog(@"%@",currentDateString);
+    return currentDateString;
+}
+
+//NSString转NSDate
++ (NSDate *)dateFromString:(NSString *)string
+{
+    //需要转换的字符串
+    NSString *dateString = string;
+    //设置转换格式
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    //NSString转NSDate
+    NSDate *date=[formatter dateFromString:dateString];
+    return date;
+}
+
++(NSString *)getTimeStampStr{
+    //获取当前的时间戳
+    NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSTimeInterval a=[dat timeIntervalSince1970]*1000;
+    NSString *timeString = [NSString stringWithFormat:@"%ld", (long)a];
+    return timeString;
+}
++(BOOL)checkTaskIsEnabledWithTask:(DeviceSchedulerTask *)task{
+    //检验此定时任务是否执行中，当有一半的定时器为执行时就默认此定时组是执行中
+    BOOL isEnable = NO;
+    if (task.sches.count == 0) {
+        return isEnable;
+    }
+    NSInteger mark = 0;
+    for (DeviceCommonSchulder *timer in task.sches) {
+        if (timer.enabled) {
+            mark++;
+        }
+    }
+    if (mark >= (task.sches.count/2)) {
+        isEnable = YES;
+    }
+    
+    return isEnable;
+}
 
 + (id)fetchSSIDInfo {
     NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();

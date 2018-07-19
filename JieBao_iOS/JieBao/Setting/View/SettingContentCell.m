@@ -157,6 +157,7 @@
     self.tranferImgView.hidden = YES;
     self.versionLb.hidden = NO;
     self.versionLb.text = versionStr;
+    self.versionLb.textColor = [UIColor lightGrayColor];
     
 }
 @end

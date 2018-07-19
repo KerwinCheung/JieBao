@@ -160,7 +160,16 @@
 {
     _dataDic = dataDic;
     self.imgView.image = [UIImage imageNamed:dataDic.taskLogo];
-    self.textLb.text = dataDic.taskName;
+    // 定时器的命名规则为：定时器名字_时间戳
+    NSArray *strArr = [dataDic.taskName componentsSeparatedByString:@"_"];
+    self.textLb.text = strArr.firstObject;
+//    if (dataDic.isDeafult) {
+//        self.textLb.text = dataDic.taskName;
+//    }else{
+//
+//        NSArray *strArr = [dataDic.taskName componentsSeparatedByString:@"_"];
+//        self.textLb.text = strArr.firstObject;
+//    }
 }
 
 - (void)setIsEdit:(BOOL)isEdit
