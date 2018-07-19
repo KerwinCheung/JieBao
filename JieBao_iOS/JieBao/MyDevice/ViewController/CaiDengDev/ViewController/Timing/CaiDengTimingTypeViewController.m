@@ -329,6 +329,7 @@
                 vc.schTask = task;
             }
             [self.navigationController pushViewController:vc animated:YES];
+            
         }else{
             if (self.nameSoure.count >= 8) {
                 [HudHelper showErrorWithStatus:@"最多添加8个定时任务"];

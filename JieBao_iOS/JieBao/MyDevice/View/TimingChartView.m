@@ -40,9 +40,9 @@
 - (void)initUI
 {
     [self addSubview:self.shapeView];
-    [self addSubview:self.zeroLb];
-    [self addSubview:self.yMaxLb];
-    [self addSubview:self.xMaxLb];
+//    [self addSubview:self.zeroLb];
+//    [self addSubview:self.yMaxLb];
+//    [self addSubview:self.xMaxLb];
     
     LHWeakSelf(self)
     [self.shapeView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -51,24 +51,80 @@
         make.bottom.equalTo(weakself.mas_bottom).offset(-CurrentDeviceSize(20));
     }];
     
-    [self.zeroLb mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(weakself.shapeView.mas_left);
-        make.bottom.equalTo(@0);
-        make.width.lessThanOrEqualTo(@50);
-    }];
+//    [self.zeroLb mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(weakself.shapeView.mas_left);
+//        make.bottom.equalTo(@0);
+//        make.width.lessThanOrEqualTo(@50);
+//    }];
+//
+//    [self.xMaxLb mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(weakself.shapeView).offset(-CurrentDeviceSize(20));
+//        make.bottom.equalTo(@0);
+//        make.width.lessThanOrEqualTo(@50);
+//    }];
     
-    [self.xMaxLb mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(weakself.shapeView).offset(-CurrentDeviceSize(20));
-        make.bottom.equalTo(@0);
-        make.width.lessThanOrEqualTo(@50);
-    }];
+//    [self.yMaxLb mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(weakself.shapeView.mas_left);
+//        make.top.equalTo(@0);
+//        make.width.lessThanOrEqualTo(@50);
+//    }];
     
-    [self.yMaxLb mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(weakself.shapeView.mas_left);
-        make.top.equalTo(@0);
-        make.width.lessThanOrEqualTo(@50);
-    }];
 }
+
+-(void)layoutSubviews{
+    
+    [super layoutSubviews];
+    
+    [self addYValueLabel];
+    [self addXTitleLabel];
+
+}
+
+-(void)addYValueLabel{
+    
+    NSArray *yValues = @[@"100%",@"75%",@"50%",@"25%"];
+    for (NSInteger i = 0; i < 4 ; i++) {
+        UILabel *label = [UILabel new];
+        label.font = [UIFont sf_systemFontOfSize:6];
+        label.textAlignment = NSTextAlignmentRight;
+        label.text = yValues[i];
+        CGFloat labelX = 0;
+        CGFloat viewHeight = (self.frame.size.height - CurrentDeviceSize(20));
+        CGFloat labelY = viewHeight*i/4 - 0.5*15;
+        if (i==0) {
+            labelY = viewHeight*i/4;
+        }
+        CGFloat labelW = CurrentDeviceSize(16);
+        CGFloat labelH = 15;
+        label.frame = CGRectMake(labelX, labelY, labelW, labelH);
+        [self addSubview:label];
+        NSLog(@"frame = %@ labelY = %f viewH = %f",NSStringFromCGRect(self.frame),labelY,viewHeight);
+    }
+}
+
+-(void)addXTitleLabel{
+    
+    for (NSInteger i = 0; i<24; i++) {
+        UILabel *label = [UILabel new];
+        label.font = [UIFont sf_systemFontOfSize:6];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.text = [NSString stringWithFormat:@"%ld",i];
+        
+        CGFloat ViewW = self.frame.size.width - CurrentDeviceSize(20) -CurrentDeviceSize(10);
+        
+        CGFloat tempX = ViewW * 1/24;
+        
+        CGFloat labelX = CurrentDeviceSize(20) + tempX *i - 7.5;
+        
+        CGFloat labelY = (self.frame.size.height - CurrentDeviceSize(20) + 5);
+        
+        CGFloat labelW = 15;
+        CGFloat labelH = 15;
+        label.frame = CGRectMake(labelX, labelY, labelW, labelH);
+        [self addSubview:label];
+    }
+}
+
 
 - (void)setSelectedIndex:(NSInteger)index
 {
@@ -85,6 +141,8 @@
     [self.shapeView setOrignalValues:values];
 }
 
+
+#pragma mark - getter
 - (NSArray<NSString *> *)getChartValues
 {
     return self.shapeView.schValues;
@@ -110,7 +168,7 @@
 {
     if (!_zeroLb) {
         _zeroLb = [UILabel new];
-        _zeroLb.font = [UIFont sf_systemFontOfSize:8];
+        _zeroLb.font = [UIFont sf_systemFontOfSize:6];
         _zeroLb.textAlignment = NSTextAlignmentRight;
         _zeroLb.text = @"0";
     }
@@ -132,7 +190,7 @@
 {
     if (!_xMaxLb) {
         _xMaxLb = [UILabel new];
-        _xMaxLb.font = [UIFont sf_systemFontOfSize:8];
+        _xMaxLb.font = [UIFont sf_systemFontOfSize:6];
         _xMaxLb.textAlignment = NSTextAlignmentRight;
         _xMaxLb.text = @"24";
     }

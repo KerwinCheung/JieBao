@@ -224,6 +224,7 @@
         make.bottom.equalTo(weakself.deleteBtn.mas_top).offset(-CurrentDeviceSize(LL_ScreenHeight/18));
     }];
     
+    
     [self.deleteBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakself.spsBtn);
         make.size.equalTo(weakself.spsBtn);;
@@ -270,23 +271,36 @@
         
     }else{
         //编辑
+        
+        NSString *dateStr = [UtilHelper stringFromDate:[NSDate date]];
+        
         for (NSInteger i = 0; i < 24; i++) {
             if (self.schTask.sches.count > i) {
-                DeviceCommonSchulder *timer = [self.schTask.sches objectAtIndex:i];
-              NSNumber *color_white =  [timer.attrs objectForKey:@"color_white"];
-              NSNumber *color_blue1 =    [timer.attrs objectForKey:@"color_blue1"];
-              NSNumber *color_blue2 =   [timer.attrs objectForKey:@"color_blue2"];
-              NSNumber *color_green =   [timer.attrs objectForKey:@"color_green"];
-              NSNumber *color_red =   [timer.attrs objectForKey:@"color_red"];
-              NSNumber *volor_violet =   [timer.attrs objectForKey:@"volor_violet"];
                 
-                [self.whiteValues addObject:color_white];
-                [self.blue1Values addObject:color_blue1];
-                [self.blue2Values addObject:color_blue2];
-                [self.greenValues addObject:color_green];
-                [self.redValues addObject:color_red];
-                [self.violetValues addObject:volor_violet];
+                NSString *originTimerStr = [NSString stringWithFormat:@"%02ld:00",(long)i];
+                NSString *str = [NSString stringWithFormat:@"%@ %@",dateStr,originTimerStr];
+                NSDate *setDate = [UtilHelper dateFromString:str];
+                NSString *utcTimerStr = [setDate formattedDateWithFormat:@"HH:mm"];
                 
+                for (DeviceCommonSchulder *tempTimer in self.schTask.sches) {
+                    if ([tempTimer.time isEqualToString:utcTimerStr]) {
+                        NSNumber *color_white =  [tempTimer.attrs objectForKey:@"color_white"];
+                        NSNumber *color_blue1 =    [tempTimer.attrs objectForKey:@"color_blue1"];
+                        NSNumber *color_blue2 =   [tempTimer.attrs objectForKey:@"color_blue2"];
+                        NSNumber *color_green =   [tempTimer.attrs objectForKey:@"color_green"];
+                        NSNumber *color_red =   [tempTimer.attrs objectForKey:@"color_red"];
+                        NSNumber *volor_violet =   [tempTimer.attrs objectForKey:@"volor_violet"];
+                        
+                        [self.whiteValues addObject:color_white];
+                        [self.blue1Values addObject:color_blue1];
+                        [self.blue2Values addObject:color_blue2];
+                        [self.greenValues addObject:color_green];
+                        [self.redValues addObject:color_red];
+                        [self.violetValues addObject:volor_violet];
+                        break;
+                    }
+                }
+
             }else{
                 [self.whiteValues addObject:@50];
                 [self.blue1Values addObject:@50];
@@ -298,6 +312,17 @@
         }
         
     }
+    
+    
+    //设置定时名称
+    NSArray *taskNameArr = [self.schTask.taskName componentsSeparatedByString:@"_"];
+    self.timingTextView.text = taskNameArr.firstObject;
+    
+    [self.lineChartView setChartSchValues:self.whiteValues];
+    
+    [self.lineChartView setSelectedIndex:0];
+    self.currentIndex = 0;
+    self.currentSelectView = self.whiteLcView;
 }
 
 
@@ -351,7 +376,7 @@
     for (int i = 0; i < 24; i++)
     {
         //@"date":[[NSDate dateWithTimeInterval:24*60*60 sinceDate:[NSDate date]] formattedDateWithFormat:@"yyyy-MM-dd"],
-        
+        //将时间转化成UTC
         NSString *originTimerStr = [NSString stringWithFormat:@"%02d:00",i];
         NSString *str = [NSString stringWithFormat:@"%@ %@",dateStr,originTimerStr];
         NSDate *setDate = [UtilHelper dateFromString:str];
@@ -480,7 +505,7 @@
         self.currentSelectView.isClicked = NO;
     }
     
-//    [self getValuesWhithSelectedIndex];
+    [self getValuesWhithSelectedIndex];
     
     if ([view isEqual:self.whiteLcView])
     {
@@ -803,7 +828,10 @@
 //        [self.tempArr replaceObjectAtIndex:index withObject:value];
 //    }
 //    NSInteger selecteIndex = [dic[key] integerValue];
-//    self.timingTextView.text = schTask.taskName;
+//    //设置定时名称
+//    NSArray *taskNameArr = [schTask.taskName componentsSeparatedByString:@"_"];
+//    self.timingTextView.text = taskNameArr.firstObject;
+//
 //    [self.lineChartView setChartSchValues:self.tempArr];
 //
 //    if (selecteIndex == 0) {
