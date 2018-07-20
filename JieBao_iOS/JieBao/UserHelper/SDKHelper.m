@@ -182,8 +182,8 @@ static SDKHelper *helper = nil;
         if (self.shareCallBackBlock) {
             self.shareCallBackBlock(YES);
         }
-    }else
-    {
+    }else{
+        [HudHelper showErrorWithStatus:[NSString stringWithFormat:@"分享失败%ld",result.code]];
         if (self.shareCallBackBlock) {
             self.shareCallBackBlock(NO);
         }

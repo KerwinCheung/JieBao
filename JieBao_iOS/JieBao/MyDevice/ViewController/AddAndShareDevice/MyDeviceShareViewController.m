@@ -14,6 +14,8 @@
 
 @property (nonatomic, strong) UIView *nameBgView;
 
+@property (nonatomic, strong) UIImageView *shareImageView;
+
 @end
 
 @implementation MyDeviceShareViewController
@@ -52,20 +54,28 @@
                                                   kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"设备分享",
                                                   kCustomNaviBarRightActionKey:rightAction,
-                                                  kCustomNaviBarRightImgKey:@"分享"
+                                                  kCustomNaviBarRightImgKey:@"fenxiangq1"
                                                   }];
 }
 
 - (void)initUI
 {
+    [self.bgView addSubview:self.shareImageView];
     [self.bgView addSubview:self.nameBgView];
     [self.nameBgView addSubview:self.shareNameTv];
     
     LHWeakSelf(self)
     
+    [self.shareImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(CurrentDeviceSize(40)));
+        make.size.mas_equalTo(CGSizeMake(111.5, 99.5));
+        make.centerX.equalTo(weakself.bgView.mas_centerX);
+
+    }];
+    
     [self.nameBgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(@0);
-        make.top.equalTo(@(CurrentDeviceSize(40)));
+        make.top.equalTo(weakself.shareImageView.mas_bottom).offset(CurrentDeviceSize(40));
         make.height.equalTo(@(CurrentDeviceSize(40)));
     }];
     
@@ -79,24 +89,30 @@
 - (void)shareDevice
 {
     if (self.shareNameTv.text.length == 0) {
-        [HudHelper showInfoWithStatus:@"请输入分享人的账号"];
+        [HudHelper showErrorWithStatus:@"请输入分享人的账号"];
         return;
     }
     [SDKHelper shareInstance].shareCallBackBlock = ^(BOOL success) {
         if (success) {
-            LHLog(@"分享成功");
             [HudHelper showSuccessWithStatus:@"分享成功"];
         }else
         {
-            LHLog(@"分享失败");
-            [HudHelper showSuccessWithStatus:@"分享失败"];
+            [HudHelper showErrorWithStatus:@"分享失败"];
         }
     };
     [GizDeviceSharing sharingDevice:[UserHelper getCurrentUser].token deviceID:self.dev.did sharingWay:GizDeviceSharingByNormal guestUser:self.shareNameTv.text guestUserType:GizUserPhone];
-    [self alertShowMessage:[NSString stringWithFormat:@"已向\"%@\"发送了一个设备分享邀请",self.shareNameTv.text] title:@"提示" confirmBtnText:@"确定" confirmCallback:nil];
+//    [self alertShowMessage:[NSString stringWithFormat:@"已向\"%@\"发送了一个设备分享邀请",self.shareNameTv.text] title:@"提示" confirmBtnText:@"确定" confirmCallback:nil];
     
 }
 
+#pragma mark - lazy init
+-(UIImageView *)shareImageView{
+    if (!_shareImageView) {
+        _shareImageView = [[UIImageView alloc] init];
+        _shareImageView.image = [UIImage imageNamed:@"feeenx"];
+    }
+    return _shareImageView;
+}
 - (UITextField *)shareNameTv
 {
     if (!_shareNameTv) {

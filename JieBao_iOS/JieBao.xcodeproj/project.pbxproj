@@ -1043,7 +1043,7 @@
 			children = (
 				E0D3DCF1207F615B00F14860 /* MyDeviceViewController.h */,
 				E0D3DCF2207F615B00F14860 /* MyDeviceViewController.m */,
-				F5C1310520F1EF1900FF8CBC /* AboutDevuce */,
+				F5C1310520F1EF1900FF8CBC /* AddAndShareDevice */,
 				F5C1310720F1F07B00FF8CBC /* ShuiBengDev */,
 				F5C1310620F1F06E00FF8CBC /* ZaoLangBengDev */,
 				E0F34B9F20BA8811001281AB /* Addition */,
@@ -1233,7 +1233,7 @@
 			path = WirelessDev;
 			sourceTree = "<group>";
 		};
-		F5C1310520F1EF1900FF8CBC /* AboutDevuce */ = {
+		F5C1310520F1EF1900FF8CBC /* AddAndShareDevice */ = {
 			isa = PBXGroup;
 			children = (
 				E0ECF04A208732C7001530CE /* MyDeviceAddNextViewController.h */,
@@ -1261,7 +1261,7 @@
 				E0ECF070208870FB001530CE /* MyDeviceConnectViewController.h */,
 				E0ECF071208870FB001530CE /* MyDeviceConnectViewController.m */,
 			);
-			path = AboutDevuce;
+			path = AddAndShareDevice;
 			sourceTree = "<group>";
 		};
 		F5C1310620F1F06E00FF8CBC /* ZaoLangBengDev */ = {

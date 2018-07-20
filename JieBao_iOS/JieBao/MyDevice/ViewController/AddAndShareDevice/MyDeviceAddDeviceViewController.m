@@ -170,7 +170,7 @@
         }
     };
     for (GizWifiDevice * dev in self.temps) {
-        [[GizWifiSDK sharedInstance] bindRemoteDevice:[UserHelper getCurrentUser].uid token:[UserHelper getCurrentUser].token mac:dev.macAddress productKey:dev.productKey productSecret:[UserHelper shareInstance].productSecretKey beOwner:NO];
+        [[GizWifiSDK sharedInstance] bindRemoteDevice:[UserHelper getCurrentUser].uid token:[UserHelper getCurrentUser].token mac:dev.macAddress productKey:dev.productKey productSecret:[UserHelper shareInstance].productSecretKey beOwner:YES];
     }
 }
 
