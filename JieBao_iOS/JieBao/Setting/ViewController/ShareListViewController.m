@@ -44,6 +44,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.tabBarController.tabBar setHidden:YES];
+
     LHWeakSelf(self)
     
     ActionBlock rightAction = ^(UIButton *btn){

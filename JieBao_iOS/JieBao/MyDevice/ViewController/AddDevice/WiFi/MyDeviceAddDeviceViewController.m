@@ -145,7 +145,6 @@
                    
                 }
                 
-                
                 if (isAPPDev) {
                     [weakself.dataSource addObject:devcie];
                 }
@@ -163,9 +162,12 @@
 {
     [SDKHelper shareInstance].bindDeviceBlock = ^(BOOL success) {
         if (success) {
-            [self.navigationController pushViewController:[NSClassFromString(@"MyDeviceAddSuccessViewController") new] animated:YES];
-        }else
-        {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                 [self.navigationController pushViewController:[NSClassFromString(@"MyDeviceAddSuccessViewController") new] animated:YES];
+            });
+           
+        }else{
             [HudHelper showErrorWithStatus:@"绑定失败"];
         }
     };

@@ -90,7 +90,7 @@
             [self.dataSource addObject:group];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.cv reloadData];
-                self.noGroupView.hidden = self.dataSource.count != 0;
+                self.dataSource.count !=0?(self.noGroupView.hidden = YES):(self.noGroupView.hidden = NO);
             });
         }
  

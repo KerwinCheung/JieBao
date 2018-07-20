@@ -154,12 +154,12 @@ static SDKHelper *helper = nil;
 {
      if(result.code == GIZ_SDK_SUCCESS) {
          if (self.unBindDeviceBlock) {
-             self.unBindDeviceBlock(YES);
+             self.unBindDeviceBlock(YES,0);
          }
      }else
      {
          if (self.unBindDeviceBlock) {
-             self.unBindDeviceBlock(NO);
+             self.unBindDeviceBlock(NO,result.code);
          }
      }
 }

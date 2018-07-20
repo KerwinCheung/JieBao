@@ -39,14 +39,14 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    LHWeakSelf(self)
-    ActionBlock leftAction = ^(UIButton *btn){
-        [weakself.navigationController popViewControllerAnimated:YES];
-        LHLog(@"left");
-    };
+//    LHWeakSelf(self)
+//    ActionBlock leftAction = ^(UIButton *btn){
+//        [weakself.navigationController popViewControllerAnimated:YES];
+//        LHLog(@"left");
+//    };
     [self.naviBar  configNavigationBarWithAttrs:@{
-                                                  kCustomNaviBarLeftActionKey:leftAction,
-                                                  kCustomNaviBarLeftImgKey:@"back",
+//                                                  kCustomNaviBarLeftActionKey:leftAction,
+//                                                  kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"设备成功添加",
                                                   }];
 }
@@ -80,7 +80,8 @@
 
 - (void)useBtnClicked
 {
-    [self.navigationController popToViewController:self.navigationController.topViewController animated:YES];
+//    [self.navigationController popToViewController:self.navigationController.topViewController animated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - lazy init 

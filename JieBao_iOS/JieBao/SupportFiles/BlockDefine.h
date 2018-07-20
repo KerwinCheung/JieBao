@@ -21,7 +21,7 @@ typedef void(^DeviceOnboardingCallBackBlock)(BOOL success);
 
 typedef void(^BindDeviceCallBackBlock)(BOOL success);
 
-typedef void(^UnBindDeviceCallBackBlock)(BOOL success);
+typedef void(^UnBindDeviceCallBackBlock)(BOOL success,NSInteger errcode);
 
 typedef void(^DiscoverDeviceCallBackBlock)(NSArray * devs);
 

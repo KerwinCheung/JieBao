@@ -139,15 +139,24 @@
             }
             //用单例记录下设备数组
             SDKHELPER.deviceArray = [NSMutableArray arrayWithArray:self.dataSource];
-            
-        }else
-        {
-            weakself.noDeviceView.hidden = NO;
         }
-        [weakself.cv reloadData];
+        self.dataSource.count !=0?(self.noDeviceView.hidden = YES):(self.noDeviceView.hidden = NO);
+        [self.cv performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     };
     [[GizWifiSDK sharedInstance] getBoundDevices:[UserHelper getCurrentUser].uid token:[UserHelper getCurrentUser].token];
 }
+
+-(void)getShareTheInvitation{
+//    [GizDeviceSharing setDelegate:self];
+//    [GizDeviceSharing getDeviceSharingInfos:[UserHelper getCurrentUser].token sharingType:GizDeviceSharingToMe deviceID:nil];
+    
+  
+//    [self alertShowMessage:@"您确定要删除此设备?" title:@"提示" leftBtnText:@"取消" rightBtnText:@"删除" leftCallback:nil rightCallback:^{
+//    }];
+    
+}
+
+
 
 #pragma mark - userLogout
 - (void)userLogout

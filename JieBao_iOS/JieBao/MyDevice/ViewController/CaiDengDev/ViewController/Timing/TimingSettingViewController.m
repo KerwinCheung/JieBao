@@ -284,19 +284,43 @@
     // 配置颜色数组初始值
     if (self.schTask.sches.count == 0) {
         //新增
-        for (NSInteger i = 0; i< 24; i++) {
-            [self.whiteValues addObject:@50];
-            [self.blue1Values addObject:@50];
-            [self.blue2Values addObject:@50];
-            [self.greenValues addObject:@50];
-            [self.redValues addObject:@50];
-            [self.violetValues addObject:@50];
+        if ([_type isEqualToString:@"SPS"]||[_type isEqualToString:@"LPS"]) {
+            //默认程序点击进来
+            self.deleteBtn.hidden = YES;
+            self.spsBtn.hidden = YES;
+            self.saveBtn.hidden = YES;
+            
+        }else{
+            for (NSInteger i = 0; i< 24; i++) {
+                [self.whiteValues addObject:@50];
+                [self.blue1Values addObject:@50];
+                [self.blue2Values addObject:@50];
+                [self.greenValues addObject:@50];
+                [self.redValues addObject:@50];
+                [self.violetValues addObject:@50];
+            }
         }
+        
+        
         
     }else{
         //编辑
         
+        if ([_type isEqualToString:@"SPS"]||[_type isEqualToString:@"LPS"]) {
+            //默认程序点击进来
+            self.deleteBtn.hidden = YES;
+            self.spsBtn.hidden = YES;
+            self.saveBtn.hidden = YES;
+        }
+        
         NSString *dateStr = [UtilHelper stringFromDate:[NSDate date]];
+        
+        self.whiteValues = [NSMutableArray array];
+        self.blue1Values = [NSMutableArray array];
+        self.blue2Values = [NSMutableArray array];
+        self.greenValues = [NSMutableArray array];
+        self.redValues   = [NSMutableArray array];
+        self.violetValues = [NSMutableArray array];
         
         for (NSInteger i = 0; i < 24; i++) {
             if (self.schTask.sches.count > i) {
@@ -305,6 +329,7 @@
                 NSString *str = [NSString stringWithFormat:@"%@ %@",dateStr,originTimerStr];
                 NSDate *setDate = [UtilHelper dateFromString:str];
                 NSString *utcTimerStr = [setDate formattedDateWithFormat:@"HH:mm"];
+               
                 
                 for (DeviceCommonSchulder *tempTimer in self.schTask.sches) {
                     if ([tempTimer.time isEqualToString:utcTimerStr]) {

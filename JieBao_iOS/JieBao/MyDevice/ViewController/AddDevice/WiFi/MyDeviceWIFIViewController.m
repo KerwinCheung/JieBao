@@ -86,7 +86,6 @@
 - (void)makeContraints
 {
     LHWeakSelf(self)
-    
     [self.wifiImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(weakself.view.mas_centerX);
         make.top.equalTo(@(CurrentDeviceSize(80 + LL_StatusBarAndNavigationBarHeight)));
@@ -149,6 +148,8 @@
         make.height.equalTo(@(CurrentDeviceSize(35)));
     }];
 }
+
+#pragma mark - lazy init
 - (void)nextBtnClicked
 {
     if (self.wifiPswText.text.length == 0) {

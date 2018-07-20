@@ -348,17 +348,23 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 - (void)deleteDevice
 {
     LHWeakSelf(self)
-    [SDKHelper shareInstance].unBindDeviceBlock = ^(BOOL success) {
+    [SDKHelper shareInstance].unBindDeviceBlock = ^(BOOL success,NSInteger errCode) {
         if (success) {
-            [self alertShowMessage:@"删除成功" title:@"提示" confirmBtnText:@"确定" confirmCallback:nil];
+
+            [HudHelper showSuccessWithStatus:@"设备删除成功"];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
         }else
         {
-            [self alertShowMessage:@"删除失败" title:@"提示" confirmBtnText:@"确定" confirmCallback:nil];
+            [HudHelper showSuccessWithStatus:@"设备删除失败"];
         }
     };
-    [self alertShowMessage:@"提示" title:@"您确定要删除此设备?" leftBtnText:@"取消" rightBtnText:@"删除" leftCallback:nil rightCallback:^{
-        [[GizWifiSDK sharedInstance] unbindDevice:weakself.dev.did token:[UserHelper getCurrentUser].token did:[UserHelper getCurrentUser].uid];
+    [self alertShowMessage:@"您确定要删除此设备?" title:@"提示" leftBtnText:@"取消" rightBtnText:@"删除" leftCallback:nil rightCallback:^{
+        
+        [[GizWifiSDK sharedInstance] unbindDevice:[UserHelper getCurrentUser].uid token:[UserHelper getCurrentUser].token did:weakself.dev.did];
     }];
+  
 }
 
 - (void)turnBtnClicked:(UIButton *)btn
