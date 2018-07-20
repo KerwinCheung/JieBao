@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class PreinstallSelectView;
 @protocol PreinstallSelectViewDelegate<NSObject>
 
 - (void)selectIndex:(NSInteger)index;
+
 
 @end
 

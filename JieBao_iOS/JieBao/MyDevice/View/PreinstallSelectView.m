@@ -32,6 +32,7 @@
         [self addSubview:self.lineView];
         [self addSubview:self.confirmBtn];
         
+        
         LHWeakSelf(self)
         [self.pView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.left.right.equalTo(@0);
@@ -52,6 +53,9 @@
     return self;
 }
 
+-(void)layoutSubviews{
+    [super layoutSubviews];
+}
 - (void)confirmBtnClicked:(UIButton *)btn
 {
     if (_delegate && [_delegate respondsToSelector:@selector(selectIndex:)]) {
@@ -59,6 +63,9 @@
     }
 }
 
+
+
+#pragma mark - PickerView Delegate
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 
 {
@@ -81,6 +88,7 @@
 }
 
 
+#pragma mark - lazy init
 - (UIPickerView *)pView
 {
     if (!_pView) {

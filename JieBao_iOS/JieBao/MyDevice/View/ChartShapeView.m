@@ -142,6 +142,10 @@
     [self addDefaultLineWithStartPoint:StartPoint75 withEndPoint:endPoint75];
     
     
+    CGPoint StartPoint50 = CGPointMake(0,0.5*self.bounds.size.height);
+    CGPoint endPoint50   = CGPointMake(((CGFloat)(23)/24)*(width-CurrentDeviceSize(10)), 0.5*self.bounds.size.height);
+    [self addDefaultLineWithStartPoint:StartPoint50 withEndPoint:endPoint50];
+    
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     if (self.points.count == 0) return;
     [self.lineColor set];

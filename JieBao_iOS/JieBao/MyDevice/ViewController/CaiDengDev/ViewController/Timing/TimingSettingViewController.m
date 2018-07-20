@@ -42,7 +42,7 @@
 @property (nonatomic, strong) UIButton *closeBtn;
 
 @property (nonatomic, strong) PreinstallSelectView *selectView;
-
+@property (nonatomic, strong) UIView *blackView;
 @property (nonatomic, strong) NSDictionary *dic;
 
 @property (nonatomic, assign) NSInteger currentIndex;
@@ -156,7 +156,7 @@
     [self.view addSubview:self.saveBtn];
     [self.view addSubview:self.deleteBtn];
     [self.view addSubview:self.closeBtn];
-    
+    [self addBlackView];
     [self makeContraints];
 }
 
@@ -248,11 +248,35 @@
         make.height.equalTo(@(CurrentDeviceSize(1)));
     }];
     
+    [self.blackView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@0);
+        make.top.equalTo(@0);
+        make.right.equalTo(@0);
+        make.bottom.equalTo(@0);
+    }];
+    
     [self.view addSubview:self.selectView];
     [self.selectView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(weakself.view);
         make.size.mas_offset(CGSizeMake(LL_ScreenWidth/2, CurrentDeviceSize(CurrentDeviceSize(44*2+30))));
     }];
+}
+
+-(void)addBlackView{
+    UIView *blackView = [[UIView alloc] init];
+    blackView.backgroundColor = [UIColor blackColor];
+    blackView.alpha = 0.2;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClicked:)];
+    [blackView addGestureRecognizer:tap];
+    blackView.hidden = YES;
+    self.blackView = blackView;
+    [self.view addSubview:blackView];
+}
+
+-(void)tapClicked:(UIGestureRecognizer *)tap{
+    self.selectView.hidden = YES;
+    self.blackView.hidden = YES;
+    
 }
 
 #pragma mark - 配置初始值
@@ -329,6 +353,7 @@
 #pragma mark - buttonAction
 - (void)spsBtnClicked
 {
+    self.blackView.hidden = NO;
     self.selectView.hidden = NO;
 }
 
@@ -588,6 +613,7 @@
     }
 }
 
+#pragma mark - PreinstallSelectView Delegate
 - (void)selectIndex:(NSInteger)index
 {
     self.yusheSelected = (int)index;
@@ -611,6 +637,7 @@
         [self reefAquariumSelected];
         [self setupTempValuesWithArrays:kReef];
     }
+    self.blackView.hidden = YES;
     self.selectView.hidden = YES;
 }
 
@@ -811,6 +838,8 @@
     if (!_selectView) {
         _selectView = [PreinstallSelectView new];
         _selectView.delegate = self;
+        _selectView.layer.cornerRadius = 5;
+        _selectView.layer.masksToBounds = YES;
         self.selectView.hidden = YES;
     }
     return _selectView;
