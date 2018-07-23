@@ -39,14 +39,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    LHWeakSelf(self)
-//    ActionBlock leftAction = ^(UIButton *btn){
-//        [weakself.navigationController popViewControllerAnimated:YES];
-//        LHLog(@"left");
-//    };
     [self.naviBar  configNavigationBarWithAttrs:@{
-//                                                  kCustomNaviBarLeftActionKey:leftAction,
-//                                                  kCustomNaviBarLeftImgKey:@"back",
+
                                                   kCustomNaviBarTitleKey:@"添加设备",
                                                   }];
 }
