@@ -11,6 +11,15 @@
 
 @interface ShareListCell : UITableViewCell
 
-@property (nonatomic, strong) ShareModel *dataDic;
+@property (nonatomic, strong) ShareModel *shareModel;
+
+@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
+@property (weak, nonatomic) IBOutlet UILabel *devNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *macLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+
+@property (weak, nonatomic) IBOutlet UIImageView *shortLine;
+@property (weak, nonatomic) IBOutlet UIImageView *longLine;
 
 @end

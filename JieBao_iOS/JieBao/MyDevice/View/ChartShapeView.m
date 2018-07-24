@@ -66,15 +66,13 @@
             slider.value = 50;
             
             [self addSubview:slider];
-            
+
             CGFloat width = self.bounds.size.width;
             CGFloat cenX = ((CGFloat)(i)/24)*(width-CurrentDeviceSize(10));
             CGPoint point = CGPointMake(cenX, (CGFloat)(0.5*self.bounds.size.height));
             [self.points addObject:[NSValue valueWithCGPoint:point]];
             [self.schValues addObject:@((NSInteger)slider.value)];
         }
-        
-       
         
     }
     return self;
@@ -163,6 +161,7 @@
 }
 
 
+// 添加默认的线
 -(void)addDefaultLineWithStartPoint:(CGPoint )startPoint withEndPoint:(CGPoint )endPoint{
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
@@ -195,6 +194,7 @@
         UISlider *slider = [self viewWithTag:100+i];
         [slider setValue:[schValues[i] floatValue]];
         self.points[i] = [NSValue valueWithCGPoint:CGPointMake([self.points[i] CGPointValue].x, (1-((CGFloat)([schValues[i] floatValue]/100)))*self.bounds.size.height)];
+       
     }
     [self setNeedsDisplay];
 }

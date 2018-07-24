@@ -109,6 +109,8 @@
     
     NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
     [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
+    
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -447,8 +449,7 @@
                                                                 @"remark":taskName}];
         if (self.dev) {
             [body setObject:self.dev.did forKey:@"did"];
-        }else
-        {
+        }else{
             [body setObject:self.group.gid forKey:@"group_id"];
         }
         [NetworkHelper sendRequest:body Method:@"POST" Path:@"https://api.gizwits.com/app/common_scheduler" callback:^(NSData *data, NSError *error) {
@@ -694,11 +695,11 @@
 -(void)willEnterForegroundNoti:(NSNotification *)noti{
     
     // 设置屏幕为横屏
-    NSNumber *orientationUnknown = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
-    [[UIDevice currentDevice] setValue:orientationUnknown forKey:@"orientation"];
-    
-    NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
-    [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
+//    NSNumber *orientationUnknown = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
+//    [[UIDevice currentDevice] setValue:orientationUnknown forKey:@"orientation"];
+//
+//    NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
+//    [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
 }
 
 

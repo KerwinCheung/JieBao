@@ -54,9 +54,17 @@
     
     [super layoutSubviews];
     
-    [self addYValueLabel];
-    [self addXTitleLabel];
-
+    BOOL isHad = NO;
+    for (UIView *tempView in self.subviews) {
+        if ([tempView isKindOfClass:[UILabel class]]) {
+            isHad = YES;
+            break;
+        }
+    }
+    if (!isHad) {
+        [self addYValueLabel];
+        [self addXTitleLabel];
+    }
 }
 
 -(void)addYValueLabel{

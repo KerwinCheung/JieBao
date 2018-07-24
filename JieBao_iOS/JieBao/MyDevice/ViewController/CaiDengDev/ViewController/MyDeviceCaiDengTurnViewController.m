@@ -102,21 +102,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     [self initUI];
     [self getTiming];
 
-    if (self.dev) {
-        NSLog(@"%@",self.dev.macAddress);
-        self.dev.delegate = self;
-        [self.dev setSubscribe:self.dev.productKey subscribed:YES];
-        [self.dev getDeviceStatus:@[@"mode",@"switch"]];
-    }else{
-        //设置分组初始状态,使用某一台设备的状态
-        for (CustomDevice *customDev in self.group.devs) {
-            if ([SDKHELPER.statusDic.allKeys containsObject:customDev.did]) {
-                LightsDataPointModel *lightStatusModel = [SDKHELPER.statusDic objectForKey:customDev.did];
-                [self setTurnBtnWhithStatus:lightStatusModel.switchNum.boolValue currentViewWhith:lightStatusModel.modelNum.integerValue];
-                return;
-            }
-        }
-    }
+   
     
 }
 
@@ -148,6 +134,22 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
                                                   kCustomNaviBarRightActionKey:rightAction
                                                   
                                                   }];
+    
+    if (self.dev) {
+        NSLog(@"%@",self.dev.macAddress);
+        self.dev.delegate = self;
+        [self.dev setSubscribe:self.dev.productKey subscribed:YES];
+        [self.dev getDeviceStatus:@[@"mode",@"switch"]];
+    }else{
+        //设置分组初始状态,使用某一台设备的状态
+        for (CustomDevice *customDev in self.group.devs) {
+            if ([SDKHELPER.statusDic.allKeys containsObject:customDev.did]) {
+                LightsDataPointModel *lightStatusModel = [SDKHELPER.statusDic objectForKey:customDev.did];
+                [self setTurnBtnWhithStatus:lightStatusModel.switchNum.boolValue currentViewWhith:lightStatusModel.modelNum.integerValue];
+                return;
+            }
+        }
+    }
 }
 
 - (void)initUI
@@ -467,6 +469,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     NSDictionary *controlDic = [NSDictionary dictionary];
     @weakify(controlDic);
     if (modeNum.integerValue == 6) {
+        // 当模式由其他切换为定时模式时下发对应定时任务中当前时间的控制指令
         if (self.deviceSchedulerTask.sches.count > 0 ) {
             [self.deviceSchedulerTask.sches enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(DeviceCommonSchulder * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 @strongify(controlDic);
@@ -483,16 +486,31 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
                                    @"volor_violet":@([[obj.attrs objectForKey:@"volor_violet"] integerValue])
                                    };
                     *stop = YES;
+                    
                     if (self.dev) {
                         [self.dev write:controlDic withSN:999];
                     }else{
                         [self sendGroupControlWith:controlDic];
                     }
+
                 }
             }];
         }else{
-            [HudHelper showErrorWithStatus:@"当前没有设置定时任务"];
+//            [HudHelper showErrorWithStatus:@"当前没有设置定时任务"];
+            LHLog(@"当前没有定时任务");
+            @strongify(controlDic);
+
+            controlDic = @{@"mode":modeNum};
+            if (self.dev) {
+                [self.dev write:controlDic withSN:999];
+            }else{
+                [self sendGroupControlWith:controlDic];
+            }
+
+            
         }
+        
+        
     }else{
         @strongify(controlDic);
         controlDic = @{@"mode":modeNum};
@@ -626,12 +644,12 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
             [self setTurnBtnWhithStatus:turnStatus currentViewWhith:modeStatus];
         }
         
-//        if (sn.integerValue == 999) {
-//            NSDictionary *data = dataMap[@"data"];
-//            BOOL turnStatus = [data[@"switch"] boolValue];
-//            NSInteger modeStatus = [data[@"mode"] integerValue];
-//            [self setTurnBtnWhithStatus:turnStatus currentViewWhith:modeStatus];
-//        }
+        if (sn.integerValue == 999) {
+            NSDictionary *data = dataMap[@"data"];
+            BOOL turnStatus = [data[@"switch"] boolValue];
+            NSInteger modeStatus = [data[@"mode"] integerValue];
+            [self setTurnBtnWhithStatus:turnStatus currentViewWhith:modeStatus];
+        }
     }
 }
 

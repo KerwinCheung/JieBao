@@ -12,6 +12,7 @@
 #import "BaseTableView.h"
 #import "SettingContentCell.h"
 #import "AppDelegate.h"
+#import "ShareListViewController.h"
 @interface SettingViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) SettingHeadView *headView;
@@ -135,7 +136,12 @@
 {
     switch (indexPath.row) {
         case 0:
-            [self.navigationController pushViewController:[NSClassFromString(@"ShareListViewController") new] animated:YES];
+//            [self.navigationController pushViewController:[NSClassFromString(@"ShareListViewController") new] animated:YES];
+        {
+            UIStoryboard *settingSB = [UIStoryboard storyboardWithName:@"SettingStoryboard" bundle:nil];
+            ShareListViewController *shareListVC = [settingSB instantiateViewControllerWithIdentifier:@"ShareListViewController"];
+            [self.navigationController pushViewController:shareListVC animated:YES];
+        }
             break;
         case 1:
             [self.navigationController pushViewController:[NSClassFromString(@"ErrorListViewController") new] animated:YES];
@@ -161,7 +167,6 @@
     if (!_headView) {
         _headView = [[SettingHeadView alloc] init];
         _headView.currentUser = [UserHelper getCurrentUser];
-//        _headView.delegate = self;
     }
     return _headView;
 }

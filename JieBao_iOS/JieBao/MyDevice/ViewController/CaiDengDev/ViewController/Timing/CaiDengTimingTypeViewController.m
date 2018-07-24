@@ -415,7 +415,7 @@
     if (schTask.sches.count == 0) {
         [SVProgressHUD dismiss];
         if ([schTask.taskName containsString:@"LPS"]||[schTask.taskName containsString:@"SPS"]) {
-            // 如果是默认的定时程序，则去创建
+            // 如果是默认的定时程序，第一次则去创建
             [self setDefaultTimerWithTask:schTask];
             return;
         }
@@ -433,7 +433,13 @@
         [body setObject:@(1) forKey:@"enabled"];
         [body setObject:sch.date forKey:@"date"];
         [body setObject:sch.remark forKey:@"remark"];
-
+        
+        if (self.dev) {
+            [body setObject:self.dev.did forKey:@"did"];
+        }else{
+            [body setObject:self.group.gid forKey:@"group_id"];
+        }
+        
         @weakify(self);
         [NetworkHelper sendRequest:body Method:@"PUT" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler/%@",sch.sid] callback:^(NSData *data, NSError *error) {
             @strongify(self);
@@ -488,6 +494,8 @@
                 self.currentEnableTask = [self.dataSourceDic objectForKey:taskName];
             }
         }
+        [self setCurrentTimerControlInstruction];
+
         return;
     }
     
@@ -508,6 +516,12 @@
         [body setObject:@(0) forKey:@"enabled"];
         [body setObject:sch.date forKey:@"date"];
         [body setObject:sch.remark forKey:@"remark"];
+        
+        if (self.dev) {
+            [body setObject:self.dev.did forKey:@"did"];
+        }else{
+            [body setObject:self.group.gid forKey:@"group_id"];
+        }
         
         @weakify(self);
         [NetworkHelper sendRequest:body Method:@"PUT" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler/%@",sch.sid] callback:^(NSData *data, NSError *error) {
