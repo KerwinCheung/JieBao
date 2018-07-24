@@ -102,8 +102,13 @@
         CGFloat ViewW = self.frame.size.width - CurrentDeviceSize(20) -CurrentDeviceSize(10);
         
         CGFloat tempX = ViewW * 1/24;
-        
-        CGFloat labelX = CurrentDeviceSize(20) + tempX *i - 15;
+        CGFloat labelX;
+        if (i == 24) {
+            labelX = CurrentDeviceSize(20) + tempX *i - 15 + 5;
+        }else{
+            labelX = CurrentDeviceSize(20) + tempX *i - 15;
+
+        }
         
         CGFloat labelY = self.frame.size.height - CurrentDeviceSize(20) + 20;
         

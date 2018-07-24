@@ -327,10 +327,22 @@
         for (NSInteger i = 0; i < 24; i++) {
             if (self.schTask.sches.count > i) {
                 
-                NSString *originTimerStr = [NSString stringWithFormat:@"%02ld:00",(long)i];
-                NSString *str = [NSString stringWithFormat:@"%@ %@",dateStr,originTimerStr];
-                NSDate *setDate = [UtilHelper dateFromString:str];
-                NSString *utcTimerStr = [setDate formattedDateWithFormat:@"HH:mm"];
+                NSString *originTimerStr = nil;
+                NSString *str = nil;
+                NSDate *setDate = nil;
+                NSString *utcTimerStr = nil;
+                if (i == 23) {
+                    originTimerStr = [NSString stringWithFormat:@"00:00"];
+                    str = [NSString stringWithFormat:@"%@ %@",dateStr,originTimerStr];
+                    setDate = [UtilHelper dateFromString:str];
+                    utcTimerStr = [setDate formattedDateWithFormat:@"HH:mm"];
+                }else{
+                    originTimerStr = [NSString stringWithFormat:@"%02ld:00",(long)i+1];
+                    str = [NSString stringWithFormat:@"%@ %@",dateStr,originTimerStr];
+                    setDate = [UtilHelper dateFromString:str];
+                    utcTimerStr = [setDate formattedDateWithFormat:@"HH:mm"];
+                }
+               
                
                 
                 for (DeviceCommonSchulder *tempTimer in self.schTask.sches) {
@@ -428,11 +440,25 @@
     for (int i = 0; i < 24; i++)
     {
         //@"date":[[NSDate dateWithTimeInterval:24*60*60 sinceDate:[NSDate date]] formattedDateWithFormat:@"yyyy-MM-dd"],
+        
         //将时间转化成UTC
-        NSString *originTimerStr = [NSString stringWithFormat:@"%02d:00",i];
-        NSString *str = [NSString stringWithFormat:@"%@ %@",dateStr,originTimerStr];
-        NSDate *setDate = [UtilHelper dateFromString:str];
-        NSString *utcTimerStr = [setDate formattedDateWithFormat:@"HH:mm"];
+        NSString *originTimerStr = nil;
+        NSString *str = nil;
+        NSDate *setDate = nil;
+        NSString *utcTimerStr = nil;
+        if (i == 23) {
+            originTimerStr = [NSString stringWithFormat:@"00:00"];
+            str = [NSString stringWithFormat:@"%@ %@",dateStr,originTimerStr];
+            setDate = [UtilHelper dateFromString:str];
+            utcTimerStr = [setDate formattedDateWithFormat:@"HH:mm"];
+        }else{
+            originTimerStr = [NSString stringWithFormat:@"%02d:00",i+1];
+            str = [NSString stringWithFormat:@"%@ %@",dateStr,originTimerStr];
+            setDate = [UtilHelper dateFromString:str];
+            utcTimerStr = [setDate formattedDateWithFormat:@"HH:mm"];
+        }
+        
+        
         
         NSMutableDictionary *body = [NSMutableDictionary
                                      dictionaryWithDictionary:@{@"attrs":@{@"color_white":@([self.whiteValues[i] integerValue]),
@@ -454,7 +480,7 @@
         }
         [NetworkHelper sendRequest:body Method:@"POST" Path:@"https://api.gizwits.com/app/common_scheduler" callback:^(NSData *data, NSError *error) {
             @strongify(self);
-           
+
             if (data != nil) {
                 NSDictionary *tempDic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
                 NSLog(@"%@",tempDic);
@@ -464,17 +490,17 @@
             if (self.count == 24) {
                 [HudHelper dismiss];
             }
-            
+
             if (!data || error) {
                 LHLog(@"创建定时失败");
                 return ;
             }
             NSDictionary *jsonObj =  [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            
+
             if (!jsonObj) {
                 return;
             }
-            
+
             @synchronized(self)
             {
                 self.sucCount++;
@@ -570,14 +596,14 @@
         [self.lineChartView setSelectedIndex:1];
         self.currentIndex = 1;
         self.currentSelectView = self.sapphireBlueLcView;
-        [self.lineChartView setChartSchValues:self.blue1Values];
+        [self.lineChartView setChartSchValues:self.blue2Values];
     }
     else if ([view isEqual:self.blueLcView])
     {
         [self.lineChartView setSelectedIndex:2];
         self.currentIndex = 2;
         self.currentSelectView = self.blueLcView;
-        [self.lineChartView setChartSchValues:self.blue2Values];
+        [self.lineChartView setChartSchValues:self.blue1Values];
     }
     else if ([view isEqual:self.greenLcView])
     {
@@ -611,12 +637,12 @@
             break;
         case 1:
         {
-            self.blue1Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
+            self.blue2Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
         }
             break;
         case 2:
         {
-            self.blue2Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
+            self.blue1Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
         }
             break;
         case 3:
@@ -760,7 +786,7 @@
 {
     if (!_blueLcView) {
         _blueLcView = [LightControlView new];
-        _blueLcView.btnColor = [UIColor blueColor];
+        _blueLcView.btnColor = UICOLORFROMRGB(0x0087ed);
         _blueLcView.delegate = self;
     }
     return _blueLcView;
@@ -771,7 +797,7 @@
 {
     if (!_greenLcView) {
         _greenLcView = [LightControlView new];
-        _greenLcView.btnColor = [UIColor greenColor];
+        _greenLcView.btnColor = UICOLORFROMRGB(0x8fc31f);
         _greenLcView.delegate = self;
     }
     return _greenLcView;

@@ -29,7 +29,7 @@
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
         self.lineColor = [UIColor blueColor];
-        self.colors = @[[UIColor whiteColor],UICOLORFROMRGB(0x69cef9),[UIColor blueColor],[UIColor greenColor],[UIColor redColor],[UIColor purpleColor]];
+        self.colors = @[[UIColor whiteColor],UICOLORFROMRGB(0x69cef9),UICOLORFROMRGB(0x0087ed),UICOLORFROMRGB(0x8fc31f),[UIColor redColor],[UIColor purpleColor]];
         self.imgs = @[@"write20",@"blue20",@"blue220",@"green20",@"red20",@"zi20"];
         UIView *vBorder = [UIView new];
         UIView *hBorder = [UIView new];
@@ -100,7 +100,9 @@
                  self.points[i] = [NSValue valueWithCGPoint:point];
  
                  [slider mas_remakeConstraints:^(MASConstraintMaker *make) {
-                     make.width.equalTo(@(weakself.bounds.size.height + 2));
+//                     make.width.equalTo(@(weakself.bounds.size.height + 2));
+                     make.width.equalTo(@(weakself.bounds.size.height - 4));
+
                      make.height.equalTo(@(CurrentDeviceSize(6)));
                      make.left.equalTo(@(cenX - ((CGFloat)(weakself.bounds.size.height/2))));
                      make.centerY.equalTo(weakself.mas_centerY);
@@ -156,9 +158,13 @@
     
     //画折线
     CGContextRef ctx = UIGraphicsGetCurrentContext();
+
     if (self.points.count == 0) return;
     [self.lineColor set];
     UIBezierPath *path = [UIBezierPath bezierPath];
+    path.lineWidth = 2;
+    path.lineCapStyle = kCGLineCapRound;
+    path.lineJoinStyle = kCGLineCapRound;
     [path moveToPoint:CGPointMake([self.points[0] CGPointValue].x, [self.points[0] CGPointValue].y)];
     for (int i=1; i<self.points.count; i++) {
         [path addLineToPoint:CGPointMake([self.points[i] CGPointValue].x, [self.points[i] CGPointValue].y)];
