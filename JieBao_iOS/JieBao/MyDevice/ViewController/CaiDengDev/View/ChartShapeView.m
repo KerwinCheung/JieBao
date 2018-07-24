@@ -54,7 +54,22 @@
             make.right.equalTo(weakself.mas_right);
         }];
         
-        for (int i = 0; i <24; i++) {
+        [self addContentViews];
+        
+    }
+    return self;
+}
+
+-(void)addContentViews{
+    for (int i = 0; i < 25; i++) {
+        if (i == 0) {
+            UISlider *slider = [UISlider new];
+            slider.tag = 100+i;
+            slider.backgroundColor = [UIColor clearColor];
+            slider.tintColor = [UIColor lightGrayColor];
+            [slider setThumbImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+            [self addSubview:slider];
+        }else{
             UISlider *slider = [UISlider new];
             slider.tag = 100+i;
             slider.backgroundColor = [UIColor clearColor];
@@ -66,29 +81,32 @@
             slider.value = 50;
             
             [self addSubview:slider];
-
+            
             CGFloat width = self.bounds.size.width;
             CGFloat cenX = ((CGFloat)(i)/24)*(width-CurrentDeviceSize(10));
             CGPoint point = CGPointMake(cenX, (CGFloat)(0.5*self.bounds.size.height));
             [self.points addObject:[NSValue valueWithCGPoint:point]];
             [self.schValues addObject:@((NSInteger)slider.value)];
         }
-        
+       
     }
-    return self;
 }
 
 - (void)layoutSubviews
 {
     if (self.count == 0 && self.bounds.size.width != 0) {
-        for (int i = 0; i <24; i++) {
+        for (int i = 0; i < 25; i++) {
             LHWeakSelf(self)
             UISlider *slider = [self viewWithTag:100+i];
             slider.backgroundColor = [UIColor clearColor];
             CGFloat width = self.bounds.size.width;
             CGFloat cenX = ((CGFloat)(i)/24)*(width-CurrentDeviceSize(10));
-            CGPoint point = CGPointMake(cenX, (1-((CGFloat)(slider.value/100)))*self.bounds.size.height);
-            self.points[i] = [NSValue valueWithCGPoint:point];
+            
+            if (i > 0) {
+                CGPoint point = CGPointMake(cenX, (1-((CGFloat)(slider.value/100)))*self.bounds.size.height);
+                self.points[i] = [NSValue valueWithCGPoint:point];
+            }
+           
             
             [slider mas_remakeConstraints:^(MASConstraintMaker *make) {
                 make.width.equalTo(@(weakself.bounds.size.height + 2));
@@ -109,9 +127,11 @@
 - (void)setTrackAndLineColorWithIndex:(NSInteger)index
 {
     self.lineColor = self.colors[index];
-    for (int i = 0; i <24; i++) {
+    for (int i = 0; i < 25 ; i++) {
         UISlider *slider = [self viewWithTag:100+i];
-        [slider setThumbImage:[UIImage imageNamed:self.imgs[index]] forState:UIControlStateNormal];
+        if (i > 0) {
+            [slider setThumbImage:[UIImage imageNamed:self.imgs[index]] forState:UIControlStateNormal];
+        }
     }
     [self setNeedsDisplay];
 }
@@ -121,7 +141,7 @@
     if (_delegate && [_delegate respondsToSelector:@selector(chartShapeViewValueChange:)]) {
         [_delegate chartShapeViewValueChange:(NSInteger)slider.value];
     }
-    NSInteger index = slider.tag - 100;
+    NSInteger index = slider.tag - 100 - 1;
     self.points[index] = [NSValue valueWithCGPoint:CGPointMake([self.points[index] CGPointValue].x, (1-((CGFloat)(slider.value/100)))*self.bounds.size.height)];
     self.schValues[index] = @((NSInteger)slider.value);
     [self setNeedsDisplay];
@@ -130,6 +150,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
+    // 画默认的标记线
     CGFloat width = self.bounds.size.width;
     CGPoint StartPoint25 = CGPointMake(0,0.75*self.bounds.size.height);
     CGPoint endPoint25   = CGPointMake(((CGFloat)(23)/24)*(width-CurrentDeviceSize(10)), 0.75*self.bounds.size.height);
@@ -144,6 +165,7 @@
     CGPoint endPoint50   = CGPointMake(((CGFloat)(23)/24)*(width-CurrentDeviceSize(10)), 0.5*self.bounds.size.height);
     [self addDefaultLineWithStartPoint:StartPoint50 withEndPoint:endPoint50];
     
+    //画折线
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     if (self.points.count == 0) return;
     [self.lineColor set];
@@ -190,11 +212,13 @@
 - (void)setSchValues:(NSMutableArray<NSNumber *> *)schValues
 {
     _schValues = [NSMutableArray arrayWithArray:schValues];
-    for (int i = 0; i <24; i++) {
+    for (int i = 0; i < 25; i++) {
         UISlider *slider = [self viewWithTag:100+i];
-        [slider setValue:[schValues[i] floatValue]];
-        self.points[i] = [NSValue valueWithCGPoint:CGPointMake([self.points[i] CGPointValue].x, (1-((CGFloat)([schValues[i] floatValue]/100)))*self.bounds.size.height)];
-       
+        
+        if (i > 0) {
+            [slider setValue:[schValues[i-1] floatValue]];
+            self.points[i-1] = [NSValue valueWithCGPoint:CGPointMake([self.points[i-1] CGPointValue].x, (1-((CGFloat)([schValues[i-1] floatValue]/100)))*self.bounds.size.height)];
+        }
     }
     [self setNeedsDisplay];
 }

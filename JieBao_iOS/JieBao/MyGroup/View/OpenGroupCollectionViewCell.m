@@ -87,7 +87,12 @@
     _customDev = customDev;
     self.img.image = [SelectImageHelper selectDeviceImageWithTpye:customDev
                       .product_key];
-    self.lb.text = customDev.dev_alias;
+    if (customDev.dev_alias.length > 0) {
+        self.lb.text = customDev.dev_alias;
+
+    }else{
+        self.lb.text = customDev.verbose_name;
+    }
 }
 
 #pragma mark - lazy init

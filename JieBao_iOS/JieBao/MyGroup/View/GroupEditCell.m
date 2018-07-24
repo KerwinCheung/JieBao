@@ -112,7 +112,17 @@
 {
     _dataDic = dataDic;
     self.imgView.image = [SelectImageHelper selectDeviceImageWithTpye:dataDic.product_key];
-    self.textLb.text = dataDic.dev_alias.length == 0 ? dataDic.product_name :dataDic.dev_alias ;
+    for (GizWifiDevice *dev in SDKHELPER.deviceArray) {
+        if ([dev.did isEqualToString:dataDic.did]) {
+            if (dev.alias.length > 0) {
+                self.textLb.text = dev.alias;
+            }else{
+                self.textLb.text = dev.productName;
+            }
+            break;
+        }
+    }
+
 }
 
 - (void)setSelected
