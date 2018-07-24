@@ -93,7 +93,7 @@
 
 -(void)addXTitleLabel{
     
-    for (NSInteger i = 0; i<24; i++) {
+    for (NSInteger i = 0; i< 25; i++) {
         UILabel *label = [UILabel new];
         label.font = [UIFont sf_systemFontOfSize:5];
         label.textAlignment = NSTextAlignmentCenter;
