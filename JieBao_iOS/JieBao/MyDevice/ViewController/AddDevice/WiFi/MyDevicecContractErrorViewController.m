@@ -7,7 +7,7 @@
 //
 
 #import "MyDevicecContractErrorViewController.h"
-
+#import "MyDeviceWIFIViewController.h"
 @interface MyDevicecContractErrorViewController ()
 
 @property (nonatomic, strong) UIImageView *errorImgView;
@@ -39,14 +39,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    LHWeakSelf(self)
-    ActionBlock leftAction = ^(UIButton *btn){
-        [weakself.navigationController popViewControllerAnimated:YES];
-        LHLog(@"left");
-    };
     [self.naviBar  configNavigationBarWithAttrs:@{
-                                                  kCustomNaviBarLeftActionKey:leftAction,
-                                                  kCustomNaviBarLeftImgKey:@"back",
+
                                                   kCustomNaviBarTitleKey:@"添加设备",
                                                   }];
 }
@@ -94,9 +88,17 @@
 
 - (void)backBtnClicked
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    MyDeviceWIFIViewController *wifiVC = nil;
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[MyDeviceWIFIViewController class]]) {
+            wifiVC = (MyDeviceWIFIViewController *)vc;
+        }
+    }
+    [self.navigationController popToViewController:wifiVC animated:YES];
 }
 
+
+#pragma mark - lazy init
 - (UIImageView *)errorImgView
 {
     if (!_errorImgView) {
@@ -135,7 +137,7 @@
         [_backBtn addTarget:self action:@selector(backBtnClicked) forControlEvents:UIControlEventTouchUpInside];
         [_backBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
         [_backBtn.titleLabel setTextColor:[UIColor whiteColor]];
-        [_backBtn setTitle:@"返回" forState:UIControlStateNormal];
+        [_backBtn setTitle:@"重试" forState:UIControlStateNormal];
     }
     return _backBtn;
 }

@@ -98,6 +98,7 @@
 
 - (void)requestDevices
 {
+    //获取分组的设备列表
     NSString *path = [NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/devices",self.group.gid];
     NSString *method = @"GET";
     [NetworkHelper sendRequest:nil Method:method Path:path callback:^(NSData *data, NSError *error) {
@@ -165,7 +166,10 @@
     
     ConfirmCallback deleteCallBack = ^(void){
         [self alertShowMessage:@"您确定要删除分组?" title:@"提示" confirmCallback:^{
+            [HudHelper show];
             [NetworkHelper sendRequest:nil Method:@"DELETE" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@",weakself.group.gid] callback:^(NSData *data, NSError *error) {
+                [HudHelper dismiss];
+
                 if (error) {
                     return;
                 }

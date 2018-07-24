@@ -213,7 +213,7 @@
 - (void)deleteDevice
 {
     LHWeakSelf(self)
-    [SDKHelper shareInstance].unBindDeviceBlock = ^(BOOL success) {
+    [SDKHelper shareInstance].unBindDeviceBlock = ^(BOOL success,NSInteger errCode) {
         if (success) {
             LHLog(@"删除成功");
         }

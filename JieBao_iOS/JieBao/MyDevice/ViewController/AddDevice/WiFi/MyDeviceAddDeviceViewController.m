@@ -38,7 +38,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.view.backgroundColor = UICOLORFROMRGB(0xededed);
     [self initUI];
     [self discoverDevice];
@@ -145,7 +144,6 @@
                    
                 }
                 
-                
                 if (isAPPDev) {
                     [weakself.dataSource addObject:devcie];
                 }
@@ -163,14 +161,17 @@
 {
     [SDKHelper shareInstance].bindDeviceBlock = ^(BOOL success) {
         if (success) {
-            [self.navigationController pushViewController:[NSClassFromString(@"MyDeviceAddSuccessViewController") new] animated:YES];
-        }else
-        {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                 [self.navigationController pushViewController:[NSClassFromString(@"MyDeviceAddSuccessViewController") new] animated:YES];
+            });
+           
+        }else{
             [HudHelper showErrorWithStatus:@"绑定失败"];
         }
     };
     for (GizWifiDevice * dev in self.temps) {
-        [[GizWifiSDK sharedInstance] bindRemoteDevice:[UserHelper getCurrentUser].uid token:[UserHelper getCurrentUser].token mac:dev.macAddress productKey:dev.productKey productSecret:[UserHelper shareInstance].productSecretKey beOwner:NO];
+        [[GizWifiSDK sharedInstance] bindRemoteDevice:[UserHelper getCurrentUser].uid token:[UserHelper getCurrentUser].token mac:dev.macAddress productKey:dev.productKey productSecret:[UserHelper shareInstance].productSecretKey beOwner:YES];
     }
 }
 

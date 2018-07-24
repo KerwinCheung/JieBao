@@ -14,65 +14,79 @@
 
 @interface ShareListViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, strong) BaseTableView *tb;
 
 @property (nonatomic, strong) NSMutableArray<ShareModel *> *myShareDataSource;
 
 @property (nonatomic, strong) NSMutableArray<ShareModel *> *otherShareDataSource;
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *noDataView;
+
 @end
 
 @implementation ShareListViewController
 
-- (instancetype)init
-{
-    if (self = [super init]) {
-    
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.view.backgroundColor = UICOLORFROMRGB(0xf8f8f8);
-    [self initUI];
     [self requestMyShareData];
-    
+    self.tableView.tableFooterView = [UIView new];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.rowHeight = 85;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    LHWeakSelf(self)
+    [self.tabBarController.tabBar setHidden:YES];
+    [self configNavWithEdit:NO];
+    self.bgView.hidden = YES;
     
-    ActionBlock rightAction = ^(UIButton *btn){
-        [weakself showEdit];
-        LHLog(@"left");
-    };
     
-    ActionBlock leftAction = ^(UIButton *btn){
-        [weakself.navigationController popViewControllerAnimated:YES];
-        LHLog(@"left");
-    };
-    [self.naviBar  configNavigationBarWithAttrs:@{
-                                                  kCustomNaviBarLeftActionKey:leftAction,
-                                                  kCustomNaviBarLeftImgKey:@"back",
-                                                  kCustomNaviBarTitleKey:@"分享列表",
-                                                  kCustomNaviBarRightImgKey:@"编辑",
-                                                  kCustomNaviBarRightActionKey:rightAction
-                                                  }];
 }
 
-- (void)initUI
-{
-    [self.view addSubview:self.tb];
-    
+-(void)configNavWithEdit:(BOOL)isEdit{
+    LHWeakSelf(self)
+
+    if (isEdit) {
+        //编辑状态
+        ActionBlock rightAction = ^(UIButton *btn){
+            [weakself showEdit];
+        };
+        
+        ActionBlock leftAction = ^(UIButton *btn){
+            [weakself.navigationController popViewControllerAnimated:YES];
+        };
+        [self.naviBar  configNavigationBarWithAttrs:@{
+                                                      kCustomNaviBarLeftActionKey:leftAction,
+                                                      kCustomNaviBarLeftImgKey:@"back",
+                                                      kCustomNaviBarTitleKey:@"分享列表",
+                                                      kCustomNaviBarRightImgKey:@"queding1",
+                                                      kCustomNaviBarRightActionKey:rightAction
+                                                      }];
+    }else{
+        //非编辑状态
+        ActionBlock rightAction = ^(UIButton *btn){
+            [weakself showEdit];
+        };
+        
+        ActionBlock leftAction = ^(UIButton *btn){
+            [weakself.navigationController popViewControllerAnimated:YES];
+        };
+        [self.naviBar  configNavigationBarWithAttrs:@{
+                                                      kCustomNaviBarLeftActionKey:leftAction,
+                                                      kCustomNaviBarLeftImgKey:@"back",
+                                                      kCustomNaviBarTitleKey:@"分享列表",
+                                                      kCustomNaviBarRightImgKey:@"bianji",
+                                                      kCustomNaviBarRightActionKey:rightAction
+                                                      }];
+    }
 }
 
 - (void)showEdit
 {
-    [self.tb setEditing:YES animated:YES];
+    [self.tableView setEditing:!self.tableView.editing animated:YES];
+    [self configNavWithEdit:self.tableView.editing];
 }
 
 - (void)requestMyShareData
@@ -94,7 +108,14 @@
             [self.myShareDataSource addObject:model];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tb reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+            if (self.otherShareDataSource.count>0||self.myShareDataSource.count > 0) {
+                self.noDataView.hidden = YES;
+                self.tableView.hidden = NO;
+            }else{
+                self.noDataView.hidden = NO;
+                self.tableView.hidden = YES;
+            }
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
         });
     }];
 }
@@ -117,23 +138,27 @@
             [self.otherShareDataSource addObject:model];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tb reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            if (self.otherShareDataSource.count>0||self.myShareDataSource.count > 0) {
+                self.noDataView.hidden = YES;
+                self.tableView.hidden = NO;
+            }else{
+                self.noDataView.hidden = NO;
+                self.tableView.hidden = YES;
+            }
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
         });
     }];
 }
 
+#pragma mark - tableView Delegate|DataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"ShareListCell";
     ShareListCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    if (!cell) {
-        cell = [[ShareListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-    }
     if (indexPath.section == 1) {
-        cell.dataDic = self.myShareDataSource[indexPath.row];
-    }else
-    {
-        cell.dataDic = self.otherShareDataSource[indexPath.row];
+        cell.shareModel = self.myShareDataSource[indexPath.row];
+    }else{
+        cell.shareModel = self.otherShareDataSource[indexPath.row];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -144,19 +169,18 @@
     return 2;
 }
 
+
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger num;
     if (section == 1) {
         num = self.myShareDataSource.count;
-    }else
-    {
+    }else{
         num = self.otherShareDataSource.count;
     }
     return num;
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-
 {
     return UITableViewCellEditingStyleDelete;
 }
@@ -168,7 +192,7 @@
     if (editingStyle==UITableViewCellEditingStyleDelete) {
         if (indexPath.section == 0) {
             [self.otherShareDataSource removeObjectAtIndex:indexPath.row];
-            [self.tb reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
         }else
         {
             if ([self.myShareDataSource[indexPath.row].status integerValue] == 1) {
@@ -177,12 +201,12 @@
                         return ;
                     }
                     [self.myShareDataSource removeObjectAtIndex:indexPath.row];
-                    [self.tb reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+                    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
                 }];
             }else
             {
                 [self.myShareDataSource removeObjectAtIndex:indexPath.row];
-                [self.tb reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
             }
         }
     }
@@ -247,19 +271,7 @@
     return  CurrentDeviceSize(0.01);
 }
 
-- (BaseTableView *)tb
-{
-    if (!_tb) {
-        _tb = [[BaseTableView alloc] initWithFrame:CGRectMake(0, LL_StatusBarAndNavigationBarHeight, LL_ScreenWidth, LL_ScreenHeight - LL_StatusBarAndNavigationBarHeight) style:UITableViewStylePlain];
-        _tb.backgroundColor = [UIColor clearColor];
-        _tb.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tb.dataSource = self;
-        _tb.delegate = self;
-        _tb.tableFooterView = [UIView new];
-    }
-    return _tb;
-}
-
+#pragma mark - lazy init
 - (NSMutableArray<ShareModel *> *)myShareDataSource
 {
     if (!_myShareDataSource) {

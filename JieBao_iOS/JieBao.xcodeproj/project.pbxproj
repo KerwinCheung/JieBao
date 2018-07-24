@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		64835F3803A7D5575A74A12F /* libPods-JieBaoUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEDAE18DC06BAB8956839337 /* libPods-JieBaoUITests.a */; };
 		8DB3FBD37C6E6DC862A122AE /* libPods-JieBaoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C534CAD771B30F6AAED0BC16 /* libPods-JieBaoTests.a */; };
+		A28D47992105DE3F00590230 /* SettingStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A28D47982105DE3F00590230 /* SettingStoryboard.storyboard */; };
 		A2F219E320FDEB4600180CDC /* LightsDataPointModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F219E220FDEB4600180CDC /* LightsDataPointModel.m */; };
 		A2F219E920FF4FE600180CDC /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2F219E820FF4FE600180CDC /* LoginStoryboard.storyboard */; };
 		E0221A7620994F9800156753 /* DeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E0221A7420994F9700156753 /* DeviceModel.m */; };
@@ -232,6 +233,7 @@
 		394D2F32FD0F3C418FD9D599 /* Pods-JieBao.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JieBao.release.xcconfig"; path = "Pods/Target Support Files/Pods-JieBao/Pods-JieBao.release.xcconfig"; sourceTree = "<group>"; };
 		56E86079D5CEA048F420DC48 /* libPods-JieBao.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JieBao.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EF937847B456B68FD7BBEBE /* Pods-JieBao.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JieBao.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JieBao/Pods-JieBao.debug.xcconfig"; sourceTree = "<group>"; };
+		A28D47982105DE3F00590230 /* SettingStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingStoryboard.storyboard; sourceTree = "<group>"; };
 		A2F219E120FDEB4600180CDC /* LightsDataPointModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightsDataPointModel.h; sourceTree = "<group>"; };
 		A2F219E220FDEB4600180CDC /* LightsDataPointModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LightsDataPointModel.m; sourceTree = "<group>"; };
 		A2F219E820FF4FE600180CDC /* LoginStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginStoryboard.storyboard; sourceTree = "<group>"; };
@@ -638,6 +640,58 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		A20410C02101F1B6007B3B55 /* ShareDevice */ = {
+			isa = PBXGroup;
+			children = (
+				E0ECF06420883E5A001530CE /* MyDeviceShareViewController.h */,
+				E0ECF06520883E5A001530CE /* MyDeviceShareViewController.m */,
+			);
+			path = ShareDevice;
+			sourceTree = "<group>";
+		};
+		A20410C12101F2CF007B3B55 /* RenameDevice */ = {
+			isa = PBXGroup;
+			children = (
+				E0ECF061208836CA001530CE /* MyDeviceRenameViewController.h */,
+				E0ECF062208836CA001530CE /* MyDeviceRenameViewController.m */,
+			);
+			path = RenameDevice;
+			sourceTree = "<group>";
+		};
+		A20410C22101F306007B3B55 /* WiFi */ = {
+			isa = PBXGroup;
+			children = (
+				E0ECF0472087325E001530CE /* MyDeviceAddViewController.h */,
+				E0ECF0482087325E001530CE /* MyDeviceAddViewController.m */,
+				E0ECF04A208732C7001530CE /* MyDeviceAddNextViewController.h */,
+				E0ECF04B208732C7001530CE /* MyDeviceAddNextViewController.m */,
+				E0ECF04D20873488001530CE /* MyDeviceWIFIViewController.h */,
+				E0ECF04E20873488001530CE /* MyDeviceWIFIViewController.m */,
+				E0ECF050208740B9001530CE /* MyDevicecContractViewController.h */,
+				E0ECF051208740B9001530CE /* MyDevicecContractViewController.m */,
+				E0ECF05320874405001530CE /* MyDevicecContractErrorViewController.h */,
+				E0ECF05420874405001530CE /* MyDevicecContractErrorViewController.m */,
+				E0ECF05620874B11001530CE /* MyDeviceAddDeviceViewController.h */,
+				E0ECF05720874B11001530CE /* MyDeviceAddDeviceViewController.m */,
+				E0ECF05920874D3A001530CE /* MyDeviceAddSuccessViewController.h */,
+				E0ECF05A20874D3A001530CE /* MyDeviceAddSuccessViewController.m */,
+			);
+			path = WiFi;
+			sourceTree = "<group>";
+		};
+		A20410C32101F306007B3B55 /* AP */ = {
+			isa = PBXGroup;
+			children = (
+				E0ECF06A20887080001530CE /* MyDeviceAPControlViewController.h */,
+				E0ECF06B20887080001530CE /* MyDeviceAPControlViewController.m */,
+				E0ECF06D208870B9001530CE /* MyDeviceAPControlNextViewController.h */,
+				E0ECF06E208870B9001530CE /* MyDeviceAPControlNextViewController.m */,
+				E0ECF070208870FB001530CE /* MyDeviceConnectViewController.h */,
+				E0ECF071208870FB001530CE /* MyDeviceConnectViewController.m */,
+			);
+			path = AP;
+			sourceTree = "<group>";
+		};
 		A2F219E020FDEB1C00180CDC /* DataPointModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -886,9 +940,9 @@
 		E0D3DCC6207F3B0000F14860 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				E0D3DCC7207F3B5000F14860 /* ViewController */,
 				E0D3DCC9207F3B6300F14860 /* Model */,
 				E0D3DCC8207F3B5D00F14860 /* View */,
+				E0D3DCC7207F3B5000F14860 /* ViewController */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -916,6 +970,7 @@
 				E0ECF03F2086EF4B001530CE /* ErrorListViewController.m */,
 				E0E5824820CE0CFF00EEFB44 /* AboutUsController.h */,
 				E0E5824920CE0CFF00EEFB44 /* AboutUsController.m */,
+				A28D47982105DE3F00590230 /* SettingStoryboard.storyboard */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1043,7 +1098,9 @@
 			children = (
 				E0D3DCF1207F615B00F14860 /* MyDeviceViewController.h */,
 				E0D3DCF2207F615B00F14860 /* MyDeviceViewController.m */,
-				F5C1310520F1EF1900FF8CBC /* AboutDevuce */,
+				F5C1310520F1EF1900FF8CBC /* AddDevice */,
+				A20410C02101F1B6007B3B55 /* ShareDevice */,
+				A20410C12101F2CF007B3B55 /* RenameDevice */,
 				F5C1310720F1F07B00FF8CBC /* ShuiBengDev */,
 				F5C1310620F1F06E00FF8CBC /* ZaoLangBengDev */,
 				E0F34B9F20BA8811001281AB /* Addition */,
@@ -1233,35 +1290,13 @@
 			path = WirelessDev;
 			sourceTree = "<group>";
 		};
-		F5C1310520F1EF1900FF8CBC /* AboutDevuce */ = {
+		F5C1310520F1EF1900FF8CBC /* AddDevice */ = {
 			isa = PBXGroup;
 			children = (
-				E0ECF04A208732C7001530CE /* MyDeviceAddNextViewController.h */,
-				E0ECF04B208732C7001530CE /* MyDeviceAddNextViewController.m */,
-				E0ECF04D20873488001530CE /* MyDeviceWIFIViewController.h */,
-				E0ECF04E20873488001530CE /* MyDeviceWIFIViewController.m */,
-				E0ECF050208740B9001530CE /* MyDevicecContractViewController.h */,
-				E0ECF051208740B9001530CE /* MyDevicecContractViewController.m */,
-				E0ECF05320874405001530CE /* MyDevicecContractErrorViewController.h */,
-				E0ECF05420874405001530CE /* MyDevicecContractErrorViewController.m */,
-				E0ECF05620874B11001530CE /* MyDeviceAddDeviceViewController.h */,
-				E0ECF05720874B11001530CE /* MyDeviceAddDeviceViewController.m */,
-				E0ECF05920874D3A001530CE /* MyDeviceAddSuccessViewController.h */,
-				E0ECF05A20874D3A001530CE /* MyDeviceAddSuccessViewController.m */,
-				E0ECF0472087325E001530CE /* MyDeviceAddViewController.h */,
-				E0ECF0482087325E001530CE /* MyDeviceAddViewController.m */,
-				E0ECF061208836CA001530CE /* MyDeviceRenameViewController.h */,
-				E0ECF062208836CA001530CE /* MyDeviceRenameViewController.m */,
-				E0ECF06420883E5A001530CE /* MyDeviceShareViewController.h */,
-				E0ECF06520883E5A001530CE /* MyDeviceShareViewController.m */,
-				E0ECF06A20887080001530CE /* MyDeviceAPControlViewController.h */,
-				E0ECF06B20887080001530CE /* MyDeviceAPControlViewController.m */,
-				E0ECF06D208870B9001530CE /* MyDeviceAPControlNextViewController.h */,
-				E0ECF06E208870B9001530CE /* MyDeviceAPControlNextViewController.m */,
-				E0ECF070208870FB001530CE /* MyDeviceConnectViewController.h */,
-				E0ECF071208870FB001530CE /* MyDeviceConnectViewController.m */,
+				A20410C32101F306007B3B55 /* AP */,
+				A20410C22101F306007B3B55 /* WiFi */,
 			);
-			path = AboutDevuce;
+			path = AddDevice;
 			sourceTree = "<group>";
 		};
 		F5C1310620F1F06E00FF8CBC /* ZaoLangBengDev */ = {
@@ -1527,6 +1562,7 @@
 				E0D3DC97207F327A00F14860 /* LaunchScreen.storyboard in Resources */,
 				E0CEAFF220DCCB0E00225922 /* icon_m_wind@2x.png in Resources */,
 				E0CEAFE920DCCB0E00225922 /* sk_kongtiao_bg@2x.png in Resources */,
+				A28D47992105DE3F00590230 /* SettingStoryboard.storyboard in Resources */,
 				E0ECF06020883555001530CE /* loading.gif in Resources */,
 				A2F219E920FF4FE600180CDC /* LoginStoryboard.storyboard in Resources */,
 				E0F34BA720BA8853001281AB /* piao.png in Resources */,

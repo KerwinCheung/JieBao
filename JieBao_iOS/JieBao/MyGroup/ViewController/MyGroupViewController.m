@@ -55,7 +55,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self requestGroups];
     LHWeakSelf(self)
     ActionBlock rightAction = ^(UIButton *btn){
         [weakself addGroupDidSelected];
@@ -67,6 +66,7 @@
                                                   kCustomNaviBarRightActionKey:rightAction
                                                   }];
     [self.tabBarController.tabBar setHidden:NO];
+    [self requestGroups];
 
 }
 
@@ -84,13 +84,17 @@
             return;
         }
         [self.dataSource removeAllObjects];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.cv reloadData];
+            self.dataSource.count !=0?(self.noGroupView.hidden = YES):(self.noGroupView.hidden = NO);
+        });
         for (NSDictionary *dic in jsonObject) {
             CustomDeviceGroup *group = [CustomDeviceGroup yy_modelWithJSON:dic];
             [self requestDevicesWithGroup:group];
             [self.dataSource addObject:group];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.cv reloadData];
-                self.noGroupView.hidden = self.dataSource.count != 0;
+                self.dataSource.count !=0?(self.noGroupView.hidden = YES):(self.noGroupView.hidden = NO);
             });
         }
  
@@ -143,7 +147,7 @@
         }
     }
     NSInteger checkStandard = 1;
-    if (group.devs) {
+    if (group.devs.count >1) {
         checkStandard =  group.devs.count/2;
     }
     

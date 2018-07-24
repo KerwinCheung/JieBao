@@ -42,7 +42,7 @@
 @property (nonatomic, strong) UIButton *closeBtn;
 
 @property (nonatomic, strong) PreinstallSelectView *selectView;
-
+@property (nonatomic, strong) UIView *blackView;
 @property (nonatomic, strong) NSDictionary *dic;
 
 @property (nonatomic, assign) NSInteger currentIndex;
@@ -109,6 +109,8 @@
     
     NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
     [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
+    
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -156,7 +158,7 @@
     [self.view addSubview:self.saveBtn];
     [self.view addSubview:self.deleteBtn];
     [self.view addSubview:self.closeBtn];
-    
+    [self addBlackView];
     [self makeContraints];
 }
 
@@ -224,6 +226,7 @@
         make.bottom.equalTo(weakself.deleteBtn.mas_top).offset(-CurrentDeviceSize(LL_ScreenHeight/18));
     }];
     
+    
     [self.deleteBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(weakself.spsBtn);
         make.size.equalTo(weakself.spsBtn);;
@@ -247,6 +250,13 @@
         make.height.equalTo(@(CurrentDeviceSize(1)));
     }];
     
+    [self.blackView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@0);
+        make.top.equalTo(@0);
+        make.right.equalTo(@0);
+        make.bottom.equalTo(@0);
+    }];
+    
     [self.view addSubview:self.selectView];
     [self.selectView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(weakself.view);
@@ -254,39 +264,94 @@
     }];
 }
 
+-(void)addBlackView{
+    UIView *blackView = [[UIView alloc] init];
+    blackView.backgroundColor = [UIColor blackColor];
+    blackView.alpha = 0.2;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClicked:)];
+    [blackView addGestureRecognizer:tap];
+    blackView.hidden = YES;
+    self.blackView = blackView;
+    [self.view addSubview:blackView];
+}
+
+-(void)tapClicked:(UIGestureRecognizer *)tap{
+    self.selectView.hidden = YES;
+    self.blackView.hidden = YES;
+    
+}
+
 #pragma mark - 配置初始值
 -(void)configInitialValues{
     // 配置颜色数组初始值
     if (self.schTask.sches.count == 0) {
         //新增
-        for (NSInteger i = 0; i< 24; i++) {
-            [self.whiteValues addObject:@50];
-            [self.blue1Values addObject:@50];
-            [self.blue2Values addObject:@50];
-            [self.greenValues addObject:@50];
-            [self.redValues addObject:@50];
-            [self.violetValues addObject:@50];
+        if ([_type isEqualToString:@"SPS"]||[_type isEqualToString:@"LPS"]) {
+            //默认程序点击进来
+            self.deleteBtn.hidden = YES;
+            self.spsBtn.hidden = YES;
+            self.saveBtn.hidden = YES;
+            
+        }else{
+            for (NSInteger i = 0; i< 24; i++) {
+                [self.whiteValues addObject:@50];
+                [self.blue1Values addObject:@50];
+                [self.blue2Values addObject:@50];
+                [self.greenValues addObject:@50];
+                [self.redValues addObject:@50];
+                [self.violetValues addObject:@50];
+            }
         }
+        
+        
         
     }else{
         //编辑
+        
+        if ([_type isEqualToString:@"SPS"]||[_type isEqualToString:@"LPS"]) {
+            //默认程序点击进来
+            self.deleteBtn.hidden = YES;
+            self.spsBtn.hidden = YES;
+            self.saveBtn.hidden = YES;
+        }
+        
+        NSString *dateStr = [UtilHelper stringFromDate:[NSDate date]];
+        
+        self.whiteValues = [NSMutableArray array];
+        self.blue1Values = [NSMutableArray array];
+        self.blue2Values = [NSMutableArray array];
+        self.greenValues = [NSMutableArray array];
+        self.redValues   = [NSMutableArray array];
+        self.violetValues = [NSMutableArray array];
+        
         for (NSInteger i = 0; i < 24; i++) {
             if (self.schTask.sches.count > i) {
-                DeviceCommonSchulder *timer = [self.schTask.sches objectAtIndex:i];
-              NSNumber *color_white =  [timer.attrs objectForKey:@"color_white"];
-              NSNumber *color_blue1 =    [timer.attrs objectForKey:@"color_blue1"];
-              NSNumber *color_blue2 =   [timer.attrs objectForKey:@"color_blue2"];
-              NSNumber *color_green =   [timer.attrs objectForKey:@"color_green"];
-              NSNumber *color_red =   [timer.attrs objectForKey:@"color_red"];
-              NSNumber *volor_violet =   [timer.attrs objectForKey:@"volor_violet"];
                 
-                [self.whiteValues addObject:color_white];
-                [self.blue1Values addObject:color_blue1];
-                [self.blue2Values addObject:color_blue2];
-                [self.greenValues addObject:color_green];
-                [self.redValues addObject:color_red];
-                [self.violetValues addObject:volor_violet];
+                NSString *originTimerStr = [NSString stringWithFormat:@"%02ld:00",(long)i];
+                NSString *str = [NSString stringWithFormat:@"%@ %@",dateStr,originTimerStr];
+                NSDate *setDate = [UtilHelper dateFromString:str];
+                NSString *utcTimerStr = [setDate formattedDateWithFormat:@"HH:mm"];
+               
                 
+                for (DeviceCommonSchulder *tempTimer in self.schTask.sches) {
+                    if ([tempTimer.time isEqualToString:utcTimerStr]) {
+                        NSNumber *color_white =  [tempTimer.attrs objectForKey:@"color_white"];
+                        NSNumber *color_blue1 =    [tempTimer.attrs objectForKey:@"color_blue1"];
+                        NSNumber *color_blue2 =   [tempTimer.attrs objectForKey:@"color_blue2"];
+                        NSNumber *color_green =   [tempTimer.attrs objectForKey:@"color_green"];
+                        NSNumber *color_red =   [tempTimer.attrs objectForKey:@"color_red"];
+                        NSNumber *volor_violet =   [tempTimer.attrs objectForKey:@"volor_violet"];
+                        
+                        [self.whiteValues addObject:color_white];
+                        [self.blue1Values addObject:color_blue1];
+                        [self.blue2Values addObject:color_blue2];
+                        [self.greenValues addObject:color_green];
+                        [self.redValues addObject:color_red];
+                        [self.violetValues addObject:volor_violet];
+                        break;
+                    }
+                }
+
             }else{
                 [self.whiteValues addObject:@50];
                 [self.blue1Values addObject:@50];
@@ -298,12 +363,24 @@
         }
         
     }
+    
+    
+    //设置定时名称
+    NSArray *taskNameArr = [self.schTask.taskName componentsSeparatedByString:@"_"];
+    self.timingTextView.text = taskNameArr.firstObject;
+    
+    [self.lineChartView setChartSchValues:self.whiteValues];
+    
+    [self.lineChartView setSelectedIndex:0];
+    self.currentIndex = 0;
+    self.currentSelectView = self.whiteLcView;
 }
 
 
 #pragma mark - buttonAction
 - (void)spsBtnClicked
 {
+    self.blackView.hidden = NO;
     self.selectView.hidden = NO;
 }
 
@@ -351,7 +428,7 @@
     for (int i = 0; i < 24; i++)
     {
         //@"date":[[NSDate dateWithTimeInterval:24*60*60 sinceDate:[NSDate date]] formattedDateWithFormat:@"yyyy-MM-dd"],
-        
+        //将时间转化成UTC
         NSString *originTimerStr = [NSString stringWithFormat:@"%02d:00",i];
         NSString *str = [NSString stringWithFormat:@"%@ %@",dateStr,originTimerStr];
         NSDate *setDate = [UtilHelper dateFromString:str];
@@ -372,8 +449,7 @@
                                                                 @"remark":taskName}];
         if (self.dev) {
             [body setObject:self.dev.did forKey:@"did"];
-        }else
-        {
+        }else{
             [body setObject:self.group.gid forKey:@"group_id"];
         }
         [NetworkHelper sendRequest:body Method:@"POST" Path:@"https://api.gizwits.com/app/common_scheduler" callback:^(NSData *data, NSError *error) {
@@ -480,7 +556,7 @@
         self.currentSelectView.isClicked = NO;
     }
     
-//    [self getValuesWhithSelectedIndex];
+    [self getValuesWhithSelectedIndex];
     
     if ([view isEqual:self.whiteLcView])
     {
@@ -563,6 +639,7 @@
     }
 }
 
+#pragma mark - PreinstallSelectView Delegate
 - (void)selectIndex:(NSInteger)index
 {
     self.yusheSelected = (int)index;
@@ -586,6 +663,7 @@
         [self reefAquariumSelected];
         [self setupTempValuesWithArrays:kReef];
     }
+    self.blackView.hidden = YES;
     self.selectView.hidden = YES;
 }
 
@@ -617,11 +695,11 @@
 -(void)willEnterForegroundNoti:(NSNotification *)noti{
     
     // 设置屏幕为横屏
-    NSNumber *orientationUnknown = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
-    [[UIDevice currentDevice] setValue:orientationUnknown forKey:@"orientation"];
-    
-    NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
-    [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
+//    NSNumber *orientationUnknown = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
+//    [[UIDevice currentDevice] setValue:orientationUnknown forKey:@"orientation"];
+//
+//    NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
+//    [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
 }
 
 
@@ -786,6 +864,8 @@
     if (!_selectView) {
         _selectView = [PreinstallSelectView new];
         _selectView.delegate = self;
+        _selectView.layer.cornerRadius = 5;
+        _selectView.layer.masksToBounds = YES;
         self.selectView.hidden = YES;
     }
     return _selectView;
@@ -803,7 +883,10 @@
 //        [self.tempArr replaceObjectAtIndex:index withObject:value];
 //    }
 //    NSInteger selecteIndex = [dic[key] integerValue];
-//    self.timingTextView.text = schTask.taskName;
+//    //设置定时名称
+//    NSArray *taskNameArr = [schTask.taskName componentsSeparatedByString:@"_"];
+//    self.timingTextView.text = taskNameArr.firstObject;
+//
 //    [self.lineChartView setChartSchValues:self.tempArr];
 //
 //    if (selecteIndex == 0) {

@@ -66,13 +66,14 @@
             slider.value = 50;
             
             [self addSubview:slider];
-            
+
             CGFloat width = self.bounds.size.width;
             CGFloat cenX = ((CGFloat)(i)/24)*(width-CurrentDeviceSize(10));
             CGPoint point = CGPointMake(cenX, (CGFloat)(0.5*self.bounds.size.height));
             [self.points addObject:[NSValue valueWithCGPoint:point]];
             [self.schValues addObject:@((NSInteger)slider.value)];
         }
+        
     }
     return self;
 }
@@ -129,6 +130,20 @@
 
 - (void)drawRect:(CGRect)rect
 {
+    CGFloat width = self.bounds.size.width;
+    CGPoint StartPoint25 = CGPointMake(0,0.75*self.bounds.size.height);
+    CGPoint endPoint25   = CGPointMake(((CGFloat)(23)/24)*(width-CurrentDeviceSize(10)), 0.75*self.bounds.size.height);
+    [self addDefaultLineWithStartPoint:StartPoint25 withEndPoint:endPoint25];
+    
+    CGPoint StartPoint75 = CGPointMake(0,0.25*self.bounds.size.height);
+    CGPoint endPoint75   = CGPointMake(((CGFloat)(23)/24)*(width-CurrentDeviceSize(10)), 0.25*self.bounds.size.height);
+    [self addDefaultLineWithStartPoint:StartPoint75 withEndPoint:endPoint75];
+    
+    
+    CGPoint StartPoint50 = CGPointMake(0,0.5*self.bounds.size.height);
+    CGPoint endPoint50   = CGPointMake(((CGFloat)(23)/24)*(width-CurrentDeviceSize(10)), 0.5*self.bounds.size.height);
+    [self addDefaultLineWithStartPoint:StartPoint50 withEndPoint:endPoint50];
+    
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     if (self.points.count == 0) return;
     [self.lineColor set];
@@ -139,24 +154,28 @@
     }
     [path stroke];
     CGContextAddPath(ctx, path.CGPath);
+    
+    
+   
+    
 }
 
+
+// 添加默认的线
 -(void)addDefaultLineWithStartPoint:(CGPoint )startPoint withEndPoint:(CGPoint )endPoint{
     
-    //1、获取图形上下文
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    //2、描述路径
     //创建路径
     CGMutablePathRef path =  CGPathCreateMutable();
     //设置起点
-    CGPathMoveToPoint(path, NULL, 50, 150);
+    CGPathMoveToPoint(path, NULL, startPoint.x, startPoint.y);
     //设置终点
-    CGPathAddLineToPoint(path, NULL, 100, 100);
+    CGPathAddLineToPoint(path, NULL, endPoint.x, endPoint.y);
     //颜色
     [UICOLORFROMRGB(0x69cef9) setStroke];
     //线宽
-    CGContextSetLineWidth(ctx, 5);
-    //设置连接样式
+    CGContextSetLineWidth(ctx, 1);
+    
     CGContextSetLineJoin(ctx, kCGLineJoinBevel);
     
     CGContextSetLineCap(ctx, kCGLineCapButt);
@@ -175,6 +194,7 @@
         UISlider *slider = [self viewWithTag:100+i];
         [slider setValue:[schValues[i] floatValue]];
         self.points[i] = [NSValue valueWithCGPoint:CGPointMake([self.points[i] CGPointValue].x, (1-((CGFloat)([schValues[i] floatValue]/100)))*self.bounds.size.height)];
+       
     }
     [self setNeedsDisplay];
 }

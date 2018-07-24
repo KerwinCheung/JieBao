@@ -128,11 +128,50 @@
             [self.nameSoure addObject:task.taskName];
         }
         
+        
         // 保证LPS程序和SPS程序排在最前面
         [self.nameSoure removeObject:@"LPS程序"];
         [self.nameSoure removeObject:@"SPS程序"];
         [self.nameSoure insertObject:@"LPS程序" atIndex:0];
         [self.nameSoure insertObject:@"SPS程序" atIndex:1];
+        
+        NSInteger lpsCount = 0;
+        NSInteger spsCount = 0;
+        for (NSInteger i = 0 ; i < self.nameSoure.count; i++) {
+            NSString *nameStr = [self.nameSoure objectAtIndex:i];
+            if ([nameStr containsString:@"LPS程序"]) {
+                lpsCount++;
+            }else if ([nameStr containsString:@"SPS程序"]){
+                spsCount++;
+            }
+        }
+        if (spsCount == 2) {
+            [self.nameSoure removeObject: @"SPS程序"];
+            NSString *spsName = nil;
+            for (NSString *nameStr in self.nameSoure) {
+                if ([nameStr containsString:@"SPS程序"]) {
+                    spsName = nameStr;
+                    break;
+                }
+            }
+            [self.nameSoure removeObject:spsName];
+            [self.nameSoure insertObject:spsName  atIndex:1];
+
+        }
+        if (lpsCount == 2) {
+            [self.nameSoure removeObject: @"LPS程序"];
+            
+            NSString *lpsName = nil;
+            for (NSString *nameStr in self.nameSoure) {
+                if ([nameStr containsString:@"LPS程序"]) {
+                    lpsName = nameStr;
+                    break;
+                }
+            }
+            [self.nameSoure removeObject:lpsName];
+            [self.nameSoure insertObject:lpsName  atIndex:0];
+        }
+        
         
         //获取执行中的定时组的序号
         for (NSInteger i =0; i<self.nameSoure.count; i++) {
@@ -143,6 +182,7 @@
                 self.currentEnableTask = [self.dataSourceDic objectForKey:taskName];
             }
         }
+        
         
         dispatch_async(dispatch_get_main_queue(), ^{
 
@@ -317,10 +357,16 @@
             if(indexPath.row == 0)
             {
                 vc.type = @"LPS";
+                NSString *taskName = [self.nameSoure objectAtIndex:indexPath.row];
+                DeviceSchedulerTask *task = [self.dataSourceDic objectForKey:taskName];
+                vc.schTask = task;
             }
             else if (indexPath.row == 1)
             {
                 vc.type = @"SPS";
+                NSString *taskName = [self.nameSoure objectAtIndex:indexPath.row];
+                DeviceSchedulerTask *task = [self.dataSourceDic objectForKey:taskName];
+                vc.schTask = task;
             }
             else
             {
@@ -329,6 +375,7 @@
                 vc.schTask = task;
             }
             [self.navigationController pushViewController:vc animated:YES];
+            
         }else{
             if (self.nameSoure.count >= 8) {
                 [HudHelper showErrorWithStatus:@"最多添加8个定时任务"];
@@ -368,7 +415,7 @@
     if (schTask.sches.count == 0) {
         [SVProgressHUD dismiss];
         if ([schTask.taskName containsString:@"LPS"]||[schTask.taskName containsString:@"SPS"]) {
-            // 如果是默认的定时程序，则去创建
+            // 如果是默认的定时程序，第一次则去创建
             [self setDefaultTimerWithTask:schTask];
             return;
         }
@@ -386,7 +433,13 @@
         [body setObject:@(1) forKey:@"enabled"];
         [body setObject:sch.date forKey:@"date"];
         [body setObject:sch.remark forKey:@"remark"];
-
+        
+        if (self.dev) {
+            [body setObject:self.dev.did forKey:@"did"];
+        }else{
+            [body setObject:self.group.gid forKey:@"group_id"];
+        }
+        
         @weakify(self);
         [NetworkHelper sendRequest:body Method:@"PUT" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler/%@",sch.sid] callback:^(NSData *data, NSError *error) {
             @strongify(self);
@@ -441,6 +494,8 @@
                 self.currentEnableTask = [self.dataSourceDic objectForKey:taskName];
             }
         }
+        [self setCurrentTimerControlInstruction];
+
         return;
     }
     
@@ -461,6 +516,12 @@
         [body setObject:@(0) forKey:@"enabled"];
         [body setObject:sch.date forKey:@"date"];
         [body setObject:sch.remark forKey:@"remark"];
+        
+        if (self.dev) {
+            [body setObject:self.dev.did forKey:@"did"];
+        }else{
+            [body setObject:self.group.gid forKey:@"group_id"];
+        }
         
         @weakify(self);
         [NetworkHelper sendRequest:body Method:@"PUT" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler/%@",sch.sid] callback:^(NSData *data, NSError *error) {
@@ -557,7 +618,7 @@
 
 -(void)setDefaultTimerWithTask:(DeviceSchedulerTask *)task{
     // 定时器的命名规则为：名称_时间戳
-    NSString *taskName = [NSString stringWithFormat:@"%@_%@",task,[UtilHelper getTimeStampStr]];
+    NSString *taskName = [NSString stringWithFormat:@"%@_%@",task.taskName,[UtilHelper getTimeStampStr]];
     
     if ([taskName containsString:@"LPS"]) {
         [self setUpTempValuesWithArrays:kLPS];
@@ -591,7 +652,7 @@
                                                                            },
                                                                 @"time":utcTimerStr,
                                                                 @"repeat":@"mon,tue,wed,thu,fri,sat,sun",
-                                                                @"enabled":@(0),
+                                                                @"enabled":@(1),
                                                                 @"remark":taskName}];
         if (self.dev) {
             [body setObject:self.dev.did forKey:@"did"];
@@ -599,46 +660,91 @@
         {
             [body setObject:self.group.gid forKey:@"group_id"];
         }
-        [NetworkHelper sendRequest:body Method:@"POST" Path:@"https://api.gizwits.com/app/common_scheduler" callback:^(NSData *data, NSError *error) {
-            @strongify(self);
-            
-            if (data != nil) {
-                NSDictionary *tempDic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-                NSLog(@"%@",tempDic);
-            }
-            self.count++;
-            NSLog(@"发送定时任务%zd次",self.count);
-            if (self.count == 24) {
-                [HudHelper dismiss];
-            }
-            
-//            if (!data || error) {
-//                LHLog(@"创建定时失败");
-//                return ;
-//            }
-            NSDictionary *jsonObj =  [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            
-//            if (!jsonObj) {
-//                return;
-//            }
-            
-            self.sucCount++;
-            if (self.count == 24) {
+        
+    
+        DeviceCommonSchulder *comTimer = [task.sches objectAtIndex:i];
+        if (comTimer) {
+            //修改
+            [NetworkHelper sendRequest:body Method:@"PUT" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler/%@",comTimer.sid] callback:^(NSData *data, NSError *error) {
+                @strongify(self);
                 
-                //关闭之前的定时器
-                [self closeTimer];
-                if (self.sucCount == 24) {
-                    [HudHelper showSuccessWithStatus:@"设置成功"];
-                    
-                }else
-                {
-                    [HudHelper showErrorWithStatus:@"设置失败"];
+                if (data != nil) {
+                    NSDictionary *tempDic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                    NSLog(@"%@",tempDic);
                 }
-                self.sucCount = 0;
-                self.count = 0;
-            }
-            LHLog(@"创建定时成功%@==%@",jsonObj[@"id"],jsonObj);
-        }];
+                self.count++;
+                NSLog(@"发送定时任务%zd次",self.count);
+                if (self.count == 24) {
+                    [HudHelper dismiss];
+                }
+                
+                if (data != nil) {
+                    NSDictionary *tempDic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                    NSLog(@"%@",tempDic);
+                }
+                
+                if (!data || error) {
+                    return ;
+                }
+                
+                self.sucCount++;
+                if (self.count == 24) {
+                    
+                    //关闭之前的定时器
+                    [self closeTimer];
+                    if (self.sucCount == 24) {
+                        [HudHelper showSuccessWithStatus:@"设置成功"];
+                        
+                    }else
+                    {
+                        [HudHelper showErrorWithStatus:@"设置失败"];
+                    }
+                    self.sucCount = 0;
+                    self.count = 0;
+                }
+            }];
+        }else{
+            //新增
+            [NetworkHelper sendRequest:body Method:@"POST" Path:@"https://api.gizwits.com/app/common_scheduler" callback:^(NSData *data, NSError *error) {
+                @strongify(self);
+                
+                if (data != nil) {
+                    NSDictionary *tempDic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                    NSLog(@"%@",tempDic);
+                }
+                self.count++;
+                NSLog(@"发送定时任务%zd次",self.count);
+                if (self.count == 24) {
+                    [HudHelper dismiss];
+                }
+                
+                if (data != nil) {
+                    NSDictionary *tempDic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                    NSLog(@"%@",tempDic);
+                }
+                
+                if (!data || error) {
+                    return ;
+                }
+                
+                self.sucCount++;
+                if (self.count == 24) {
+                    
+                    //关闭之前的定时器
+                    [self closeTimer];
+                    if (self.sucCount == 24) {
+                        [HudHelper showSuccessWithStatus:@"设置成功"];
+                        
+                    }else
+                    {
+                        [HudHelper showErrorWithStatus:@"设置失败"];
+                    }
+                    self.sucCount = 0;
+                    self.count = 0;
+                }
+            }];
+        }
+
     }
 }
 

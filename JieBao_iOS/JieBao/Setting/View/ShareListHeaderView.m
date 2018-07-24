@@ -21,6 +21,7 @@
     if (self = [super initWithReuseIdentifier:reuseIdentifier]) {
         self.layer.masksToBounds = YES;
         [self addSubview:self.titleLb];
+        self.backgroundColor = UICOLORFROMRGB(0xf0f0f0);
         [self makeContraints];
     }
     return self;
