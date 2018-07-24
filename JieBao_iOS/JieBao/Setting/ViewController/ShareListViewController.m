@@ -271,6 +271,33 @@
     return  CurrentDeviceSize(0.01);
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (!tableView.editing) {
+        //不为编辑
+        if (indexPath.section == 0) {
+            // 分享给我的
+            ShareModel *shareModel = self.otherShareDataSource[indexPath.row];
+            if (shareModel.status.integerValue == 0) {
+                [self alertShowMessage:[NSString stringWithFormat:@"账号：%@向您分享了一台设备?",shareModel.phone] title:@"提示" leftBtnText:@"取消" rightBtnText:@"接受分享" leftCallback:nil rightCallback:^{
+                    [GizDeviceSharing acceptDeviceSharing:[UserHelper getCurrentUser].token sharingID:shareModel.sid.integerValue accept:YES];
+                }];
+            }
+        }
+    }
+}
+
+#pragma mark - Giz ShareDelegate
+// 实现接受分享邀请的回调
+- (void)didAcceptDeviceSharing:(NSError*)result sharingID:(NSInteger)sharingID {
+    if(result.code == GIZ_SDK_SUCCESS) {
+        // 接受成功
+        [self requestOtherShareData];
+    } else {
+        // 接受失败
+    }
+}
+
 #pragma mark - lazy init
 - (NSMutableArray<ShareModel *> *)myShareDataSource
 {
