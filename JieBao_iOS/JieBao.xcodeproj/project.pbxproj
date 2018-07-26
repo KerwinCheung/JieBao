@@ -692,6 +692,17 @@
 			path = AP;
 			sourceTree = "<group>";
 		};
+		A28D479A210706FD00590230 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E0B1651420A41FD0005D294B /* TimingChartView.h */,
+				E0B1651520A41FD0005D294B /* TimingChartView.m */,
+				E0B1651720A42014005D294B /* ChartShapeView.h */,
+				E0B1651820A42014005D294B /* ChartShapeView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		A2F219E020FDEB1C00180CDC /* DataPointModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1067,10 +1078,6 @@
 				E0B164C820A197F8005D294B /* SchedulerFootAddView.m */,
 				E0B164D620A2CF08005D294B /* LightControlView.h */,
 				E0B164D720A2CF08005D294B /* LightControlView.m */,
-				E0B1651420A41FD0005D294B /* TimingChartView.h */,
-				E0B1651520A41FD0005D294B /* TimingChartView.m */,
-				E0B1651720A42014005D294B /* ChartShapeView.h */,
-				E0B1651820A42014005D294B /* ChartShapeView.m */,
 				E0B1651D20A98068005D294B /* ChannelDetailCell.h */,
 				E0B1651E20A98068005D294B /* ChannelDetailCell.m */,
 				E0E2242220AC732500133DA3 /* SelectionView.h */,
@@ -1250,6 +1257,7 @@
 		F5C1310220F1ED8600FF8CBC /* CaiDengDev */ = {
 			isa = PBXGroup;
 			children = (
+				A28D479A210706FD00590230 /* View */,
 				F5E3027320FE494F004C34FB /* Storyboard */,
 				F5E3026920FE3BFB004C34FB /* ViewController */,
 			);

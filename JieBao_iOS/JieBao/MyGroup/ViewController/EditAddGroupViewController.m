@@ -126,20 +126,28 @@
 
 - (void)discoverDevice
 {
-    LHWeakSelf(self)
-    [SDKHelper shareInstance].discoverDeviceBlock = ^(NSArray *devs) {
-        if (devs) {
-            for (GizWifiDevice *dev in devs) {
-                if (dev.isBind) {
-                    if ([dev.productKey isEqualToString:[UserHelper shareInstance].productSecretKey]) {
-                        [weakself.dataSource addObject:dev];
-                    }
-                }
-            }
-             [weakself.tb reloadData];
+//    LHWeakSelf(self)
+//    [SDKHelper shareInstance].discoverDeviceBlock = ^(NSArray *devs) {
+//        if (devs) {
+//            for (GizWifiDevice *dev in devs) {
+//                if (dev.isBind) {
+//                    if ([dev.productKey isEqualToString:[UserHelper shareInstance].productSecretKey]) {
+//                        [weakself.dataSource addObject:dev];
+//                    }
+//                }
+//            }
+//             [weakself.tb reloadData];
+//        }
+//    };
+//    [[GizWifiSDK sharedInstance] getBoundDevices:[UserHelper getCurrentUser].uid token:[UserHelper getCurrentUser].token];
+    
+    [self.dataSource removeAllObjects];
+    for (GizWifiDevice *dev in SDKHELPER.deviceArray) {
+        if ([dev.productKey isEqualToString:[UserHelper shareInstance].productSecretKey]) {
+            [self.dataSource addObject:dev];
         }
-    };
-    [[GizWifiSDK sharedInstance] getBoundDevices:[UserHelper getCurrentUser].uid token:[UserHelper getCurrentUser].token];
+    }
+    [self.tb reloadData];
 }
 
 - (void)confirmBtnClicked
@@ -154,6 +162,7 @@
                            @"product_key":self.temps[0].productKey,
                            @"group_name": self.groupNameTv.text
                            };
+    
     [NetworkHelper sendRequest:body Method:method Path:path callback:^(NSData *data, NSError *error) {
         if (!data || error) {
             return;
@@ -171,7 +180,11 @@
     }
     
     NSDictionary *body = @{@"dids":ids};
+    [HudHelper show];
     [NetworkHelper sendRequest:body Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/devices",groupId] callback:^(NSData *data, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [HudHelper dismiss];
+        });
         if (!data || error) {
             return;
         }

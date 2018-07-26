@@ -10,9 +10,7 @@
 
 @interface ShareModel : NSObject
 
-/**
- 分享记录
- */
+/**分享记录id*/
 @property (nonatomic, copy) NSString *sid;
 
 /**

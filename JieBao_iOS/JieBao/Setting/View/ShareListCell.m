@@ -18,7 +18,11 @@
 -(void)setShareModel:(ShareModel *)shareModel{
     _shareModel = shareModel;
     self.phoneLabel.text = shareModel.phone;
-    self.devNameLabel.text = [NSString stringWithFormat:@"设备名: %@",shareModel.dev_alias];
+    if (shareModel.dev_alias.length >0) {
+        self.devNameLabel.text = [NSString stringWithFormat:@"设备名:%@",shareModel.dev_alias];
+    }else{
+        self.devNameLabel.text = [NSString stringWithFormat:@"设备名:%@",shareModel.product_name];
+    }
     for (GizWifiDevice *dev in SDKHELPER.deviceArray) {
         if ([dev.did isEqualToString:shareModel.did]) {
             self.macLabel.text = [NSString stringWithFormat:@"设备Mac: %@",dev.macAddress];

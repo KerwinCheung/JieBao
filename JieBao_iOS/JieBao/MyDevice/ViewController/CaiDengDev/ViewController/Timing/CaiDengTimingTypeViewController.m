@@ -117,7 +117,6 @@
                 task.sches = marr;
                 task.taskLogo = @"dingshichengxu";
                 [self.dataSourceDic setObject:task forKey:task.taskName];
-                
             }
         }
         
@@ -636,10 +635,22 @@
     
     for (int i = 0; i < 24; i++)
     {
-        NSString *originTimerStr = [NSString stringWithFormat:@"%02d:00",i];
-        NSString *str = [NSString stringWithFormat:@"%@ %@",dateStr,originTimerStr];
-        NSDate *setDate = [UtilHelper dateFromString:str];
-        NSString *utcTimerStr = [setDate formattedDateWithFormat:@"HH:mm"];
+        NSString *originTimerStr = nil;
+        NSString *str = nil;
+        NSDate *setDate = nil;
+        NSString *utcTimerStr = nil;
+        if (i == 23) {
+            originTimerStr = [NSString stringWithFormat:@"00:00"];
+            str = [NSString stringWithFormat:@"%@ %@",dateStr,originTimerStr];
+            setDate = [UtilHelper dateFromString:str];
+            utcTimerStr = [setDate formattedDateWithFormat:@"HH:mm"];
+        }else{
+            originTimerStr = [NSString stringWithFormat:@"%02d:00",i+1];
+            str = [NSString stringWithFormat:@"%@ %@",dateStr,originTimerStr];
+            setDate = [UtilHelper dateFromString:str];
+            utcTimerStr = [setDate formattedDateWithFormat:@"HH:mm"];
+        }
+        
         
         NSMutableDictionary *body = [NSMutableDictionary
                                      dictionaryWithDictionary:@{@"attrs":@{@"color_white":@([self.whiteValues[i] integerValue]),
