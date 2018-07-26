@@ -167,8 +167,6 @@
 		E0F34B9E20B6661C001281AB /* DeviceSchedulerTask.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F34B9D20B6661C001281AB /* DeviceSchedulerTask.m */; };
 		E0F34BA520BA8853001281AB /* scanFlashlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F34BA020BA8853001281AB /* scanFlashlight@2x.png */; };
 		E0F34BA620BA8853001281AB /* scanLine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F34BA120BA8853001281AB /* scanLine@2x.png */; };
-		E0F34BA720BA8853001281AB /* piao.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F34BA220BA8853001281AB /* piao.png */; };
-		E0F34BA820BA8853001281AB /* WechatIMG1 1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = E0F34BA320BA8853001281AB /* WechatIMG1 1.jpeg */; };
 		E0F34BA920BA8853001281AB /* scanFlashlight@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0F34BA420BA8853001281AB /* scanFlashlight@3x.png */; };
 		E0F34BAE20BA8871001281AB /* WSLNativeScanTool.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F34BAB20BA8870001281AB /* WSLNativeScanTool.m */; };
 		E0F34BAF20BA8871001281AB /* WSLScanView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F34BAC20BA8871001281AB /* WSLScanView.m */; };
@@ -537,8 +535,6 @@
 		E0F34B9D20B6661C001281AB /* DeviceSchedulerTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceSchedulerTask.m; sourceTree = "<group>"; };
 		E0F34BA020BA8853001281AB /* scanFlashlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scanFlashlight@2x.png"; sourceTree = "<group>"; };
 		E0F34BA120BA8853001281AB /* scanLine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scanLine@2x.png"; sourceTree = "<group>"; };
-		E0F34BA220BA8853001281AB /* piao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = piao.png; sourceTree = "<group>"; };
-		E0F34BA320BA8853001281AB /* WechatIMG1 1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "WechatIMG1 1.jpeg"; sourceTree = "<group>"; };
 		E0F34BA420BA8853001281AB /* scanFlashlight@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scanFlashlight@3x.png"; sourceTree = "<group>"; };
 		E0F34BAA20BA8870001281AB /* WSLScanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSLScanView.h; sourceTree = "<group>"; };
 		E0F34BAB20BA8870001281AB /* WSLNativeScanTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSLNativeScanTool.m; sourceTree = "<group>"; };
@@ -669,10 +665,10 @@
 				E0ECF04E20873488001530CE /* MyDeviceWIFIViewController.m */,
 				E0ECF050208740B9001530CE /* MyDevicecContractViewController.h */,
 				E0ECF051208740B9001530CE /* MyDevicecContractViewController.m */,
-				E0ECF05320874405001530CE /* MyDevicecContractErrorViewController.h */,
-				E0ECF05420874405001530CE /* MyDevicecContractErrorViewController.m */,
 				E0ECF05620874B11001530CE /* MyDeviceAddDeviceViewController.h */,
 				E0ECF05720874B11001530CE /* MyDeviceAddDeviceViewController.m */,
+				E0ECF05320874405001530CE /* MyDevicecContractErrorViewController.h */,
+				E0ECF05420874405001530CE /* MyDevicecContractErrorViewController.m */,
 				E0ECF05920874D3A001530CE /* MyDeviceAddSuccessViewController.h */,
 				E0ECF05A20874D3A001530CE /* MyDeviceAddSuccessViewController.m */,
 			);
@@ -1224,11 +1220,9 @@
 				E0F34BAB20BA8870001281AB /* WSLNativeScanTool.m */,
 				E0F34BAA20BA8870001281AB /* WSLScanView.h */,
 				E0F34BAC20BA8871001281AB /* WSLScanView.m */,
-				E0F34BA220BA8853001281AB /* piao.png */,
 				E0F34BA020BA8853001281AB /* scanFlashlight@2x.png */,
 				E0F34BA420BA8853001281AB /* scanFlashlight@3x.png */,
 				E0F34BA120BA8853001281AB /* scanLine@2x.png */,
-				E0F34BA320BA8853001281AB /* WechatIMG1 1.jpeg */,
 				E0F34BB020BA88B1001281AB /* ScanViewController.h */,
 				E0F34BB120BA88B1001281AB /* ScanViewController.m */,
 			);
@@ -1569,7 +1563,6 @@
 			files = (
 				F5E3027520FE4964004C34FB /* Timing.storyboard in Resources */,
 				E0CEAFF020DCCB0E00225922 /* icon_m_auto@2x.png in Resources */,
-				E0F34BA820BA8853001281AB /* WechatIMG1 1.jpeg in Resources */,
 				E0CEAFEF20DCCB0E00225922 /* icon_m_chushi@2x.png in Resources */,
 				E0F34BA520BA8853001281AB /* scanFlashlight@2x.png in Resources */,
 				E0D3DC97207F327A00F14860 /* LaunchScreen.storyboard in Resources */,
@@ -1578,7 +1571,6 @@
 				A28D47992105DE3F00590230 /* SettingStoryboard.storyboard in Resources */,
 				E0ECF06020883555001530CE /* loading.gif in Resources */,
 				A2F219E920FF4FE600180CDC /* LoginStoryboard.storyboard in Resources */,
-				E0F34BA720BA8853001281AB /* piao.png in Resources */,
 				E0D3DC94207F327A00F14860 /* Assets.xcassets in Resources */,
 				E0D3DC92207F327A00F14860 /* Main.storyboard in Resources */,
 				E0CEAFEA20DCCB0E00225922 /* icon_m_sun@2x.png in Resources */,

@@ -746,8 +746,7 @@
                     if (self.sucCount == 24) {
                         [HudHelper showSuccessWithStatus:@"设置成功"];
                         
-                    }else
-                    {
+                    }else{
                         [HudHelper showErrorWithStatus:@"设置失败"];
                     }
                     self.sucCount = 0;
