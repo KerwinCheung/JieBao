@@ -153,7 +153,7 @@
 - (void)nextBtnClicked
 {
     if (self.wifiPswText.text.length == 0) {
-        [HudHelper showStatus:@"请检查wifi密码"];
+        [HudHelper showStatus:@"请输入wifi密码"];
         return;
     }
     MyDevicecContractViewController *vc = [MyDevicecContractViewController new];
