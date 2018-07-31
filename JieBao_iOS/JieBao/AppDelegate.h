@@ -13,6 +13,7 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) SDKHelper *sdkHelper;
 
+@property  (nonatomic, assign) NSInteger allowRotation;
 
 - (void)changeRootViewController;
 

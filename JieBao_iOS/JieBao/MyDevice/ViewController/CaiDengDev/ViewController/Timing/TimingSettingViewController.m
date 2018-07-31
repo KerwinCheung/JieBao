@@ -10,7 +10,7 @@
 #import "LightControlView.h"
 #import "TimingChartView.h"
 #import "PreinstallSelectView.h"
-
+#import "AppDelegate.h"
 @interface TimingSettingViewController ()<LightControlViewDelegate,PreinstallSelectViewDelegate,TimingChartViewDelegate>
 
 @property (nonatomic, strong) UITextField *timingTextView;
@@ -106,10 +106,10 @@
     //首先设置UIInterfaceOrientationUnknown欺骗系统，避免可能出现直接设置无效的情况
     NSNumber *orientationUnknown = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
     [[UIDevice currentDevice] setValue:orientationUnknown forKey:@"orientation"];
-    
+
     NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
     [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
-    
+   
 
 }
 
@@ -119,6 +119,7 @@
     self.naviBar.hidden = NO;
     NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
     [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
+   
 }
 
 - (void)dealloc
