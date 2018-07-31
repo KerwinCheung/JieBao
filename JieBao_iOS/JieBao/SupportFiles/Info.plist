@@ -39,9 +39,9 @@
 	<key>NSCameraUsageDescription</key>
 	<string>访问相机将用于扫一扫、拍照等功能。</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>让开，我要访问你的相册咯</string>
+	<string>让开，我要访问你的相册咯!</string>
 	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
+	<string>LoginStoryboard</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array/>
 	<key>UISupportedInterfaceOrientations</key>

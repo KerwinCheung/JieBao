@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="U7j-c3-bqQ">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -187,6 +188,7 @@
                             <constraint firstAttribute="trailing" secondItem="loY-ky-vig" secondAttribute="trailing" constant="20" id="lja-Ht-zQ1"/>
                             <constraint firstAttribute="trailing" secondItem="rar-VZ-LCc" secondAttribute="trailing" constant="20" id="nBG-Jb-wbo"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="RA6-0E-lGa"/>
                     </view>
                     <connections>
                         <outlet property="PhoneTextField" destination="Lme-Bb-ML2" id="u7d-yp-MWL"/>
