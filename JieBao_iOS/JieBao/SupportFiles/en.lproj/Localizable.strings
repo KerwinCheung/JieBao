@@ -1,0 +1,217 @@
+/* 
+  Localizable.strings
+  JieBao
+
+  Created by XMYY-21 on 2018/7/29.
+  Copyright © 2018年 yangzhenmin. All rights reserved.
+*/
+
+//一、登录、注册模块
+"登录" = "Log on";
+"注册新用户" = "Sign Up";
+"忘记密码?" =  "Forget Password";
+"注册" = "Register";
+"请输入您的手机号码" = "Enter your mobile phone number.";
+"请输入6-16位的密码" = "Enter 6-16 character password.";
+"该手机号未注册，请注册后登录" = "The mobile phone number is not registered, please register first.";
+"请输入正确的手机号码" = "Please enter correct mobile phone number.";
+"密码不可包含特殊符号" = "Password cannot contain special characters.";
+"请检查网络设置" = "Please check network configuration.";
+"验证码有误，请重新输入" = "Wrong verification code. Please enter again.";
+"账号名或密码错误" = "Incorrect account name or password";
+"密码错误" = "Incorrect password";
+"获取验证码" = "Obtain the verification code";
+"请输入手机号码" = "Enter your mobile phone number";
+"请输入验证码" = "Obtain the verification code";
+"请再次输入密码" = "Please re-enter password";
+"50秒后重发" = "Resend in 50 seconds";
+"确认密码不一致" = "Password does not match.";
+"注册失败" = "Registration fails.";
+"恭喜您账号已经注册成功" = "Congratulation! Your account has been registered successfully.";
+"立即使用" = "Use it now.";
+"下一步" = "Next";
+"密码修改成功，请重新登录" = "Password has been changed successfully. Please log on again.";
+"返回登录" = "Return to log in";// (这里是否应该用“注销”或“退出登录”，英文则为Log Out)
+
+//二、我的设备模块
+"我的设备" = "My Devices";
+"六路彩灯" = "Full Spectrum Lamps";
+"LED灯" = "LED Lamps";
+"滴定泵" = "Dosing Pumps";
+"无线开关" = "Wireless Switch";
+"造浪泵" =  "Wave Makers";
+"水泵" = "Pumps";
+"添加设备" = "Add Your Devices";
+"立即添加" = "Add Now";
+"APP直连" = "Direct Connection";
+"请选择您要添加的设备类型" = "Please select your device type.";
+"长按设备开关5秒，看到红绿灯闪烁时放开" = "Long press the device power button for 5 seconds until green/red light starts flashing.";
+"如红绿灯已交替闪烁，可忽略步骤1，点击下一步继续" = "If green/red light is already flashing, skip step 1, go to NEXT.";
+"请输入wifi密码" = "Please enter your Wi-Fi passcode.";
+"提示：暂不支持5G频段WiFi，请选择2.4G频段" = "Notice: Please choose 2.4G Network. Do not support 5G network currently.";
+"点击底部按钮，前往Wi-Fi列表，选择“”后返回捷宝APP." = "Press the button underneath the lamp. Go to your Wi-Fi list and choose……. Return to App.";
+"设备连接中" = "Device connecting";
+"设备配网中" = "Network configuring";
+"确认添加" = "Confirm to add";
+"绑定失败，请重试" =  "Fail to connect. Please try again.";
+"请选择设备" = "Please select devices.";
+"重试" = "Try again.";
+"请尝试以下步骤：" = "Please try the following steps.";
+"请确认无线网络密码是否正确" = "Please check your Wi-Fi passcode.";
+"请检查无线网络是否正常" = "Please check your Wi-Fi network.";
+"请尝试重置设备" = "Please try to reset your device.";
+"WiFi配置失败" = "Wi-Fi configuration fails.";
+"该设备已被绑定，请重试" = "The device has been bound. Please try again.";
+"设备添加成功" = "You have successfully added the device.";
+"立即使用" = "Use it now";
+"请输入被分享人的账号" = "Please enter the account of the shared person.";
+"已向13266778989发送了一个设备分享邀请" = "Already sent an device sharing invitation to 13266778989.";//这种得手动拼啊
+"确定" = "Confirm";
+"分享邀请发送失败" =  "Failed to send invitation";
+"设备分享" = "Share your device";
+"设备重命名" = "Rename your device";
+"请输入设备名称" = "Please enter the device name";
+"修改成功" = "Changes has been made successfully.";
+"修改失败" = "Change failed.";
+"AP控制" = "AP Control";
+"请长按设备开关5秒使其进入AP模式" = "Please long press power button for 5 seconds to enter the AP Mode";
+"前往设置" = "Go to Settings";
+"无线开关" = "Wi-Fi Switch";
+"设备删除成功" = "Device has been deleted successfully.";
+"设备删除失败" = "Device deletion failed.";
+"您确定要删除此设备" = "Are you sure to delete this device?";
+"取消" = "Cancel";
+"删除" = "Delete";
+"重命名" = "Rename";
+"设备分享" = "Device Sharing";
+"删除设备" = "Delete Device";
+"请选择模式" =  "Please select mode.";
+"提示：长按模式图标进入模式设置页" = "Note: Long press the Mode icon to the Mode Settings page.";
+"手动模式" = "Manual Mode";
+"早晨模式" = "Morning Mode";
+"日出模式" = "Sunrise Mode";
+"白天模式" = "Daytime Mode";
+"日落模式" = "Sunset Mode";
+"夜晚模式" = "Night Mode";
+"定时模式" = "Scheduled Time Mode";
+"亮度" = "Brightness";
+"设定" = "Settings";
+"请调节亮度值或点击设置确认" = "Please adjust brightness or click on Confirm button";
+"设置失败" = "Setting Fails";
+"白天模式设置" = "Daytime Setting";
+"手动模式设置" = "Manual Setting";
+"早晨模式设置" = "Morning Setting";
+"日出模式设置" = "Sunrise Setting";
+"日落模式设置" = "Sunset Setting";
+"夜晚模式设置" = "Night Setting";
+"定时模式设置" = "Scheduled Time Setting";
+"白色" = "White";
+"宝蓝色" = "Royal Blue";
+"蓝色" = "Blue";
+"绿色" = "Green";
+"红色" = "Red";
+"紫色" = "Violet";
+"确认使用" = "Confirm";
+"最多添加8个定时任务" = "Up to 8 scheduled time programs";
+"LPS程序" = "LPS Program";
+"SPS程序" = "SPS Program";
+"载入预设" = "Loading the preset program";
+"添加定时程序" = "Adding scheduled time program";
+"请输入定时名称" = "Please enter your program name";
+"请在对应的颜色图表上设置亮度" = "Please set the brightness of corresponding color on the color diagram";
+"删除成功" = "Delete successfully";
+"删除失败" = "Delete failed";
+"此名称已被其它定时任务使用，请重新输入" = "The name has been used. Please re-enter.";
+"喂食" = "Feed";
+"关" = "OFF";
+"定时模式" = "Scheduled time mode";
+"定时" = "Schedule time";
+"开启" = "ON";
+"喂食设置" = "Feed";
+"喂食开始时间" = "Feeding start time";
+"添加开始时间" = "Add start time";
+"喂食暂停时间" = "Feeding pause time";
+"添加暂停时间" = "Add pause time";
+"设置开始时间" = "Set start time";
+"保存" = "Save";
+"请选择喂食开始时间" = "Please select feeding start time";
+"暂无定时模式" = "No scheduled time mode";
+"添加定时模式" = "Add scheduled time mode";
+"经典造浪" = "Classic wave";
+"正弦造浪" = "Sine wave";
+"随机造浪" = "Random wave";
+"恒流造浪" = "Constant wave";
+"夜间模式" = "Night Mode";
+"喂食模式" = "Feeding Mode";
+"设备名" = "Device Name";
+"设备故障" = "Device Error";
+"故障提示" = "Error Notice";
+"确定" = "Confirm";
+"开启" = "Start";
+"关闭" = "Close";
+"主机" = "Master device";
+"同步控制" = "Synchronous control";
+"异步控制" = "Asynchronous control";
+"请在图表上设置流量值" = "Set flow rate value on the diagram";
+"请在图表上设定每小时的流量值" = "Set flow rate per hour";
+"补养液校准" = "Liquid flow rate calibration";
+"补养液" = "Liquid";
+"请输入校准补养液量" = "Enter calibration liquid value";
+"补养液校准时长" = "Calibration duration";
+"补养液校准通道" = "Calibration channel";
+"补养液校准开启" = "Start calibration";
+"通道" = "channel";
+"提示：长按通道进入设置页" = "Notice: Long press to enter into the Settings page";
+"未接受分享" = "Sharing waiting for accept";
+"已接受分享" = "Sharing accepted";
+"拒绝分享" = "Decline Sharing";
+"取消分享" = "Cancel Sharing";
+"请选择手动或定时模式" = "Please choose manual or timing mode";
+
+//三、我的分组模块
+"我的分组" = "My Groups";
+"设置" = "Settings";
+"编辑分组" = "Modify Group Settings";
+"删除分组" = "Cancel Groups";
+"您确定要删除分组" = "Are you sure to delete group?";
+"确定" = "Confirm";
+"请选择您要添加的设备类型" = "Please select the device type";
+"添加分组" = "Add Group";
+"分组名称" = "Group Name";
+"分组设备" = "Devices of Group";
+"请输入分组名称" = "Please enter group name";
+"确定添加" = "Confirm";
+"添加成功" = "Added successfully";
+"请选择设备" = "Please select devices";
+"重命名分组" = "Rename Group";
+"设备管理" = "Device Management";
+"编辑成功" = "Edit successfully";
+"编辑分组" = "Manage Group";
+"管理分组设备" = "Manage Group Devices";
+"删除" = "Delete";
+
+//四、设置模块
+"设置" = "Settings";
+"退出" = "Exit";
+"分享列表" = "Sharing list";
+"故障列表" = "Error list";
+"AP控制" = "AP Control";
+"使用帮助" = "Help";
+"关于我们" = "About Us";
+"版本信息" = "Version";
+"分享给我" = "Share to";
+"我分享的" = "My sharing";
+"设备名" = "Model";
+"设备：" = "MAC:";
+"删除" = "Delete";
+"接受分享" = "Accept sharing";
+"取消" = "Cancel";
+"拒绝" = "Decline";
+"提示" = "Notice";
+"故障" = "Error";
+"账号:13566778989向您分享了一台设备" = "Account: 13566778989 is sharing a device with you."; //这种手动拼
+
+
+
+
+

@@ -10,6 +10,8 @@
 #import "UIViewController+Custom.h"
 #import "SettingViewController.h"
 
+#import "LocalizedEngine.h"
+
 @interface LoginViewController ()<UITextFieldDelegate>
 
 
@@ -31,7 +33,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
 }
 
 - (void)viewWillAppear:(BOOL)animated

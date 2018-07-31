@@ -10,6 +10,9 @@
 #import "BaseNavigationController.h"
 #import "SDKHelper.h"
 #import "LoginViewController.h"
+
+#import "LocalizedEngine.h"
+
 @interface AppDelegate ()
 
 
@@ -19,6 +22,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [LocalizedEngine startEngine];
+    
     // Override point for customization after application launch.
     self.sdkHelper = [SDKHelper shareInstance];
     [GizWifiSDK sharedInstance].delegate = self.sdkHelper;
@@ -27,14 +32,11 @@
     [GizDeviceSchedulerCenter setDelegate:self.sdkHelper];
     [GizWifiSDK startWithAppInfo:@{@"appId":kAppId,@"appSecret":kAppSecrect} productInfo:nil cloudServiceInfo:nil autoSetDeviceDomain:NO];
     
-    
     UIStoryboard *loginSB = [UIStoryboard storyboardWithName:@"LoginStoryboard" bundle:nil];
     LoginViewController *loginVC = [loginSB instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    
     UINavigationController *vc = [[UINavigationController alloc] initWithRootViewController:loginVC];
-    
-    
     self.window.rootViewController = vc;
+    
     return YES;
 }
 

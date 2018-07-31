@@ -11,7 +11,6 @@
 		8DB3FBD37C6E6DC862A122AE /* libPods-JieBaoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C534CAD771B30F6AAED0BC16 /* libPods-JieBaoTests.a */; };
 		A28D47992105DE3F00590230 /* SettingStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A28D47982105DE3F00590230 /* SettingStoryboard.storyboard */; };
 		A2F219E320FDEB4600180CDC /* LightsDataPointModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F219E220FDEB4600180CDC /* LightsDataPointModel.m */; };
-		A2F219E920FF4FE600180CDC /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2F219E820FF4FE600180CDC /* LoginStoryboard.storyboard */; };
 		E0221A7620994F9800156753 /* DeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E0221A7420994F9700156753 /* DeviceModel.m */; };
 		E0221A7920994FE000156753 /* AddDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0221A7820994FE000156753 /* AddDeviceCell.m */; };
 		E02856DD20C66E1500FD1A8F /* NetworkHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E02856DC20C66E1500FD1A8F /* NetworkHelper.m */; };
@@ -106,7 +105,6 @@
 		E0CEAFFE20DD5E4900225922 /* HudHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E0CEAFFD20DD5E4900225922 /* HudHelper.m */; };
 		E0D3DC8C207F327A00F14860 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D3DC8B207F327A00F14860 /* AppDelegate.m */; };
 		E0D3DC8F207F327A00F14860 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D3DC8E207F327A00F14860 /* ViewController.m */; };
-		E0D3DC92207F327A00F14860 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0D3DC90207F327A00F14860 /* Main.storyboard */; };
 		E0D3DC94207F327A00F14860 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0D3DC93207F327A00F14860 /* Assets.xcassets */; };
 		E0D3DC97207F327A00F14860 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0D3DC95207F327A00F14860 /* LaunchScreen.storyboard */; };
 		E0D3DC9A207F327A00F14860 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D3DC99207F327A00F14860 /* main.m */; };
@@ -186,6 +184,10 @@
 		E0FC65422084DBC60070E9B3 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FC65412084DBC60070E9B3 /* HelpViewController.m */; };
 		E0FC654520858B850070E9B3 /* APNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0FC654420858B850070E9B3 /* APNextViewController.m */; };
 		EA939CD2B3BFD8998263AC61 /* libPods-JieBao.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E86079D5CEA048F420DC48 /* libPods-JieBao.a */; };
+		F5085DE6210DB2E200BB1AA3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5085DE8210DB2E200BB1AA3 /* Localizable.strings */; };
+		F5085DEC210DB31B00BB1AA3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F5085DEE210DB31B00BB1AA3 /* InfoPlist.strings */; };
+		F5085DF5210DB66E00BB1AA3 /* LocalizedEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = F5085DF4210DB66E00BB1AA3 /* LocalizedEngine.m */; };
+		F5085DF6210DBBD700BB1AA3 /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5085DF8210DBBD700BB1AA3 /* LoginStoryboard.storyboard */; };
 		F58C217720F62B5E0073B85E /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = F58C217520F62B5E0073B85E /* EXTScope.m */; };
 		F5C8F86A20FF84190024ED6A /* UIview+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C8F86820FF84180024ED6A /* UIview+Extension.m */; };
 		F5C8F86D20FF8E060024ED6A /* UIViewController+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C8F86B20FF8E060024ED6A /* UIViewController+Extension.m */; };
@@ -234,7 +236,6 @@
 		A28D47982105DE3F00590230 /* SettingStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingStoryboard.storyboard; sourceTree = "<group>"; };
 		A2F219E120FDEB4600180CDC /* LightsDataPointModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightsDataPointModel.h; sourceTree = "<group>"; };
 		A2F219E220FDEB4600180CDC /* LightsDataPointModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LightsDataPointModel.m; sourceTree = "<group>"; };
-		A2F219E820FF4FE600180CDC /* LoginStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginStoryboard.storyboard; sourceTree = "<group>"; };
 		BE41390BAC3B4CC214AED7C0 /* Pods-JieBaoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JieBaoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JieBaoTests/Pods-JieBaoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BEDAE18DC06BAB8956839337 /* libPods-JieBaoUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JieBaoUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C534CAD771B30F6AAED0BC16 /* libPods-JieBaoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JieBaoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -414,7 +415,6 @@
 		E0D3DC8B207F327A00F14860 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E0D3DC8D207F327A00F14860 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		E0D3DC8E207F327A00F14860 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		E0D3DC91207F327A00F14860 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E0D3DC93207F327A00F14860 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E0D3DC96207F327A00F14860 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E0D3DC98207F327A00F14860 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -571,6 +571,17 @@
 		E0FC65412084DBC60070E9B3 /* HelpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
 		E0FC654320858B850070E9B3 /* APNextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APNextViewController.h; sourceTree = "<group>"; };
 		E0FC654420858B850070E9B3 /* APNextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APNextViewController.m; sourceTree = "<group>"; };
+		F5085DE3210DB0F400BB1AA3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		F5085DE7210DB2E200BB1AA3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F5085DE9210DB2E400BB1AA3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		F5085DED210DB31B00BB1AA3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F5085DEF210DB31C00BB1AA3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		F5085DF1210DB32F00BB1AA3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		F5085DF3210DB66E00BB1AA3 /* LocalizedEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizedEngine.h; sourceTree = "<group>"; };
+		F5085DF4210DB66E00BB1AA3 /* LocalizedEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizedEngine.m; sourceTree = "<group>"; };
+		F5085DF7210DBBD700BB1AA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LoginStoryboard.storyboard; sourceTree = "<group>"; };
+		F5085DFA210DBBD900BB1AA3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LoginStoryboard.strings; sourceTree = "<group>"; };
+		F5085DFC210DBBDA00BB1AA3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LoginStoryboard.strings"; sourceTree = "<group>"; };
 		F58C217420F62B5E0073B85E /* EXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
 		F58C217520F62B5E0073B85E /* EXTScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTScope.m; sourceTree = "<group>"; };
 		F58C217620F62B5E0073B85E /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
@@ -744,7 +755,7 @@
 				E03F2F6A209070100093C55E /* RegisterSuccessViewController.m */,
 				E0D3DD0B208056EF00F14860 /* FogotPswViewController.h */,
 				E0D3DD0C208056EF00F14860 /* FogotPswViewController.m */,
-				A2F219E820FF4FE600180CDC /* LoginStoryboard.storyboard */,
+				F5085DF8210DBBD700BB1AA3 /* LoginStoryboard.storyboard */,
 			);
 			path = viewController;
 			sourceTree = "<group>";
@@ -858,12 +869,9 @@
 				E0D3DC8B207F327A00F14860 /* AppDelegate.m */,
 				E0D3DC8D207F327A00F14860 /* ViewController.h */,
 				E0D3DC8E207F327A00F14860 /* ViewController.m */,
-				E0D3DC90207F327A00F14860 /* Main.storyboard */,
 				E0D3DC93207F327A00F14860 /* Assets.xcassets */,
 				E0D3DC95207F327A00F14860 /* LaunchScreen.storyboard */,
-				E0D3DC98207F327A00F14860 /* Info.plist */,
 				E0D3DC99207F327A00F14860 /* main.m */,
-				E0B164CA20A1A68B005D294B /* JieBao-Bridging-Header.h */,
 				A2F219E020FDEB1C00180CDC /* DataPointModel */,
 				E0D3DCBC207F37F300F14860 /* Base */,
 				E0ECF05F20883554001530CE /* loading.gif */,
@@ -874,6 +882,7 @@
 				E0D3DCF4207F652100F14860 /* UserHelper */,
 				E0D3DCE1207F4A7E00F14860 /* Category */,
 				F58C217220F62B450073B85E /* Helper */,
+				F5085DF2210DB66E00BB1AA3 /* LocalizedEngine */,
 				E0D3DCD8207F417E00F14860 /* SupportFiles */,
 			);
 			path = JieBao;
@@ -1015,10 +1024,14 @@
 		E0D3DCD8207F417E00F14860 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				E0D3DC98207F327A00F14860 /* Info.plist */,
+				E0B164CA20A1A68B005D294B /* JieBao-Bridging-Header.h */,
 				E0D3DCDA207F421500F14860 /* PrefixHeader.pch */,
 				E0D3DCD9207F41D500F14860 /* Define.h */,
 				E0D3DD04207F75A700F14860 /* SpecificDefine.h */,
 				E0FC653920849B760070E9B3 /* BlockDefine.h */,
+				F5085DE8210DB2E200BB1AA3 /* Localizable.strings */,
+				F5085DEE210DB31B00BB1AA3 /* InfoPlist.strings */,
 			);
 			path = SupportFiles;
 			sourceTree = "<group>";
@@ -1227,6 +1240,15 @@
 				E0F34BB120BA88B1001281AB /* ScanViewController.m */,
 			);
 			path = Addition;
+			sourceTree = "<group>";
+		};
+		F5085DF2210DB66E00BB1AA3 /* LocalizedEngine */ = {
+			isa = PBXGroup;
+			children = (
+				F5085DF3210DB66E00BB1AA3 /* LocalizedEngine.h */,
+				F5085DF4210DB66E00BB1AA3 /* LocalizedEngine.m */,
+			);
+			path = LocalizedEngine;
 			sourceTree = "<group>";
 		};
 		F58C217220F62B450073B85E /* Helper */ = {
@@ -1538,6 +1560,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = E0D3DC7E207F327A00F14860;
 			productRefGroup = E0D3DC88207F327A00F14860 /* Products */;
@@ -1563,11 +1586,12 @@
 				E0D3DC97207F327A00F14860 /* LaunchScreen.storyboard in Resources */,
 				E0CEAFF220DCCB0E00225922 /* icon_m_wind@2x.png in Resources */,
 				E0CEAFE920DCCB0E00225922 /* sk_kongtiao_bg@2x.png in Resources */,
+				F5085DEC210DB31B00BB1AA3 /* InfoPlist.strings in Resources */,
+				F5085DE6210DB2E200BB1AA3 /* Localizable.strings in Resources */,
 				A28D47992105DE3F00590230 /* SettingStoryboard.storyboard in Resources */,
 				E0ECF06020883555001530CE /* loading.gif in Resources */,
-				A2F219E920FF4FE600180CDC /* LoginStoryboard.storyboard in Resources */,
+				F5085DF6210DBBD700BB1AA3 /* LoginStoryboard.storyboard in Resources */,
 				E0D3DC94207F327A00F14860 /* Assets.xcassets in Resources */,
-				E0D3DC92207F327A00F14860 /* Main.storyboard in Resources */,
 				E0CEAFEA20DCCB0E00225922 /* icon_m_sun@2x.png in Resources */,
 				E0CEAFF120DCCB0E00225922 /* icon_m_snow@2x.png in Resources */,
 				E0F34BA620BA8853001281AB /* scanLine@2x.png in Resources */,
@@ -1691,6 +1715,7 @@
 				E0ECF03D2086EA2A001530CE /* ShareListHeaderView.m in Sources */,
 				E0D3DCE4207F4AA400F14860 /* UIFont+Custom.m in Sources */,
 				E0FC6532208206650070E9B3 /* ManagerDeviceViewController.m in Sources */,
+				F5085DF5210DB66E00BB1AA3 /* LocalizedEngine.m in Sources */,
 				E0221A7620994F9800156753 /* DeviceModel.m in Sources */,
 				E0D3DCBF207F384000F14860 /* BaseViewController.m in Sources */,
 				E0B5190E208D84F50010D552 /* CaiDengTimingCell.m in Sources */,
@@ -1864,20 +1889,42 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		E0D3DC90207F327A00F14860 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E0D3DC91207F327A00F14860 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		E0D3DC95207F327A00F14860 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				E0D3DC96207F327A00F14860 /* Base */,
+				F5085DE3210DB0F400BB1AA3 /* zh-Hans */,
+				F5085DF1210DB32F00BB1AA3 /* en */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		F5085DE8210DB2E200BB1AA3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5085DE7210DB2E200BB1AA3 /* en */,
+				F5085DE9210DB2E400BB1AA3 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		F5085DEE210DB31B00BB1AA3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5085DED210DB31B00BB1AA3 /* en */,
+				F5085DEF210DB31C00BB1AA3 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		F5085DF8210DBBD700BB1AA3 /* LoginStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F5085DF7210DBBD700BB1AA3 /* Base */,
+				F5085DFA210DBBD900BB1AA3 /* en */,
+				F5085DFC210DBBDA00BB1AA3 /* zh-Hans */,
+			);
+			name = LoginStoryboard.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1887,6 +1934,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1942,6 +1990,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2005,7 +2054,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/JieBao/SupportFiles/PrefixHeader.pch";
-				INFOPLIST_FILE = JieBao/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/JieBao/SupportFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -2017,7 +2066,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8a6cc2aa-75c9-4b09-a88a-ff4e15787e5e";
 				PROVISIONING_PROFILE_SPECIFIER = JieBaoDevolop;
-				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/JieBao/JieBao-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/JieBao/SupportFiles/JieBao-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2043,7 +2092,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/JieBao/SupportFiles/PrefixHeader.pch";
-				INFOPLIST_FILE = JieBao/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/JieBao/SupportFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -2055,7 +2104,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "af1fe31a-f524-442a-867c-75d634d68d13";
 				PROVISIONING_PROFILE_SPECIFIER = jebao;
-				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/JieBao/JieBao-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/JieBao/SupportFiles/JieBao-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = " $(PODS_ROOT)";
