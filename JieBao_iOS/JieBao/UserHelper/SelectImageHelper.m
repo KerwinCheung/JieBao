@@ -44,7 +44,7 @@
 {
     NSString *str = nil;
     if ([type isEqualToString:kProductKeys[@"六路彩灯"]]) {
-        str = @"fenzu3";
+        str = @"light_group";
     }else if ([type isEqualToString:kProductKeys[@"滴定泵"]]){
         str = @"fenzu5";
     }
@@ -68,7 +68,7 @@
 {
     NSString *str = nil;
     if ([type isEqualToString:kProductKeys[@"六路彩灯"]]) {
-        str = @"3fenzu";
+        str = @"light_groupSelected";
     }else if ([type isEqualToString:kProductKeys[@"滴定泵"]]){
         str = @"5fenzu";
     }
@@ -92,7 +92,7 @@
 {
     NSString *str = nil;
     if ([type isEqualToString:kProductKeys[@"六路彩灯"]]) {
-        str = @"4";
+        str = @"light";
     }else if ([type isEqualToString:kProductKeys[@"滴定泵"]]){
         str = @"6";
     }
@@ -117,7 +117,7 @@
 {
     NSString *str = nil;
     if ([type isEqualToString:kProductKeys[@"六路彩灯"]]) {
-        str = @"44";
+        str = @"light_selected";
     }else if ([type isEqualToString:kProductKeys[@"滴定泵"]]){
         str = @"66";
     }

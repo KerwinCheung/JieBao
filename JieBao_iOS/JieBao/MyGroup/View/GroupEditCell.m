@@ -117,7 +117,20 @@
             if (dev.alias.length > 0) {
                 self.textLb.text = dev.alias;
             }else{
-                self.textLb.text = dev.productName;
+                
+                //显示默认名称
+                GizWifiDevice *currentDev = nil;
+                for (GizWifiDevice *dev in SDKHELPER.deviceArray) {
+                    if ([dev.did isEqualToString:dataDic.did]) {
+                        currentDev = dev;
+                        break;
+                    }
+                }
+                NSRange range = NSMakeRange(currentDev.macAddress.length - 7, 6);
+                NSString *lastMacStr = [currentDev.macAddress substringWithRange:range];
+                NSString *deaultStr = [NSString stringWithFormat:@"%@%@",[UtilHelper getDefaultNameStrPrefixWithProductKey:currentDev.productKey],lastMacStr];
+                
+                self.textLb.text = deaultStr;
             }
             break;
         }

@@ -24,7 +24,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [LocalizedEngine startEngine];
     
-    // Override point for customization after application launch.
     self.sdkHelper = [SDKHelper shareInstance];
     [GizWifiSDK sharedInstance].delegate = self.sdkHelper;
     GizDeviceGroupCenter.delegate = self.sdkHelper;

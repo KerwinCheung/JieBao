@@ -143,4 +143,26 @@
     return [phoneTest evaluateWithObject:mobile];
 }
 
+
++ (NSString *)getDefaultNameStrPrefixWithProductKey:(NSString *)type
+{
+    NSString *str = nil;
+    if ([type isEqualToString:kProductKeys[@"六路彩灯"]]) {
+        str = @"LED_";
+    }else if ([type isEqualToString:kProductKeys[@"滴定泵"]]){
+        str = @"DS_";
+    }
+    else if ([type isEqualToString:kProductKeys[@"无线开关"]]){
+        str = @"S_";
+    }
+    else if ([type isEqualToString:kProductKeys[@"造浪泵"]]){
+        str = @"W_";
+    }
+    else if ([type isEqualToString:kProductKeys[@"水泵"]]){
+        str = @"P_";
+    }
+    
+    return str;
+}
+
 @end

@@ -47,4 +47,8 @@
  */
 + (NSDate *)dateFromString:(NSString *)string;
 
+/**
+ *  获取设备默认名称的前缀
+ */
++ (NSString *)getDefaultNameStrPrefixWithProductKey:(NSString *)type;
 @end

@@ -130,7 +130,11 @@
     if (dataDic.alias.length > 0) {
         self.textLb.text = dataDic.alias;
     }else{
-        self.textLb.text = dataDic.productName ;
+        
+        NSRange range = NSMakeRange(dataDic.macAddress.length - 7, 6);
+        NSString *lastMacStr = [dataDic.macAddress substringWithRange:range];
+        NSString *deaultStr = [NSString stringWithFormat:@"%@%@",[UtilHelper getDefaultNameStrPrefixWithProductKey:dataDic.productKey],lastMacStr];
+        self.textLb.text = deaultStr ;
     }
     
 }

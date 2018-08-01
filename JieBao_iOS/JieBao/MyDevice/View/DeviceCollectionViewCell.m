@@ -129,6 +129,11 @@
         self.img.image = [SelectImageHelper selectDeviceNoConnectedWithTpye:self.dataDic.productKey];
     }
     
-    self.lb.text =  dataDic.alias.length >0 ? dataDic.alias:dataDic.productName;
+    NSRange range = NSMakeRange(self.dataDic.macAddress.length - 7, 6);
+    NSString *lastMacStr = [self.dataDic.macAddress substringWithRange:range];
+    NSString *deaultStr = [NSString stringWithFormat:@"%@%@",[UtilHelper getDefaultNameStrPrefixWithProductKey:self.dataDic.productKey],lastMacStr];
+    
+    
+    self.lb.text =  dataDic.alias.length >0 ? dataDic.alias:deaultStr;
 }
 @end

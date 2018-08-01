@@ -33,7 +33,7 @@
 /**设备状态字典    key 为设备did value 为数据点模型*/
 @property (nonatomic, strong) NSMutableDictionary *statusDic;
 
-//绑定的设备数组 GizWifiDevice对象
+/**当前账号绑定的设备数组 GizWifiDevice对象*/
 @property (nonatomic, strong) NSMutableArray *deviceArray;
 
 

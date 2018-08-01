@@ -87,11 +87,27 @@
     _customDev = customDev;
     self.img.image = [SelectImageHelper selectDeviceImageWithTpye:customDev
                       .product_key];
+    
+
+    
+   
+    
     if (customDev.dev_alias.length > 0) {
         self.lb.text = customDev.dev_alias;
 
     }else{
-        self.lb.text = customDev.verbose_name;
+        //显示默认名称
+        GizWifiDevice *currentDev = nil;
+        for (GizWifiDevice *dev in SDKHELPER.deviceArray) {
+            if ([dev.did isEqualToString:customDev.did]) {
+                currentDev = dev;
+                break;
+            }
+        }
+        NSRange range = NSMakeRange(currentDev.macAddress.length - 7, 6);
+        NSString *lastMacStr = [currentDev.macAddress substringWithRange:range];
+        NSString *deaultStr = [NSString stringWithFormat:@"%@%@",[UtilHelper getDefaultNameStrPrefixWithProductKey:currentDev.productKey],lastMacStr];
+        self.lb.text = deaultStr;
     }
 }
 

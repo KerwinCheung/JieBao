@@ -9,7 +9,7 @@ target 'JieBao' do
   # Pods for JieBao
   source 'https://github.com/CocoaPods/Specs.git'
   pod 'Masonry'
-  pod 'IQKeyboardManager'
+#  pod 'IQKeyboardManager'
   pod 'SDWebImage'
   pod 'AFNetworking'
   pod 'YYModel'
