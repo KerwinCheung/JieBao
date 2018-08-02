@@ -9,7 +9,8 @@
 //一、登录、注册模块
 "登录" = "Log on";
 "注册新用户" = "Sign Up";
-"忘记密码?" =  "Forget Password";
+"忘记密码?" =  "Forget Password?";
+"忘记密码" =  "Forget Password";
 "注册" = "Register";
 "请输入您的手机号码" = "Enter your mobile phone number.";
 "请输入6-16位的密码" = "Enter 6-16 character password.";
@@ -79,7 +80,7 @@
 "无线开关" = "Wi-Fi Switch";
 "设备删除成功" = "Device has been deleted successfully.";
 "设备删除失败" = "Device deletion failed.";
-"您确定要删除此设备" = "Are you sure to delete this device?";
+"您确定要删除此设备？" = "Are you sure to delete this device?";
 "取消" = "Cancel";
 "删除" = "Delete";
 "重命名" = "Rename";
@@ -211,7 +212,10 @@
 "故障" = "Error";
 "账号:13566778989向您分享了一台设备" = "Account: 13566778989 is sharing a device with you."; //这种手动拼
 
-
+"暂无设备" = "No equipment";
+"暂无分组" = "No group";
+"暂无故障" = "Temporary trouble-free";
+"请调节亮度值到合适值" =  "Adjust the brightness value to the appropriate value";
 
 
 

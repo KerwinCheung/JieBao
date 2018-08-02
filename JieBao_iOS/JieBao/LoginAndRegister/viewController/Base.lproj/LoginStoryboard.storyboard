@@ -142,10 +142,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ez-Pc-1YQ">
-                                <rect key="frame" x="20" y="388" width="87" height="30"/>
+                                <rect key="frame" x="20" y="388" width="100" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="3cV-v9-1fC"/>
-                                    <constraint firstAttribute="width" constant="87" id="N1M-KW-3fi"/>
+                                    <constraint firstAttribute="width" constant="100" id="N1M-KW-3fi"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="注册新用户">
@@ -156,10 +156,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJZ-QZ-dDo">
-                                <rect key="frame" x="213" y="388" width="87" height="30"/>
+                                <rect key="frame" x="150" y="388" width="150" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="87m-Dx-dpK"/>
-                                    <constraint firstAttribute="width" constant="87" id="Zhc-wg-ZBe"/>
+                                    <constraint firstAttribute="width" constant="150" id="Zhc-wg-ZBe"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="忘记密码?">

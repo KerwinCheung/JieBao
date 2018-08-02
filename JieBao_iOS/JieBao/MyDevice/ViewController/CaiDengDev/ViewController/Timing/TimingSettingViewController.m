@@ -842,6 +842,8 @@
         [_spsBtn setTitle:@"载入预设" forState:UIControlStateNormal];
         [_spsBtn setBackgroundColor:[UIColor clearColor]];
         [_spsBtn.titleLabel setFont:[UIFont sf_systemFontOfSize:8]];
+        _spsBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
+//        _spsBtn.titleLabel.numberOfLines = 0 ;
         _spsBtn.layer.masksToBounds = YES;
         _spsBtn.layer.cornerRadius = CurrentDeviceSize(5);
         [_spsBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];

@@ -55,7 +55,7 @@
     [self.naviBar  configNavigationBarWithAttrs:@{
                                                   kCustomNaviBarLeftActionKey:leftAction,
                                                   kCustomNaviBarLeftImgKey:@"back",
-                                                  kCustomNaviBarTitleKey:@"手动设置模式",
+                                                  kCustomNaviBarTitleKey:@"手动模式",
                                                  
                                                   }];
     

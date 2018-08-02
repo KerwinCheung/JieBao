@@ -121,7 +121,10 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     };
     NSString *title = nil;
     if (self.dev) {
-        title = self.dev.alias.length==0?self.dev.productName:self.dev.alias;
+        NSRange range = NSMakeRange(self.dev.macAddress.length - 7, 6);
+        NSString *lastMacStr = [self.dev.macAddress substringWithRange:range];
+        NSString *deaultStr = [NSString stringWithFormat:@"%@%@",[UtilHelper getDefaultNameStrPrefixWithProductKey:self.dev.productKey],lastMacStr];
+        title = self.dev.alias.length==0?deaultStr:self.dev.alias;
     }else
     {
         title = self.group.group_name;
@@ -186,7 +189,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     
     [self.modelLb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(weakself.view.mas_centerX);
-        make.width.lessThanOrEqualTo(@200);
+        make.width.lessThanOrEqualTo(@260);
         make.top.equalTo(@(CurrentDeviceSize(20)));
     }];
     
@@ -205,7 +208,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     [self.msgLb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(weakself.view.mas_centerX);
         make.bottom.equalTo(weakself.view.mas_bottom).offset(-CurrentDeviceSize(40));
-        make.width.lessThanOrEqualTo(@(CurrentDeviceSize(200)));
+        make.width.lessThanOrEqualTo(@(CurrentDeviceSize(300)));
     }];
 }
 
@@ -362,7 +365,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
             [HudHelper showSuccessWithStatus:@"设备删除失败"];
         }
     };
-    [self alertShowMessage:@"您确定要删除此设备?" title:@"提示" leftBtnText:@"取消" rightBtnText:@"删除" leftCallback:nil rightCallback:^{
+    [self alertShowMessage:@"您确定要删除此设备？" title:@"提示" leftBtnText:@"取消" rightBtnText:@"删除" leftCallback:nil rightCallback:^{
         
         [[GizWifiSDK sharedInstance] unbindDevice:[UserHelper getCurrentUser].uid token:[UserHelper getCurrentUser].token did:weakself.dev.did];
     }];
@@ -529,7 +532,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
             [HudHelper showErrorWithStatus:@"设置失败"];
             return ;
         }
-        [HudHelper showSuccessWithStatus:@"设置成功"];
+//        [HudHelper showSuccessWithStatus:@"设置成功"];
     }];
 }
 
@@ -797,7 +800,8 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     if (!_msgLb) {
         _msgLb = [UILabel new];
         _msgLb.font = [UIFont  sf_systemFontOfSize:12];
-        _msgLb.text = @"提示:长按模式图标进入模式设置页";
+        _msgLb.text = @"提示：长按模式图标进入模式设置页";
+        _msgLb.adjustsFontSizeToFitWidth = YES;
     }
     return _msgLb;
 }

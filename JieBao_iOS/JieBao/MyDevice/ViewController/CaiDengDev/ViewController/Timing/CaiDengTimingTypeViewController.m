@@ -193,6 +193,9 @@
     }];
 
     [self  configNavBar];
+    
+    NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
+    [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
 }
 
 -(void)configNavBar{
@@ -210,7 +213,7 @@
     [self.naviBar  configNavigationBarWithAttrs:@{
                                                   kCustomNaviBarLeftActionKey:leftAction,
                                                   kCustomNaviBarLeftImgKey:@"back",
-                                                  kCustomNaviBarTitleKey:@"定时程序",
+                                                  kCustomNaviBarTitleKey:@"定时模式",
                                                   kCustomNaviBarRightImgKey:@"bianji",
                                                   kCustomNaviBarRightActionKey:rightAction
                                                   }];

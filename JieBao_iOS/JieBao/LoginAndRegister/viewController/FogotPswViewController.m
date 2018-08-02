@@ -366,7 +366,7 @@
 {
     if (!_usrTextView) {
         _usrTextView = [UITextField new];
-        _usrTextView.placeholder = @"请输入您的手机号";
+        _usrTextView.placeholder = @"请输入您的手机号码";
         _usrTextView.delegate = self;
         _usrTextView.font = [UIFont sf_systemFontOfSize:13];
         _usrTextView.keyboardType = UIKeyboardTypeNumberPad;
@@ -423,6 +423,7 @@
         [_getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         [_getValidateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_getValidateBtn.titleLabel setFont:[UIFont sf_systemFontOfSize:13]];
+        _getValidateBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
         _getValidateBtn.layer.masksToBounds = YES;
         _getValidateBtn.layer.cornerRadius = CurrentDeviceSize(5);
     }

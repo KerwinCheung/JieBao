@@ -77,7 +77,7 @@
     [self.naviBar  configNavigationBarWithAttrs:@{
                                                   kCustomNaviBarLeftActionKey:leftAction,
                                                   kCustomNaviBarLeftImgKey:@"back",
-                                                  kCustomNaviBarTitleKey:@"注册账号"
+                                                  kCustomNaviBarTitleKey:@"注册"
                                                   }];
 }
 
@@ -114,7 +114,7 @@
 {
     LHWeakSelf(self)
     [self.phoneImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@(CurrentDeviceSize(40)));
+        make.left.equalTo(@(CurrentDeviceSize(20)));
         make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(20), CurrentDeviceSize(30)));
         make.top.equalTo(@(CurrentDeviceSize(60)));
     }];
@@ -221,7 +221,7 @@
 - (void)getValidateBtnClicked
 {
     if (self.usrTextView.text.length != 11 || ![UtilHelper isValidateMobile:self.usrTextView.text]) {
-        [HudHelper showStatus:@"请输入正确的手机号码"];
+        [HudHelper showErrorWithStatus:@"请输入正确的手机号码"];
         return;
     }
     if (self.timer) {
@@ -382,7 +382,7 @@
 {
     if (!_usrTextView) {
         _usrTextView = [UITextField new];
-        _usrTextView.placeholder = @"请输入您的手机号";
+        _usrTextView.placeholder = @"请输入您的手机号码";
         _usrTextView.delegate = self;
         _usrTextView.font = [UIFont sf_systemFontOfSize:13];
         _usrTextView.keyboardType = UIKeyboardTypeNumberPad;
@@ -399,6 +399,8 @@
         _validateTextView.placeholder = @"请输入验证码";
         _validateTextView.delegate = self;
         _validateTextView.font = [UIFont sf_systemFontOfSize:13];
+        _validateTextView.adjustsFontSizeToFitWidth = YES;
+        _validateTextView.minimumFontSize = 7;
         _validateTextView.keyboardType = UIKeyboardTypeNumberPad;
         _validateTextView.clearButtonMode = UITextFieldViewModeWhileEditing;
     }
@@ -439,6 +441,8 @@
         [_getValidateBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
         [_getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         [_getValidateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _getValidateBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
+        _getValidateBtn.titleLabel.minimumScaleFactor = 0.5;
         [_getValidateBtn.titleLabel setFont:[UIFont sf_systemFontOfSize:13]];
         _getValidateBtn.layer.masksToBounds = YES;
         _getValidateBtn.layer.cornerRadius = CurrentDeviceSize(5);
