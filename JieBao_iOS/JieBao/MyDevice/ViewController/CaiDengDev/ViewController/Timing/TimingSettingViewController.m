@@ -109,7 +109,7 @@
 
     NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
     [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
-   
+
 
 }
 
@@ -132,16 +132,7 @@
     return NO;
 }
 
-- (void)handleDeviceOrientationDidChange:(UIInterfaceOrientation)interfaceOrientation
-{
-    if ([UIDevice currentDevice].orientation == UIInterfaceOrientationLandscapeLeft) {
-        LHLog(@"%f,%f",LL_ScreenWidth,LL_ScreenHeight);
-        [self initUI];
-        if (self.currentSelectView) {
-            self.currentSelectView.isClicked = YES;
-        }
-    }
-}
+
 
 - (void)initUI
 {
@@ -508,7 +499,7 @@
             }
             if (self.count == 24) {
                 if (self.sucCount == 24) {
-                    [HudHelper showSuccessWithStatus:@"设置成功"];
+//                    [HudHelper showSuccessWithStatus:@"设置成功"];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.navigationController popViewControllerAnimated:YES];
                     });
@@ -709,7 +700,19 @@
 }
 
 
-#pragma mark - notifacation
+#pragma mark - 控制转屏
+
+
+- (void)handleDeviceOrientationDidChange:(UIInterfaceOrientation)interfaceOrientation
+{
+    if ([UIDevice currentDevice].orientation == UIInterfaceOrientationLandscapeLeft) {
+        [self initUI];
+        if (self.currentSelectView) {
+            self.currentSelectView.isClicked = YES;
+        }
+    }
+}
+
 - (void)orientationToPortrait:(UIInterfaceOrientation)orientation {
     
     NSNumber *orientationUnknown = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];

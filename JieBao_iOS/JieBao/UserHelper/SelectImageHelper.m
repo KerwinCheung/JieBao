@@ -141,7 +141,7 @@
 {
     NSString *str = nil;
     if ([type isEqualToString:kProductKeys[@"六路彩灯"]]) {
-        str = @"31";
+        str = @"light_notOnlin";
     }else if ([type isEqualToString:kProductKeys[@"滴定泵"]]){
         str = @"42";
     }
