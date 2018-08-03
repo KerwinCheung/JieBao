@@ -30,7 +30,7 @@
         zaolangBeng.deviceName = @"造浪泵";
         DeviceModel *diandiBeng = [DeviceModel new];
         diandiBeng.type = DeviceTpyeDianDiBeng;
-        diandiBeng.deviceName = @"点滴泵";
+        diandiBeng.deviceName = @"滴定泵";
         DeviceModel *shuiBeng = [DeviceModel new];
         shuiBeng.type = DeviceTpyeShuiBeng;
         shuiBeng.deviceName = @"水泵";
@@ -40,7 +40,7 @@
         DeviceModel *caideng = [DeviceModel new];
         caideng.type = DeviceTpyeCaiDeng;
         caideng.deviceName = @"六路彩灯";
-        self.dataSource = @[diandiBeng,shuiBeng,wuxianKaiguan,caideng];
+        self.dataSource = @[caideng];
     }
     return self;
 }
@@ -87,7 +87,7 @@
     [self.subLb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(CurrentDeviceSize(20)));
         make.top.equalTo(@(CurrentDeviceSize(20)));
-        make.width.lessThanOrEqualTo(@200);
+        make.width.lessThanOrEqualTo(@300);
     }];
     
     [self.tb mas_makeConstraints:^(MASConstraintMaker *make) {

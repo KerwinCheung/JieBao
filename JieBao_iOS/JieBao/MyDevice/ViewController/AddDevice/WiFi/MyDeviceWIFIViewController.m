@@ -102,7 +102,7 @@
     [self.wifiLogoImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(CurrentDeviceSize(5)));
         make.centerY.equalTo(weakself.wifiNameBgView.mas_centerY);
-        make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(20), CurrentDeviceSize(20)));
+        make.size.mas_equalTo(CGSizeMake(21, 21));
     }];
     
     
@@ -120,7 +120,7 @@
     [self.wifiPswImgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(weakself.wifiLogoImgView.mas_left);
         make.centerY.equalTo(weakself.wifiPswBgView.mas_centerY);
-        make.size.equalTo(weakself.wifiLogoImgView);
+        make.size.mas_equalTo(CGSizeMake(22,27));
     }];
     
     [self.wifiPswText mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -138,6 +138,7 @@
     [self.tipLb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(weakself.view.mas_centerX);
         make.top.equalTo(weakself.wifiPswBgView.mas_bottom).offset(CurrentDeviceSize(40));
+        make.height.equalTo(@36);
         make.width.lessThanOrEqualTo(@300);
     }];
     
@@ -153,7 +154,7 @@
 - (void)nextBtnClicked
 {
     if (self.wifiPswText.text.length == 0) {
-        [HudHelper showStatus:@"请输入wifi密码"];
+        [HudHelper showErrorWithStatus:@"请输入wifi密码"];
         return;
     }
     MyDevicecContractViewController *vc = [MyDevicecContractViewController new];
@@ -168,6 +169,7 @@
     btn.selected = !btn.selected;
 }
 
+#pragma mark - lazy init
 - (UIImageView *)wifiImgView
 {
     if (!_wifiImgView) {
@@ -228,7 +230,7 @@
 {
     if (!_wifiPswText) {
         _wifiPswText = [UITextField new];
-        _wifiPswText.placeholder = @"请输入WiFi密码";
+        _wifiPswText.placeholder = @"请输入wifi密码";
         _wifiPswText.font = [UIFont sf_systemFontOfSize:13];
         if ([UtilHelper getWifi][kUserWIFINameKey]) {
             _wifiPswText.text = [UtilHelper getWifi][kUserWIFINameKey];
@@ -253,6 +255,7 @@
     if (!_tipLb) {
         _tipLb = [UILabel new];
         _tipLb.font = [UIFont sf_systemFontOfSize:13];
+        _tipLb.numberOfLines = 0;
         _tipLb.text = @"提示:暂不支持5G频段WiFi,请选择2.4G频段";
     }
     return _tipLb;

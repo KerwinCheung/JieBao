@@ -10,6 +10,7 @@
 		64835F3803A7D5575A74A12F /* libPods-JieBaoUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEDAE18DC06BAB8956839337 /* libPods-JieBaoUITests.a */; };
 		8DB3FBD37C6E6DC862A122AE /* libPods-JieBaoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C534CAD771B30F6AAED0BC16 /* libPods-JieBaoTests.a */; };
 		A28D47992105DE3F00590230 /* SettingStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A28D47982105DE3F00590230 /* SettingStoryboard.storyboard */; };
+		A28D48BA21141BCF00590230 /* AddDeviceStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A28D48B921141BCF00590230 /* AddDeviceStoryboard.storyboard */; };
 		A2F219E320FDEB4600180CDC /* LightsDataPointModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F219E220FDEB4600180CDC /* LightsDataPointModel.m */; };
 		E0221A7620994F9800156753 /* DeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E0221A7420994F9700156753 /* DeviceModel.m */; };
 		E0221A7920994FE000156753 /* AddDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0221A7820994FE000156753 /* AddDeviceCell.m */; };
@@ -234,6 +235,7 @@
 		56E86079D5CEA048F420DC48 /* libPods-JieBao.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JieBao.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EF937847B456B68FD7BBEBE /* Pods-JieBao.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JieBao.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JieBao/Pods-JieBao.debug.xcconfig"; sourceTree = "<group>"; };
 		A28D47982105DE3F00590230 /* SettingStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingStoryboard.storyboard; sourceTree = "<group>"; };
+		A28D48B921141BCF00590230 /* AddDeviceStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddDeviceStoryboard.storyboard; sourceTree = "<group>"; };
 		A2F219E120FDEB4600180CDC /* LightsDataPointModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightsDataPointModel.h; sourceTree = "<group>"; };
 		A2F219E220FDEB4600180CDC /* LightsDataPointModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LightsDataPointModel.m; sourceTree = "<group>"; };
 		BE41390BAC3B4CC214AED7C0 /* Pods-JieBaoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JieBaoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JieBaoTests/Pods-JieBaoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -682,6 +684,7 @@
 				E0ECF05420874405001530CE /* MyDevicecContractErrorViewController.m */,
 				E0ECF05920874D3A001530CE /* MyDeviceAddSuccessViewController.h */,
 				E0ECF05A20874D3A001530CE /* MyDeviceAddSuccessViewController.m */,
+				A28D48B921141BCF00590230 /* AddDeviceStoryboard.storyboard */,
 			);
 			path = WiFi;
 			sourceTree = "<group>";
@@ -1589,6 +1592,7 @@
 				E0CEAFEF20DCCB0E00225922 /* icon_m_chushi@2x.png in Resources */,
 				E0F34BA520BA8853001281AB /* scanFlashlight@2x.png in Resources */,
 				E0D3DC97207F327A00F14860 /* LaunchScreen.storyboard in Resources */,
+				A28D48BA21141BCF00590230 /* AddDeviceStoryboard.storyboard in Resources */,
 				E0CEAFF220DCCB0E00225922 /* icon_m_wind@2x.png in Resources */,
 				E0CEAFE920DCCB0E00225922 /* sk_kongtiao_bg@2x.png in Resources */,
 				F5085DEC210DB31B00BB1AA3 /* InfoPlist.strings in Resources */,

@@ -9,12 +9,13 @@
 #import "MyDeviceAddNextViewController.h"
 
 @interface MyDeviceAddNextViewController ()
-
-@property (nonatomic, strong) UIImageView *imgView;
-
-@property (nonatomic, strong) UILabel *textLb;
-
-@property (nonatomic, strong) UIButton *nextBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *handImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *lampImageView;
+@property (weak, nonatomic) IBOutlet UILabel *upLabel;
+@property (weak, nonatomic) IBOutlet UILabel *downLabel;
+@property (weak, nonatomic) IBOutlet UIButton *nextBtn;
+@property (assign, nonatomic) BOOL isRed;
+@property (strong, nonatomic) NSTimer *timer;
 @end
 
 @implementation MyDeviceAddNextViewController
@@ -29,31 +30,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = UICOLORFROMRGB(0xededed);
-    [self.view addSubview:self.imgView];
-    [self.view addSubview:self.textLb];
-    [self.view addSubview:self.nextBtn];
-    
-    LHWeakSelf(self)
-    [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakself.view.mas_centerX);
-        make.size.mas_equalTo(CGSizeMake(CurrentDeviceSize(220), CurrentDeviceSize(140)));
-        make.centerY.equalTo(weakself.view.mas_centerY).offset(-CurrentDeviceSize(10));
-    }];
-    
-    [self.textLb mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakself.view.mas_centerX);
-        make.top.equalTo(weakself.imgView.mas_bottom).offset(CurrentDeviceSize(20));
-        make.width.lessThanOrEqualTo(@200);
-    }];
-    
-    
-    [self.nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(weakself.view.mas_centerX);
-        make.bottom.equalTo(weakself.view.mas_bottom).offset(-CurrentDeviceSize(100));
-        make.width.equalTo(weakself.imgView.mas_width);
-        make.height.equalTo(@(CurrentDeviceSize(35)));
-    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -63,13 +39,49 @@
     
     ActionBlock leftAction = ^(UIButton *btn){
         [weakself.navigationController popViewControllerAnimated:YES];
-        LHLog(@"left");
     };
     [self.naviBar  configNavigationBarWithAttrs:@{
                                                   kCustomNaviBarLeftActionKey:leftAction,
                                                   kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"添加设备",
                                                   }];
+    
+    [self configContentView];
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
+
+-(void)configContentView{
+    self.bgView.hidden = YES;
+    self.upLabel.text = [NSString stringWithFormat:@"%@",@"1.长按设备开关5秒，看到红绿灯闪烁时放开。"];
+    self.downLabel.text = [NSString stringWithFormat:@"%@",@"2.如红绿灯已交替闪烁，可忽略步骤1，点击下一步继续。"];
+    self.handImageView.layer.masksToBounds = YES;
+    self.handImageView.layer.cornerRadius = 15;
+    self.lampImageView.layer.masksToBounds = YES;
+    self.lampImageView.layer.cornerRadius = 20;
+    self.lampImageView.backgroundColor = [UIColor redColor];
+    _isRed = YES;
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.25f target:self selector:@selector(changeLampColor) userInfo:nil repeats:YES];
+
+}
+
+
+- (IBAction)nextBtnDidClicked:(id)sender {
+    [self nextBtnClicked];
+}
+
+-(void)changeLampColor{
+    self.isRed = !self.isRed;
+    if (self.isRed) {
+        self.lampImageView.backgroundColor = [UIColor redColor];
+    }else{
+        self.lampImageView.backgroundColor = [UIColor greenColor];
+    }
 }
 
 - (void)nextBtnClicked
@@ -77,36 +89,5 @@
     [self.navigationController pushViewController:[NSClassFromString(@"MyDeviceWIFIViewController") new] animated:YES];
 }
 
-- (UIImageView *)imgView
-{
-    if (!_imgView) {
-        _imgView = [UIImageView new];
-        _imgView.image = [UIImage imageNamed:@"connect"];
-    }
-    return _imgView;
-}
 
-- (UILabel *)textLb
-{
-    if (!_textLb) {
-        _textLb = [UILabel new];
-        _textLb.font = [UIFont sf_systemFontOfSize:13];
-        _textLb.text = @"请长按设备开关5秒";
-    }
-    return _textLb;
-}
-
-- (UIButton *)nextBtn
-{
-    if (!_nextBtn) {
-        _nextBtn = [UIButton new];
-        [_nextBtn addTarget:self action:@selector(nextBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-        [_nextBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
-        [_nextBtn.titleLabel setTextColor:[UIColor whiteColor]];
-        _nextBtn.layer.masksToBounds = YES;
-        _nextBtn.layer.cornerRadius = CurrentDeviceSize(5);
-        [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
-    }
-    return _nextBtn;
-}
 @end

@@ -64,7 +64,7 @@
     [self.textLb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(weakself.mas_centerY);
         make.left.equalTo(weakself.imgView.mas_right).offset(CurrentDeviceSize(10));
-        make.width.lessThanOrEqualTo(@100);
+        make.width.lessThanOrEqualTo(@200);
     }];
     
     [self.tranferImgView mas_makeConstraints:^(MASConstraintMaker *make) {

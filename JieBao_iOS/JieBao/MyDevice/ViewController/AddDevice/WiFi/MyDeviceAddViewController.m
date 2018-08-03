@@ -9,7 +9,7 @@
 #import "MyDeviceAddViewController.h"
 #import "BaseTableView.h"
 #import "AddDeviceCell.h"
-
+#import "MyDeviceAddNextViewController.h"
 @interface MyDeviceAddViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) BaseTableView *tb;
@@ -87,7 +87,7 @@
     [self.subLb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(CurrentDeviceSize(20)));
         make.top.equalTo(@(CurrentDeviceSize(20)));
-        make.width.lessThanOrEqualTo(@200);
+        make.width.lessThanOrEqualTo(@300);
     }];
     
     [self.tb mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -126,9 +126,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.navigationController pushViewController:[NSClassFromString(@"MyDeviceAddNextViewController") new] animated:YES];
     
     [UserHelper shareInstance].productSecretKey = self.secKeys[indexPath.row];
+    UIStoryboard *addSB = [UIStoryboard storyboardWithName:@"AddDeviceStoryboard" bundle:nil];
+    MyDeviceAddNextViewController *addNextVC = [addSB instantiateViewControllerWithIdentifier:@"MyDeviceAddNextViewController"];
+    [self.navigationController pushViewController:addNextVC animated:YES];
 }
 
 #pragma mark - lazy init

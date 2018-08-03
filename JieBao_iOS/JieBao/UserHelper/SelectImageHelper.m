@@ -25,7 +25,7 @@
             imgName = @"6";
             break;
         case DeviceTpyeCaiDeng:
-            imgName = @"4";
+            imgName = @"light";
             break;
         case DeviceTpyeKaiGuan:
             imgName = @"5";
