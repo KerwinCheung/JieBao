@@ -52,7 +52,7 @@
     [self.textLb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(weakself.mas_centerY);
         make.left.equalTo(@(CurrentDeviceSize(30)));
-        make.width.lessThanOrEqualTo(@200);
+        make.width.lessThanOrEqualTo(@270);
     }];
     
     [self.tranferBtn mas_makeConstraints:^(MASConstraintMaker *make) {

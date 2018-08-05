@@ -75,6 +75,8 @@
         make.left.right.bottom.equalTo(@0);
         make.height.equalTo(@(CurrentDeviceSize(0.5)));
     }];
+    NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
+    [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
 }
 
 

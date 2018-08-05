@@ -197,6 +197,7 @@
         _logoutBtn.layer.masksToBounds = YES;
         _logoutBtn.layer.cornerRadius = CurrentDeviceSize(5);
         [_logoutBtn setBackgroundImage:[UIImage imageNamed:@"tuichu"] forState:UIControlStateNormal];
+        [_logoutBtn setTitle:@"退出" forState:UIControlStateNormal];
     }
     return _logoutBtn;
 }

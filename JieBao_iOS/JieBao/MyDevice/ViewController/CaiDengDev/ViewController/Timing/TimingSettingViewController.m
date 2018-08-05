@@ -843,13 +843,11 @@
         _spsBtn = [UIButton new];
         [_spsBtn addTarget:self action:@selector(spsBtnClicked) forControlEvents:UIControlEventTouchUpInside];
         [_spsBtn setTitle:@"载入预设" forState:UIControlStateNormal];
-        [_spsBtn setBackgroundColor:[UIColor clearColor]];
         [_spsBtn.titleLabel setFont:[UIFont sf_systemFontOfSize:8]];
         _spsBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
-//        _spsBtn.titleLabel.numberOfLines = 0 ;
         _spsBtn.layer.masksToBounds = YES;
         _spsBtn.layer.cornerRadius = CurrentDeviceSize(5);
-        [_spsBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
+        [_spsBtn setBackgroundImage:[UIImage imageNamed:@"button1"] forState:UIControlStateNormal];
         [_spsBtn.titleLabel setTextColor:[UIColor whiteColor]];
     }
     return _spsBtn;
@@ -860,8 +858,9 @@
     if (!_saveBtn) {
         _saveBtn = [UIButton new];
         [_saveBtn addTarget:self action:@selector(saveBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-        [_saveBtn setImage:[UIImage imageNamed:@"button3"] forState:UIControlStateNormal];
-        [_saveBtn setBackgroundColor:[UIColor clearColor]];
+        [_saveBtn setBackgroundImage:[UIImage imageNamed:@"button1"] forState:UIControlStateNormal];
+        [_saveBtn setTitle:@"保存" forState:UIControlStateNormal];
+        [_deleteBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _saveBtn.layer.masksToBounds = YES;
         _saveBtn.layer.cornerRadius = CurrentDeviceSize(5);
     }
@@ -873,8 +872,9 @@
     if (!_deleteBtn) {
         _deleteBtn = [UIButton new];
         [_deleteBtn addTarget:self action:@selector(deleteBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-        [_deleteBtn setImage:[UIImage imageNamed:@"button4"] forState:UIControlStateNormal];
-        [_deleteBtn setBackgroundColor:[UIColor clearColor]];
+        [_deleteBtn setBackgroundImage:[UIImage imageNamed:@"button4"] forState:UIControlStateNormal];
+        [_deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
+        [_deleteBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _deleteBtn.layer.masksToBounds = YES;
         _deleteBtn.layer.cornerRadius = CurrentDeviceSize(5);
     }

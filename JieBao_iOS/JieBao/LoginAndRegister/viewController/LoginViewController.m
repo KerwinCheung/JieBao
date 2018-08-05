@@ -43,6 +43,8 @@
     self.PhoneTextField.text = [UserHelper getCurrentUser].userName;
     self.pwdTextField.text = [UserHelper getCurrentUser].psw;
     [self registerNoti];
+    NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
+    [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
