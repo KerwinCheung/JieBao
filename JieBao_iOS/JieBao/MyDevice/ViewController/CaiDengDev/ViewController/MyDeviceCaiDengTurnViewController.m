@@ -448,7 +448,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 //    }
 }
 
-#pragma mark - 手势事件
+#pragma mark - 转盘点击事件
 - (void)tapAction:(UITapGestureRecognizer *)ges {
 //    0.手动 1.早晨 2.日出 3.白天 4.日落 5.夜晚 6.定时
     NSInteger tempTag = ges.view.tag;
@@ -467,6 +467,11 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
         modeNum = @(5);
     }else if (tempTag == CaiDengTypeTiming){
         modeNum = @(6);
+    }
+    
+    if (self.group) {
+        //分组控制时修改界面
+        [self setCurrentModelStatusWith:modeNum.integerValue];
     }
     
     NSDictionary *controlDic = [NSDictionary dictionary];
@@ -500,7 +505,6 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
             }];
         }else{
 //            [HudHelper showErrorWithStatus:@"当前没有设置定时任务"];
-            LHLog(@"当前没有定时任务");
             @strongify(controlDic);
 
             controlDic = @{@"mode":modeNum};
@@ -532,7 +536,6 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
             [HudHelper showErrorWithStatus:@"设置失败"];
             return ;
         }
-//        [HudHelper showSuccessWithStatus:@"设置成功"];
     }];
 }
 
@@ -708,6 +711,57 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
             break;
     }
 }
+
+-(void)setCurrentModelStatusWith:(NSInteger )modeStatus{
+    switch (modeStatus) {
+        case 0:
+        {
+            self.currentImgView.image = [UIImage imageNamed:@"shoudong1"];
+            self.currentModelLb.text = @"手动模式";
+        }
+            break;
+        case 1:
+        {
+            self.currentImgView.image = [UIImage imageNamed:@"zaocheng1"];
+            self.currentModelLb.text = @"早晨模式";
+        }
+            break;
+        case 2:
+        {
+            self.currentImgView.image = [UIImage imageNamed:@"richu1"];
+            self.currentModelLb.text = @"日出模式";
+        }
+            break;
+        case 3:
+        {
+            self.currentImgView.image = [UIImage imageNamed:@"sun1"];
+            self.currentModelLb.text = @"白天模式";
+        }
+            break;
+        case 4:
+        {
+            self.currentImgView.image = [UIImage imageNamed:@"riluo1"];
+            self.currentModelLb.text = @"日落模式";
+        }
+            break;
+        case 5:
+        {
+            self.currentImgView.image = [UIImage imageNamed:@"yewan1"];
+            self.currentModelLb.text = @"夜晚模式";
+        }
+            break;
+        case 6:
+        {
+            self.currentImgView.image = [UIImage imageNamed:@"dingshi1"];
+            self.currentModelLb.text = @"定时模式";
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
 
 #pragma mark - get Timing Action
 - (void)getTiming {
