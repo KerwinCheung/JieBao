@@ -13,7 +13,8 @@
 #import "GroupEditCell.h"
 #import "UIViewController+Custom.h"
 #import "GroupEditCell.h"
-
+#import "LWHttpRequest.h"
+#import "DeviceCommonSchulder.h"
 @interface AddDeviceViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) BaseTableView *tb;
@@ -77,6 +78,7 @@
 
 - (void)discoverDevice
 {
+    // 显示当前账号绑定且未添加进分组的设备
     [self.dataSource removeAllObjects];
     for (GizWifiDevice *dev in SDKHELPER.deviceArray) {
         if ([dev.productKey isEqualToString:self.group.product_key]) {
@@ -110,16 +112,36 @@
         if (error) {
             return ;
         }
+        [self getAddDevsTimerListWithArray:self.temps];
         NSMutableArray *arr = [NSMutableArray arrayWithArray:self.group.devs];
         [arr addObjectsFromArray:self.temps];
         self.group.devs = arr;
         self.callback(self.group);
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.navigationController popViewControllerAnimated:YES];
-
         });
     }];
 }
+
+-(void)getAddDevsTimerListWithArray:(NSArray *)addDevArray{
+    for (CustomDevice *dev in addDevArray) {
+        [LWHttpRequest getTimerListWithDid:dev.did didLoadData:^(NSArray *result, NSError *err) {
+            if (!err) {
+                for (DeviceCommonSchulder *sch in result) {
+                    if (sch.enabled) {
+                        //关闭定时器
+                        [LWHttpRequest closeTimerWithSchulder:sch didLoadData:^(id result, NSError *err) {
+                            if (err) {
+                                NSLog(@"关闭定时器失败，定时器：%@",sch.sid);
+                            }
+                        }];
+                    }
+                }
+            }
+        }];
+    }
+}
+
 
 #pragma mark - tableView Delegate|DataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
