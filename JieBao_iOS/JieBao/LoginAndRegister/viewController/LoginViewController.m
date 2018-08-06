@@ -127,12 +127,11 @@
                         if ([group isKindOfClass:[CustomDeviceGroup class]]) {
                             //获取分组详情
                             dispatch_group_async(dispatchGroup, queue, ^{
-//                                sleep(1);
                                 [LWHttpRequest getGroupDetailsWithGroup:group didLoadData:^(id result, NSError *err) {
                                     if (err) {
                                         NSLog(@"获取分组详情失败 分组id:%@",group.gid);
                                     }else{
-                                        
+                                        [SDKHELPER addGroupToLocalWith:group];
                                     }
                                 }];
                             });
@@ -148,10 +147,7 @@
                             [delegate changeRootViewController];
                         });
                     });
-                    
-                    
-                  
-                    
+
                 }else{
                     [SVProgressHUD dismiss];
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -159,8 +155,6 @@
                         [delegate changeRootViewController];
                     });
                 }
-                
-                
             }];
         }else{
             [SVProgressHUD dismiss];

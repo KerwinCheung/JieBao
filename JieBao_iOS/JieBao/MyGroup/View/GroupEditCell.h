@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "CustomDevice.h"
-
 @interface GroupEditCell : UITableViewCell
 
 @property (nonatomic, strong) CustomDevice *dataDic;

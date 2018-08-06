@@ -14,6 +14,7 @@
 #import "OpenGroupViewController.h"
 #import "GroupCollectionViewCell.h"
 #import "LightsDataPointModel.h"
+#import "LWHttpRequest.h"
 @interface MyGroupViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,NoGroupViewDelegate,GroupCollectionViewCellCellDelegate>
 
 @property (nonatomic, strong) BaseCollectionView *cv;
@@ -66,61 +67,58 @@
                                                   kCustomNaviBarRightActionKey:rightAction
                                                   }];
     [self.tabBarController.tabBar setHidden:NO];
-    [self requestGroups];
+    [self getGroupList];
 
 }
 
 #pragma mark - 获取分组列表
-- (void)requestGroups
-{
-    NSString *path = @"https://api.gizwits.com/app/group";
-    NSString *method = @"GET";
-    [NetworkHelper sendRequest:nil Method:method Path:path callback:^(NSData *data, NSError *error) {
-        if (!data || error) {
-            return;
-        }
-        NSArray *jsonObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        if (!jsonObject || ![jsonObject isKindOfClass:[NSArray class]]) {
-            return;
-        }
-        [self.dataSource removeAllObjects];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.cv reloadData];
-            self.dataSource.count !=0?(self.noGroupView.hidden = YES):(self.noGroupView.hidden = NO);
-        });
-        for (NSDictionary *dic in jsonObject) {
-            CustomDeviceGroup *group = [CustomDeviceGroup yy_modelWithJSON:dic];
-            [self requestDevicesWithGroup:group];
-            [self.dataSource addObject:group];
+-(void)getGroupList{
+    [LWHttpRequest getGroupListDidLoadData:^(NSArray *result, NSError *err) {
+        if (!err) {
+            SDKHELPER.groupsArray = [NSMutableArray arrayWithArray:result];
+            dispatch_group_t dispatchGroup = dispatch_group_create();
+            //获取队列
+            dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            //添加并发任务
+            for (CustomDeviceGroup *group in result) {
+                if ([group isKindOfClass:[CustomDeviceGroup class]]) {
+                    //获取分组详情
+                    dispatch_group_async(dispatchGroup, queue, ^{
+                        [LWHttpRequest getGroupDetailsWithGroup:group didLoadData:^(id result, NSError *err) {
+                            if (err) {
+                                NSLog(@"获取分组详情失败 分组id:%@",group.gid);
+                            }else{
+                                [SDKHELPER addGroupToLocalWith:group];
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    [self.dataSource removeAllObjects];
+                                    self.dataSource = [NSMutableArray arrayWithArray:SDKHELPER.groupsArray];
+                                    [self.cv reloadData];
+                                    self.dataSource.count !=0?(self.noGroupView.hidden = YES):(self.noGroupView.hidden = NO);
+                                });
+                            }
+                        }];
+                    });
+                }
+            }
+            
+            //任务执行完毕后，获取通知
+            dispatch_group_notify(dispatchGroup, queue, ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.dataSource removeAllObjects];
+                    self.dataSource = [NSMutableArray arrayWithArray:SDKHELPER.groupsArray];
+                    [self.cv reloadData];
+                    self.dataSource.count !=0?(self.noGroupView.hidden = YES):(self.noGroupView.hidden = NO);
+                });
+            });
+            
+        }else{
             dispatch_async(dispatch_get_main_queue(), ^{
+                [self.dataSource removeAllObjects];
+                self.dataSource = [NSMutableArray arrayWithArray:SDKHELPER.groupsArray];
                 [self.cv reloadData];
                 self.dataSource.count !=0?(self.noGroupView.hidden = YES):(self.noGroupView.hidden = NO);
             });
         }
- 
-    }];
-}
-
-- (void)requestDevicesWithGroup:(CustomDeviceGroup *)group
-{
-    NSString *path = [NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/devices",group.gid];
-    NSString *method = @"GET";
-    [NetworkHelper sendRequest:nil Method:method Path:path callback:^(NSData *data, NSError *error) {
-        if (!data || error) {
-            return;
-        }
-        NSArray *jsonObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        NSMutableArray *deviceArr = [NSMutableArray array];
-        for (NSDictionary *dic in jsonObject) {
-            CustomDevice *dev = [CustomDevice yy_modelWithJSON:dic];
-            [deviceArr addObject:dev];
-        }
-        group.devs = deviceArr;
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.cv reloadData];
-            self.noGroupView.hidden = self.dataSource.count != 0;
-        });
     }];
 }
 

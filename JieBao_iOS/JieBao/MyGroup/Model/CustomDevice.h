@@ -36,4 +36,6 @@ string    设备别名
 
 @property (nonatomic, copy) NSString *remark;
 
+-(instancetype)initWithGizwifDev:(GizWifiDevice *)dev;
+
 @end

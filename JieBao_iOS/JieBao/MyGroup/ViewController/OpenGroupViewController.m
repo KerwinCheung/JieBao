@@ -173,7 +173,10 @@
                 if (error) {
                     return;
                 }
+                
+                
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    [SDKHELPER removeGourpFromLocalWith:weakself.group];
                     [weakself.navigationController popViewControllerAnimated:YES];
                 });
             }];
