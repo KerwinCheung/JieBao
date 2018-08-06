@@ -124,6 +124,7 @@
     }];
 }
 
+
 #pragma mark - method
 -(BOOL)checkGroupStatusWithGroup:(CustomDeviceGroup *)group{
     BOOL isStatus = NO;

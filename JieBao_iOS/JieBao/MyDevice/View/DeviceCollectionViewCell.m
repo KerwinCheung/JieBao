@@ -7,7 +7,6 @@
 //
 
 #import "DeviceCollectionViewCell.h"
-
 @interface DeviceCollectionViewCell()
 
 @property (nonatomic, strong) UIImageView *img;
@@ -136,4 +135,11 @@
     
     self.lb.text =  dataDic.alias.length >0 ? dataDic.alias:deaultStr;
 }
+
+-(void)setGroupWith:(CustomDeviceGroup *)group{
+    self.img.image = [UIImage imageNamed:@"twoLamp"];
+    self.lb.text = group.group_name;
+}
+
+
 @end

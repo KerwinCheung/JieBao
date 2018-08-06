@@ -8,6 +8,8 @@
 
 #import "SDKHelper.h"
 #import "LightsDataPointModel.h"
+#import "CustomDeviceGroup.h"
+#import "CustomDevice.h"
 static SDKHelper *helper = nil;
 
 @interface SDKHelper()
@@ -23,6 +25,7 @@ static SDKHelper *helper = nil;
         helper = [[super allocWithZone:NULL] init];
         helper.statusDic = [NSMutableDictionary dictionary];
         helper.deviceArray = [NSMutableArray array];
+        helper.groupsArray = [NSMutableArray array];
     });
     return helper;
 }
@@ -51,12 +54,9 @@ static SDKHelper *helper = nil;
         if (self.registerBlock) {
             self.registerBlock(YES);
         }
-    }else if (result.code ==  GIZ_OPENAPI_CODE_INVALID)
-    {
-        [HudHelper showErrorWithStatus:@"验证码错误"];
-    }
-    else
-    {
+    }else if (result.code ==  GIZ_OPENAPI_CODE_INVALID){
+        [HudHelper showErrorWithStatus:@"验证码有误，请重新输入"];
+    }else{
         if (self.registerBlock) {
             self.registerBlock(NO);
         }
@@ -77,16 +77,16 @@ static SDKHelper *helper = nil;
         }
     }else if (result.code ==  GIZ_OPENAPI_PHONE_UNAVALIABLE)
     {
-       [HudHelper showErrorWithStatus:@"输入正确手机号"];
+       [HudHelper showErrorWithStatus:@"请输入正确的手机号码"];
     }else if (result.code ==  GIZ_OPENAPI_USERNAME_PASSWORD_ERROR)
     {
         [HudHelper showErrorWithStatus:@"密码错误"];
     }else if (result.code ==  GIZ_OPENAPI_CODE_INVALID)
     {
-        [HudHelper showErrorWithStatus:@"验证码错误"];
+        [HudHelper showErrorWithStatus:@"验证码有误，请重新输入"];
     }else if (result.code == GIZ_OPENAPI_USER_NOT_EXIST)
     {
-        [HudHelper showErrorWithStatus:@"手机号未注册"];
+        [HudHelper showErrorWithStatus:@"该手机号未注册，请注册后登录"];
     }
     else
     {
@@ -102,16 +102,16 @@ static SDKHelper *helper = nil;
         if (self.resetPswBlock) {
             self.resetPswBlock(YES);
         }
-        [HudHelper showStatus:@"重置成功"];
+        [HudHelper showSuccessWithStatus:@"密码修改成功，请重新登录"];
     }else if (result.code ==  GIZ_OPENAPI_CODE_INVALID)
     {
-        [HudHelper showStatus:@"验证码错误"];
+        [HudHelper showErrorWithStatus:@"验证码有误，请重新输入"];
     }else if (result.code ==  GIZ_OPENAPI_PHONE_UNAVALIABLE)
     {
-        [HudHelper showStatus:@"输入正确手机号"];
+        [HudHelper showErrorWithStatus:@"请输入正确的手机号码"];
     }else if (result.code == GIZ_OPENAPI_USER_NOT_EXIST)
     {
-        [HudHelper showStatus:@"手机号未注册"];
+        [HudHelper showErrorWithStatus:@"该手机号未注册，请重新输入"];
     }
     else
     {
@@ -205,7 +205,22 @@ static SDKHelper *helper = nil;
 }
 
 
-
+-(BOOL)isExistingGroupWith:(GizWifiDevice *)dev{
+    BOOL isExisting = NO;
+    for (NSInteger i = 0; i< SDKHELPER.groupsArray.count; i++) {
+        CustomDeviceGroup *group = [SDKHELPER.groupsArray objectAtIndex:i];
+        for (CustomDevice *customDev in group.devs) {
+            if (![customDev isKindOfClass:[CustomDevice class]]) {
+                continue;
+            }
+            if ([dev.did isEqualToString:customDev.did]) {
+                isExisting = YES;
+                break;
+            }
+        }
+    }
+    return isExisting;
+}
 
 
 

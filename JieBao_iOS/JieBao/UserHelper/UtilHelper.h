@@ -51,4 +51,7 @@
  *  获取设备默认名称的前缀
  */
 + (NSString *)getDefaultNameStrPrefixWithProductKey:(NSString *)type;
+
+
+
 @end

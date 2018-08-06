@@ -7,6 +7,7 @@
 //
 
 #import "BaseCollectionViewCell.h"
+#import "CustomDeviceGroup.h"
 
 @class DeviceCollectionViewCell;
 @protocol DeviceCollectionViewCellDelegate<NSObject>
@@ -28,4 +29,5 @@
 - (BOOL)isSwitchOn;
 
 - (void)cellSetSelectedWithStatus:(BOOL)selected;
+-(void)setGroupWith:(CustomDeviceGroup *)group;
 @end

@@ -11,6 +11,7 @@
 		8DB3FBD37C6E6DC862A122AE /* libPods-JieBaoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C534CAD771B30F6AAED0BC16 /* libPods-JieBaoTests.a */; };
 		A28D47992105DE3F00590230 /* SettingStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A28D47982105DE3F00590230 /* SettingStoryboard.storyboard */; };
 		A28D48BA21141BCF00590230 /* AddDeviceStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A28D48B921141BCF00590230 /* AddDeviceStoryboard.storyboard */; };
+		A28D48BE21185A3C00590230 /* LWHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A28D48BC21185A3C00590230 /* LWHttpRequest.m */; };
 		A2F219E320FDEB4600180CDC /* LightsDataPointModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2F219E220FDEB4600180CDC /* LightsDataPointModel.m */; };
 		E0221A7620994F9800156753 /* DeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E0221A7420994F9700156753 /* DeviceModel.m */; };
 		E0221A7920994FE000156753 /* AddDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0221A7820994FE000156753 /* AddDeviceCell.m */; };
@@ -236,6 +237,8 @@
 		6EF937847B456B68FD7BBEBE /* Pods-JieBao.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JieBao.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JieBao/Pods-JieBao.debug.xcconfig"; sourceTree = "<group>"; };
 		A28D47982105DE3F00590230 /* SettingStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingStoryboard.storyboard; sourceTree = "<group>"; };
 		A28D48B921141BCF00590230 /* AddDeviceStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddDeviceStoryboard.storyboard; sourceTree = "<group>"; };
+		A28D48BC21185A3C00590230 /* LWHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LWHttpRequest.m; sourceTree = "<group>"; };
+		A28D48BD21185A3C00590230 /* LWHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LWHttpRequest.h; sourceTree = "<group>"; };
 		A2F219E120FDEB4600180CDC /* LightsDataPointModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightsDataPointModel.h; sourceTree = "<group>"; };
 		A2F219E220FDEB4600180CDC /* LightsDataPointModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LightsDataPointModel.m; sourceTree = "<group>"; };
 		BE41390BAC3B4CC214AED7C0 /* Pods-JieBaoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JieBaoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JieBaoTests/Pods-JieBaoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -713,6 +716,17 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		A28D48BB211859B100590230 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				A28D48BD21185A3C00590230 /* LWHttpRequest.h */,
+				A28D48BC21185A3C00590230 /* LWHttpRequest.m */,
+				E02856DB20C66E1500FD1A8F /* NetworkHelper.h */,
+				E02856DC20C66E1500FD1A8F /* NetworkHelper.m */,
+			);
+			path = NetworkManager;
+			sourceTree = "<group>";
+		};
 		A2F219E020FDEB1C00180CDC /* DataPointModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -868,6 +882,7 @@
 		E0D3DC89207F327A00F14860 /* JieBao */ = {
 			isa = PBXGroup;
 			children = (
+				A28D48BB211859B100590230 /* NetworkManager */,
 				E0D3DC8A207F327A00F14860 /* AppDelegate.h */,
 				E0D3DC8B207F327A00F14860 /* AppDelegate.m */,
 				E0D3DC8D207F327A00F14860 /* ViewController.h */,
@@ -1203,8 +1218,6 @@
 				E03F2FC72092FE4D0093C55E /* SelectImageHelper.m */,
 				E03F2FCC209811A70093C55E /* UtilHelper.h */,
 				E03F2FCD209811A70093C55E /* UtilHelper.m */,
-				E02856DB20C66E1500FD1A8F /* NetworkHelper.h */,
-				E02856DC20C66E1500FD1A8F /* NetworkHelper.m */,
 				E0CEAFFC20DD5E4900225922 /* HudHelper.h */,
 				E0CEAFFD20DD5E4900225922 /* HudHelper.m */,
 			);
@@ -1822,6 +1835,7 @@
 				E05B9F4520D9394B002CBC2A /* ZaoLangBengZhengXianViewController.m in Sources */,
 				E03F2FCE209811A70093C55E /* UtilHelper.m in Sources */,
 				E0ECF04C208732C7001530CE /* MyDeviceAddNextViewController.m in Sources */,
+				A28D48BE21185A3C00590230 /* LWHttpRequest.m in Sources */,
 				E0B1651C20A97B3A005D294B /* ChannelDetailViewController.m in Sources */,
 				E0F34BAF20BA8871001281AB /* WSLScanView.m in Sources */,
 				E05B9F4B20D9397A002CBC2A /* ZaoLangBengYeJianViewController.m in Sources */,

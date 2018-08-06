@@ -10,6 +10,7 @@
 #import <SystemConfiguration/CaptiveNetwork.h>
 #import "CommonCrypto/CommonDigest.h"
 #import "DeviceSchedulerTask.h"
+
 @implementation UtilHelper
 
 //NSDate转NSString
@@ -164,5 +165,7 @@
     
     return str;
 }
+
+
 
 @end

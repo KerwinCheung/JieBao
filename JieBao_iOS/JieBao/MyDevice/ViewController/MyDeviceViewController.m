@@ -24,7 +24,7 @@
 
 @property (nonatomic, strong) MyDeviceNoDeviceView *noDeviceView;
 
-@property (nonatomic, strong) NSMutableArray<GizWifiDevice *> *dataSource;
+@property (nonatomic, strong) NSMutableArray*dataSource;
 
 @property (nonatomic, assign) NSInteger currentIndex;
 
@@ -139,12 +139,33 @@
             }
             //用单例记录下设备数组
             SDKHELPER.deviceArray = [NSMutableArray arrayWithArray:self.dataSource];
+            
+            //判断设备是否已经添加进了分组
+            NSMutableArray *tempArray = [NSMutableArray array];
+            for (NSInteger i = 0; i< self.dataSource.count; i++) {
+                GizWifiDevice *dev = [self.dataSource objectAtIndex:i];
+                if ([dev isKindOfClass:[GizWifiDevice class]]) {
+                    //
+                   BOOL isExisting =  [SDKHELPER isExistingGroupWith:dev];
+                    if (!isExisting) {
+                        // 不存在
+                        [tempArray addObject:dev];
+                    }
+                }
+            }
+            [self.dataSource removeAllObjects];
+            for (CustomDeviceGroup *group in SDKHELPER.groupsArray) {
+                [tempArray addObject:group];
+            }
+            self.dataSource = tempArray.mutableCopy;
         }
+        
+        
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             self.dataSource.count !=0?(self.noDeviceView.hidden = YES):(self.noDeviceView.hidden = NO);
             [self.cv reloadData];
         });
-        
     };
     [[GizWifiSDK sharedInstance] getBoundDevices:[UserHelper getCurrentUser].uid token:[UserHelper getCurrentUser].token];
 }
@@ -152,8 +173,9 @@
 -(void)getShareTheInvitation{
     [GizDeviceSharing setDelegate:self];
     [GizDeviceSharing getDeviceSharingInfos:[UserHelper getCurrentUser].token sharingType:GizDeviceSharingToMe deviceID:nil];
-    
 }
+
+
 
 
 
@@ -190,23 +212,33 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DeviceCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceCollectionViewCell" forIndexPath:indexPath];
-    cell.dataDic = self.dataSource[indexPath.row];
     
-    if ([cell.dataDic.productKey isEqualToString:kProductKeys[@"六路彩灯"]]) {
-        if ([SDKHELPER.statusDic.allKeys containsObject:cell.dataDic.did]) {
-            LightsDataPointModel *lightStatusModel = [SDKHELPER.statusDic objectForKey:cell.dataDic.did];
-            [cell cellSetSelectedWithStatus:[lightStatusModel.switchNum boolValue]];
+    id  dev = [self.dataSource objectAtIndex:indexPath.row];
+    
+    if ([dev isKindOfClass:[GizWifiDevice class]]) {
+        cell.dataDic = (GizWifiDevice *)dev;
+        if ([cell.dataDic.productKey isEqualToString:kProductKeys[@"六路彩灯"]]) {
+            if ([SDKHELPER.statusDic.allKeys containsObject:cell.dataDic.did]) {
+                LightsDataPointModel *lightStatusModel = [SDKHELPER.statusDic objectForKey:cell.dataDic.did];
+                [cell cellSetSelectedWithStatus:[lightStatusModel.switchNum boolValue]];
+            }
+            
+        }else if ([cell.dataDic.productKey isEqualToString:kProductKeys[@"滴定泵"]]){
+            
+        }else if ([cell.dataDic.productKey isEqualToString:kProductKeys[@"无线开关"]]){
+            
+        }else if ([cell.dataDic.productKey isEqualToString:kProductKeys[@"造浪泵"]]){
+            
+        }else if ([cell.dataDic.productKey isEqualToString:kProductKeys[@"水泵"]]){
+            
         }
-        
-    }else if ([cell.dataDic.productKey isEqualToString:kProductKeys[@"滴定泵"]]){
-        
-    }else if ([cell.dataDic.productKey isEqualToString:kProductKeys[@"无线开关"]]){
-        
-    }else if ([cell.dataDic.productKey isEqualToString:kProductKeys[@"造浪泵"]]){
-        
-    }else if ([cell.dataDic.productKey isEqualToString:kProductKeys[@"水泵"]]){
-        
+
+    }else if ([dev isKindOfClass:[CustomDeviceGroup class]]){
+        [cell setGroupWith:(CustomDeviceGroup *)dev];
     }
+    
+    
+    
     
    
 
@@ -217,54 +249,63 @@
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    GizWifiDevice *dev = self.dataSource[indexPath.row];
     
-    if ([dev.productKey isEqualToString:kProductKeys[@"六路彩灯"]]) {
-        LightsDataPointModel *lightStatusModel = [SDKHELPER.statusDic objectForKey:dev.did];
-        BOOL isSwitch = !lightStatusModel.switchNum.boolValue;
-        NSNumber *switchNum = [NSNumber numberWithBool:isSwitch];
-        [dev write:@{@"switch":switchNum} withSN:500];
-        
-    }else if ([dev.productKey isEqualToString:kProductKeys[@"滴定泵"]]){
-        
-    }else if ([dev.productKey isEqualToString:kProductKeys[@"无线开关"]]){
-        
-    }else if ([dev.productKey isEqualToString:kProductKeys[@"造浪泵"]]){
-        
-    }else if ([dev.productKey isEqualToString:kProductKeys[@"水泵"]]){
-        
-    }
+    id  object = self.dataSource[indexPath.row];
+   if ([object isKindOfClass:[GizWifiDevice class]]) {
+       GizWifiDevice *dev = (GizWifiDevice *)object;
+       if ([dev.productKey isEqualToString:kProductKeys[@"六路彩灯"]]) {
+           LightsDataPointModel *lightStatusModel = [SDKHELPER.statusDic objectForKey:dev.did];
+           BOOL isSwitch = !lightStatusModel.switchNum.boolValue;
+           NSNumber *switchNum = [NSNumber numberWithBool:isSwitch];
+           [dev write:@{@"switch":switchNum} withSN:500];
+           
+       }else if ([dev.productKey isEqualToString:kProductKeys[@"滴定泵"]]){
+           
+       }else if ([dev.productKey isEqualToString:kProductKeys[@"无线开关"]]){
+           
+       }else if ([dev.productKey isEqualToString:kProductKeys[@"造浪泵"]]){
+           
+       }else if ([dev.productKey isEqualToString:kProductKeys[@"水泵"]]){
+           
+       }
+   }else if ([object isKindOfClass:[CustomDeviceGroup class]]){
+       [HudHelper showErrorWithStatus:@"已分组，请到我的分组中进行设置"];
+   }
+    
 }
 
 
 #pragma mark - DeviceCollectionViewCellDelegate
 -(void)DeviceCollectionViewCell:(DeviceCollectionViewCell *)cell longTapWithIndexPath:(NSIndexPath *)indexPath{
     //长按
-    GizWifiDevice *dev = [self.dataSource objectAtIndex:indexPath.row];
-    NSString *type = dev.productKey;
-    if ([type isEqualToString:kProductKeys[@"六路彩灯"]]) {
-        MyDeviceCaiDengTurnViewController *vc = [MyDeviceCaiDengTurnViewController new];
-        vc.dev = dev;
-        [self.navigationController pushViewController:vc animated:YES];
-    }else if ([type isEqualToString:kProductKeys[@"滴定泵"]]){
-        DianDiBengViewController *vc = [DianDiBengViewController new];
-        vc.dev = dev;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-    else if ([type isEqualToString:kProductKeys[@"无线开关"]]){
-        MyDeviceWirelessTurnViewController *vc = [MyDeviceWirelessTurnViewController new];
-        vc.dev = dev;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-    else if ([type isEqualToString:kProductKeys[@"造浪泵"]]){
-        ZaoLangBengViewController *vc = [ZaoLangBengViewController new];
-        vc.dev = dev;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-    else if ([type isEqualToString:kProductKeys[@"水泵"]]){
-        ShuiBengViewController *vc = [ShuiBengViewController new];
-        vc.dev = dev;
-        [self.navigationController pushViewController:vc animated:YES];
+    id  object = self.dataSource[indexPath.row];
+    if ([object isKindOfClass:[GizWifiDevice class]]) {
+        GizWifiDevice *dev = (GizWifiDevice *)object;
+        NSString *type = dev.productKey;
+        if ([type isEqualToString:kProductKeys[@"六路彩灯"]]) {
+            MyDeviceCaiDengTurnViewController *vc = [MyDeviceCaiDengTurnViewController new];
+            vc.dev = dev;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if ([type isEqualToString:kProductKeys[@"滴定泵"]]){
+            DianDiBengViewController *vc = [DianDiBengViewController new];
+            vc.dev = dev;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else if ([type isEqualToString:kProductKeys[@"无线开关"]]){
+            MyDeviceWirelessTurnViewController *vc = [MyDeviceWirelessTurnViewController new];
+            vc.dev = dev;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else if ([type isEqualToString:kProductKeys[@"造浪泵"]]){
+            ZaoLangBengViewController *vc = [ZaoLangBengViewController new];
+            vc.dev = dev;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else if ([type isEqualToString:kProductKeys[@"水泵"]]){
+            ShuiBengViewController *vc = [ShuiBengViewController new];
+            vc.dev = dev;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
 }
 

@@ -2,8 +2,8 @@
 //  LoginViewController.m
 //  JieBao
 //
-//  Created by yangzhenmin on 2018/4/12.
-//  Copyright © 2018年 yangzhenmin. All rights reserved.
+//  Created by wen on 2018/4/12.
+//  Copyright © 2018年 wen. All rights reserved.
 //
 
 #import "LoginViewController.h"
@@ -11,7 +11,8 @@
 #import "SettingViewController.h"
 
 #import "LocalizedEngine.h"
-
+#import "LWHttpRequest.h"
+#import "AppDelegate.h"
 @interface LoginViewController ()<UITextFieldDelegate>
 
 
@@ -109,17 +110,60 @@
     
     [SVProgressHUD show];
     [SDKHelper shareInstance].loginBlock = ^(BOOL success) {
-        [SVProgressHUD dismiss];
         if (success) {
             UserModel *model = [UserHelper getCurrentUser];
             model.userName = weakself.PhoneTextField.text;
             model.psw = weakself.pwdTextField.text;
             [UserHelper setCurrentUser:model];
             
-            [[[UIApplication sharedApplication] delegate] performSelector:@selector(changeRootViewController) withObject:nil];
-        }else
-        {
-            //登录失败
+            [LWHttpRequest getGroupListDidLoadData:^(NSArray *result, NSError *err) {
+                if (!err) {
+                    SDKHELPER.groupsArray = [NSMutableArray arrayWithArray:result];
+                    dispatch_group_t dispatchGroup = dispatch_group_create();
+                    //获取队列
+                    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+                    //添加并发任务
+                    for (CustomDeviceGroup *group in result) {
+                        if ([group isKindOfClass:[CustomDeviceGroup class]]) {
+                            //获取分组详情
+                            dispatch_group_async(dispatchGroup, queue, ^{
+//                                sleep(1);
+                                [LWHttpRequest getGroupDetailsWithGroup:group didLoadData:^(id result, NSError *err) {
+                                    if (err) {
+                                        NSLog(@"获取分组详情失败 分组id:%@",group.gid);
+                                    }else{
+                                        
+                                    }
+                                }];
+                            });
+                            
+                        }
+                    }
+
+                    //任务执行完毕后，获取通知
+                    dispatch_group_notify(dispatchGroup, queue, ^{
+                        [SVProgressHUD dismiss];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            AppDelegate *delegate =  (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                            [delegate changeRootViewController];
+                        });
+                    });
+                    
+                    
+                  
+                    
+                }else{
+                    [SVProgressHUD dismiss];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        AppDelegate *delegate =  (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                        [delegate changeRootViewController];
+                    });
+                }
+                
+                
+            }];
+        }else{
+            [SVProgressHUD dismiss];
         }
     };
     [[GizWifiSDK sharedInstance] userLogin:self.PhoneTextField.text password:self.pwdTextField.text];

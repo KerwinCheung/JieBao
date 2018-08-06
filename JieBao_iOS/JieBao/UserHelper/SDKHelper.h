@@ -36,7 +36,17 @@
 /**当前账号绑定的设备数组 GizWifiDevice对象*/
 @property (nonatomic, strong) NSMutableArray *deviceArray;
 
+/**当前账号绑定的分组数组 CustomeGroup对象*/
+@property (nonatomic, strong) NSMutableArray *groupsArray;
+
 
 + (instancetype)shareInstance;
+
+/**
+ * 校验该设备是否已经加入进了分组中
+ * @param dev GizWifiDevice对象
+ * @return bool值
+ */
+-(BOOL)isExistingGroupWith:(GizWifiDevice *)dev;
 
 @end

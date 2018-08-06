@@ -113,7 +113,7 @@
 {
     self.timelb.text = [NSString stringWithFormat:@"设备连接中 %ld",self.timeCount--];
     if (self.timeCount == 0) {
-        self.timeCount = 60;
+        self.timeCount = 120;
         [self.helper dismissLoading];
     }
 }

@@ -275,4 +275,8 @@
     return _nextBtn;
 }
 
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.wifiPswText resignFirstResponder];
+}
+
 @end
