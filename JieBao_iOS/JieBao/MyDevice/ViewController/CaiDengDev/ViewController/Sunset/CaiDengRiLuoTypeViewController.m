@@ -99,7 +99,7 @@
     [self.tiplb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(CurrentDeviceSize(20)));
         make.top.equalTo(weakself.nightImgView.mas_bottom).offset(CurrentDeviceSize(20));
-        make.width.lessThanOrEqualTo(@280);
+        make.width.lessThanOrEqualTo(@300);
     }];
     
     [self.sliderBGView mas_makeConstraints:^(MASConstraintMaker *make) {
