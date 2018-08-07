@@ -11,7 +11,9 @@
 #import "BaseTableView.h"
 #import "UIViewController+Custom.h"
 #import "UIViewController+Custom.h"
-
+#import "CustomDevice.h"
+#import "CustomDeviceGroup.h"
+#import "LWHttpRequest.h"
 @interface EditAddGroupViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) UILabel *groupLb;
@@ -124,14 +126,25 @@
     }];
 }
 
+#pragma mark - method
 - (void)discoverDevice
 {
 
-    
     [self.dataSource removeAllObjects];
     for (GizWifiDevice *dev in SDKHELPER.deviceArray) {
         if ([dev.productKey isEqualToString:[UserHelper shareInstance].productSecretKey]) {
-            [self.dataSource addObject:dev];
+            BOOL isExisting = NO;
+            for (CustomDeviceGroup *group in SDKHELPER.groupsArray) {
+                for (CustomDevice *customDev in group.devs) {
+                    if ([customDev.did isEqualToString:dev.did]) {
+                        isExisting = YES;
+                        break;
+                    }
+                }
+            }
+            if (!isExisting) {
+                [self.dataSource addObject:dev];
+            }
         }
     }
     [self.tb reloadData];
@@ -175,12 +188,30 @@
         if (!data || error) {
             return;
         }
+        [self getAddDevsTimerListWithArray:self.temps];
         dispatch_async(dispatch_get_main_queue(), ^{
-
-            [HudHelper showSuccessWithStatus:@"添加成功"];
             [self.navigationController popToRootViewControllerAnimated:YES];
         });
     }];
+}
+
+-(void)getAddDevsTimerListWithArray:(NSArray *)addDevArray{
+    for (CustomDevice *dev in addDevArray) {
+        [LWHttpRequest getTimerListWithDid:dev.did didLoadData:^(NSArray *result, NSError *err) {
+            if (!err) {
+                for (DeviceCommonSchulder *sch in result) {
+                    if (sch.enabled) {
+                        //关闭定时器
+                        [LWHttpRequest closeTimerWithSchulder:sch didLoadData:^(id result, NSError *err) {
+                            if (err) {
+                                NSLog(@"关闭定时器失败，定时器：%@",sch.sid);
+                            }
+                        }];
+                    }
+                }
+            }
+        }];
+    }
 }
 
 #pragma mark - tableView Delegate|DataSource

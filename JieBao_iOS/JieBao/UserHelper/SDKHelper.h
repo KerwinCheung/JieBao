@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #define SDKHELPER [SDKHelper shareInstance]
-
+@class CustomDeviceGroup;
 @interface SDKHelper : NSObject<GizWifiSDKDelegate,GizDeviceGroupCenterDelegate,GizDeviceSharingDelegate,GizDeviceSchedulerCenterDelegate>
 
 @property (nonatomic, copy) RegisterCallBackBlock registerBlock;
@@ -49,4 +49,15 @@
  */
 -(BOOL)isExistingGroupWith:(GizWifiDevice *)dev;
 
+/**
+ * 将分组从本地移除
+ * @param group 要移除的分组对象
+ */
+-(void)removeGourpFromLocalWith:(CustomDeviceGroup *)group;
+
+/**
+ * 添加分组对象到本地
+ * @param group 要添加的分组对象
+ */
+-(void)addGroupToLocalWith:(CustomDeviceGroup *)group;
 @end

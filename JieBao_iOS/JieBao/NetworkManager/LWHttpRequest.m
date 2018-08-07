@@ -58,7 +58,61 @@
     }];
 }
 
+#pragma mark - 获取设备远端定时任务列表
++(void)getTimerListWithDid:(NSString *)did
+               didLoadData:(requestBlock)block{
+    [NetworkHelper sendRequest:nil Method:@"GET" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler?%@&limit=200",did] callback:^(NSData *data, NSError *error) {
+        if (!data || error) {
+            block(nil,error);
+            return ;
+        }
+        NSArray *list =  [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        NSMutableArray *timerListArray = [NSMutableArray array];
+        for (int i = 0; i< list.count; i++) {
+            DeviceCommonSchulder *sch = [DeviceCommonSchulder yy_modelWithJSON:list[i]];
+            [timerListArray addObject:sch];
+        }
+        block(timerListArray,nil);
+    }];
+}
 
+#pragma mark - 关闭定时器
++(void)closeTimerWithSchulder:(DeviceCommonSchulder *)schulder
+                didLoadData:(requestBlock)block{
+    
+    NSMutableDictionary *body = [NSMutableDictionary
+                                 dictionaryWithDictionary:@{@"attrs":@{@"color_white":[schulder.attrs objectForKey:@"color_white"],
+                                                                       @"color_blue1":[schulder.attrs objectForKey:@"color_blue1"],
+                                                                       @"color_blue2":[schulder.attrs objectForKey:@"color_blue2"],
+                                                                       @"color_green":[schulder.attrs objectForKey:@"color_green"],
+                                                                       @"color_red":[schulder.attrs objectForKey:@"color_red"],
+                                                                       @"volor_violet":[schulder.attrs objectForKey:@"volor_violet"],
+                                                                       @"Timer" :[schulder.attrs objectForKey:@"Timer"]
+                                                                       },
+                                                            @"time":schulder.time,
+                                                            @"repeat":@"mon,tue,wed,thu,fri,sat,sun",
+                                                            @"enabled":@(0),
+            @"remark":schulder.remark}];
+    
+        [body setObject:schulder.sid forKey:@"did"];
+
+    
+        [NetworkHelper sendRequest:body Method:@"PUT" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler/%@",schulder.sid] callback:^(NSData *data, NSError *error) {
+            
+            
+            
+            if (!data || error) {
+                block(nil,error);
+                return ;
+            }
+            NSDictionary *tempDic;
+            if (data != nil) {
+                tempDic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                NSLog(@"%@",tempDic);
+            }
+            block(tempDic,error);
+        }];
+}
 
 
 

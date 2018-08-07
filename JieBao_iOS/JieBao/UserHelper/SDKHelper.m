@@ -204,7 +204,7 @@ static SDKHelper *helper = nil;
     }
 }
 
-
+#pragma mark - 分组本地操作
 -(BOOL)isExistingGroupWith:(GizWifiDevice *)dev{
     BOOL isExisting = NO;
     for (NSInteger i = 0; i< SDKHELPER.groupsArray.count; i++) {
@@ -222,6 +222,32 @@ static SDKHelper *helper = nil;
     return isExisting;
 }
 
+-(void)removeGourpFromLocalWith:(CustomDeviceGroup *)group{
+    for (CustomDeviceGroup *tempGroup in SDKHELPER.groupsArray) {
+        if ([tempGroup.gid isEqualToString:group.gid]) {
+            [SDKHELPER.groupsArray removeObject:tempGroup];
+            break;
+        }
+    }
+}
 
+-(void)addGroupToLocalWith:(CustomDeviceGroup *)group{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        BOOL isExisting = NO;
+        for (NSInteger i = 0; i < SDKHELPER.groupsArray.count; i++) {
+            CustomDeviceGroup *tempGroup = [SDKHELPER.groupsArray objectAtIndex:i];
+            if ([tempGroup.gid isEqualToString:group.gid]) {
+                isExisting = YES;
+                [SDKHELPER.groupsArray replaceObjectAtIndex:i withObject:group];
+                break;
+            }
+        }
+        
+        if (!isExisting) {
+            //不存在则添加
+            [SDKHELPER.groupsArray addObject:group];
+        }
+    });
+}
 
 @end

@@ -13,14 +13,15 @@
 #import "GroupEditCell.h"
 #import "UIViewController+Custom.h"
 #import "GroupEditCell.h"
-
+#import "LWHttpRequest.h"
+#import "DeviceCommonSchulder.h"
 @interface AddDeviceViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) BaseTableView *tb;
 
-@property (nonatomic, strong) NSMutableArray<CustomDevice *> *dataSource;
+@property (nonatomic, strong) NSMutableArray <CustomDevice *>*dataSource;
 
-@property (nonatomic, strong) NSMutableArray<CustomDevice *> *temps;
+@property (nonatomic, strong) NSMutableArray <CustomDevice *>*temps;
 
 @property (nonatomic, strong) UIButton *sureBtn;
 @property (nonatomic,strong) UIView *sureBgView;
@@ -77,42 +78,31 @@
 
 - (void)discoverDevice
 {
-    [NetworkHelper sendRequest:nil Method:@"GET" Path:@"https://api.gizwits.com/app/bindings" callback:^(NSData *data, NSError *error) {
-        if (!data|| error) {
-            return ;
-        }
-        NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        if (!jsonObject) {
-            return;
-        }
-        for (NSDictionary *dic in (NSArray *)jsonObject[@"devices"]) {
-            CustomDevice *cdev = [CustomDevice yy_modelWithJSON:dic];
-            if (self.group.devs.count > 0) {
-                for (int i = 0;i<self.group.devs.count ;i++) {
-                    CustomDevice *dev = self.group.devs[i];
-                    if ([cdev.did isEqualToString:dev.did]) {
+    // 显示当前账号绑定且未添加进分组的设备
+    [self.dataSource removeAllObjects];
+    for (GizWifiDevice *dev in SDKHELPER.deviceArray) {
+        if ([dev.productKey isEqualToString:self.group.product_key]) {
+            BOOL isExisting = NO;
+            for (CustomDeviceGroup *group in SDKHELPER.groupsArray) {
+                for (CustomDevice *customDev in group.devs) {
+                    if ([customDev.did isEqualToString:dev.did]) {
+                        isExisting = YES;
                         break;
                     }
-                    if (i == self.group.devs.count - 1) {
-                        [self.dataSource addObject:cdev];
-                    }
                 }
-            }else
-            {
+            }
+            if (!isExisting) {
+                CustomDevice *cdev = [[CustomDevice alloc] initWithGizwifDev:dev];
                 [self.dataSource addObject:cdev];
             }
-            
         }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tb reloadData];
-        });
-    }];
+    }
+    
+     [self.tb reloadData];
 }
 
 - (void)confirm
 {
-    LHWeakSelf(self)
     NSMutableArray *ids = [NSMutableArray array];
     for (CustomDevice *dev in self.temps) {
         [ids addObject:dev.did];
@@ -122,17 +112,36 @@
         if (error) {
             return ;
         }
+        [self getAddDevsTimerListWithArray:self.temps];
         NSMutableArray *arr = [NSMutableArray arrayWithArray:self.group.devs];
         [arr addObjectsFromArray:self.temps];
         self.group.devs = arr;
         self.callback(self.group);
         dispatch_async(dispatch_get_main_queue(), ^{
-            [HudHelper showSuccessWithStatus:@"添加成功"];
             [self.navigationController popViewControllerAnimated:YES];
-
         });
     }];
 }
+
+-(void)getAddDevsTimerListWithArray:(NSArray *)addDevArray{
+    for (CustomDevice *dev in addDevArray) {
+        [LWHttpRequest getTimerListWithDid:dev.did didLoadData:^(NSArray *result, NSError *err) {
+            if (!err) {
+                for (DeviceCommonSchulder *sch in result) {
+                    if (sch.enabled) {
+                        //关闭定时器
+                        [LWHttpRequest closeTimerWithSchulder:sch didLoadData:^(id result, NSError *err) {
+                            if (err) {
+                                NSLog(@"关闭定时器失败，定时器：%@",sch.sid);
+                            }
+                        }];
+                    }
+                }
+            }
+        }];
+    }
+}
+
 
 #pragma mark - tableView Delegate|DataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
