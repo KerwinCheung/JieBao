@@ -43,7 +43,7 @@
 
 @property (nonatomic, strong) NSTimer *timer;
 
-@property (nonatomic, assign) NSInteger secs;
+@property (nonatomic, assign) int secs;
 
 
 @end
@@ -65,6 +65,22 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self.rePswTextView addTarget:self action:@selector(passConTextChange:) forControlEvents:UIControlEventEditingChanged];
     [self initUI];
+    
+    @weakify(self);
+    [[NSNotificationCenter defaultCenter] addObserverForName:UITextFieldTextDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note){
+        @strongify(self);
+        if ([note.object isEqual:self.usrTextView])
+        {
+            if ([UtilHelper isValidateMobile:self.usrTextView.text]) {
+                [self.getValidateBtn setBackgroundColor:[UIColor clearColor]];
+                [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
+                [self.getValidateBtn.titleLabel setTextColor:[UIColor whiteColor]];
+            }else{
+                [self.getValidateBtn setBackgroundColor:[UIColor grayColor]];
+                [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@" "] forState:UIControlStateNormal];
+            }
+        }
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -228,15 +244,17 @@
 
 - (void)timeCount
 {
+    self.getValidateBtn.enabled = NO;
     [self.getValidateBtn setBackgroundColor:[UIColor grayColor]];
     [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@" "] forState:UIControlStateNormal];
     [[GizWifiSDK sharedInstance] requestSendPhoneSMSCode:kAppSecrect phone:self.usrTextView.text];
-    [self.getValidateBtn setTitle:[NSString stringWithFormat:@"%ld秒后重发",self.secs--] forState:UIControlStateNormal];
+    [GizWifiSDK sharedInstance].delegate = self;
+    [self.getValidateBtn setTitle:[NSString stringWithFormat:@"%d秒后重发",self.secs--] forState:UIControlStateNormal];
     if (self.secs == 0) {
         self.secs = kTimeSecs;
         [self.timer invalidate];
         self.timer = nil;
-
+        self.getValidateBtn.enabled = YES;
         [self.getValidateBtn setBackgroundColor:[UIColor clearColor]];
         [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
         [self.getValidateBtn.titleLabel setTextColor:[UIColor whiteColor]];
@@ -274,12 +292,12 @@
         return;
     }
     if (self.pswTextView.text.length < 6 || self.pswTextView.text.length > 16) {
-        [HudHelper showStatus:@"请按提示输入密码"];
+        [HudHelper showStatus:@"请输入6~16位字符密码"];
         return;
     }
     
     if (![self.pswTextView.text isEqualToString:self.rePswTextView.text]) {
-        [HudHelper showStatus:@"确认密码一致"];
+        [HudHelper showStatus:@"确认密码不一致"];
         return;
     }
     
@@ -317,7 +335,7 @@
         }
     }else if([textField isEqual:self.validateTextView])
     {
-        if (self.validateTextView.text.length == 4) {
+        if (self.validateTextView.text.length == 6) {
             return NO;
         }
     }else if([textField isEqual:self.pswTextView])
@@ -332,6 +350,27 @@
         }
     }
     return YES;
+}
+
+#pragma mark GzWifiDelegate
+/**
+ 请求手机短信验证码的回调接口
+ @param wifiSDK 回调的 GizWifiSDK 单例
+ @param result 详细见 GizWifiErrorCode 枚举定义。result.code 为 GIZ_SDK_SUCCESS 表示成功，其他为失败。失败时，其他回调参数为 nil
+ @param token 请求短信验证码时得到的 token
+ @see 触发函数：[GizWifiSDK requestSendPhoneSMSCode:phone:]、[GizWifiSDK requestSendPhoneSMSCode:captchaId:captchaCode:phone:]
+ @see GizWifiErrorCode
+ */
+- (void)wifiSDK:(GizWifiSDK * _Nonnull)wifiSDK didRequestSendPhoneSMSCode:(NSError * _Nonnull)result token:(NSString * _Nullable)token{
+    if (result.code != GIZ_SDK_SUCCESS) {
+        [HudHelper showStatus:@"获取验证码失败" dismiss:2];
+    }
+    
+}
+
+#pragma mark - touchEven
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
 }
 
 #pragma mark - lazy init
@@ -392,7 +431,7 @@
 {
     if (!_pswTextView) {
         _pswTextView = [UITextField new];
-        _pswTextView.placeholder = @"请输入6-16位的密码";
+        _pswTextView.placeholder = @"请输入6~16位字符密码";
         _pswTextView.delegate = self;
         _pswTextView.font = [UIFont sf_systemFontOfSize:13];
         _pswTextView.clearButtonMode = UITextFieldViewModeWhileEditing;

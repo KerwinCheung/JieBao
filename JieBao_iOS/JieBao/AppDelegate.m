@@ -32,10 +32,8 @@
     [GizWifiSDK startWithAppInfo:@{@"appId":kAppId,@"appSecret":kAppSecrect} productInfo:nil cloudServiceInfo:nil autoSetDeviceDomain:NO];
     
     UIStoryboard *loginSB = [UIStoryboard storyboardWithName:@"LoginStoryboard" bundle:nil];
-    LoginViewController *loginVC = [loginSB instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    UINavigationController *vc = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    UIViewController *vc = [loginSB instantiateViewControllerWithIdentifier:@"NavigationController"];
     self.window.rootViewController = vc;
-    
     return YES;
 }
 

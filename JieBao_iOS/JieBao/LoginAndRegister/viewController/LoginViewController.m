@@ -13,6 +13,7 @@
 #import "LocalizedEngine.h"
 #import "LWHttpRequest.h"
 #import "AppDelegate.h"
+
 @interface LoginViewController ()<UITextFieldDelegate>
 
 
@@ -30,17 +31,14 @@
 
 @implementation LoginViewController
 
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.PhoneTextField.text = [UserHelper getCurrentUser].userName;
     self.pwdTextField.text = [UserHelper getCurrentUser].psw;
     [self registerNoti];
@@ -58,11 +56,10 @@
 }
 
 -(void)registerNoti{
-    
      [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textFieldChanged) name:UITextFieldTextDidChangeNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name: UIKeyboardWillShowNotification object:nil];
-    
+
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name: UIKeyboardWillHideNotification object:nil];
 }
 
@@ -214,14 +211,13 @@
 }
 
 #pragma mark - textField 监听
--(void)textFieldChanged{
-    
+-(void)textFieldChanged{    
     if (_PhoneTextField.text.length>0 && _pwdTextField.text.length>0) {
         _loginBtn.enabled = YES;
     }else{
         _loginBtn.enabled = NO;
     }
-    
+
     if (_PhoneTextField.text.length>11) {
         _PhoneTextField.text=[_PhoneTextField.text substringToIndex:11];
     }
@@ -230,6 +226,7 @@
     }
 }
 
+#pragma mark - textFieldDelegate
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self.PhoneTextField resignFirstResponder];
     [self.pwdTextField resignFirstResponder];

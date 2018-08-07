@@ -11,7 +11,7 @@
 #include "UIViewController+Custom.h"
 
 
-@interface RegisterViewController ()<UITextFieldDelegate>
+@interface RegisterViewController ()<UITextFieldDelegate,GizWifiSDKDelegate>
 
 @property (nonatomic, strong) UIImageView *phoneImgView;
 
@@ -64,6 +64,25 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self.rePswTextView addTarget:self action:@selector(passConTextChange:) forControlEvents:UIControlEventEditingChanged];
     [self initUI];
+    
+    [self.getValidateBtn setBackgroundColor:[UIColor grayColor]];
+    [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@" "] forState:UIControlStateNormal];
+    
+    @weakify(self);
+    [[NSNotificationCenter defaultCenter] addObserverForName:UITextFieldTextDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note){
+        @strongify(self);
+        if ([note.object isEqual:self.usrTextView])
+        {
+            if ([UtilHelper isValidateMobile:self.usrTextView.text]) {
+                [self.getValidateBtn setBackgroundColor:[UIColor clearColor]];
+                [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
+                [self.getValidateBtn.titleLabel setTextColor:[UIColor whiteColor]];
+            }else{
+                [self.getValidateBtn setBackgroundColor:[UIColor grayColor]];
+                [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@" "] forState:UIControlStateNormal];
+            }
+        }
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -224,10 +243,10 @@
         [HudHelper showErrorWithStatus:@"请输入正确的手机号码"];
         return;
     }
-    if (self.timer) {
-        [self.timer invalidate];
-        self.timer = nil;
-    }
+//    if (self.timer) {
+//        [self.timer invalidate];
+//        self.timer = nil;
+//    }
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeCount) userInfo:nil repeats:YES];
     [self.getValidateBtn setBackgroundImage:nil forState:UIControlStateNormal];
@@ -236,15 +255,17 @@
 
 - (void)timeCount
 {
+    self.getValidateBtn.enabled = NO;
     [self.getValidateBtn setBackgroundColor:[UIColor grayColor]];
     [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@" "] forState:UIControlStateNormal];
     [[GizWifiSDK sharedInstance] requestSendPhoneSMSCode:kAppSecrect phone:self.usrTextView.text];
+    [GizWifiSDK sharedInstance].delegate = self;
     [self.getValidateBtn setTitle:[NSString stringWithFormat:@"%ld秒后重发",self.secs--] forState:UIControlStateNormal];
     if (self.secs == 0) {
         self.secs = kTimeSecs;
         [self.timer invalidate];
         self.timer = nil;
-        
+        self.getValidateBtn.enabled = YES;
        [self.getValidateBtn setBackgroundColor:[UIColor clearColor]];
        [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
        [self.getValidateBtn.titleLabel setTextColor:[UIColor whiteColor]];
@@ -283,7 +304,7 @@
         return;
     }
     if (self.pswTextView.text.length < 6 || self.pswTextView.text.length > 16) {
-        [HudHelper showStatus:@"请按提示输入密码"];
+        [HudHelper showStatus:@"请输入6~16位字符密码"];
         return;
     }
     
@@ -328,7 +349,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if ([textField isEqual:self.usrTextView]) {
-        if (self.usrTextView.text.length == 11) {
+        if (self.usrTextView.text.length == 11 && ![string isEqualToString:@""]) {
             return NO;
         }
     }else if([textField isEqual:self.validateTextView])
@@ -348,6 +369,27 @@
         }
     }
     return YES;
+}
+
+#pragma mark GzWifiDelegate
+/**
+ 请求手机短信验证码的回调接口
+ @param wifiSDK 回调的 GizWifiSDK 单例
+ @param result 详细见 GizWifiErrorCode 枚举定义。result.code 为 GIZ_SDK_SUCCESS 表示成功，其他为失败。失败时，其他回调参数为 nil
+ @param token 请求短信验证码时得到的 token
+ @see 触发函数：[GizWifiSDK requestSendPhoneSMSCode:phone:]、[GizWifiSDK requestSendPhoneSMSCode:captchaId:captchaCode:phone:]
+ @see GizWifiErrorCode
+ */
+- (void)wifiSDK:(GizWifiSDK * _Nonnull)wifiSDK didRequestSendPhoneSMSCode:(NSError * _Nonnull)result token:(NSString * _Nullable)token{
+    if (result.code != GIZ_SDK_SUCCESS) {
+        [HudHelper showStatus:@"获取验证码失败" dismiss:2];
+    }
+    
+}
+
+#pragma mark - touchEven
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
 }
 
 #pragma mark - lazy init
