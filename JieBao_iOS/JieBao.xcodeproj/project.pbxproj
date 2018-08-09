@@ -882,7 +882,6 @@
 		E0D3DC89207F327A00F14860 /* JieBao */ = {
 			isa = PBXGroup;
 			children = (
-				A28D48BB211859B100590230 /* NetworkManager */,
 				E0D3DC8A207F327A00F14860 /* AppDelegate.h */,
 				E0D3DC8B207F327A00F14860 /* AppDelegate.m */,
 				E0D3DC8D207F327A00F14860 /* ViewController.h */,
@@ -890,6 +889,7 @@
 				E0D3DC93207F327A00F14860 /* Assets.xcassets */,
 				E0D3DC95207F327A00F14860 /* LaunchScreen.storyboard */,
 				E0D3DC99207F327A00F14860 /* main.m */,
+				A28D48BB211859B100590230 /* NetworkManager */,
 				A2F219E020FDEB1C00180CDC /* DataPointModel */,
 				E0D3DCBC207F37F300F14860 /* Base */,
 				E0ECF05F20883554001530CE /* loading.gif */,
@@ -1495,6 +1495,7 @@
 				E0D3DC85207F327A00F14860 /* Resources */,
 				2093CC990DD2F6DAE3EA93CF /* [CP] Copy Pods Resources */,
 				E0B164D020A1A6B5005D294B /* Embed Frameworks */,
+				FE03B36E4839ABAF08C6C1AF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1513,6 +1514,8 @@
 				E0D3DC9B207F327B00F14860 /* Sources */,
 				E0D3DC9C207F327B00F14860 /* Frameworks */,
 				E0D3DC9D207F327B00F14860 /* Resources */,
+				C6C70B6DC647595BF3F5C2BF /* [CP] Embed Pods Frameworks */,
+				EAB063FF3ECAD730EC4767A1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1532,6 +1535,8 @@
 				E0D3DCA6207F327B00F14860 /* Sources */,
 				E0D3DCA7207F327B00F14860 /* Frameworks */,
 				E0D3DCA8207F327B00F14860 /* Resources */,
+				84B55449D464452DB00C2D37 /* [CP] Embed Pods Frameworks */,
+				4463E199B30288E22991301C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1659,15 +1664,32 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-JieBao/Pods-JieBao-resources.sh",
+				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBao/Pods-JieBao-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4463E199B30288E22991301C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoUITests/Pods-JieBaoUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5F9A722C73A36F28F96DE497 /* [CP] Check Pods Manifest.lock */ = {
@@ -1688,6 +1710,36 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		84B55449D464452DB00C2D37 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoUITests/Pods-JieBaoUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C6C70B6DC647595BF3F5C2BF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoTests/Pods-JieBaoTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C9A002C1C316B2084709305D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1704,6 +1756,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EAB063FF3ECAD730EC4767A1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBaoTests/Pods-JieBaoTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FE03B36E4839ABAF08C6C1AF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JieBao/Pods-JieBao-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

@@ -92,15 +92,17 @@
         [HudHelper showErrorWithStatus:@"请输入分享人的账号"];
         return;
     }
-    [SDKHelper shareInstance].shareCallBackBlock = ^(BOOL success) {
+ 
+    SDKHELPER.shareCallBackBlock = ^(BOOL success, NSInteger errcode) {
         if (success) {
-            [HudHelper showSuccessWithStatus:@"分享成功"];
-        }else
-        {
-            [HudHelper showErrorWithStatus:@"分享失败"];
+            [HudHelper showSuccessWithStatus:[NSString stringWithFormat:@"已向\"%@\"发送了一个设备分享邀请",self.shareNameTv.text]];
+        }else{
+            //            [HudHelper showErrorWithStatus:@"分享失败"];
         }
     };
+    
     [GizDeviceSharing sharingDevice:[UserHelper getCurrentUser].token deviceID:self.dev.did sharingWay:GizDeviceSharingByNormal guestUser:self.shareNameTv.text guestUserType:GizUserPhone];
+    
 //    [self alertShowMessage:[NSString stringWithFormat:@"已向\"%@\"发送了一个设备分享邀请",self.shareNameTv.text] title:@"提示" confirmBtnText:@"确定" confirmCallback:nil];
     
 }
@@ -133,6 +135,11 @@
     }
     return _nameBgView;
 }
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.shareNameTv resignFirstResponder];
+}
+
 @end
 
 

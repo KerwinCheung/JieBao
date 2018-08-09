@@ -93,7 +93,7 @@
     [self.tb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(@0);
         make.top.equalTo(weakself.subLb.mas_bottom).offset(CurrentDeviceSize(5));
-        make.height.equalTo(@(5*CurrentDeviceSize(44)));
+        make.height.equalTo(@(5*60));
     }];
 }
 
@@ -121,7 +121,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CurrentDeviceSize(44);
+    return 60;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

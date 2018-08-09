@@ -25,7 +25,9 @@ typedef void(^UnBindDeviceCallBackBlock)(BOOL success,NSInteger errcode);
 
 typedef void(^DiscoverDeviceCallBackBlock)(NSArray * devs);
 
-typedef void(^ShareCallBackBlock)(BOOL success);
+typedef void(^ShareCallBackBlock)(BOOL success,NSInteger errcode);
+
+typedef void(^GetShareListCallBackBlock)(NSError *result,NSArray *list);
 
 typedef void(^ScheduleCallBackBlock)(NSArray *list);
 

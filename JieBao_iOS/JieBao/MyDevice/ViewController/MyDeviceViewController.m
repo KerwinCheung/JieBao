@@ -171,7 +171,8 @@
 }
 
 -(void)getShareTheInvitation{
-    [GizDeviceSharing setDelegate:self];
+    
+//    [GizDeviceSharing setDelegate:self];
     [GizDeviceSharing getDeviceSharingInfos:[UserHelper getCurrentUser].token sharingType:GizDeviceSharingToMe deviceID:nil];
 }
 
@@ -366,6 +367,7 @@
         
     }
 }
+
 
 // 实现接受分享邀请的回调
 - (void)didAcceptDeviceSharing:(NSError*)result sharingID:(NSInteger)sharingID {

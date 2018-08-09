@@ -180,15 +180,25 @@ static SDKHelper *helper = nil;
 {
     if(result.code == GIZ_SDK_SUCCESS) {
         if (self.shareCallBackBlock) {
-            self.shareCallBackBlock(YES);
+            self.shareCallBackBlock(YES,0);
+        }
+    }else if (result.code == 9081 ){
+        [HudHelper showErrorWithStatus:@"您不是管理员不能分享此设备"];
+        if (self.shareCallBackBlock) {
+            self.shareCallBackBlock(NO,result.code);
         }
     }else{
         [HudHelper showErrorWithStatus:[NSString stringWithFormat:@"分享失败%ld",result.code]];
         if (self.shareCallBackBlock) {
-            self.shareCallBackBlock(NO);
+            self.shareCallBackBlock(NO,result.code);
         }
     }
 }
+
+-(void)didGetDeviceSharingInfos:(NSError *)result deviceID:(NSString *)deviceID deviceSharingInfos:(NSArray<GizDeviceSharingInfo *> *)deviceSharingInfos{
+    
+}
+
 
 - (void)didUpdateSchedulers:(GizWifiDevice*)schedulerOwner result:(NSError*)result schedulerList:(NSArray*)schedulerList {
     if(result.code == GIZ_SDK_SUCCESS) {

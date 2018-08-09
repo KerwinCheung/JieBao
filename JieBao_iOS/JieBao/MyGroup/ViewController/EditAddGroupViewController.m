@@ -156,6 +156,10 @@
         [HudHelper showErrorWithStatus:@"请选择设备"];
         return;
     }
+    if (self.groupNameTv.text.length == 0) {
+        [HudHelper showErrorWithStatus:@"请输入分组名称"];
+        return;
+    }
     NSString *path = @"https://api.gizwits.com/app/group";
     NSString *method = @"POST";
     NSDictionary *body = @{
