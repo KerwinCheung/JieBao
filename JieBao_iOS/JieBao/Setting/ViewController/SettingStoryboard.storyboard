@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -35,7 +36,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eEy-tO-Si3" userLabel="name">
-                                                    <rect key="frame" x="25" y="35" width="155" height="15"/>
+                                                    <rect key="frame" x="25" y="35" width="165" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="15" id="cIl-ys-cfh"/>
                                                     </constraints>
@@ -84,7 +85,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="y2P-Su-8jZ" secondAttribute="trailing" id="B7V-2P-sXJ"/>
                                                 <constraint firstAttribute="trailing" secondItem="lS5-mK-gKc" secondAttribute="trailing" constant="25" id="DTu-xF-37v"/>
                                                 <constraint firstItem="x4h-53-Atg" firstAttribute="top" secondItem="y2P-Su-8jZ" secondAttribute="bottom" id="NmJ-lo-fqX"/>
-                                                <constraint firstItem="Lw4-6d-SlB" firstAttribute="leading" secondItem="eEy-tO-Si3" secondAttribute="trailing" constant="20" id="R0U-bt-JBF"/>
+                                                <constraint firstItem="Lw4-6d-SlB" firstAttribute="leading" secondItem="eEy-tO-Si3" secondAttribute="trailing" constant="10" id="R0U-bt-JBF"/>
                                                 <constraint firstItem="eEy-tO-Si3" firstAttribute="top" secondItem="lS5-mK-gKc" secondAttribute="bottom" constant="10" id="U0u-jw-j78"/>
                                                 <constraint firstItem="eEy-tO-Si3" firstAttribute="centerY" secondItem="Lw4-6d-SlB" secondAttribute="centerY" id="UsU-uy-02b"/>
                                                 <constraint firstAttribute="bottom" secondItem="x4h-53-Atg" secondAttribute="bottom" id="UvE-jH-9BW"/>
@@ -153,6 +154,7 @@
                             <constraint firstAttribute="trailing" secondItem="qe0-Bn-H2J" secondAttribute="trailing" id="ovH-lQ-Tj5"/>
                             <constraint firstAttribute="trailing" secondItem="AHh-Cg-aJM" secondAttribute="trailing" id="qbR-0r-gdp"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="itG-UJ-TJa"/>
                     </view>
                     <connections>
                         <outlet property="noDataView" destination="qe0-Bn-H2J" id="pii-Se-wWQ"/>

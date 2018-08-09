@@ -18,14 +18,44 @@
 -(void)setShareModel:(ShareModel *)shareModel{
     _shareModel = shareModel;
     self.phoneLabel.text = shareModel.phone;
+    NSString *currentLanguage = [UtilHelper getCurrentLanguage];
+
     if (shareModel.dev_alias.length >0) {
-        self.devNameLabel.text = [NSString stringWithFormat:@"设备名:%@",shareModel.dev_alias];
+        if ([currentLanguage containsString:@"zh"]) {
+            self.devNameLabel.text = [NSString stringWithFormat:@"设备名:%@",shareModel.dev_alias];
+        }else{
+            self.devNameLabel.text = [NSString stringWithFormat:@"The device Name:%@",shareModel.dev_alias];
+        }
+        
     }else{
-        self.devNameLabel.text = [NSString stringWithFormat:@"设备名:%@",shareModel.product_name];
+        GizWifiDevice *device ;
+        for (GizWifiDevice *dev in SDKHELPER.deviceArray) {
+            if ([dev.did isEqualToString:shareModel.did]) {
+                device = dev;
+                break;
+            }
+        }
+        NSRange range = NSMakeRange(device.macAddress.length - 7, 6);
+        NSString *lastMacStr = [device.macAddress substringWithRange:range];
+        NSString *deaultStr = [NSString stringWithFormat:@"%@%@",[UtilHelper getDefaultNameStrPrefixWithProductKey:device.productKey],lastMacStr];
+        
+        if ([currentLanguage containsString:@"zh"]) {
+            self.devNameLabel.text = [NSString stringWithFormat:@"设备名:%@",deaultStr];
+        }else{
+            self.devNameLabel.text = [NSString stringWithFormat:@"The device Name:%@",deaultStr];
+        }
+        
+        
     }
     for (GizWifiDevice *dev in SDKHELPER.deviceArray) {
         if ([dev.did isEqualToString:shareModel.did]) {
-            self.macLabel.text = [NSString stringWithFormat:@"设备Mac: %@",dev.macAddress];
+            
+            if ([currentLanguage containsString:@"zh"]) {
+                self.macLabel.text = [NSString stringWithFormat:@"设备Mac: %@",dev.macAddress];
+            }else{
+                self.macLabel.text = [NSString stringWithFormat:@"The device Mac: %@",dev.macAddress];
+            }
+            
             break;
         }
     }

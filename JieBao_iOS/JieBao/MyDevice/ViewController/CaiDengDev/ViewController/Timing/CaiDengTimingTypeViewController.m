@@ -246,6 +246,8 @@
     }];
     self.confirmBtn.hidden = !self.isEdit;
     [self.tb reloadData];
+    
+    
 }
 
 

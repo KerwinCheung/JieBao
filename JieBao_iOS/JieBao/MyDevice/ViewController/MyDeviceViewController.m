@@ -174,6 +174,29 @@
     
 //    [GizDeviceSharing setDelegate:self];
     [GizDeviceSharing getDeviceSharingInfos:[UserHelper getCurrentUser].token sharingType:GizDeviceSharingToMe deviceID:nil];
+    SDKHELPER.getShareListCallBackBlock = ^(NSError *result, NSArray *list) {
+        if (result.code == GIZ_SDK_SUCCESS) {
+            NSInteger your_sharing_id = -1;
+            GizDeviceSharingInfo *devcieShare;
+            for (int i = 0; i < list.count; i++) {
+                GizDeviceSharingInfo* mDeviceSharing = [list objectAtIndex:i];
+                if (mDeviceSharing.status == GizDeviceSharingNotAccepted) {
+                    your_sharing_id = mDeviceSharing.id;
+                    devcieShare = mDeviceSharing;
+                    break;
+                }
+            }
+            
+            // 接受邀请
+            if (your_sharing_id != -1) {
+                
+                [self alertShowMessage:[NSString stringWithFormat:@"账号：%@向您分享了一台设备?",devcieShare.userInfo.phone] title:@"提示" leftBtnText:@"取消" rightBtnText:@"接受分享" leftCallback:nil rightCallback:^{
+                    [GizDeviceSharing acceptDeviceSharing:[UserHelper getCurrentUser].token sharingID:your_sharing_id accept:YES];
+                }];
+                
+            }
+        }
+    };
 }
 
 
@@ -341,32 +364,29 @@
     }
 }
 
--(void)didGetDeviceSharingInfos:(NSError *)result deviceID:(NSString *)deviceID deviceSharingInfos:(NSArray<GizDeviceSharingInfo *> *)deviceSharingInfos{
-    if (result.code == GIZ_SDK_SUCCESS) {
-        NSInteger your_sharing_id = -1;
-        GizDeviceSharingInfo *devcieShare;
-        for (int i = 0; i < deviceSharingInfos.count; i++) {
-            GizDeviceSharingInfo* mDeviceSharing = [deviceSharingInfos objectAtIndex:i];
-            if (mDeviceSharing.status == GizDeviceSharingNotAccepted) {
-                your_sharing_id = mDeviceSharing.id;
-                devcieShare = mDeviceSharing;
-                break;
-            }
-        }
-        
-        // 接受邀请
-        if (your_sharing_id != -1) {
-            
-            [self alertShowMessage:[NSString stringWithFormat:@"账号：%@向您分享了一台设备?",devcieShare.userInfo.phone] title:@"提示" leftBtnText:@"取消" rightBtnText:@"接受分享" leftCallback:nil rightCallback:^{
-                [GizDeviceSharing acceptDeviceSharing:[UserHelper getCurrentUser].token sharingID:your_sharing_id accept:YES];
-            }];
-            
-        }
-    } else {
-        // 获取失败
-        
-    }
-}
+//-(void)didGetDeviceSharingInfos:(NSError *)result deviceID:(NSString *)deviceID deviceSharingInfos:(NSArray<GizDeviceSharingInfo *> *)deviceSharingInfos{
+//    if (result.code == GIZ_SDK_SUCCESS) {
+//        NSInteger your_sharing_id = -1;
+//        GizDeviceSharingInfo *devcieShare;
+//        for (int i = 0; i < deviceSharingInfos.count; i++) {
+//            GizDeviceSharingInfo* mDeviceSharing = [deviceSharingInfos objectAtIndex:i];
+//            if (mDeviceSharing.status == GizDeviceSharingNotAccepted) {
+//                your_sharing_id = mDeviceSharing.id;
+//                devcieShare = mDeviceSharing;
+//                break;
+//            }
+//        }
+//
+//        // 接受邀请
+//        if (your_sharing_id != -1) {
+//
+//            [self alertShowMessage:[NSString stringWithFormat:@"账号：%@向您分享了一台设备?",devcieShare.userInfo.phone] title:@"提示" leftBtnText:@"取消" rightBtnText:@"接受分享" leftCallback:nil rightCallback:^{
+//                [GizDeviceSharing acceptDeviceSharing:[UserHelper getCurrentUser].token sharingID:your_sharing_id accept:YES];
+//            }];
+//
+//        }
+//    }
+//}
 
 
 // 实现接受分享邀请的回调

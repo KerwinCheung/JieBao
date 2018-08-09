@@ -63,10 +63,10 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self.rePswTextView addTarget:self action:@selector(passConTextChange:) forControlEvents:UIControlEventEditingChanged];
+    
     [self initUI];
     
-    [self.getValidateBtn setBackgroundColor:[UIColor grayColor]];
-    [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@" "] forState:UIControlStateNormal];
+    self.getValidateBtn.enabled = NO;
     
     @weakify(self);
     [[NSNotificationCenter defaultCenter] addObserverForName:UITextFieldTextDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note){
@@ -74,12 +74,10 @@
         if ([note.object isEqual:self.usrTextView])
         {
             if ([UtilHelper isValidateMobile:self.usrTextView.text]) {
-                [self.getValidateBtn setBackgroundColor:[UIColor clearColor]];
-                [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
+                self.getValidateBtn.enabled = YES;
                 [self.getValidateBtn.titleLabel setTextColor:[UIColor whiteColor]];
             }else{
-                [self.getValidateBtn setBackgroundColor:[UIColor grayColor]];
-                [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@" "] forState:UIControlStateNormal];
+                self.getValidateBtn.enabled = NO;
             }
         }
     }];
@@ -98,6 +96,11 @@
                                                   kCustomNaviBarLeftImgKey:@"back",
                                                   kCustomNaviBarTitleKey:@"注册"
                                                   }];
+}
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [self.timer invalidate];
+    self.timer = nil;
 }
 
 - (void)dealloc
@@ -243,31 +246,22 @@
         [HudHelper showErrorWithStatus:@"请输入正确的手机号码"];
         return;
     }
-//    if (self.timer) {
-//        [self.timer invalidate];
-//        self.timer = nil;
-//    }
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeCount) userInfo:nil repeats:YES];
-    [self.getValidateBtn setBackgroundImage:nil forState:UIControlStateNormal];
-    [self.getValidateBtn setBackgroundColor:[UIColor grayColor]];
+    [[GizWifiSDK sharedInstance] requestSendPhoneSMSCode:kAppSecrect phone:self.usrTextView.text];
+    [GizWifiSDK sharedInstance].delegate = self;
+
 }
 
 - (void)timeCount
 {
     self.getValidateBtn.enabled = NO;
-    [self.getValidateBtn setBackgroundColor:[UIColor grayColor]];
-    [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@" "] forState:UIControlStateNormal];
-    [[GizWifiSDK sharedInstance] requestSendPhoneSMSCode:kAppSecrect phone:self.usrTextView.text];
-    [GizWifiSDK sharedInstance].delegate = self;
     [self.getValidateBtn setTitle:[NSString stringWithFormat:@"%ld秒后重发",self.secs--] forState:UIControlStateNormal];
     if (self.secs == 0) {
         self.secs = kTimeSecs;
         [self.timer invalidate];
         self.timer = nil;
         self.getValidateBtn.enabled = YES;
-       [self.getValidateBtn setBackgroundColor:[UIColor clearColor]];
-       [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
        [self.getValidateBtn.titleLabel setTextColor:[UIColor whiteColor]];
        [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     }
@@ -295,21 +289,21 @@
 - (void)registerBtnCilcked
 {
     if (self.usrTextView.text.length != 11 || ![UtilHelper isValidateMobile:self.usrTextView.text]) {
-        [HudHelper showStatus:@"请输入正确手机号码"];
+        [HudHelper showErrorWithStatus:@"请输入正确手机号码"];
         return;
     }
     
     if (self.validateTextView.text.length == 0) {
-        [HudHelper showStatus:@"请输入验证码"];
+        [HudHelper showErrorWithStatus:@"请输入验证码"];
         return;
     }
     if (self.pswTextView.text.length < 6 || self.pswTextView.text.length > 16) {
-        [HudHelper showStatus:@"请输入6~16位字符密码"];
+        [HudHelper showErrorWithStatus:@"请输入6~16位字符密码"];
         return;
     }
     
     if (![self.pswTextView.text isEqualToString:self.rePswTextView.text]) {
-        [HudHelper showStatus:@"确认密码一致"];
+        [HudHelper showErrorWithStatus:@"确认密码一致"];
         return;
     }
     
@@ -371,6 +365,8 @@
     return YES;
 }
 
+
+
 #pragma mark GzWifiDelegate
 /**
  请求手机短信验证码的回调接口
@@ -382,7 +378,13 @@
  */
 - (void)wifiSDK:(GizWifiSDK * _Nonnull)wifiSDK didRequestSendPhoneSMSCode:(NSError * _Nonnull)result token:(NSString * _Nullable)token{
     if (result.code != GIZ_SDK_SUCCESS) {
-        [HudHelper showStatus:@"获取验证码失败" dismiss:2];
+        [HudHelper showErrorWithStatus:@"获取验证码失败"];
+        self.secs = kTimeSecs;
+        [self.timer invalidate];
+        self.timer = nil;
+        self.getValidateBtn.enabled = YES;
+        [self.getValidateBtn.titleLabel setTextColor:[UIColor whiteColor]];
+        [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     }
     
 }

@@ -30,6 +30,8 @@
 
 @property (nonatomic, copy) ScheduleCallBackBlock scheduleCallBackBlock;
 
+@property (nonatomic, copy) GetShareListCallBackBlock getShareListCallBackBlock;
+
 /**设备状态字典    key 为设备did value 为数据点模型*/
 @property (nonatomic, strong) NSMutableDictionary *statusDic;
 

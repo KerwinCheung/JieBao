@@ -196,7 +196,7 @@ static SDKHelper *helper = nil;
 }
 
 -(void)didGetDeviceSharingInfos:(NSError *)result deviceID:(NSString *)deviceID deviceSharingInfos:(NSArray<GizDeviceSharingInfo *> *)deviceSharingInfos{
-    
+    self.getShareListCallBackBlock(result, deviceSharingInfos);
 }
 
 

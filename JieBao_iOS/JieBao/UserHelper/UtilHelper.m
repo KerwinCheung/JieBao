@@ -166,6 +166,11 @@
     return str;
 }
 
++(NSString *)getCurrentLanguage{
+    NSArray *languages = [NSLocale preferredLanguages];
+    NSString *currentLanguage = [languages objectAtIndex:0];
+    return currentLanguage;
+}
 
 
 @end

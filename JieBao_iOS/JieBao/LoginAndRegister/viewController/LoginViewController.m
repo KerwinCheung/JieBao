@@ -41,6 +41,12 @@
     [super viewWillAppear:animated];
     self.PhoneTextField.text = [UserHelper getCurrentUser].userName;
     self.pwdTextField.text = [UserHelper getCurrentUser].psw;
+    if (self.PhoneTextField.text.length > 0 && self.pwdTextField.text.length >0) {
+        self.loginBtn.enabled = YES;
+    }else{
+        self.loginBtn.enabled = NO;
+    }
+    
     [self registerNoti];
     NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
     [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
