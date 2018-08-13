@@ -128,7 +128,7 @@
         self.img.image = [SelectImageHelper selectDeviceNoConnectedWithTpye:self.dataDic.productKey];
     }
     
-    NSRange range = NSMakeRange(self.dataDic.macAddress.length - 7, 6);
+    NSRange range = NSMakeRange(self.dataDic.macAddress.length - 6, 6);
     NSString *lastMacStr = [self.dataDic.macAddress substringWithRange:range];
     NSString *deaultStr = [NSString stringWithFormat:@"%@%@",[UtilHelper getDefaultNameStrPrefixWithProductKey:self.dataDic.productKey],lastMacStr];
     

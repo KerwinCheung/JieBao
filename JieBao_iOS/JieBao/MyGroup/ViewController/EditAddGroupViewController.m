@@ -203,6 +203,10 @@
     for (CustomDevice *dev in addDevArray) {
         [LWHttpRequest getTimerListWithDid:dev.did didLoadData:^(NSArray *result, NSError *err) {
             if (!err) {
+                if (!result) {
+                    return ;
+                }
+                
                 for (DeviceCommonSchulder *sch in result) {
                     if (sch.enabled) {
                         //关闭定时器

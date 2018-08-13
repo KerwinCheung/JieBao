@@ -100,7 +100,6 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self initUI];
-    [self getTiming];
 
    
     
@@ -110,6 +109,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 {
     [super viewWillAppear:animated];
     [self.tabBarController.tabBar setHidden:YES];
+    [self getTiming];
     LHWeakSelf(self)
     ActionBlock leftAction = ^(UIButton *btn){
         [weakself.navigationController popViewControllerAnimated:YES];
@@ -121,7 +121,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     };
     NSString *title = nil;
     if (self.dev) {
-        NSRange range = NSMakeRange(self.dev.macAddress.length - 7, 6);
+        NSRange range = NSMakeRange(self.dev.macAddress.length - 6, 6);
         NSString *lastMacStr = [self.dev.macAddress substringWithRange:range];
         NSString *deaultStr = [NSString stringWithFormat:@"%@%@",[UtilHelper getDefaultNameStrPrefixWithProductKey:self.dev.productKey],lastMacStr];
         title = self.dev.alias.length==0?deaultStr:self.dev.alias;
@@ -504,7 +504,6 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
                 }
             }];
         }else{
-//            [HudHelper showErrorWithStatus:@"当前没有设置定时任务"];
             @strongify(controlDic);
 
             controlDic = @{@"mode":modeNum};
@@ -625,9 +624,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 - (void)device:(GizWifiDevice *)device didReceiveData:(NSError *)result data:(NSDictionary<NSString *,id> *)dataMap withSN:(NSNumber *)sn
 {
     if(result.code == GIZ_SDK_SUCCESS) {
-        if (sn.integerValue == 999) {
-            NSLog(@"发送成功了");
-        }
+       
         if ([sn integerValue] == 0) {
 //            NSLog(@"属性%@",dataMap);
             NSDictionary *data = dataMap[@"data"];
@@ -648,6 +645,12 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
             BOOL turnStatus = [data[@"switch"] boolValue];
             NSInteger modeStatus = [data[@"mode"] integerValue];
             [self setTurnBtnWhithStatus:turnStatus currentViewWhith:modeStatus];
+            
+            if ([device.productKey isEqualToString:kProductKeys[@"六路彩灯"]]) {
+                LightsDataPointModel *lightStatusModel = [[LightsDataPointModel alloc] initWithData:dataMap withDevice:device];
+                [SDKHELPER.statusDic setObject:lightStatusModel forKey:device.did];
+                
+            }
         }
         
         if (sn.integerValue == 999) {
@@ -655,6 +658,12 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
             BOOL turnStatus = [data[@"switch"] boolValue];
             NSInteger modeStatus = [data[@"mode"] integerValue];
             [self setTurnBtnWhithStatus:turnStatus currentViewWhith:modeStatus];
+            
+            if ([device.productKey isEqualToString:kProductKeys[@"六路彩灯"]]) {
+                LightsDataPointModel *lightStatusModel = [[LightsDataPointModel alloc] initWithData:dataMap withDevice:device];
+                [SDKHELPER.statusDic setObject:lightStatusModel forKey:device.did];
+                
+            }
         }
     }
 }

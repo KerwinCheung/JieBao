@@ -126,7 +126,7 @@
                         break;
                     }
                 }
-                NSRange range = NSMakeRange(currentDev.macAddress.length - 7, 6);
+                NSRange range = NSMakeRange(currentDev.macAddress.length - 6, 6);
                 NSString *lastMacStr = [currentDev.macAddress substringWithRange:range];
                 NSString *deaultStr = [NSString stringWithFormat:@"%@%@",[UtilHelper getDefaultNameStrPrefixWithProductKey:currentDev.productKey],lastMacStr];
                 

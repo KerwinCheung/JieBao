@@ -67,6 +67,15 @@
             return ;
         }
         NSArray *list =  [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        if ([list isKindOfClass:[NSMutableDictionary class]]) {
+            NSDictionary *listDic = (NSDictionary *)list;
+            if ([listDic.allKeys containsObject:@"error_code"]) {
+                //有错误
+                block(nil,nil);
+                return;
+            }
+        }
+        
         NSMutableArray *timerListArray = [NSMutableArray array];
         for (int i = 0; i< list.count; i++) {
             DeviceCommonSchulder *sch = [DeviceCommonSchulder yy_modelWithJSON:list[i]];

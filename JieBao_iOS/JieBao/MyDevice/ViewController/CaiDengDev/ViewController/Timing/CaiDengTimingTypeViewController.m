@@ -395,18 +395,6 @@
 }
 
 #pragma mark - btnAction
-//- (void)addSchBtnClicked
-//{
-////    if (self.nameSoure.count >= 8) {
-////        [HudHelper showErrorWithStatus:@"最多添加8个定时任务"];
-////        return;
-////    }
-////    TimingSettingViewController *vc = [TimingSettingViewController new];
-////    vc.dev = self.dev;
-////    vc.group = self.group;
-////    [self.navigationController pushViewController:vc animated:YES];
-//}
-    
 - (void)confirmBtnClicked
 {
     //开启定时任务
@@ -457,7 +445,7 @@
             
             if (data != nil) {
                 NSDictionary *tempDic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-                NSLog(@"%@",tempDic);
+//                NSLog(@"%@",tempDic);
             }
             
             if (!data || error) {
@@ -467,6 +455,8 @@
             if (self.count == 24) {
                 //关闭之前的定时器
                 [self closeTimer];
+                //下发当前时间的控制指令
+                [self setCurrentTimerControlInstruction];
                 if (self.sucCount == 24) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [HudHelper showSuccessWithStatus:@"设置成功"];
@@ -488,16 +478,6 @@
     if (self.currentEnableTask.sches.count == 0) {
         LHLog(@"当前执行的定时组没有定时器");
         //获取当前执行的定时任务组
-        for (NSInteger i =0; i<self.nameSoure.count; i++) {
-            NSString *taskName = [self.nameSoure objectAtIndex:i];
-            
-            BOOL isEnable = [UtilHelper checkTaskIsEnabledWithTask:[self.dataSourceDic objectForKey:taskName]];
-            
-            if (isEnable) {
-                self.currentIndex = i;
-                self.currentEnableTask = [self.dataSourceDic objectForKey:taskName];
-            }
-        }
         [self setCurrentTimerControlInstruction];
 
         return;
@@ -539,7 +519,7 @@
             
             if (data != nil) {
                 NSDictionary *tempDic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-                NSLog(@"%@",tempDic);
+//                NSLog(@"%@",tempDic);
             }
             
             if (!data || error) {
@@ -547,25 +527,10 @@
             }
             self.closeSucCount++;
             if (self.closeSucCount == 24) {
-                //获取当前执行的定时任务组
-                for (NSInteger i =0; i<self.nameSoure.count; i++) {
-                    NSString *taskName = [self.nameSoure objectAtIndex:i];
-                    
-                    BOOL isEnable = [UtilHelper checkTaskIsEnabledWithTask:[self.dataSourceDic objectForKey:taskName]];
-                    
-                    if (isEnable) {
-                        self.currentIndex = i;
-                        self.currentEnableTask = [self.dataSourceDic objectForKey:taskName];
-                    }
-                }
-                [self setCurrentTimerControlInstruction];
                 
                 if (self.closeSucCount == 24) {
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        [HudHelper showSuccessWithStatus:@"设置成功"];
-//                    });
-                }else
-                {
+                    NSLog(@"关闭之前执行的定时器成功");
+                }else{
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [HudHelper showErrorWithStatus:@"关闭之前定时器失败"];
                     });
@@ -578,14 +543,13 @@
 }
 
 -(void)setCurrentTimerControlInstruction{
-// 下发当前时间的定时器控制指令
-    if (self.currentEnableTask.sches.count == 0) {
-        return;
-    }
+   
+    DeviceSchedulerTask *schTask = self.temps.firstObject;
+
     NSDictionary *controlDic = [NSDictionary dictionary];
     @weakify(controlDic);
     
-        [self.currentEnableTask.sches enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(DeviceCommonSchulder * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [schTask.sches enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(DeviceCommonSchulder * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSString *nowHour = [[NSDate date] formattedDateWithFormat:@"HH"];
             NSArray *timeArray = [obj.time componentsSeparatedByString:@":"];
             @strongify(controlDic);
@@ -686,7 +650,7 @@
                 
                 if (data != nil) {
                     NSDictionary *tempDic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-                    NSLog(@"%@",tempDic);
+//                    NSLog(@"%@",tempDic);
                 }
                 self.count++;
                 NSLog(@"发送定时任务%zd次",self.count);
@@ -708,6 +672,7 @@
                     
                     //关闭之前的定时器
                     [self closeTimer];
+                    [self setCurrentTimerControlInstruction];
                     if (self.sucCount == 24) {
                         [HudHelper showSuccessWithStatus:@"设置成功"];
                         
@@ -736,7 +701,7 @@
                 
                 if (data != nil) {
                     NSDictionary *tempDic =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-                    NSLog(@"%@",tempDic);
+//                    NSLog(@"%@",tempDic);
                 }
                 
                 if (!data || error) {
@@ -748,9 +713,9 @@
                     
                     //关闭之前的定时器
                     [self closeTimer];
+                    [self setCurrentTimerControlInstruction];
                     if (self.sucCount == 24) {
                         [HudHelper showSuccessWithStatus:@"设置成功"];
-                        
                     }else{
                         [HudHelper showErrorWithStatus:@"设置失败"];
                     }
@@ -762,6 +727,7 @@
 
     }
 }
+
 
 - (void)setUpTempValuesWithArrays:(NSArray *)array {
     self.whiteValues = array[0];
