@@ -22,7 +22,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//    [LocalizedEngine startEngine];
+    [LocalizedEngine startEngine];
     
     self.sdkHelper = [SDKHelper shareInstance];
     [GizWifiSDK sharedInstance].delegate = self.sdkHelper;
