@@ -14,7 +14,6 @@
 #import "TimingSettingViewController.h"
 #import "DeviceSchedulerTask.h"
 #import "DeviceCommonSchulder.h"
-#import "NewTimingViewController.h"
 
 @interface CaiDengTimingTypeViewController ()<UITableViewDataSource,UITableViewDelegate,SchedulerFootAddViewDelegate,CaiDengTimingAddCellDelegate,GizDeviceSchedulerDelegate>
 

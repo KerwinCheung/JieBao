@@ -52,18 +52,21 @@
 
 - (void)startBtnClicked
 {
-    LHWeakSelf(self)
-    UserModel *model = [UserHelper getCurrentUser];
-    [[GizWifiSDK sharedInstance] userLogin:model.userName password:model.psw];
-    [SDKHelper shareInstance].loginBlock = ^(BOOL success) {
-        for (UIViewController *vc in weakself.navigationController.viewControllers) {
-            if ([vc isKindOfClass:[SettingViewController class]]) {
-                [weakself.navigationController popToViewController:vc animated:YES];
-                ((SettingViewController *)vc).currentUser = model;
-                break;
-            }
-        }
-    };
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+//    LHWeakSelf(self)
+//    UserModel *model = [UserHelper getCurrentUser];
+//    [[GizWifiSDK sharedInstance] userLogin:model.userName password:model.psw];
+//    [SDKHelper shareInstance].loginBlock = ^(BOOL success) {
+//        for (UIViewController *vc in weakself.navigationController.viewControllers) {
+//            if ([vc isKindOfClass:[SettingViewController class]]) {
+//                [weakself.navigationController popToViewController:vc animated:YES];
+//                ((SettingViewController *)vc).currentUser = model;
+//                break;
+//            }
+//        }
+//    };
 }
 
 - (UIImageView *)successImgView

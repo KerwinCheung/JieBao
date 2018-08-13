@@ -33,7 +33,6 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
 #import "CircleView.h"
 
 #import "DeviceSchedulerTask.h"
-#import "NewTimingViewController.h"
 #import "LightsDataPointModel.h"
 @interface MyDeviceCaiDengTurnViewController ()<GizWifiDeviceDelegate,CircleViewDelegate>
 {

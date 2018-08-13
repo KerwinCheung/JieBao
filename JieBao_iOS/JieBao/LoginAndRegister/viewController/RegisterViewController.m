@@ -308,24 +308,52 @@
     }
     
     [SVProgressHUD show];
-    [[GizWifiSDK sharedInstance] registerUser:self.usrTextView.text password:self.pswTextView.text verifyCode:self.validateTextView.text accountType:GizUserPhone];
-    LHWeakSelf(self)
-    [SDKHelper shareInstance].registerBlock = ^(BOOL success) {
-        [SVProgressHUD dismiss];
-        if (success) {
-            [weakself.navigationController pushViewController:[NSClassFromString(@"RegisterSuccessViewController") new] animated:YES];
-            
-            UserModel *model = [UserHelper getCurrentUser];
-            model.userName = self.usrTextView.text;
-            model.psw = self.pswTextView.text;
-            [UserHelper setCurrentUser:model];
-        }else
-        {
-            LHLog(@"注册失败");
-        }
-    };
+    [self checkworking];
+    
 }
 
+-(void)checkworking
+
+{
+    AFNetworkReachabilityManager *manger = [AFNetworkReachabilityManager sharedManager];
+    /*
+     AFNetworkReachabilityStatusUnknown          = -1, // 代表不知道什么网络
+     AFNetworkReachabilityStatusNotReachable     = 0,  // 代表没有网络
+     AFNetworkReachabilityStatusReachableViaWWAN = 1,    // 代表蜂窝数据(你自己的网络)
+     AFNetworkReachabilityStatusReachableViaWiFi = 2, // 代表 wifi
+     */
+    [manger setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        
+        if (status == 0) {
+            [SVProgressHUD dismiss];
+            UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"提示" message:@"没有网络" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定"style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            [controller addAction:action];
+            [self presentViewController:controller animated:YES completion:nil];
+        }else{
+            [[GizWifiSDK sharedInstance] registerUser:self.usrTextView.text password:self.pswTextView.text verifyCode:self.validateTextView.text accountType:GizUserPhone];
+            LHWeakSelf(self)
+            [SDKHelper shareInstance].registerBlock = ^(BOOL success) {
+                [SVProgressHUD dismiss];
+                if (success) {
+                    [weakself.navigationController pushViewController:[NSClassFromString(@"RegisterSuccessViewController") new] animated:YES];
+                    
+                    UserModel *model = [UserHelper getCurrentUser];
+                    model.userName = self.usrTextView.text;
+                    model.psw = self.pswTextView.text;
+                    [UserHelper setCurrentUser:model];
+                }else
+                {
+                    LHLog(@"注册失败");
+                }
+            };
+        }
+    }];
+    
+    [manger startMonitoring];
+}
 
 - (void)passConTextChange:(UITextField *)textField
 {

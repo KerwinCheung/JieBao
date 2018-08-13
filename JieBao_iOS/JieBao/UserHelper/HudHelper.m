@@ -13,6 +13,8 @@
 + (void)showStatus:(NSString *)status dismiss:(NSInteger)time
 {
     [SVProgressHUD showWithStatus:status];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setBackgroundColor:[UIColor whiteColor]];
     [SVProgressHUD dismissWithDelay:time];
 }
 
@@ -27,6 +29,8 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD showErrorWithStatus:status];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD setBackgroundColor:[UIColor whiteColor]];
         [SVProgressHUD dismissWithDelay:2];
     });
 }
@@ -34,6 +38,8 @@
 + (void)showSuccessWithStatus:(NSString *)status
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        SVProgressHUD *hud = [[SVProgressHUD alloc]init];
+        hud.backgroundColor = [UIColor redColor];
         [SVProgressHUD showSuccessWithStatus:status];
         [SVProgressHUD dismissWithDelay:2];
     });
