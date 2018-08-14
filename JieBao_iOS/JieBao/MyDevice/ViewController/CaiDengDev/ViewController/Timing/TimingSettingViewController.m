@@ -589,8 +589,7 @@
     
     [self getValuesWhithSelectedIndex];
     
-    if ([view isEqual:self.whiteLcView])
-    {
+    if ([view isEqual:self.whiteLcView]){
         [self.lineChartView setSelectedIndex:0];
         self.currentIndex = 0;
         self.currentSelectView = self.whiteLcView;
@@ -601,14 +600,14 @@
         [self.lineChartView setSelectedIndex:1];
         self.currentIndex = 1;
         self.currentSelectView = self.sapphireBlueLcView;
-        [self.lineChartView setChartSchValues:self.blue2Values];
+        [self.lineChartView setChartSchValues:self.blue1Values];
     }
     else if ([view isEqual:self.blueLcView])
     {
         [self.lineChartView setSelectedIndex:2];
         self.currentIndex = 2;
         self.currentSelectView = self.blueLcView;
-        [self.lineChartView setChartSchValues:self.blue1Values];
+        [self.lineChartView setChartSchValues:self.blue2Values];
     }
     else if ([view isEqual:self.greenLcView])
     {
@@ -642,12 +641,12 @@
             break;
         case 1:
         {
-            self.blue2Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
+            self.blue1Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
         }
             break;
         case 2:
         {
-            self.blue1Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
+            self.blue2Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
         }
             break;
         case 3:
@@ -1001,7 +1000,7 @@
 }
 
 - (NSMutableArray *)blue1Values {
-    //浅蓝
+    //宝蓝
     if (!_blue1Values) {
         _blue1Values = [NSMutableArray array];
     }

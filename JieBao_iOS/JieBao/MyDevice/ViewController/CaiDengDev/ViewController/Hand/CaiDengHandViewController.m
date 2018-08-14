@@ -413,7 +413,7 @@
 {
     if (!_sapphireBlueSlider) {
         _sapphireBlueSlider = [SliderView new];
-        [_sapphireBlueSlider setTrickImg:@"bluue1"];
+        [_sapphireBlueSlider setTrickImg:@"sblue"];
         _sapphireBlueSlider.title = @"宝蓝色";
         _sapphireBlueSlider.tag = 101;
         _sapphireBlueSlider.delegate = self;
@@ -425,7 +425,7 @@
 {
     if (!_blueSlider) {
         _blueSlider = [SliderView new];
-        [_blueSlider setTrickImg:@"sblue"];
+        [_blueSlider setTrickImg:@"bluue1"];
         _blueSlider.title = @"蓝色";
         _blueSlider.tag = 102;
         _blueSlider.delegate = self;

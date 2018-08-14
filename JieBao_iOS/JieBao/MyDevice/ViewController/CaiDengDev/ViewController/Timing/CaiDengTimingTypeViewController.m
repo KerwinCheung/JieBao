@@ -402,7 +402,7 @@
     
     [SVProgressHUD show];
     DeviceSchedulerTask *schTask = self.temps.firstObject;
-    
+    [self setCurrentTimerControlInstruction];
     if (schTask.sches.count == 0) {
         [SVProgressHUD dismiss];
         if ([schTask.taskName containsString:@"LPS"]||[schTask.taskName containsString:@"SPS"]) {
@@ -455,7 +455,7 @@
                 //关闭之前的定时器
                 [self closeTimer];
                 //下发当前时间的控制指令
-                [self setCurrentTimerControlInstruction];
+//                [self setCurrentTimerControlInstruction];
                 if (self.sucCount == 24) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [HudHelper showSuccessWithStatus:@"设置成功"];
@@ -477,7 +477,7 @@
     if (self.currentEnableTask.sches.count == 0) {
         LHLog(@"当前执行的定时组没有定时器");
         //获取当前执行的定时任务组
-        [self setCurrentTimerControlInstruction];
+//        [self setCurrentTimerControlInstruction];
 
         return;
     }
@@ -553,6 +553,7 @@
             NSArray *timeArray = [obj.time componentsSeparatedByString:@":"];
             @strongify(controlDic);
             if ([timeArray.firstObject isEqualToString:nowHour]) {
+                
                 controlDic = @{@"mode":@6,
                                @"Timer":@YES,
                                @"color_white":@([[obj.attrs objectForKey:@"color_white"] integerValue]),
@@ -671,7 +672,7 @@
                     
                     //关闭之前的定时器
                     [self closeTimer];
-                    [self setCurrentTimerControlInstruction];
+//                    [self setCurrentTimerControlInstruction];
                     if (self.sucCount == 24) {
                         [HudHelper showSuccessWithStatus:@"设置成功"];
                         
@@ -712,7 +713,7 @@
                     
                     //关闭之前的定时器
                     [self closeTimer];
-                    [self setCurrentTimerControlInstruction];
+//                    [self setCurrentTimerControlInstruction];
                     if (self.sucCount == 24) {
                         [HudHelper showSuccessWithStatus:@"设置成功"];
                     }else{
