@@ -416,11 +416,24 @@
         [HudHelper showErrorWithStatus:@"请修改定时任务名字"];
         return;
     }
+    if (self.timingTextView.text.length == 0 ) {
+        [HudHelper showErrorWithStatus:@"请修改定时任务名字"];
+        return;
+    }
     
     [self getValuesWhithSelectedIndex];
 
     // 定时器的命名规则为：名称_时间戳
-    NSString *taskName = [NSString stringWithFormat:@"%@_%@",self.timingTextView.text,[UtilHelper getTimeStampStr]];
+
+    NSString *taskName;
+    if (self.schTask.sches.count == 0) {
+        //新增定时
+        taskName = [NSString stringWithFormat:@"%@_%@",self.timingTextView.text,[UtilHelper getTimeStampStr]];
+    }else{
+        //修改定时
+        NSArray *taskNameArr = [self.schTask.taskName componentsSeparatedByString:@"_"];
+       taskName = [NSString stringWithFormat:@"%@_%@",self.timingTextView.text,taskNameArr.lastObject];
+    }
     
     
     [SVProgressHUD show];
