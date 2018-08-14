@@ -65,7 +65,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self.rePswTextView addTarget:self action:@selector(passConTextChange:) forControlEvents:UIControlEventEditingChanged];
     [self initUI];
-    self.getValidateBtn.enabled = NO;
+    
     @weakify(self);
     [[NSNotificationCenter defaultCenter] addObserverForName:UITextFieldTextDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note){
         @strongify(self);
@@ -73,8 +73,10 @@
         {
             if ([UtilHelper isValidateMobile:self.usrTextView.text]) {
                 self.getValidateBtn.enabled = YES;
+                [self.getValidateBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
             }else{
                 self.getValidateBtn.enabled = NO;
+                [self.getValidateBtn setBackgroundImage:nil forState:UIControlStateNormal];
             }
         }
     }];
@@ -320,10 +322,11 @@
     }
 }
 
+#pragma marl - textFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if ([textField isEqual:self.usrTextView]) {
-        if (self.usrTextView.text.length == 11) {
+        if (self.usrTextView.text.length == 11 && ![string isEqualToString:@""]) {
             return NO;
         }
     }else if([textField isEqual:self.validateTextView])
@@ -464,6 +467,8 @@
         _getValidateBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
         _getValidateBtn.layer.masksToBounds = YES;
         _getValidateBtn.layer.cornerRadius = CurrentDeviceSize(5);
+        _getValidateBtn.backgroundColor = [UIColor colorWithRed:233/255.0 green:233/255.0 blue:233/255.0 alpha:1];
+        _getValidateBtn.enabled = NO;
     }
     return _getValidateBtn;
 }

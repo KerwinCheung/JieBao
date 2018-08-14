@@ -14,6 +14,8 @@
 #import "LWHttpRequest.h"
 #import "AppDelegate.h"
 
+#import "IQKeyboardManager.h"
+
 @interface LoginViewController ()<UITextFieldDelegate>
 
 
@@ -34,10 +36,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    self.loginBtn.backgroundColor = [UIColor colorWithRed:233/255.0 green:233/255.0 blue:233/255.0 alpha:1];
+    
+    @weakify(self);
+    [[NSNotificationCenter defaultCenter] addObserverForName:UITextFieldTextDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note){
+        @strongify(self);
+        if ([note.object isEqual:self.PhoneTextField])
+        {
+            if ([UtilHelper isValidateMobile:self.PhoneTextField.text]) {
+                self.loginBtn.enabled = YES;
+                [self.loginBtn setBackgroundImage:[UIImage imageNamed:@"button1"] forState:UIControlStateNormal];
+            }else{
+                self.loginBtn.enabled = NO;
+                [self.loginBtn setBackgroundImage:nil forState:UIControlStateNormal];
+            }
+        }
+    }];
+}
+
+- (void)applicationWillEnterForeground{
+    [self.view endEditing:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [IQKeyboardManager sharedManager].enable = YES;
+    [IQKeyboardManager sharedManager].enableAutoToolbar= YES;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+
     [super viewWillAppear:animated];
     self.PhoneTextField.text = [UserHelper getCurrentUser].userName;
     self.pwdTextField.text = [UserHelper getCurrentUser].psw;
@@ -45,8 +73,9 @@
         self.loginBtn.enabled = YES;
     }else{
         self.loginBtn.enabled = NO;
+        [self.loginBtn setBackgroundImage:nil forState:UIControlStateNormal];
     }
-    
+
     [self registerNoti];
     NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
     [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
@@ -108,6 +137,7 @@
     [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         if (status == AFNetworkReachabilityStatusNotReachable) {
             [HudHelper showErrorWithStatus:@"请检查网络设置"];
+            return;
         }
     }];
     

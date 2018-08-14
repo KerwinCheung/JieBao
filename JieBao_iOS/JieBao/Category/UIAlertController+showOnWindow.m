@@ -11,11 +11,11 @@
 @implementation UIAlertController (showOnWindow)
 
 - (void)showOnWindow {
-    UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    [window setRootViewController:[[UIViewController alloc] init]];
-    window.windowLevel = UIWindowLevelAlert;
-    [window makeKeyAndVisible];
-    [window.rootViewController presentViewController:self animated:YES completion:nil];
+    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    if (rootViewController.presentedViewController) {
+        rootViewController = rootViewController.presentedViewController;
+    }
+    [rootViewController presentViewController:self animated:YES completion:nil];
 }
 
 + (void)showAlertWithTitle:(NSString *)title
