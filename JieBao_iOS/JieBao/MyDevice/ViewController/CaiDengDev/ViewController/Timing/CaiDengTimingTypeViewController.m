@@ -212,7 +212,7 @@
     [self.naviBar  configNavigationBarWithAttrs:@{
                                                   kCustomNaviBarLeftActionKey:leftAction,
                                                   kCustomNaviBarLeftImgKey:@"back",
-                                                  kCustomNaviBarTitleKey:@"定时模式",
+                                                  kCustomNaviBarTitleKey:@"定时程序",
                                                   kCustomNaviBarRightImgKey:@"bianji",
                                                   kCustomNaviBarRightActionKey:rightAction
                                                   }];
@@ -402,7 +402,9 @@
     
     [SVProgressHUD show];
     DeviceSchedulerTask *schTask = self.temps.firstObject;
+    
     [self setCurrentTimerControlInstruction];
+    
     if (schTask.sches.count == 0) {
         [SVProgressHUD dismiss];
         if ([schTask.taskName containsString:@"LPS"]||[schTask.taskName containsString:@"SPS"]) {
@@ -623,8 +625,8 @@
         
         NSMutableDictionary *body = [NSMutableDictionary
                                      dictionaryWithDictionary:@{@"attrs":@{@"color_white":@([self.whiteValues[i] integerValue]),
-                                                                           @"color_blue1":@([self.blue1Values[i] integerValue]),
-                                                                           @"color_blue2":@([self.blue2Values[i] integerValue]),
+                                                                           @"color_blue1":@([self.blue2Values[i] integerValue]),
+                                                                           @"color_blue2":@([self.blue1Values[i] integerValue]),
                                                                            @"color_green":@([self.greenValues[i] integerValue]),
                                                                            @"color_red":@([self.redValues[i] integerValue]),
                                                                            @"volor_violet":@([self.violetValues[i] integerValue]),

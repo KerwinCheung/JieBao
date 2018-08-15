@@ -155,7 +155,9 @@
             }
             [self.dataSource removeAllObjects];
             for (CustomDeviceGroup *group in SDKHELPER.groupsArray) {
-                [tempArray addObject:group];
+                if (group.devs.count >0) {
+                    [tempArray addObject:group];
+                }
             }
             self.dataSource = tempArray.mutableCopy;
         }

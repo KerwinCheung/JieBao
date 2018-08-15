@@ -86,7 +86,7 @@
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.dic = @{@0:@"color_white",@1:@"color_blue1",@2:@"color_blue2",@3:@"color_green",@4:@"color_red",@5:@"volor_violet"};
+ 
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleDeviceOrientationDidChange:)
@@ -347,8 +347,8 @@
                         NSNumber *volor_violet =   [tempTimer.attrs objectForKey:@"volor_violet"];
                         
                         [self.whiteValues addObject:color_white];
-                        [self.blue1Values addObject:color_blue1];
-                        [self.blue2Values addObject:color_blue2];
+                        [self.blue1Values addObject:color_blue2];
+                        [self.blue2Values addObject:color_blue1];
                         [self.greenValues addObject:color_green];
                         [self.redValues addObject:color_red];
                         [self.violetValues addObject:volor_violet];
@@ -467,8 +467,8 @@
         
         NSMutableDictionary *body = [NSMutableDictionary
                                      dictionaryWithDictionary:@{@"attrs":@{@"color_white":@([self.whiteValues[i] integerValue]),
-                                                                           @"color_blue1":@([self.blue1Values[i] integerValue]),
-                                                                           @"color_blue2":@([self.blue2Values[i] integerValue]),
+                                                                           @"color_blue1":@([self.blue2Values[i] integerValue]),
+                                                                           @"color_blue2":@([self.blue1Values[i] integerValue]),
                                                                            @"color_green":@([self.greenValues[i] integerValue]),
                                                                            @"color_red":@([self.redValues[i] integerValue]),
                                                                            @"volor_violet":@([self.violetValues[i] integerValue]),
@@ -512,7 +512,6 @@
             }
             if (self.count == 24) {
                 if (self.sucCount == 24) {
-//                    [HudHelper showSuccessWithStatus:@"设置成功"];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.navigationController popViewControllerAnimated:YES];
                     });
@@ -597,6 +596,7 @@
     }
     else if ([view isEqual:self.sapphireBlueLcView])
     {
+        //蓝色
         [self.lineChartView setSelectedIndex:1];
         self.currentIndex = 1;
         self.currentSelectView = self.sapphireBlueLcView;
@@ -604,6 +604,7 @@
     }
     else if ([view isEqual:self.blueLcView])
     {
+        //宝蓝
         [self.lineChartView setSelectedIndex:2];
         self.currentIndex = 2;
         self.currentSelectView = self.blueLcView;
