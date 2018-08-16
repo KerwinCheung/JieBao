@@ -278,7 +278,6 @@
         case 105:
           
             sendDataDic = @{@"mode":@(0),
-                           
                             @"volor_violet":@(self.purpleSlider.value),
                             @"Timer":@(0)};
             break;

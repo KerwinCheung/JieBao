@@ -54,6 +54,13 @@
                                                   kCustomNaviBarRightActionKey:rightAction,
                                                   kCustomNaviBarRightImgKey:@"baocun"
                                                   }];
+    
+    NSRange range = NSMakeRange(self.dev.macAddress.length - 6, 6);
+    NSString *lastMacStr = [self.dev.macAddress substringWithRange:range];
+    NSString *deaultStr = [NSString stringWithFormat:@"%@%@",[UtilHelper getDefaultNameStrPrefixWithProductKey:self.dev.productKey],lastMacStr];
+    self.deviceNameTv.text = self.dev.alias.length == 0?deaultStr:self.dev.alias;
+
+    
 }
 
 - (void)initUI
@@ -104,7 +111,7 @@
     if (!_deviceNameTv) {
         _deviceNameTv = [UITextField new];
         _deviceNameTv.placeholder = @"请输入设备名称";
-        _deviceNameTv.text = self.dev.alias.length == 0?self.dev.productName:self.dev.alias;
+        
         _deviceNameTv.font = [UIFont sf_systemFontOfSize:13];
         _deviceNameTv.backgroundColor = [UIColor whiteColor];
         _deviceNameTv.clearButtonMode = UITextFieldViewModeWhileEditing;

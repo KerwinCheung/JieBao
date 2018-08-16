@@ -152,6 +152,8 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
             }
         }
     }
+    NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
+    [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
 }
 
 - (void)initUI
