@@ -364,7 +364,6 @@
     }else
     {
         self.registerBtn.enabled = NO;
-        
     }
 }
 

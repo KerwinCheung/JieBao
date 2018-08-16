@@ -14,6 +14,7 @@
 "注册" = "Register";
 "请输入您的手机号码" = "Enter your mobile phone number.";
 "请输入6~16位字符密码" = "Enter 6~16 character password.";
+"请输入6-16位的密码" = "Enter 6~16 character password.";
 "该手机号未注册，请注册后登录" = "The mobile phone number is not registered, please register first.";
 "请输入正确的手机号码" = "Please enter correct mobile phone number.";
 "密码不可包含特殊符号" = "Password cannot contain special characters.";

@@ -87,6 +87,4 @@
     return _naviBar;
 }
 
-
-
 @end

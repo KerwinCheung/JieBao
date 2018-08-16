@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Base Navigation Controller-->
         <scene sceneID="1tf-YH-3jQ">
             <objects>
-                <navigationController storyboardIdentifier="NavigationController" id="VuD-PM-MEg" customClass="NavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavigationController" id="VuD-PM-MEg" customClass="BaseNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" hidden="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5ZF-Gt-IJj">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -146,12 +146,12 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xtI-YM-QVx">
                                 <rect key="frame" x="20" y="338" width="280" height="35"/>
-                                <color key="backgroundColor" red="1" green="0.60848940090000003" blue="0.5052353892" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="JDe-ew-qZi"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="登录" backgroundImage="button1">
+                                <state key="normal" title="登录" backgroundImage="btnBg">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -163,7 +163,7 @@
                                     <action selector="loginBtnClicked:" destination="U7j-c3-bqQ" eventType="touchUpInside" id="sU4-YM-h8h"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ez-Pc-1YQ">
+                            <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ez-Pc-1YQ">
                                 <rect key="frame" x="20" y="388" width="100" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="3cV-v9-1fC"/>
@@ -230,8 +230,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="btnBg" width="326" height="38"/>
         <image name="bukejian" width="22" height="11"/>
-        <image name="button1" width="100" height="35"/>
         <image name="head" width="512" height="512"/>
         <image name="kejian" width="22" height="16"/>
         <image name="mima" width="22" height="27"/>
