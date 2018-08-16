@@ -243,14 +243,14 @@
             sendDataDic = @{@"mode":@(0),
                             @"color_white":@(self.whiteSlider.value),
                           
-                            @"Timer":@(0)};
+                            @"Timer":@NO};
             break;
         case 101:
             
             sendDataDic = @{@"mode":@(0),
                             @"color_blue1":@(self.sapphireBlueSlider.value),
                           
-                            @"Timer":@(0)};
+                            @"Timer":@NO};
             break;
         case 102:
            
@@ -258,7 +258,7 @@
                           
                             @"color_blue2":@(self.blueSlider.value),
                         
-                            @"Timer":@(0)};
+                            @"Timer":@NO};
             break;
         case 103:
           
@@ -266,20 +266,20 @@
                            
                             @"color_green":@(self.greenSlider.value),
                           
-                            @"Timer":@(0)};
+                            @"Timer":@NO};
             break;
         case 104:
           
             sendDataDic = @{@"mode":@(0),
                            
                             @"color_red":@(self.redSlider.value),
-                            @"Timer":@(0)};
+                            @"Timer":@NO};
             break;
         case 105:
           
             sendDataDic = @{@"mode":@(0),
                             @"volor_violet":@(self.purpleSlider.value),
-                            @"Timer":@(0)};
+                            @"Timer":@NO};
             break;
             
         default:
@@ -287,10 +287,15 @@
     }
     
     if (sendDataDic.count > 0) {
+        
         [NetworkHelper sendRequest:sendDataDic Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
+            
             if (!data || error) {
                 return ;
             }
+            
+            NSArray *list =  [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            LHLog(@"返回 %@",list);
             
         }];
     }

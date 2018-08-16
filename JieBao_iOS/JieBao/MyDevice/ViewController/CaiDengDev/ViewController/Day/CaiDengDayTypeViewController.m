@@ -146,10 +146,10 @@
 - (void)settingBtnClicked
 {
     if (self.dev) {
-        [self.dev write:@{@"M3":@(self.slider.value),@"Timer":@(0),@"mode":@(3)} withSN:103];
+        [self.dev write:@{@"M3":@(self.slider.value),@"Timer":@NO,@"mode":@(3)} withSN:103];
     }else
     {
-        NSDictionary *body = @{@"attrs":@{@"M3":@(self.slider.value),@"Timer":@(0),@"mode":@(3)}};
+        NSDictionary *body = @{@"attrs":@{@"M3":@(self.slider.value),@"Timer":@NO,@"mode":@(3)}};
         [NetworkHelper sendRequest:body Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
             if (!data || error) {
                 [HudHelper showErrorWithStatus:@"设置失败"];

@@ -507,7 +507,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
         }else{
             @strongify(controlDic);
 
-            controlDic = @{@"mode":modeNum};
+            controlDic = @{@"mode":modeNum,@"Timer":@YES};
             if (self.dev) {
                 [self.dev write:controlDic withSN:999];
             }else{
@@ -520,7 +520,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
         
     }else{
         @strongify(controlDic);
-        controlDic = @{@"mode":modeNum};
+        controlDic = @{@"mode":modeNum,@"Timer":@NO};
         if (self.dev) {
             [self.dev write:controlDic withSN:999];
         }else{
