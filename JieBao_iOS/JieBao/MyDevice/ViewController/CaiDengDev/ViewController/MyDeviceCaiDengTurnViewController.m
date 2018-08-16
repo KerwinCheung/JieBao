@@ -653,6 +653,10 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
         }
         
         if (sn.integerValue == 999) {
+            if ([dataMap isKindOfClass:[NSNull class]]||!dataMap) {
+                return;
+            }
+            
             NSDictionary *data = dataMap[@"data"];
             BOOL turnStatus = [data[@"switch"] boolValue];
             NSInteger modeStatus = [data[@"mode"] integerValue];

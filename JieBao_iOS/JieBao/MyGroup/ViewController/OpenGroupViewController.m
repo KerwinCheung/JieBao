@@ -121,6 +121,11 @@
 - (void)setBtnClicked
 {
     // 设置
+    if (self.dataSource.count == 0) {
+        [HudHelper showErrorWithStatus:@"分组内暂无设备"];
+        return;
+    }
+    
     NSString *type = self.group.product_key;
     if ([type isEqualToString:kProductKeys[@"六路彩灯"]]) {
         MyDeviceCaiDengTurnViewController *vc = [MyDeviceCaiDengTurnViewController new];

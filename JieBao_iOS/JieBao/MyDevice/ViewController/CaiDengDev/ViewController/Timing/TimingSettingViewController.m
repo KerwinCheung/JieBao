@@ -86,7 +86,7 @@
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.dic = @{@0:@"color_white",@1:@"color_blue1",@2:@"color_blue2",@3:@"color_green",@4:@"color_red",@5:@"volor_violet"};
+ 
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleDeviceOrientationDidChange:)
@@ -347,8 +347,8 @@
                         NSNumber *volor_violet =   [tempTimer.attrs objectForKey:@"volor_violet"];
                         
                         [self.whiteValues addObject:color_white];
-                        [self.blue1Values addObject:color_blue1];
-                        [self.blue2Values addObject:color_blue2];
+                        [self.blue1Values addObject:color_blue2];
+                        [self.blue2Values addObject:color_blue1];
                         [self.greenValues addObject:color_green];
                         [self.redValues addObject:color_red];
                         [self.violetValues addObject:volor_violet];
@@ -416,11 +416,24 @@
         [HudHelper showErrorWithStatus:@"请修改定时任务名字"];
         return;
     }
+    if (self.timingTextView.text.length == 0 ) {
+        [HudHelper showErrorWithStatus:@"请修改定时任务名字"];
+        return;
+    }
     
     [self getValuesWhithSelectedIndex];
 
     // 定时器的命名规则为：名称_时间戳
-    NSString *taskName = [NSString stringWithFormat:@"%@_%@",self.timingTextView.text,[UtilHelper getTimeStampStr]];
+
+    NSString *taskName;
+    if (self.schTask.sches.count == 0) {
+        //新增定时
+        taskName = [NSString stringWithFormat:@"%@_%@",self.timingTextView.text,[UtilHelper getTimeStampStr]];
+    }else{
+        //修改定时
+        NSArray *taskNameArr = [self.schTask.taskName componentsSeparatedByString:@"_"];
+       taskName = [NSString stringWithFormat:@"%@_%@",self.timingTextView.text,taskNameArr.lastObject];
+    }
     
     
     [SVProgressHUD show];
@@ -454,8 +467,8 @@
         
         NSMutableDictionary *body = [NSMutableDictionary
                                      dictionaryWithDictionary:@{@"attrs":@{@"color_white":@([self.whiteValues[i] integerValue]),
-                                                                           @"color_blue1":@([self.blue1Values[i] integerValue]),
-                                                                           @"color_blue2":@([self.blue2Values[i] integerValue]),
+                                                                           @"color_blue1":@([self.blue2Values[i] integerValue]),
+                                                                           @"color_blue2":@([self.blue1Values[i] integerValue]),
                                                                            @"color_green":@([self.greenValues[i] integerValue]),
                                                                            @"color_red":@([self.redValues[i] integerValue]),
                                                                            @"volor_violet":@([self.violetValues[i] integerValue]),
@@ -499,7 +512,6 @@
             }
             if (self.count == 24) {
                 if (self.sucCount == 24) {
-//                    [HudHelper showSuccessWithStatus:@"设置成功"];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.navigationController popViewControllerAnimated:YES];
                     });
@@ -576,8 +588,7 @@
     
     [self getValuesWhithSelectedIndex];
     
-    if ([view isEqual:self.whiteLcView])
-    {
+    if ([view isEqual:self.whiteLcView]){
         [self.lineChartView setSelectedIndex:0];
         self.currentIndex = 0;
         self.currentSelectView = self.whiteLcView;
@@ -585,17 +596,19 @@
     }
     else if ([view isEqual:self.sapphireBlueLcView])
     {
+        //蓝色
         [self.lineChartView setSelectedIndex:1];
         self.currentIndex = 1;
         self.currentSelectView = self.sapphireBlueLcView;
-        [self.lineChartView setChartSchValues:self.blue2Values];
+        [self.lineChartView setChartSchValues:self.blue1Values];
     }
     else if ([view isEqual:self.blueLcView])
     {
+        //宝蓝
         [self.lineChartView setSelectedIndex:2];
         self.currentIndex = 2;
         self.currentSelectView = self.blueLcView;
-        [self.lineChartView setChartSchValues:self.blue1Values];
+        [self.lineChartView setChartSchValues:self.blue2Values];
     }
     else if ([view isEqual:self.greenLcView])
     {
@@ -629,12 +642,12 @@
             break;
         case 1:
         {
-            self.blue2Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
+            self.blue1Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
         }
             break;
         case 2:
         {
-            self.blue1Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
+            self.blue2Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
         }
             break;
         case 3:
@@ -988,7 +1001,7 @@
 }
 
 - (NSMutableArray *)blue1Values {
-    //浅蓝
+    //宝蓝
     if (!_blue1Values) {
         _blue1Values = [NSMutableArray array];
     }

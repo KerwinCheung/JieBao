@@ -212,7 +212,7 @@
     [self.naviBar  configNavigationBarWithAttrs:@{
                                                   kCustomNaviBarLeftActionKey:leftAction,
                                                   kCustomNaviBarLeftImgKey:@"back",
-                                                  kCustomNaviBarTitleKey:@"定时模式",
+                                                  kCustomNaviBarTitleKey:@"定时程序",
                                                   kCustomNaviBarRightImgKey:@"bianji",
                                                   kCustomNaviBarRightActionKey:rightAction
                                                   }];
@@ -403,6 +403,8 @@
     [SVProgressHUD show];
     DeviceSchedulerTask *schTask = self.temps.firstObject;
     
+    [self setCurrentTimerControlInstruction];
+    
     if (schTask.sches.count == 0) {
         [SVProgressHUD dismiss];
         if ([schTask.taskName containsString:@"LPS"]||[schTask.taskName containsString:@"SPS"]) {
@@ -455,7 +457,7 @@
                 //关闭之前的定时器
                 [self closeTimer];
                 //下发当前时间的控制指令
-                [self setCurrentTimerControlInstruction];
+//                [self setCurrentTimerControlInstruction];
                 if (self.sucCount == 24) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [HudHelper showSuccessWithStatus:@"设置成功"];
@@ -477,7 +479,7 @@
     if (self.currentEnableTask.sches.count == 0) {
         LHLog(@"当前执行的定时组没有定时器");
         //获取当前执行的定时任务组
-        [self setCurrentTimerControlInstruction];
+//        [self setCurrentTimerControlInstruction];
 
         return;
     }
@@ -549,10 +551,13 @@
     @weakify(controlDic);
     
         [schTask.sches enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(DeviceCommonSchulder * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
             NSString *nowHour = [[NSDate date] formattedDateWithFormat:@"HH"];
             NSArray *timeArray = [obj.time componentsSeparatedByString:@":"];
+            
             @strongify(controlDic);
             if ([timeArray.firstObject isEqualToString:nowHour]) {
+                
                 controlDic = @{@"mode":@6,
                                @"Timer":@YES,
                                @"color_white":@([[obj.attrs objectForKey:@"color_white"] integerValue]),
@@ -564,8 +569,10 @@
                                };
                 *stop = YES;
                 if (self.dev) {
+                    LHLog(@"下发当前时间的设备控制指令");
                     [self.dev write:controlDic withSN:999];
                 }else{
+                    LHLog(@"下发当前时间的分组控制指令");
                     [self sendGroupControlWith:controlDic];
                 }
             }
@@ -593,13 +600,14 @@
         [self setUpTempValuesWithArrays:kSPS];
     }
     
-    
     [SVProgressHUD show];
     self.count = 0;
     self.sucCount = 0;
     @weakify(self);
     
     NSString *dateStr = [UtilHelper stringFromDate:[NSDate date]];
+    
+    NSString *nowHour = [[NSDate date] formattedDateWithFormat:@"HH"];
     
     for (int i = 0; i < 24; i++)
     {
@@ -619,11 +627,33 @@
             utcTimerStr = [setDate formattedDateWithFormat:@"HH:mm"];
         }
         
+        NSArray *timeArray = [utcTimerStr componentsSeparatedByString:@":"];
+        if ([timeArray.firstObject isEqualToString:nowHour]) {
+            //找到当前时间的指令
+            NSDictionary *controlDic = [NSDictionary dictionary];
+            controlDic = @{@"mode":@6,
+                           @"Timer":@YES,
+                           @"color_white":@([self.whiteValues[i] integerValue]),
+                           @"color_blue1":@([self.blue2Values[i] integerValue]),
+                           @"color_blue2":@([self.blue1Values[i] integerValue]),
+                           @"color_green":@([self.greenValues[i] integerValue]),
+                           @"color_red":@([self.redValues[i] integerValue]),
+                           @"volor_violet":@([self.violetValues[i] integerValue]),
+                           };
+            if (self.dev) {
+                LHLog(@"下发当前时间的设备控制指令");
+                [self.dev write:controlDic withSN:999];
+            }else{
+                LHLog(@"下发当前时间的分组控制指令");
+                [self sendGroupControlWith:controlDic];
+            }
+        }
+        
         
         NSMutableDictionary *body = [NSMutableDictionary
                                      dictionaryWithDictionary:@{@"attrs":@{@"color_white":@([self.whiteValues[i] integerValue]),
-                                                                           @"color_blue1":@([self.blue1Values[i] integerValue]),
-                                                                           @"color_blue2":@([self.blue2Values[i] integerValue]),
+                                                                           @"color_blue1":@([self.blue2Values[i] integerValue]),
+                                                                           @"color_blue2":@([self.blue1Values[i] integerValue]),
                                                                            @"color_green":@([self.greenValues[i] integerValue]),
                                                                            @"color_red":@([self.redValues[i] integerValue]),
                                                                            @"volor_violet":@([self.violetValues[i] integerValue]),
@@ -671,7 +701,7 @@
                     
                     //关闭之前的定时器
                     [self closeTimer];
-                    [self setCurrentTimerControlInstruction];
+//                    [self setCurrentTimerControlInstruction];
                     if (self.sucCount == 24) {
                         [HudHelper showSuccessWithStatus:@"设置成功"];
                         
@@ -712,7 +742,7 @@
                     
                     //关闭之前的定时器
                     [self closeTimer];
-                    [self setCurrentTimerControlInstruction];
+//                    [self setCurrentTimerControlInstruction];
                     if (self.sucCount == 24) {
                         [HudHelper showSuccessWithStatus:@"设置成功"];
                     }else{

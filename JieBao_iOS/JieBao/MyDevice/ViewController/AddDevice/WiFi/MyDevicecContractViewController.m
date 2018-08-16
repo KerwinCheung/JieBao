@@ -27,7 +27,7 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-        self.timeCount = 120;
+        self.timeCount = 119;
         
     }
     return self;
@@ -40,7 +40,7 @@
     [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
     [self.view addSubview:self.timelb];
     [self.view addSubview:self.loadImgView];
-    self.timelb.text = [NSString stringWithFormat:@"设备连接中 %ld",self.timeCount];
+    self.timelb.text = [NSString stringWithFormat:@"设备配网中 %ld",self.timeCount];
     [self makeContraints];
     [self contract];
 }
@@ -111,7 +111,7 @@
 
 - (void)timerCount
 {
-    self.timelb.text = [NSString stringWithFormat:@"设备连接中 %ld",self.timeCount--];
+    self.timelb.text = [NSString stringWithFormat:@"设备配网中 %ld",self.timeCount--];
     if (self.timeCount == 0) {
         self.timeCount = 120;
         [self.helper dismissLoading];

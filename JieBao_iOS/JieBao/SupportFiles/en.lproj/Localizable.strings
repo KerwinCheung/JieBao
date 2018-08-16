@@ -119,6 +119,7 @@
 "SPS程序" = "SPS Program";
 "载入预设" = "Loading the preset program";
 "添加定时程序" = "Adding scheduled time program";
+"定时程序" = "scheduled time program";
 "请输入定时名称" = "Please enter your program name";
 "请在对应的颜色图表上设置亮度" = "Please set the brightness of corresponding color on the color diagram";
 "删除成功" = "Delete successfully";
@@ -191,6 +192,7 @@
 "编辑分组" = "Manage Group";
 "管理分组设备" = "Manage Group Devices";
 "删除" = "Delete";
+"分组内暂无设备" = "No equipment is available in the group";
 
 //四、设置模块
 "设置" = "Settings";
