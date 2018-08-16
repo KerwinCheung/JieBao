@@ -37,7 +37,7 @@
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    self.loginBtn.backgroundColor = [UIColor colorWithRed:233/255.0 green:233/255.0 blue:233/255.0 alpha:1];
+//    self.loginBtn.backgroundColor = [UIColor colorWithRed:233/255.0 green:233/255.0 blue:233/255.0 alpha:1];
     
     @weakify(self);
     [[NSNotificationCenter defaultCenter] addObserverForName:UITextFieldTextDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note){
@@ -46,10 +46,9 @@
         {
             if ([UtilHelper isValidateMobile:self.PhoneTextField.text]) {
                 self.loginBtn.enabled = YES;
-                [self.loginBtn setBackgroundImage:[UIImage imageNamed:@"button1"] forState:UIControlStateNormal];
+                [self.loginBtn setBackgroundImage:[UIImage imageNamed:@"btnBg"] forState:UIControlStateNormal];
             }else{
                 self.loginBtn.enabled = NO;
-                [self.loginBtn setBackgroundImage:nil forState:UIControlStateNormal];
             }
         }
     }];
@@ -248,10 +247,10 @@
 
 #pragma mark - textField 监听
 -(void)textFieldChanged{    
-    if (_PhoneTextField.text.length>0 && _pwdTextField.text.length>0) {
-        _loginBtn.enabled = YES;
+    if (self.PhoneTextField.text.length>0 && _pwdTextField.text.length>0 && [UtilHelper isValidateMobile:self.PhoneTextField.text]) {
+        self.loginBtn.enabled = YES;
     }else{
-        _loginBtn.enabled = NO;
+        self.loginBtn.enabled = NO;
     }
 
     if (_PhoneTextField.text.length>11) {
@@ -267,8 +266,5 @@
     [self.PhoneTextField resignFirstResponder];
     [self.pwdTextField resignFirstResponder];
 }
-
-
-
 
 @end
