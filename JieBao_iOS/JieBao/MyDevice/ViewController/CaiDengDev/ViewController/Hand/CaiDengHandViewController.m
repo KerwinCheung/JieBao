@@ -287,8 +287,8 @@
     }
     
     if (sendDataDic.count > 0) {
-        
-        [NetworkHelper sendRequest:sendDataDic Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
+        NSDictionary *tempDic = @{@"attrs":sendDataDic};
+        [NetworkHelper sendRequest:tempDic Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
             
             if (!data || error) {
                 return ;

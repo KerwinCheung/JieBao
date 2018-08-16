@@ -382,7 +382,7 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     }else
     {
         //group
-        NSDictionary *body = @{@"attrs":@{@"switch":@(btn.selected)}};
+        NSDictionary *body = @{@"attrs":@{@"switch":@(btn.selected?1:0)}};
         [NetworkHelper sendRequest:body Method:@"POST" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/group/%@/control",self.group.gid] callback:^(NSData *data, NSError *error) {
             if (!data || error) {
                 return ;
