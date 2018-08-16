@@ -297,6 +297,8 @@
     }
     
     [SVProgressHUD show];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setBackgroundColor:[UIColor whiteColor]];
     [SDKHelper shareInstance].resetPswBlock = ^(BOOL success) {
         [SVProgressHUD dismiss];
         if (success) {

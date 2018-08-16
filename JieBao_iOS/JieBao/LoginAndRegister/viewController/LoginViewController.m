@@ -141,6 +141,8 @@
     }];
     
     [SVProgressHUD show];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setBackgroundColor:[UIColor whiteColor]];
     [SDKHelper shareInstance].loginBlock = ^(BOOL success) {
         if (success) {
             UserModel *model = [UserHelper getCurrentUser];

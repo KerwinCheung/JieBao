@@ -308,6 +308,8 @@
     }
     
     [SVProgressHUD show];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setBackgroundColor:[UIColor whiteColor]];
     [self checkworking];
     
 }
