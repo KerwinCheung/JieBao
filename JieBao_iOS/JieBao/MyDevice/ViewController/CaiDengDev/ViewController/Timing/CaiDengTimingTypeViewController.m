@@ -551,8 +551,10 @@
     @weakify(controlDic);
     
         [schTask.sches enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(DeviceCommonSchulder * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
             NSString *nowHour = [[NSDate date] formattedDateWithFormat:@"HH"];
             NSArray *timeArray = [obj.time componentsSeparatedByString:@":"];
+            
             @strongify(controlDic);
             if ([timeArray.firstObject isEqualToString:nowHour]) {
                 
@@ -567,8 +569,10 @@
                                };
                 *stop = YES;
                 if (self.dev) {
+                    LHLog(@"下发当前时间的设备控制指令");
                     [self.dev write:controlDic withSN:999];
                 }else{
+                    LHLog(@"下发当前时间的分组控制指令");
                     [self sendGroupControlWith:controlDic];
                 }
             }
@@ -596,13 +600,14 @@
         [self setUpTempValuesWithArrays:kSPS];
     }
     
-    
     [SVProgressHUD show];
     self.count = 0;
     self.sucCount = 0;
     @weakify(self);
     
     NSString *dateStr = [UtilHelper stringFromDate:[NSDate date]];
+    
+    NSString *nowHour = [[NSDate date] formattedDateWithFormat:@"HH"];
     
     for (int i = 0; i < 24; i++)
     {
@@ -620,6 +625,28 @@
             str = [NSString stringWithFormat:@"%@ %@",dateStr,originTimerStr];
             setDate = [UtilHelper dateFromString:str];
             utcTimerStr = [setDate formattedDateWithFormat:@"HH:mm"];
+        }
+        
+        NSArray *timeArray = [utcTimerStr componentsSeparatedByString:@":"];
+        if ([timeArray.firstObject isEqualToString:nowHour]) {
+            //找到当前时间的指令
+            NSDictionary *controlDic = [NSDictionary dictionary];
+            controlDic = @{@"mode":@6,
+                           @"Timer":@YES,
+                           @"color_white":@([self.whiteValues[i] integerValue]),
+                           @"color_blue1":@([self.blue2Values[i] integerValue]),
+                           @"color_blue2":@([self.blue1Values[i] integerValue]),
+                           @"color_green":@([self.greenValues[i] integerValue]),
+                           @"color_red":@([self.redValues[i] integerValue]),
+                           @"volor_violet":@([self.violetValues[i] integerValue]),
+                           };
+            if (self.dev) {
+                LHLog(@"下发当前时间的设备控制指令");
+                [self.dev write:controlDic withSN:999];
+            }else{
+                LHLog(@"下发当前时间的分组控制指令");
+                [self sendGroupControlWith:controlDic];
+            }
         }
         
         
