@@ -54,9 +54,7 @@
     }];
 }
 
-- (void)applicationWillEnterForeground{
-    [self.view endEditing:YES];
-}
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -140,9 +138,8 @@
         }
     }];
     
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setBackgroundColor:[UIColor whiteColor]];
+
+    [HudHelper show];
     [SDKHelper shareInstance].loginBlock = ^(BOOL success) {
         if (success) {
             UserModel *model = [UserHelper getCurrentUser];
@@ -175,23 +172,24 @@
 
                     //任务执行完毕后，获取通知
                     dispatch_group_notify(dispatchGroup, queue, ^{
-                        [SVProgressHUD dismiss];
                         dispatch_async(dispatch_get_main_queue(), ^{
+                            [HudHelper dismiss];
+
                             AppDelegate *delegate =  (AppDelegate *)[[UIApplication sharedApplication] delegate];
                             [delegate changeRootViewController];
                         });
                     });
 
                 }else{
-                    [SVProgressHUD dismiss];
                     dispatch_async(dispatch_get_main_queue(), ^{
+                        [HudHelper dismiss];
                         AppDelegate *delegate =  (AppDelegate *)[[UIApplication sharedApplication] delegate];
                         [delegate changeRootViewController];
                     });
                 }
             }];
         }else{
-            [SVProgressHUD dismiss];
+            [HudHelper dismiss];
         }
     };
     [[GizWifiSDK sharedInstance] userLogin:self.PhoneTextField.text password:self.pwdTextField.text];
@@ -267,6 +265,11 @@
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self.PhoneTextField resignFirstResponder];
     [self.pwdTextField resignFirstResponder];
+}
+
+#pragma mark - applicationWillEnterForeground
+- (void)applicationWillEnterForeground{
+    [self.view endEditing:YES];
 }
 
 @end

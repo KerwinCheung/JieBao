@@ -89,10 +89,10 @@
 
 - (void)logoutBtnCilcked
 {
+   
     UIStoryboard *loginSB = [UIStoryboard storyboardWithName:@"LoginStoryboard" bundle:nil];
-    LoginViewController *loginVC = [loginSB instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    UIViewController *vc = [loginSB instantiateViewControllerWithIdentifier:@"NavigationController"];
     
-    UINavigationController *vc = [[UINavigationController alloc] initWithRootViewController:loginVC];
     AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     delegate.window.rootViewController = vc;
     [delegate.window makeKeyAndVisible];

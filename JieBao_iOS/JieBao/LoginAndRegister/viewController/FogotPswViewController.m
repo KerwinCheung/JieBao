@@ -296,15 +296,12 @@
         return;
     }
     
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setBackgroundColor:[UIColor whiteColor]];
+    [HudHelper show];
     [SDKHelper shareInstance].resetPswBlock = ^(BOOL success) {
-        [SVProgressHUD dismiss];
+        [HudHelper dismiss];
         if (success) {
             
-        }else
-        {
+        }else{
             
         }
     };

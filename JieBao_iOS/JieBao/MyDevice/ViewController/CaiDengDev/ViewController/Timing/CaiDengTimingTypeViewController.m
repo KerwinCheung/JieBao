@@ -59,7 +59,7 @@
 @implementation CaiDengTimingTypeViewController
 
 -(void)dealloc {
-    [SVProgressHUD dismiss];
+    [HudHelper dismiss];
 }
 
 - (instancetype)init
@@ -81,7 +81,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [SVProgressHUD show];
+    [HudHelper show];
     
     [self.nameSoure removeAllObjects];
     [self.dataSourceDic removeAllObjects];
@@ -89,7 +89,7 @@
     
     @weakify(self);
     [NetworkHelper sendRequest:nil Method:@"GET" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler?%@&limit=200",self.dev?[NSString stringWithFormat:@"did=%@",self.dev.did]:[NSString stringWithFormat:@"group_id=%@",self.group.gid]] callback:^(NSData *data, NSError *error) {
-        [SVProgressHUD dismiss];
+        [HudHelper dismiss];
         if (!data || error) {
             return ;
         }
@@ -400,13 +400,13 @@
     self.count = 0;
     self.sucCount = 0;
     
-    [SVProgressHUD show];
+    [HudHelper show];
     DeviceSchedulerTask *schTask = self.temps.firstObject;
     
     [self setCurrentTimerControlInstruction];
     
     if (schTask.sches.count == 0) {
-        [SVProgressHUD dismiss];
+        [HudHelper dismiss];
         if ([schTask.taskName containsString:@"LPS"]||[schTask.taskName containsString:@"SPS"]) {
             // 如果是默认的定时程序，第一次则去创建
             [self setDefaultTimerWithTask:schTask];
@@ -456,8 +456,6 @@
             if (self.count == 24) {
                 //关闭之前的定时器
                 [self closeTimer];
-                //下发当前时间的控制指令
-//                [self setCurrentTimerControlInstruction];
                 if (self.sucCount == 24) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [HudHelper showSuccessWithStatus:@"设置成功"];
@@ -488,7 +486,7 @@
     self.closeCount    = 0;
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [SVProgressHUD show];
+        [HudHelper show];
     });
     
     for (DeviceCommonSchulder *sch in self.currentEnableTask.sches) {
@@ -600,7 +598,7 @@
         [self setUpTempValuesWithArrays:kSPS];
     }
     
-    [SVProgressHUD show];
+    [HudHelper show];
     self.count = 0;
     self.sucCount = 0;
     @weakify(self);

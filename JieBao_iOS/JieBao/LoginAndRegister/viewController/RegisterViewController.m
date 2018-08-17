@@ -307,9 +307,7 @@
         return;
     }
     
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-    [SVProgressHUD setBackgroundColor:[UIColor whiteColor]];
+    [HudHelper show];
     [self checkworking];
     
 }
@@ -327,7 +325,7 @@
     [manger setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         
         if (status == 0) {
-            [SVProgressHUD dismiss];
+            [HudHelper dismiss];
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"提示" message:@"没有网络" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定"style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 
@@ -338,7 +336,7 @@
             [[GizWifiSDK sharedInstance] registerUser:self.usrTextView.text password:self.pswTextView.text verifyCode:self.validateTextView.text accountType:GizUserPhone];
             LHWeakSelf(self)
             [SDKHelper shareInstance].registerBlock = ^(BOOL success) {
-                [SVProgressHUD dismiss];
+                [HudHelper dismiss];
                 if (success) {
                     [weakself.navigationController pushViewController:[NSClassFromString(@"RegisterSuccessViewController") new] animated:YES];
                     

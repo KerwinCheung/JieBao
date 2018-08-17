@@ -124,18 +124,23 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
         NSString *lastMacStr = [self.dev.macAddress substringWithRange:range];
         NSString *deaultStr = [NSString stringWithFormat:@"%@%@",[UtilHelper getDefaultNameStrPrefixWithProductKey:self.dev.productKey],lastMacStr];
         title = self.dev.alias.length==0?deaultStr:self.dev.alias;
-    }else
-    {
+        [self.naviBar  configNavigationBarWithAttrs:@{
+                                                      kCustomNaviBarLeftActionKey:leftAction,
+                                                      kCustomNaviBarLeftImgKey:@"back",
+                                                      kCustomNaviBarRightImgKey:@"more",
+                                                      kCustomNaviBarTitleKey:title,
+                                                      kCustomNaviBarRightActionKey:rightAction                                                      
+                                                      }];
+    }else{
         title = self.group.group_name;
+        
+        [self.naviBar  configNavigationBarWithAttrs:@{
+                                                      kCustomNaviBarLeftActionKey:leftAction,
+                                                      kCustomNaviBarLeftImgKey:@"back",
+                                                      kCustomNaviBarTitleKey:title,
+                                                      }];
     }
-    [self.naviBar  configNavigationBarWithAttrs:@{
-                                                  kCustomNaviBarLeftActionKey:leftAction,
-                                                  kCustomNaviBarLeftImgKey:@"back",
-                                                  kCustomNaviBarRightImgKey:@"more",
-                                                  kCustomNaviBarTitleKey:title,
-                                                  kCustomNaviBarRightActionKey:rightAction
-                                                  
-                                                  }];
+   
     
     if (self.dev) {
         NSLog(@"%@",self.dev.macAddress);

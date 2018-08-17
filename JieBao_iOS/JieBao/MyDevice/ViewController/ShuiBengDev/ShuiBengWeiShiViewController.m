@@ -164,9 +164,9 @@
 
 - (void)requestSch
 {
-    [SVProgressHUD show];
+    [HudHelper show];
     [NetworkHelper sendRequest:nil Method:@"GET" Path:[NSString stringWithFormat:@"https://api.gizwits.com/app/common_scheduler?did=%@",self.dev.did] callback:^(NSData *data, NSError *error) {
-        [SVProgressHUD dismiss];
+        [HudHelper dismiss];
         if (!data || error) {
             return ;
         }

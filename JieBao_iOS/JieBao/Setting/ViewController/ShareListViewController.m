@@ -91,7 +91,7 @@
 
 - (void)requestMyShareData
 {
-    [SVProgressHUD show];
+    [HudHelper show];
     [NetworkHelper sendRequest:nil Method:@"GET" Path:@"https://api.gizwits.com/app/sharing?sharing_type=0" callback:^(NSData *data, NSError *error) {
         [self requestOtherShareData];
         if (!data || error) {
@@ -123,7 +123,7 @@
 - (void)requestOtherShareData
 {
     [NetworkHelper sendRequest:nil Method:@"GET" Path:@"https://api.gizwits.com/app/sharing?sharing_type=1" callback:^(NSData *data, NSError *error) {
-        [SVProgressHUD dismiss];
+        [HudHelper dismiss];
         if (!data || error) {
             return ;
         }

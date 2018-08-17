@@ -436,7 +436,7 @@
     }
     
     
-    [SVProgressHUD show];
+    [HudHelper show];
     self.count = 0;
     self.sucCount = 0;
     @weakify(self);
@@ -536,7 +536,7 @@
         return;
     }
     
-    [SVProgressHUD show];
+    [HudHelper show];
     self.count = 0;
     self.sucCount = 0;
     for (int i=0; i<self.schTask.sches.count; i++) {
