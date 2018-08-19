@@ -20,10 +20,10 @@
 @property (nonatomic, strong) UILabel *subLb;
 
 @property (nonatomic, strong) LightControlView *whiteLcView;
-
-@property (nonatomic, strong) LightControlView *sapphireBlueLcView;
-
-@property (nonatomic, strong) LightControlView *blueLcView;
+/**蓝色*/
+@property (nonatomic, strong) LightControlView *blue2LcView;
+/**宝蓝色--颜色深的*/
+@property (nonatomic, strong) LightControlView *blue1LcView;
 
 @property (nonatomic, strong) LightControlView *greenLcView;
 
@@ -140,8 +140,8 @@
     [self.view addSubview:self.sepImgView];
     [self.view addSubview:self.subLb];
     [self.view addSubview:self.whiteLcView];
-    [self.view addSubview:self.sapphireBlueLcView];
-    [self.view addSubview:self.blueLcView];
+    [self.view addSubview:self.blue2LcView];
+    [self.view addSubview:self.blue1LcView];
     [self.view addSubview:self.greenLcView];
     [self.view addSubview:self.redLcView];
     [self.view addSubview:self.puepleLcView];
@@ -169,22 +169,22 @@
         make.left.equalTo(@(LL_ScreenWidth/17));
     }];
     
-    [self.sapphireBlueLcView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.blue2LcView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.equalTo(weakself.whiteLcView);
         make.top.equalTo(weakself.whiteLcView);
         make.left.equalTo(weakself.whiteLcView.mas_right);
     }];
     
-    [self.blueLcView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.blue1LcView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.equalTo(weakself.whiteLcView);
         make.top.equalTo(weakself.whiteLcView);
-        make.left.equalTo(weakself.sapphireBlueLcView.mas_right);
+        make.left.equalTo(weakself.blue2LcView.mas_right);
     }];
     
     [self.greenLcView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.equalTo(weakself.whiteLcView);
         make.top.equalTo(weakself.whiteLcView);
-        make.left.equalTo(weakself.blueLcView.mas_right);
+        make.left.equalTo(weakself.blue1LcView.mas_right);
     }];
     
     [self.redLcView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -347,8 +347,8 @@
                         NSNumber *volor_violet =   [tempTimer.attrs objectForKey:@"volor_violet"];
                         
                         [self.whiteValues addObject:color_white];
-                        [self.blue1Values addObject:color_blue2];
-                        [self.blue2Values addObject:color_blue1];
+                        [self.blue1Values addObject:color_blue1];
+                        [self.blue2Values addObject:color_blue2];
                         [self.greenValues addObject:color_green];
                         [self.redValues addObject:color_red];
                         [self.violetValues addObject:volor_violet];
@@ -467,8 +467,8 @@
         
         NSMutableDictionary *body = [NSMutableDictionary
                                      dictionaryWithDictionary:@{@"attrs":@{@"color_white":@([self.whiteValues[i] integerValue]),
-                                                                           @"color_blue1":@([self.blue2Values[i] integerValue]),
-                                                                           @"color_blue2":@([self.blue1Values[i] integerValue]),
+                                                                           @"color_blue1":@([self.blue1Values[i] integerValue]),
+                                                                           @"color_blue2":@([self.blue2Values[i] integerValue]),
                                                                            @"color_green":@([self.greenValues[i] integerValue]),
                                                                            @"color_red":@([self.redValues[i] integerValue]),
                                                                            @"volor_violet":@([self.violetValues[i] integerValue]),
@@ -515,8 +515,7 @@
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.navigationController popViewControllerAnimated:YES];
                     });
-                }else
-                {
+                }else{
                     [HudHelper showErrorWithStatus:@"设置失败"];
                 }
                 self.sucCount = 0;
@@ -594,21 +593,21 @@
         self.currentSelectView = self.whiteLcView;
         [self.lineChartView setChartSchValues:self.whiteValues];
     }
-    else if ([view isEqual:self.sapphireBlueLcView])
+    else if ([view isEqual:self.blue2LcView])
     {
         //蓝色
         [self.lineChartView setSelectedIndex:1];
         self.currentIndex = 1;
-        self.currentSelectView = self.sapphireBlueLcView;
-        [self.lineChartView setChartSchValues:self.blue1Values];
+        self.currentSelectView = self.blue2LcView;
+        [self.lineChartView setChartSchValues:self.blue2Values];
     }
-    else if ([view isEqual:self.blueLcView])
+    else if ([view isEqual:self.blue1LcView])
     {
         //宝蓝
         [self.lineChartView setSelectedIndex:2];
         self.currentIndex = 2;
-        self.currentSelectView = self.blueLcView;
-        [self.lineChartView setChartSchValues:self.blue2Values];
+        self.currentSelectView = self.blue1LcView;
+        [self.lineChartView setChartSchValues:self.blue1Values];
     }
     else if ([view isEqual:self.greenLcView])
     {
@@ -642,12 +641,12 @@
             break;
         case 1:
         {
-            self.blue1Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
+            self.blue2Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
         }
             break;
         case 2:
         {
-            self.blue2Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
+            self.blue1Values = [NSMutableArray arrayWithArray:[self.lineChartView getChartValues]];
         }
             break;
         case 3:
@@ -700,8 +699,8 @@
 
 - (void)setupTempValuesWithArrays:(NSArray *)array {
     self.whiteValues = array[0];
-    self.blue1Values = array[1];
-    self.blue2Values = array[2];
+    self.blue2Values = array[1];
+    self.blue1Values = array[2];
     self.greenValues = array[3];
     self.redValues = array[4];
     self.violetValues = array[5];
@@ -789,24 +788,24 @@
     return _whiteLcView;
 }
 
-- (LightControlView *)sapphireBlueLcView
+- (LightControlView *)blue2LcView
 {
-    if (!_sapphireBlueLcView) {
-        _sapphireBlueLcView = [LightControlView new];
-        _sapphireBlueLcView.btnColor = UICOLORFROMRGB(0x69cef9);
-        _sapphireBlueLcView.delegate = self;
+    if (!_blue2LcView) {
+        _blue2LcView = [LightControlView new];
+        _blue2LcView.btnColor = UICOLORFROMRGB(0x69cef9);
+        _blue2LcView.delegate = self;
     }
-    return _sapphireBlueLcView;
+    return _blue2LcView;
 }
 
-- (LightControlView *)blueLcView
+- (LightControlView *)blue1LcView
 {
-    if (!_blueLcView) {
-        _blueLcView = [LightControlView new];
-        _blueLcView.btnColor = UICOLORFROMRGB(0x0087ed);
-        _blueLcView.delegate = self;
+    if (!_blue1LcView) {
+        _blue1LcView = [LightControlView new];
+        _blue1LcView.btnColor = UICOLORFROMRGB(0x0087ed);
+        _blue1LcView.delegate = self;
     }
-    return _blueLcView;
+    return _blue1LcView;
 }
 
 
@@ -916,50 +915,7 @@
     return _selectView;
 }
 
-//- (void)setSchTask:(DeviceSchedulerTask *)schTask
-//{
-//    _schTask = schTask;
-//    NSArray<DeviceCommonSchulder *> *sches = schTask.sches;
-//    NSString *key = sches[0].attrs.allKeys.firstObject;
-//    NSDictionary *dic = @{@"color_white":@0,@"color_blue1":@1,@"color_blue2":@2,@"color_green":@3,@"color_red":@4,@"volor_violet":@5};
-//    for (int i=0; i<sches.count; i++) {
-//        id value = sches[i].attrs[key];
-//        NSInteger index = [sches[i].time componentsSeparatedByString:@":"].firstObject.integerValue;
-//        [self.tempArr replaceObjectAtIndex:index withObject:value];
-//    }
-//    NSInteger selecteIndex = [dic[key] integerValue];
-//    //设置定时名称
-//    NSArray *taskNameArr = [schTask.taskName componentsSeparatedByString:@"_"];
-//    self.timingTextView.text = taskNameArr.firstObject;
-//
-//    [self.lineChartView setChartSchValues:self.tempArr];
-//
-//    if (selecteIndex == 0) {
-//        [self.lineChartView setSelectedIndex:0];
-//        self.currentIndex = 0;
-//        self.currentSelectView = self.whiteLcView;
-//    }else if (selecteIndex == 1){
-//        [self.lineChartView setSelectedIndex:1];
-//        self.currentIndex = 1;
-//        self.currentSelectView = self.sapphireBlueLcView;
-//    }else if (selecteIndex == 2){
-//        [self.lineChartView setSelectedIndex:2];
-//        self.currentIndex = 2;
-//        self.currentSelectView = self.blueLcView;
-//    }else if (selecteIndex == 3){
-//        [self.lineChartView setSelectedIndex:3];
-//        self.currentIndex = 3;
-//        self.currentSelectView = self.greenLcView;
-//    }else if (selecteIndex == 4){
-//        [self.lineChartView setSelectedIndex:4];
-//        self.currentIndex = 4;
-//        self.currentSelectView = self.redLcView;
-//    }else if (selecteIndex == 5){
-//        [self.lineChartView setSelectedIndex:5];
-//        self.currentIndex = 5;
-//        self.currentSelectView = self.puepleLcView;
-//    }
-//}
+
 
 - (NSMutableArray *)tempArr
 {
