@@ -462,8 +462,7 @@
             setDate = [UtilHelper dateFromString:str];
             utcTimerStr = [setDate formattedDateWithFormat:@"HH:mm"];
         }
-        
-        
+       
         
         NSMutableDictionary *body = [NSMutableDictionary
                                      dictionaryWithDictionary:@{@"attrs":@{@"color_white":@([self.whiteValues[i] integerValue]),
@@ -478,6 +477,9 @@
                                                                 @"repeat":@"mon,tue,wed,thu,fri,sat,sun",
                                                                 @"enabled":@(0),
                                                                 @"remark":taskName}];
+        
+      
+        
         if (self.dev) {
             [body setObject:self.dev.did forKey:@"did"];
         }else{

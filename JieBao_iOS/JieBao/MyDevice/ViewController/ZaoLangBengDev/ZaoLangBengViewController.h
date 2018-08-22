@@ -7,9 +7,11 @@
 //
 
 #import "BaseViewController.h"
+#import "CustomDeviceGroup.h"
 
 @interface ZaoLangBengViewController : BaseViewController
 
 @property (nonatomic, strong) GizWifiDevice *dev;
+@property (nonatomic, strong) CustomDeviceGroup *group;
 
 @end

@@ -112,7 +112,6 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     LHWeakSelf(self)
     ActionBlock leftAction = ^(UIButton *btn){
         [weakself.navigationController popViewControllerAnimated:YES];
-        LHLog(@"left");
     };
     
     ActionBlock rightAction = ^(UIButton *btn){
