@@ -62,7 +62,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    [self.rePswTextView addTarget:self action:@selector(passConTextChange:) forControlEvents:UIControlEventEditingChanged];
     
     [self initUI];
     
@@ -89,8 +88,10 @@
     LHWeakSelf(self)
     ActionBlock leftAction = ^(UIButton *btn){
         [weakself.navigationController popViewControllerAnimated:YES];
-        LHLog(@"left");
     };
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(passConTextChange) name:UITextFieldTextDidChangeNotification object:nil];
+
     [self.naviBar  configNavigationBarWithAttrs:@{
                                                   kCustomNaviBarLeftActionKey:leftAction,
                                                   kCustomNaviBarLeftImgKey:@"back",
@@ -101,6 +102,7 @@
     [super viewDidDisappear:animated];
     [self.timer invalidate];
     self.timer = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)dealloc
@@ -355,7 +357,7 @@
     [manger startMonitoring];
 }
 
-- (void)passConTextChange:(UITextField *)textField
+- (void)passConTextChange
 {
     if (self.usrTextView.text.length != 0 && self.validateTextView.text.length != 0&& self.pswTextView.text.length != 0 &&self.rePswTextView.text.length != 0) {
         self.registerBtn.enabled = YES;
