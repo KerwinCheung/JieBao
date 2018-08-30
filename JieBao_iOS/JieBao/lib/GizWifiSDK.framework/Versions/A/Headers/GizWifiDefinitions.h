@@ -181,6 +181,18 @@ typedef NS_ENUM(NSInteger, GizWifiErrorCode) {
     GIZ_SDK_MEMORY_MALLOC_FAILED = 8101,
     /** Daemon内部线程创建失败 */
     GIZ_SDK_THREAD_CREATE_FAILED = 8102,
+    /** 数据AES加密失败 */
+    GIZ_SDK_AES_ENCRYPT_FAILED = 8103,
+    /** 数据AES解密失败 */
+    GIZ_SDK_AES_DECRYPT_FAILED = 8104,
+    /** Json对象创建失败 */
+    GIZ_SDK_JSON_OBJECT_CREATE_FAILED = 8105,
+    /** Json解析失败 */
+    GIZ_SDK_JSON_PARSE_FAILED = 8106,
+    /** Json去格式化失败 */
+    GIZ_SDK_JSON_UNFORMAT_FAILED = 8107,
+    /** Json拷贝失败 */
+    GIZ_SDK_JSON_DUPLICATE_FAILED = 8108,
     
     /** 定时任务创建失败 */
     GIZ_SDK_SCHEDULER_CREATE_FAILED = 8120,
@@ -247,17 +259,6 @@ typedef NS_ENUM(NSInteger, GizWifiErrorCode) {
     GIZ_SDK_SCENE_RUN_FAILED = 8177,
     /** 场景状态更新失败 */
     GIZ_SDK_SCENE_STATUS_UPDATE_FAILED = 8178,
-    
-    /** 创建联动失败 */
-    GIZ_SDK_JOINT_ACTION_CREATE_FAILED = 8190,
-    /** 删除联动失败 */
-    GIZ_SDK_JOINT_ACTION_DELETE_FAILED = 8191,
-    /** 不支持的联动版本 */
-    GIZ_SDK_JOINT_ACTION_VER_UNSUPPORTED = 8193,
-    /** 无效的联动条件类型 */
-    GIZ_SDK_JOINT_ACTION_INVALID_CONDITION_TYPE = 8194,
-    /** 无效的联动结果事件类型 */
-    GIZ_SDK_JOINT_ACTION_INVALID_RESULT_EVENT_TYPE = 8195,
 
     /** 配置文件还未下载 */
     GIZ_SDK_DATAPOINT_NOT_DOWNLOAD = 8201,
@@ -265,6 +266,69 @@ typedef NS_ENUM(NSInteger, GizWifiErrorCode) {
     GIZ_SDK_DATAPOINT_SERVICE_UNAVAILABLE = 8202,
     /** 配置文件解析失败 */
     GIZ_SDK_DATAPOINT_PARSE_FAILED = 8203,
+    
+    /** 创建联动失败 */
+    GIZ_SDK_JOINT_ACTION_CREATE_FAILED = 8221,
+    /** 删除联动失败 */
+    GIZ_SDK_JOINT_ACTION_DELETE_FAILED = 8222,
+    /** 不支持的联动版本 */
+    GIZ_SDK_JOINT_ACTION_VER_UNSUPPORTED = 8223,
+    /** 联动条件组合无效 */
+    GIZ_SDK_JOINT_ACTION_CONDITION_COMBI_INVALID = 8224,
+    /** 联动条件运算符无效 */
+    GIZ_SDK_JOINT_ACTION_CONDITION_OPERATOR_INVALID = 8225,
+    /** 联动结果类型无效 */
+    GIZ_SDK_JOINT_ACTION_RESULT_TYPE_INVALID = 8226,
+    /** 必须设置联动规则 */
+    GIZ_SDK_PARAM_JOINT_ACTION_REQUIRE_RULE = 8227,
+    /** 必须设置联动条件 */
+    GIZ_SDK_PARAM_JOINT_ACTION_REQUIRE_CONDITION = 8228,
+    /** 必须设置联动条件中的设备 */
+    GIZ_SDK_PARAM_JOINT_ACTION_CONDITION_REQUIRE_DEVICE = 8229,
+    /** 必须设置联动条件中的动作 */
+    GIZ_SDK_PARAM_JOINT_ACTION_CONDITION_REQUIRE_DATA = 8230,
+    /** 联动条件中的设备只能设置一个 */
+    GIZ_SDK_PARAM_JOINT_ACTION_CONDITION_DATA_ONLY_SUPPORT_ONE = 8231,
+    /** 联动条件中的设备动作无效 */
+    GIZ_SDK_PARAM_JOINT_ACTION_CONDITION_DATA_INVALID = 8232,
+    /** 必须设置联动的期望结果 */
+    GIZ_SDK_PARAM_JOINT_ACTION_REQUIRE_RESULT = 8233,
+    /** 必须设置联动要触发的动作 */
+    GIZ_SDK_PARAM_JOINT_ACTION_RESULT_REQUIRE_DATA = 8234,
+    /** 必须设置触发联动动作的设备 */
+    GIZ_SDK_PARAM_JOINT_ACTION_RESULT_REQUIRE_DEVICE = 8235,
+    /** 必须设置触发联动动作的组 */
+    GIZ_SDK_PARAM_JOINT_ACTION_RESULT_REQUIRE_GROUP = 8236,
+    /** 必须设置触发联动的场景 */
+    GIZ_SDK_PARAM_JOINT_ACTION_RESULT_REQUIRE_SCENE = 8237,
+    /** 必须设置触发联动的定时任务 */
+    GIZ_SDK_PARAM_JOINT_ACTION_RESULT_REQUIRE_SCHEDULER = 8238,
+    
+    
+    
+    /** 管理者设备必须是一个网关 */
+    GIZ_SDK_PARAM_GATEWAY_OWNER_REQUIRED = 8248,
+    /** 没有指定管理者设备 */
+    GIZ_SDK_PARAM_NO_DEVICE_OWNER = 8249,
+    
+    /** 产品类型不在指定范围内 */
+    GIZ_SDK_PRODUCTKEY_NOT_IN_SPECIFY = 8250,
+    /** 设备产品类型不同，无法同时安全解绑 */
+    GIZ_SDK_DEVICE_PRODUCTKEY_DIFFERENT = 8251,
+    /** 设备meshId不能为空 */
+    GIZ_SDK_DEVICE_MESHID_EMPTY = 8252,
+    /** 设备meshId无效 */
+    GIZ_SDK_DEVICE_MESHID_INVALID = 8253,
+    /** 设备meshId应为数字 */
+    GIZ_SDK_DEVICE_MESHID_IS_NOT_NUMBER = 8254,
+    /** 无法识别mesh网关 */
+    GIZ_SDK_DEVICE_MESH_GATEWAY_UNKNOWN = 8255,
+    /** mesh网关未就绪 */
+    GIZ_SDK_DEVICE_MESH_GATEWAY_NOT_READY = 8256,
+    /** 需要有mesh网关才能执行控制指令 */
+    GIZ_SDK_DEVICE_CONTROL_NEED_MESH_GATEWAY = 8257,
+    /** 设备mac长度无效 */
+    GIZ_SDK_DEVICE_MAC_LENGTH_INVALID = 8258,
     
     /** SDK 未初始化 */
     GIZ_SDK_NOT_INITIALIZED = 8300,
@@ -319,6 +383,14 @@ typedef NS_ENUM(NSInteger, GizWifiErrorCode) {
     GIZ_SDK_OTA_FIRMWARE_VERIFY_SUCCESS = 8359,
     /** 设备不支持手机OTA升级 */
     GIZ_SDK_OTA_DEVICE_NOT_SUPPORT = 8360,
+    /** websocket握手失败 */
+    GIZ_SDK_WS_HANDSHAKE_FAILED = 8400,
+    /** websocket登录失败 */
+    GIZ_SDK_WS_LOGIN_FAILED = 8401,
+    /** websocket设备订阅失败 */
+    GIZ_SDK_WS_DEVICE_SUBSCRIBE_FAILED = 8402,
+    /** websocket设备解除订阅失败 */
+    GIZ_SDK_WS_DEVICE_UNSUBSCRIBE_FAILED = 8403,
     
     /** mac already registered! */
     GIZ_OPENAPI_MAC_ALREADY_REGISTERED = 9001,
@@ -543,6 +615,7 @@ typedef NS_ENUM(NSInteger, GizWifiGAgentType) {
     GizGAgentOther = 11,
     /** 芯海模组 */
     GizGAgentFlyLink = 12,
+    GizGAgentMxchipAWS = 13,
 };
 
 /**
@@ -603,6 +676,20 @@ typedef NS_ENUM(NSInteger, GizWifiDeviceType) {
     GizDeviceCenterControl = 1,
     /** 子设备 */
     GizDeviceSub = 2,
+};
+
+/**
+ @brief GizWifiDeviceNetType枚举，描述SDK支持的设备网络类型
+ */
+typedef NS_ENUM(NSInteger, GizWifiDeviceNetType) {
+    /** wifi设备 */
+    GizDeviceNetWifi = 0,
+    /** NB设备 */
+    GizDeviceNetNB = 1,
+    /** BT设备 */
+    GizDeviceNetBT = 2,
+    /** BLE设备 */
+    GizDeviceNetBLE = 3,
 };
 
 /**

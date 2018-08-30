@@ -52,7 +52,7 @@
  */
 + (void)addGroup:(GizWifiDevice * _Nonnull)groupOwner groupType:(NSString * _Nonnull)groupType groupName:(NSString * _Nonnull)groupName groupDevices:(NSArray <GizWifiDevice *>* _Nonnull)groupDevices;
 
-/*
+/**
  删除设备分组。删除成功时返回最新的组列表，删除失败时返回错误信息
  @param groupOwner 组的管理者，参见GizDeviceGroup类中groupOwner变量的描述。此参数不能填nil
  @param group 待删除的组。此参数不能填nil

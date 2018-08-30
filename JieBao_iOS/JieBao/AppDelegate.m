@@ -30,6 +30,7 @@
     [GizDeviceSharing setDelegate:self.sdkHelper];
     [GizDeviceSchedulerCenter setDelegate:self.sdkHelper];
     [GizWifiSDK startWithAppInfo:@{@"appId":kAppId,@"appSecret":kAppSecrect} productInfo:nil cloudServiceInfo:nil autoSetDeviceDomain:NO];
+    NSLog(@"机智云iOS SDK 版本 %@",[GizWifiSDK getVersion]);
     
     UIStoryboard *loginSB = [UIStoryboard storyboardWithName:@"LoginStoryboard" bundle:nil];
     UIViewController *vc = [loginSB instantiateViewControllerWithIdentifier:@"NavigationController"];

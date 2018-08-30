@@ -335,6 +335,7 @@
             [controller addAction:action];
             [self presentViewController:controller animated:YES completion:nil];
         }else{
+            
             [[GizWifiSDK sharedInstance] registerUser:self.usrTextView.text password:self.pswTextView.text verifyCode:self.validateTextView.text accountType:GizUserPhone];
             LHWeakSelf(self)
             [SDKHelper shareInstance].registerBlock = ^(BOOL success) {
@@ -346,8 +347,7 @@
                     model.userName = self.usrTextView.text;
                     model.psw = self.pswTextView.text;
                     [UserHelper setCurrentUser:model];
-                }else
-                {
+                }else{
                     LHLog(@"注册失败");
                 }
             };
