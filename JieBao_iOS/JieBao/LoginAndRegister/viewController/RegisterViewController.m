@@ -336,7 +336,8 @@
             [self presentViewController:controller animated:YES completion:nil];
         }else{
             
-            [[GizWifiSDK sharedInstance] registerUser:self.usrTextView.text password:self.pswTextView.text verifyCode:self.validateTextView.text accountType:GizUserPhone];
+            NSString *phoneStr = [NSString stringWithFormat:@"%@",self.usrTextView.text];
+            [[GizWifiSDK sharedInstance] registerUser:phoneStr password:self.pswTextView.text verifyCode:self.validateTextView.text accountType:GizUserPhone];
             LHWeakSelf(self)
             [SDKHelper shareInstance].registerBlock = ^(BOOL success) {
                 [HudHelper dismiss];
