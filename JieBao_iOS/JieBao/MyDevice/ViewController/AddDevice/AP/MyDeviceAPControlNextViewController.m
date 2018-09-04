@@ -110,16 +110,16 @@
 
 - (void)settingBtnClicked
 {
-    NSString *wifi = @"App-Prefs:root=WIFI";
-    NSURL *url = [NSURL URLWithString:wifi];
-    if ([[UIApplication sharedApplication]canOpenURL:url]) {
-        if (SystemVersion >= 10) {
-            [[UIApplication sharedApplication] openURL:url options:nil completionHandler:nil];
-        }else
-        {
-            [[UIApplication sharedApplication] openURL:url];
-        }
-    }
+//    NSString *wifi = @"App-Prefs:root=WIFI";
+//    NSURL *url = [NSURL URLWithString:wifi];
+//    if ([[UIApplication sharedApplication]canOpenURL:url]) {
+//        if (SystemVersion >= 10) {
+//            [[UIApplication sharedApplication] openURL:url options:nil completionHandler:nil];
+//        }else
+//        {
+//            [[UIApplication sharedApplication] openURL:url];
+//        }
+//    }
 }
 
 - (void)wifiTranferBtnClicked

@@ -70,7 +70,6 @@
         self.loginBtn.enabled = YES;
     }else{
         self.loginBtn.enabled = NO;
-        [self.loginBtn setBackgroundImage:nil forState:UIControlStateNormal];
     }
 
     [self registerNoti];

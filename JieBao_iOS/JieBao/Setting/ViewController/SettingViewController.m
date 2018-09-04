@@ -30,8 +30,9 @@
 - (instancetype)init
 {
     if (self = [super init]) {
+//         @{kSettingImgKey:@"shell",kSettingTextKey:@"分享列表",kSettingRightImgKey:@"next"},
         self.dataSource =  @[
-                             @{kSettingImgKey:@"shell",kSettingTextKey:@"分享列表",kSettingRightImgKey:@"next"},
+                            
                              @{kSettingImgKey:@"guzhang",kSettingTextKey:@"故障列表",kSettingRightImgKey:@"next"},
                              @{kSettingImgKey:@"kongzhi",kSettingTextKey:@"AP控制",kSettingRightImgKey:@"next"},
                              @{kSettingImgKey:@"help",kSettingTextKey:@"使用帮助",kSettingRightImgKey:@"next"},
@@ -135,24 +136,24 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.row) {
+//        case 0:
+////            [self.navigationController pushViewController:[NSClassFromString(@"ShareListViewController") new] animated:YES];
+//        {
+//            UIStoryboard *settingSB = [UIStoryboard storyboardWithName:@"SettingStoryboard" bundle:nil];
+//            ShareListViewController *shareListVC = [settingSB instantiateViewControllerWithIdentifier:@"ShareListViewController"];
+//            [self.navigationController pushViewController:shareListVC animated:YES];
+//        }
+//            break;
         case 0:
-//            [self.navigationController pushViewController:[NSClassFromString(@"ShareListViewController") new] animated:YES];
-        {
-            UIStoryboard *settingSB = [UIStoryboard storyboardWithName:@"SettingStoryboard" bundle:nil];
-            ShareListViewController *shareListVC = [settingSB instantiateViewControllerWithIdentifier:@"ShareListViewController"];
-            [self.navigationController pushViewController:shareListVC animated:YES];
-        }
-            break;
-        case 1:
             [self.navigationController pushViewController:[NSClassFromString(@"ErrorListViewController") new] animated:YES];
             break;
-        case 2:
+        case 1:
             [self.navigationController pushViewController:[NSClassFromString(@"APControlViewController") new] animated:YES];
             break;
-        case 3:
+        case 2:
             [self.navigationController pushViewController:[NSClassFromString(@"HelpViewController") new] animated:YES];
             break;
-        case 4:
+        case 3:
             [self.navigationController pushViewController:[NSClassFromString(@"HelpViewController") new] animated:YES];
             break;
             

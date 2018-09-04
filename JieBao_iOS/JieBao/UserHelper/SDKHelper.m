@@ -77,16 +77,16 @@ static SDKHelper *helper = nil;
         }
     }else if (result.code ==  GIZ_OPENAPI_PHONE_UNAVALIABLE)
     {
-       [HudHelper showStatus:@"请输入正确的手机号码"];
+       [HudHelper showErrorWithStatus:@"请输入正确的手机号码"];
     }else if (result.code ==  GIZ_OPENAPI_USERNAME_PASSWORD_ERROR)
     {
-        [HudHelper showStatus:@"密码错误"];
+        [HudHelper showErrorWithStatus:@"密码错误"];
     }else if (result.code ==  GIZ_OPENAPI_CODE_INVALID)
     {
-        [HudHelper showStatus:@"验证码有误，请重新输入"];
+        [HudHelper showErrorWithStatus:@"验证码有误，请重新输入"];
     }else if (result.code == GIZ_OPENAPI_USER_NOT_EXIST)
     {
-        [HudHelper showStatus:@"该手机号未注册，请注册后登录"];
+        [HudHelper showErrorWithStatus:@"该手机号未注册，请注册后登录"];
     }
     else
     {

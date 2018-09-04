@@ -590,7 +590,9 @@
 
 -(void)setDefaultTimerWithTask:(DeviceSchedulerTask *)task{
     // 定时器的命名规则为：名称_时间戳
-    NSString *taskName = [NSString stringWithFormat:@"%@_%@",task.taskName,[UtilHelper getTimeStampStr]];
+//    NSString *taskName = [NSString stringWithFormat:@"%@_%@",task.taskName,[UtilHelper getTimeStampStr]];
+    NSString *taskName = task.taskName;
+
     
     if ([taskName containsString:@"LPS"]) {
         [self setUpTempValuesWithArrays:kLPS];

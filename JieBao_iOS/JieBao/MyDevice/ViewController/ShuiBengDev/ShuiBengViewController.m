@@ -46,7 +46,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.bgView.backgroundColor = [UIColor whiteColor];
     [self initUI];
 }
@@ -58,18 +57,32 @@
     LHWeakSelf(self)
     ActionBlock leftAction = ^(UIButton *btn){
         [weakself.navigationController popViewControllerAnimated:YES];
-        LHLog(@"left");
     };
     ActionBlock rightAction = ^(UIButton *btn){
         [weakself showMore];
     };
-    [self.naviBar  configNavigationBarWithAttrs:@{
-                                                  kCustomNaviBarLeftActionKey:leftAction,
-                                                  kCustomNaviBarLeftImgKey:@"back",
-                                                  kCustomNaviBarTitleKey:@"无线开关",
-                                                  kCustomNaviBarRightImgKey:@"more",
-                                                  kCustomNaviBarRightActionKey:rightAction
-                                                  }];
+    NSString *title = nil;
+    if (self.dev) {
+        NSRange range = NSMakeRange(self.dev.macAddress.length - 6, 6);
+        NSString *lastMacStr = [self.dev.macAddress substringWithRange:range];
+        NSString *deaultStr = [NSString stringWithFormat:@"%@%@",[UtilHelper getDefaultNameStrPrefixWithProductKey:self.dev.productKey],lastMacStr];
+        title = self.dev.alias.length==0?deaultStr:self.dev.alias;
+        [self.naviBar  configNavigationBarWithAttrs:@{
+                                                      kCustomNaviBarLeftActionKey:leftAction,
+                                                      kCustomNaviBarLeftImgKey:@"back",
+                                                      kCustomNaviBarRightImgKey:@"more",
+                                                      kCustomNaviBarTitleKey:title,
+                                                      kCustomNaviBarRightActionKey:rightAction
+                                                      }];
+    }else{
+        title = self.group.group_name;
+        
+        [self.naviBar  configNavigationBarWithAttrs:@{
+                                                      kCustomNaviBarLeftActionKey:leftAction,
+                                                      kCustomNaviBarLeftImgKey:@"back",
+                                                      kCustomNaviBarTitleKey:title,
+                                                      }];
+    }
 }
 
 - (void)initUI

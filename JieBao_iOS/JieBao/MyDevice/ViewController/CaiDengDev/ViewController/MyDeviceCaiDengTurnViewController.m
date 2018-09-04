@@ -112,7 +112,6 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
     LHWeakSelf(self)
     ActionBlock leftAction = ^(UIButton *btn){
         [weakself.navigationController popViewControllerAnimated:YES];
-        LHLog(@"left");
     };
     
     ActionBlock rightAction = ^(UIButton *btn){
@@ -331,15 +330,15 @@ typedef NS_ENUM(NSInteger, CaiDengTpye)
         [weakself rename];
     };
     
-    ConfirmCallback shareDeviceCallBack = ^(){
-        [weakself shareDevice];
-    };
+//    ConfirmCallback shareDeviceCallBack = ^(){
+//        [weakself shareDevice];
+//    };
     
     ConfirmCallback deleteDeviceCallBack = ^(){
         [weakself deleteDevice];
     };
     
-    [self actionSheetShowMessage:@[@"重命名",@"设备分享",@"删除设备"] confirmCallbacks:@[renameCallBack,shareDeviceCallBack,deleteDeviceCallBack] cancelCallback:nil];
+    [self actionSheetShowMessage:@[@"重命名",@"删除设备"] confirmCallbacks:@[renameCallBack,deleteDeviceCallBack] cancelCallback:nil];
 }
 
 - (void)rename

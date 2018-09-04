@@ -68,7 +68,6 @@
     [self getShareTheInvitation];
     NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationMaskPortrait];
     [[UIDevice currentDevice] setValue:orientationTarget forKey:@"orientation"];
-
 }
 
 - (void)viewDidLoad {

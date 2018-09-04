@@ -62,7 +62,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    [self.rePswTextView addTarget:self action:@selector(passConTextChange:) forControlEvents:UIControlEventEditingChanged];
     
     [self initUI];
     
@@ -89,8 +88,10 @@
     LHWeakSelf(self)
     ActionBlock leftAction = ^(UIButton *btn){
         [weakself.navigationController popViewControllerAnimated:YES];
-        LHLog(@"left");
     };
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(passConTextChange) name:UITextFieldTextDidChangeNotification object:nil];
+
     [self.naviBar  configNavigationBarWithAttrs:@{
                                                   kCustomNaviBarLeftActionKey:leftAction,
                                                   kCustomNaviBarLeftImgKey:@"back",
@@ -101,6 +102,7 @@
     [super viewDidDisappear:animated];
     [self.timer invalidate];
     self.timer = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)dealloc
@@ -333,7 +335,9 @@
             [controller addAction:action];
             [self presentViewController:controller animated:YES completion:nil];
         }else{
-            [[GizWifiSDK sharedInstance] registerUser:self.usrTextView.text password:self.pswTextView.text verifyCode:self.validateTextView.text accountType:GizUserPhone];
+            
+            NSString *phoneStr = [NSString stringWithFormat:@"%@",self.usrTextView.text];
+            [[GizWifiSDK sharedInstance] registerUser:phoneStr password:self.pswTextView.text verifyCode:self.validateTextView.text accountType:GizUserPhone];
             LHWeakSelf(self)
             [SDKHelper shareInstance].registerBlock = ^(BOOL success) {
                 [HudHelper dismiss];
@@ -344,8 +348,7 @@
                     model.userName = self.usrTextView.text;
                     model.psw = self.pswTextView.text;
                     [UserHelper setCurrentUser:model];
-                }else
-                {
+                }else{
                     LHLog(@"注册失败");
                 }
             };
@@ -355,7 +358,7 @@
     [manger startMonitoring];
 }
 
-- (void)passConTextChange:(UITextField *)textField
+- (void)passConTextChange
 {
     if (self.usrTextView.text.length != 0 && self.validateTextView.text.length != 0&& self.pswTextView.text.length != 0 &&self.rePswTextView.text.length != 0) {
         self.registerBtn.enabled = YES;

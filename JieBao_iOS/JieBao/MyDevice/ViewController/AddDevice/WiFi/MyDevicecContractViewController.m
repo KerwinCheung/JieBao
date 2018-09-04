@@ -85,7 +85,11 @@
 {
     LHWeakSelf(self)
      [self.helper showLoadingInView:self.loadImgView];
-    [[GizWifiSDK sharedInstance] setDeviceOnboarding:self.ssid key:self.key configMode:GizWifiAirLink softAPSSIDPrefix:nil timeout:60 wifiGAgentType:[NSArray arrayWithObjects: @(GizGAgentESP), nil]];
+    
+//    [[GizWifiSDK sharedInstance] setDeviceOnboarding:self.ssid key:self.key configMode:GizWifiAirLink softAPSSIDPrefix:nil timeout:60 wifiGAgentType:[NSArray arrayWithObjects: @(GizGAgentESP), nil]];
+    
+    [[GizWifiSDK sharedInstance] setDeviceOnboardingDeploy:self.ssid key:self.key configMode:GizWifiAirLink softAPSSIDPrefix:nil timeout:120 wifiGAgentType:[NSArray arrayWithObjects: @(GizGAgentESP), nil] bind:NO];
+    
     [SDKHelper shareInstance].onboardingCallBackBlock = ^(BOOL success) {
         if (success) {
             LHLog(@"链接成功");
