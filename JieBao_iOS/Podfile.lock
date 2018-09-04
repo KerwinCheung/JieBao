@@ -46,6 +46,16 @@ DEPENDENCIES:
   - SVProgressHUD
   - YYModel
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - AFNetworking
+    - BlocksKit
+    - IQKeyboardManager
+    - Masonry
+    - SDWebImage
+    - SVProgressHUD
+    - YYModel
+
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
@@ -57,4 +67,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 701d76e4c0462d51d09428f8ce78f80116628f03
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0
